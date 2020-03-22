@@ -1,22 +1,23 @@
 {
-    "name": "bagisto/laravel-payment",
+    "name": "highwayns/japan-delivery",
     "license": "MIT",
+    "description" : "package implements japanese delivery",
     "authors": [
         {
-            "name": "Jitendra Singh",
-            "email": "jitendra@webkul.com"
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
         }
     ],
     "require": {},
     "autoload": {
         "psr-4": {
-            "Webkul\\Payment\\": "src/"
+            "Highwayns\\JaDelivery\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\Payment\\Providers\\PaymentServiceProvider"
+                "Highwayns\\JaDelivery\\Providers\\JaDeliveryServiceProvider"
             ],
             "aliases": {
                 "Bouncer": "Webkul\\Payment\\Facades\\Bouncer"

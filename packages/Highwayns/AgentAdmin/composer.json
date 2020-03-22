@@ -1,10 +1,11 @@
 {
-    "name": "bagisto/laravel-agentadmin",
+    "name": "highwayns/agent-admin",
     "license": "MIT",
+    "description" : "package for agent admin",
     "authors": [
         {
-            "name": "Jitendra Singh",
-            "email": "jitendra@webkul.com"
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
         }
     ],
     "require": {

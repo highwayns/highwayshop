@@ -1,22 +1,23 @@
 {
-    "name": "bagisto/laravel-payment",
+    "name": "highwayns/japan-payment",
     "license": "MIT",
+    "description" : "package implement japanese payment",
     "authors": [
         {
-            "name": "Jitendra Singh",
-            "email": "jitendra@webkul.com"
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
         }
     ],
     "require": {},
     "autoload": {
         "psr-4": {
-            "Webkul\\Payment\\": "src/"
+            "Highwayns\\JaPayment\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\Payment\\Providers\\PaymentServiceProvider"
+                "Highwayns\\JaPayment\\Providers\\JaPaymentServiceProvider"
             ],
             "aliases": {
                 "Bouncer": "Webkul\\Payment\\Facades\\Bouncer"

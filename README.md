@@ -200,14 +200,14 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 
 <a href="https://opencollective.com/bagisto/contribute/sponsor-7372/checkout" target="_blank"><img src="https://images.opencollective.com/static/images/become_sponsor.svg"></a>
 
-####php.ini
-; http://php.net/memory-limit
-memory_limit=2G
+#### php.ini
+* ; http://php.net/memory-limit
+* memory_limit=2G
 
-####フォルダー作成
-mkdir -p storage/framework/cache/data
-mkdir -p storage/framework/sessions
-mkdir -p storage/framework/views
-mkdir -p storage/framework/testing
-mkdir -p storage/app/db-blade-compiler/views
-php artisan storage:link
+#### フォルダー作成
+* mkdir -p storage/framework/cache/data
+* mkdir -p storage/framework/sessions
+* mkdir -p storage/framework/views
+* mkdir -p storage/framework/testing
+* mkdir -p storage/app/db-blade-compiler/views
+* php artisan storage:link

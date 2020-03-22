@@ -1,11 +1,11 @@
 {
-    "name": "bagisto/laravel-shop",
+    "name": "highwayns/shopify-shop",
     "license": "MIT",
-    "description" : "Shop package for store front and customers",
+    "description" : "Shop package for shopify store front and customers",
     "authors": [
         {
-            "name": "Prashant Singh",
-            "email": "prashant.singh852@webkul.com"
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
         }
     ],
     "require": {},
@@ -17,7 +17,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\Shop\\Providers\\ShopServiceProvider"
+                "Highwayns\\Shopify\\Providers\\ShopifyServiceProvider"
             ],
             "aliases": {}
         }

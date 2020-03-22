@@ -1,10 +1,11 @@
 {
-    "name": "bagisto/laravel-vendoradmin",
+    "name": "highwayns/vendor-admin",
     "license": "MIT",
+    "description" : "package for vendor admin",
     "authors": [
         {
-            "name": "Jitendra Singh",
-            "email": "jitendra@webkul.com"
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
         }
     ],
     "require": {
@@ -14,13 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Webkul\\VendorAdmin\\": "src/"
+            "Highwayns\\VendorAdmin\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\VendorAdmin\\VendorAdminServiceProvider"
+                "Highwayns\\VendorAdmin\\VendorAdminServiceProvider"
             ],
             "aliases": {}
         }

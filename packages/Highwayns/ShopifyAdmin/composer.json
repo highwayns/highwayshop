@@ -1,5 +1,5 @@
 {
-    "name": "osiset/laravel-shopify",
+    "name": "highwayns/laravel-shopify",
     "description": "Shopify package for Laravel to aide in app development",
     "keywords": [
         "laravel",
@@ -12,8 +12,8 @@
     "prefer-stable": true,
     "authors": [
         {
-            "name": "Tyler King",
-            "email": "tyler@osiset.com"
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
         }
     ],
     "require": {
