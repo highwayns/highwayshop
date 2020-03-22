@@ -267,7 +267,6 @@ return [
         Webkul\Rule\Providers\RuleServiceProvider::class,
         Webkul\CMS\Providers\CMSServiceProvider::class,
         Webkul\Velocity\Providers\VelocityServiceProvider::class,
-        Osiset\ShopifyApp\ShopifyAppProvider::class,
     ],
 
     /*
