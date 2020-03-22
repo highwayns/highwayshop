@@ -1,5 +1,5 @@
 {
-    "name": "highwayns/japan-payment",
+    "name": "highwayns/laravel-japayment",
     "license": "MIT",
     "description" : "package implement japanese payment",
     "authors": [

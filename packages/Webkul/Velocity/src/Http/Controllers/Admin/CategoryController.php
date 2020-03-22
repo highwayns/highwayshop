@@ -10,7 +10,7 @@ use Webkul\Velocity\Repositories\CategoryRepository as VelocityCategory;
  * Category Controller
  *
  * @author    Vivek Sharma <viveksh047@webkul.com> @vivek
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
  */
 class CategoryController extends Controller
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Osiset\ShopifyApp\Contracts\Queries;
+namespace Highwayns\ShopifyAdmin\Contracts\Queries;
 
 use Illuminate\Support\Collection;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
-use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Contracts\ShopModel as IShopModel;
+use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
 
 /**
  * Reprecents a queries for shops.

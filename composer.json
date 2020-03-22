@@ -72,7 +72,17 @@
         "bagisto/laravel-tax": "v0.1.0",
         "bagisto/laravel-api": "v0.1.0",
         "bagisto/laravel-paypal": "v0.1.0",
-        "bagisto/laravel-discount": "v0.1.0"
+        "bagisto/laravel-discount": "v0.1.0",
+        "highwayns/laravel-agent": "v0.1.0",
+        "highwayns/laravel-agentadmin": "v0.1.0",
+        "highwayns/laravel-jadelivery": "v0.1.0",
+        "highwayns/laravel-japayment": "v0.1.0",
+        "highwayns/laravel-merchant": "v0.1.0",
+        "highwayns/laravel-merchantadmin": "v0.1.0",
+        "highwayns/laravel-shopify": "v0.1.0",
+        "highwayns/laravel-shopifyadmin": "v0.1.0",
+        "highwayns/laravel-vendor": "v0.1.0",
+        "highwayns/laravel-vendoradmin": "v0.1.0"
     },
 
     "autoload": {
@@ -104,7 +114,17 @@
         "Webkul\\CartRule\\": "packages/Webkul/CartRule/src",
         "Webkul\\Rule\\": "packages/Webkul/Rule/src",
         "Webkul\\CMS\\": "packages/Webkul/CMS/src",
-        "Webkul\\Velocity\\": "packages/Webkul/Velocity/src"
+        "Webkul\\Velocity\\": "packages/Webkul/Velocity/src",
+        "Highwayns\\Agent\\": "packages/Highwayns/Agent/src",
+        "Highwayns\\AgentAdmin\\": "packages/Highwayns/AgentAdmin/src",
+        "Highwayns\\JaDelivery\\": "packages/Highwayns/JaDelivery/src",
+        "Highwayns\\JaPayment\\": "packages/Highwayns/JaPayment/src",
+        "Highwayns\\Merchant\\": "packages/Highwayns/Merchant/src",
+        "Highwayns\\MerchantAdmin\\": "packages/Highwayns/MerchantAdmin/src",
+        "Highwayns\\Shopify\\": "packages/Highwayns/Shopify/src",
+        "Highwayns\\ShopifyAdmin\\": "packages/Highwayns/ShopifyAdmin/src",
+        "Highwayns\\Vendor\\": "packages/Highwayns/Vendor/src",
+        "Highwayns\\VendorAdmin\\": "packages/Highwayns/VendorAdmin/src"
       }
     },
 

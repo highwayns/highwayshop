@@ -8,8 +8,8 @@ use Webkul\API\Http\Resources\Customer\CustomerAddress as CustomerAddressResourc
 /**
  * Address controller
  *
- * @author    Jitendra Singh <jitendra@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @author    Tei Gun <tei952@hotmail.com>
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class AddressController extends Controller
 {

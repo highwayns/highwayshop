@@ -1,6 +1,6 @@
 <?php
 
-namespace Osiset\ShopifyApp\Console;
+namespace Highwayns\ShopifyAdmin\Console;
 
 use Illuminate\Foundation\Console\JobMakeCommand;
 use Illuminate\Support\Str;

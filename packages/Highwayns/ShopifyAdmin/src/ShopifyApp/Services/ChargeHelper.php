@@ -1,19 +1,19 @@
 <?php
 
-namespace Osiset\ShopifyApp\Services;
+namespace Highwayns\ShopifyAdmin\Services;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
-use Osiset\ShopifyApp\Storage\Models\Plan;
-use Osiset\ShopifyApp\Objects\Values\PlanId;
-use Osiset\ShopifyApp\Objects\Values\ChargeReference;
-use Osiset\ShopifyApp\Objects\Enums\ChargeType;
-use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
-use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
-use Osiset\ShopifyApp\Storage\Models\Charge as ChargeModel;
-use Osiset\ShopifyApp\Contracts\Queries\Charge as IChargeQuery;
-use Osiset\ShopifyApp\Objects\Transfers\PlanDetails as PlanDetailsTransfer;
-use Osiset\ShopifyApp\Traits\ConfigAccessible;
+use Highwayns\ShopifyAdmin\Storage\Models\Plan;
+use Highwayns\ShopifyAdmin\Objects\Values\PlanId;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
+use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
+use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
+use Highwayns\ShopifyAdmin\Contracts\ShopModel as IShopModel;
+use Highwayns\ShopifyAdmin\Storage\Models\Charge as ChargeModel;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Charge as IChargeQuery;
+use Highwayns\ShopifyAdmin\Objects\Transfers\PlanDetails as PlanDetailsTransfer;
+use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
 
 /**
  * Basic helper class for charges which encapsulates

@@ -1,5 +1,5 @@
 {
-    "name": "highwayns/vendor-admin",
+    "name": "highwayns/laravel-vendoradmin",
     "license": "MIT",
     "description" : "package for vendor admin",
     "authors": [

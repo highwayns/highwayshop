@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\AgentAdmin\Providers;
+namespace Highwayns\AgentAdmin\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -14,14 +14,14 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Event::listen('checkout.order.save.after', 'Webkul\AgentAdmin\Listeners\Order@sendNewOrderMail');
+        Event::listen('checkout.order.save.after', 'Highwayns\AgentAdmin\Listeners\Order@sendNewOrderMail');
 
-        Event::listen('sales.invoice.save.after', 'Webkul\AgentAdmin\Listeners\Order@sendNewInvoiceMail');
+        Event::listen('sales.invoice.save.after', 'Highwayns\AgentAdmin\Listeners\Order@sendNewInvoiceMail');
 
-        Event::listen('sales.shipment.save.after', 'Webkul\AgentAdmin\Listeners\Order@sendNewShipmentMail');
+        Event::listen('sales.shipment.save.after', 'Highwayns\AgentAdmin\Listeners\Order@sendNewShipmentMail');
 
-        Event::listen('sales.order.cancel.after','Webkul\AgentAdmin\Listeners\Order@sendCancelOrderMail');
+        Event::listen('sales.order.cancel.after','Highwayns\AgentAdmin\Listeners\Order@sendCancelOrderMail');
 
-        Event::listen('sales.refund.save.after','Webkul\AgentAdmin\Listeners\Order@sendNewRefundMail');
+        Event::listen('sales.refund.save.after','Highwayns\AgentAdmin\Listeners\Order@sendNewRefundMail');
     }
 }

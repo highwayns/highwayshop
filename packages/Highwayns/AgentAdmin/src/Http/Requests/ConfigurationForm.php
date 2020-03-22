@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\AgentAdmin\Http\Requests;
+namespace Highwayns\AgentAdmin\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

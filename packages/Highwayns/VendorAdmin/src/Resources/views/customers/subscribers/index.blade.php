@@ -21,7 +21,7 @@
         </div>
 
         <div class="page-content">
-            @inject('subscribers','Webkul\VendorAdmin\DataGrids\NewsLetterDataGrid')
+            @inject('subscribers','Highwayns\VendorAdmin\DataGrids\NewsLetterDataGrid')
             {!! $subscribers->render() !!}
         </div>
     </div>

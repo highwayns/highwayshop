@@ -20,7 +20,7 @@
 
         <div class="page-content">
 
-            @inject('datagrid','Webkul\VendorAdmin\DataGrids\VendorSourcesDataGrid')
+            @inject('datagrid','Highwayns\VendorAdmin\DataGrids\VendorSourcesDataGrid')
             {!! $datagrid->render() !!}
             {{-- <datetime></datetime> --}}
         </div>

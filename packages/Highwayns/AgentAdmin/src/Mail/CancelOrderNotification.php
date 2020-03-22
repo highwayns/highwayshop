@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Webkul\AgentAdmin\Mail;
+namespace Highwayns\AgentAdmin\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;

@@ -20,8 +20,8 @@ use Illuminate\Support\Arr;
  * Facades handler for all the methods to be implemented in Cart.
  *
  * @author    Prashant Singh <prashant.singh852@webkul.com>
- * @author    Jitendra Singh <jitendra@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @author    Tei Gun <tei952@hotmail.com>
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class Cart
 {

@@ -1,18 +1,18 @@
 <?php
 
-namespace Osiset\ShopifyApp\Http\Middleware;
+namespace Highwayns\ShopifyAdmin\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Osiset\ShopifyApp\Services\ShopSession;
-use Osiset\ShopifyApp\Objects\Enums\DataSource;
-use Osiset\ShopifyApp\Objects\Values\ShopDomain;
-use Osiset\ShopifyApp\Objects\Values\NullShopDomain;
-use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
-use Osiset\ShopifyApp\Exceptions\SignatureVerificationException;
-use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Highwayns\ShopifyAdmin\Services\ShopSession;
+use Highwayns\ShopifyAdmin\Objects\Enums\DataSource;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
+use Highwayns\ShopifyAdmin\Objects\Values\NullShopDomain;
+use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
+use Highwayns\ShopifyAdmin\Exceptions\SignatureVerificationException;
+use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
 
 /**
  * Response for ensuring an authenticated request.

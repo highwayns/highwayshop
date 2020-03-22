@@ -1,15 +1,15 @@
 <?php
 
-namespace Osiset\ShopifyApp\Actions;
+namespace Highwayns\ShopifyAdmin\Actions;
 
 use stdClass;
-use Osiset\ShopifyApp\Services\ShopSession;
-use Osiset\ShopifyApp\Objects\Enums\AuthMode;
-use Osiset\ShopifyApp\Traits\ConfigAccessible;
-use Osiset\ShopifyApp\Objects\Values\ShopDomain;
-use Osiset\ShopifyApp\Objects\Values\NullAccessToken;
-use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
-use Osiset\ShopifyApp\Contracts\Commands\Shop as IShopCommand;
+use Highwayns\ShopifyAdmin\Services\ShopSession;
+use Highwayns\ShopifyAdmin\Objects\Enums\AuthMode;
+use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
+use Highwayns\ShopifyAdmin\Objects\Values\NullAccessToken;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
+use Highwayns\ShopifyAdmin\Contracts\Commands\Shop as IShopCommand;
 
 /**
  * Authenticates a shop via HTTP request.

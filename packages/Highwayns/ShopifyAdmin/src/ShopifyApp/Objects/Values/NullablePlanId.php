@@ -1,9 +1,9 @@
 <?php
 
-namespace Osiset\ShopifyApp\Objects\Values;
+namespace Highwayns\ShopifyAdmin\Objects\Values;
 
 use Funeralzone\ValueObjects\Nullable;
-use Osiset\ShopifyApp\Contracts\Objects\Values\PlanId as PlanIdValue;
+use Highwayns\ShopifyAdmin\Contracts\Objects\Values\PlanId as PlanIdValue;
 
 /**
  * Value object for plan's ID (nullable).

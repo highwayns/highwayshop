@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\AgentAdmin\DataGrids;
+namespace Highwayns\AgentAdmin\DataGrids;
 
 use Webkul\Ui\DataGrid\DataGrid;
 use DB;
@@ -9,7 +9,7 @@ use DB;
  * InventorySourcesDataGrid Class
  *
  * @author Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class InventorySourcesDataGrid extends DataGrid
 {

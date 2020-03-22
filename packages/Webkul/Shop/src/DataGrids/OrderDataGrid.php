@@ -9,7 +9,7 @@ use DB;
  * OrderDataGrid class
  *
  * @author Rahul Shukla <rahulshkla.symfont517@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class OrderDataGrid extends DataGrid
 {

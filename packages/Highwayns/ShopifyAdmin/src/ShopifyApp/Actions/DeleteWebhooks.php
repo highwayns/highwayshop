@@ -1,9 +1,9 @@
 <?php
 
-namespace Osiset\ShopifyApp\Actions;
+namespace Highwayns\ShopifyAdmin\Actions;
 
-use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
 
 /**
  * Delete webhooks for this app on the shop.

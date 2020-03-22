@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Event;
  * DataGrid class
  *
  * @author    Prashant Singh <jitendra@webkul.com> @prashant-webkul
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 abstract class DataGrid
 {

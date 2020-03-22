@@ -3,7 +3,7 @@
 Route::group(['middleware' => ['web']], function () {
     Route::prefix('agentadmin')->group(function () {
 
-        Route::get('/', 'Webkul\AgentAdmin\Http\Controllers\Controller@redirectToLogin');
+        Route::get('/', 'Highwayns\AgentAdmin\Http\Controllers\Controller@redirectToLogin');
 
         // Login Routes
         Route::get('/login', 'Webkul\Agent\Http\Controllers\SessionController@create')->defaults('_config', [
@@ -39,89 +39,89 @@ Route::group(['middleware' => ['web']], function () {
             ])->name('agentadmin.session.destroy');
 
             // Dashboard Route
-            Route::get('dashboard', 'Webkul\AgentAdmin\Http\Controllers\DashboardController@index')->defaults('_config', [
+            Route::get('dashboard', 'Highwayns\AgentAdmin\Http\Controllers\DashboardController@index')->defaults('_config', [
                 'view' => 'agentadmin::dashboard.index'
             ])->name('agentadmin.dashboard.index');
 
             //Customer Management Routes
-            Route::get('customers', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@index')->defaults('_config', [
+            Route::get('customers', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@index')->defaults('_config', [
                 'view' => 'agentadmin::customers.index'
             ])->name('agentadmin.customer.index');
 
-            Route::get('customers/create', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@create')->defaults('_config',[
+            Route::get('customers/create', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@create')->defaults('_config',[
                 'view' => 'agentadmin::customers.create'
             ])->name('agentadmin.customer.create');
 
-            Route::post('customers/create', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@store')->defaults('_config',[
+            Route::post('customers/create', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@store')->defaults('_config',[
                 'redirect' => 'agentadmin.customer.index'
             ])->name('agentadmin.customer.store');
 
-            Route::get('customers/edit/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@edit')->defaults('_config',[
+            Route::get('customers/edit/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@edit')->defaults('_config',[
                 'view' => 'agentadmin::customers.edit'
             ])->name('agentadmin.customer.edit');
 
-            Route::get('customers/note/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@createNote')->defaults('_config',[
+            Route::get('customers/note/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@createNote')->defaults('_config',[
                 'view' => 'agentadmin::customers.note'
             ])->name('agentadmin.customer.note.create');
 
-            Route::put('customers/note/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@storeNote')->defaults('_config',[
+            Route::put('customers/note/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@storeNote')->defaults('_config',[
                 'redirect' => 'agentadmin.customer.index'
             ])->name('agentadmin.customer.note.store');
 
-            Route::put('customers/edit/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@update')->defaults('_config', [
+            Route::put('customers/edit/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@update')->defaults('_config', [
                 'redirect' => 'agentadmin.customer.index'
             ])->name('agentadmin.customer.update');
 
-            Route::post('customers/delete/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@destroy')->name('agentadmin.customer.delete');
+            Route::post('customers/delete/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@destroy')->name('agentadmin.customer.delete');
 
-            Route::post('customers/masssdelete', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@massDestroy')->name('agentadmin.customer.mass-delete');
+            Route::post('customers/masssdelete', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@massDestroy')->name('agentadmin.customer.mass-delete');
 
-            Route::post('customers/masssupdate', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerController@massUpdate')->name('agentadmin.customer.mass-update');
+            Route::post('customers/masssupdate', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerController@massUpdate')->name('agentadmin.customer.mass-update');
 
             Route::get('reviews', 'Webkul\Product\Http\Controllers\ReviewController@index')->defaults('_config',[
                 'view' => 'agentadmin::customers.reviews.index'
             ])->name('agentadmin.customer.review.index');
 
             //Customer's addresses routes
-            Route::get('customers/{id}/addresses', 'Webkul\AgentAdmin\Http\Controllers\Customer\AddressController@index')->defaults('_config', [
+            Route::get('customers/{id}/addresses', 'Highwayns\AgentAdmin\Http\Controllers\Customer\AddressController@index')->defaults('_config', [
                 'view' => 'agentadmin::customers.addresses.index'
             ])->name('agentadmin.customer.addresses.index');
 
-            Route::get('customers/{id}/addresses/create', 'Webkul\AgentAdmin\Http\Controllers\Customer\AddressController@create')->defaults('_config',[
+            Route::get('customers/{id}/addresses/create', 'Highwayns\AgentAdmin\Http\Controllers\Customer\AddressController@create')->defaults('_config',[
                 'view' => 'agentadmin::customers.addresses.create'
             ])->name('agentadmin.customer.addresses.create');
 
-            Route::post('customers/{id}/addresses/create', 'Webkul\AgentAdmin\Http\Controllers\Customer\AddressController@store')->defaults('_config',[
+            Route::post('customers/{id}/addresses/create', 'Highwayns\AgentAdmin\Http\Controllers\Customer\AddressController@store')->defaults('_config',[
                 'redirect' => 'agentadmin.customer.addresses.index'
             ])->name('agentadmin.customer.addresses.store');
 
-            Route::get('customers/addresses/edit/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\AddressController@edit')->defaults('_config',[
+            Route::get('customers/addresses/edit/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\AddressController@edit')->defaults('_config',[
                 'view' => 'agentadmin::customers.addresses.edit'
             ])->name('agentadmin.customer.addresses.edit');
 
-            Route::put('customers/addresses/edit/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\AddressController@update')->defaults('_config', [
+            Route::put('customers/addresses/edit/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\AddressController@update')->defaults('_config', [
                 'redirect' => 'agentadmin.customer.addresses.index'
             ])->name('agentadmin.customer.addresses.update');
 
-            Route::post('customers/addresses/delete/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\AddressController@destroy')->defaults('_config', [
+            Route::post('customers/addresses/delete/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\AddressController@destroy')->defaults('_config', [
                 'redirect' => 'agentadmin.customer.addresses.index'
             ])->name('agentadmin.customer.addresses.delete');
 
             //mass destroy
-            Route::post('customers/{id}/addresses', 'Webkul\AgentAdmin\Http\Controllers\Customer\AddressController@massDestroy')->defaults('_config', [
+            Route::post('customers/{id}/addresses', 'Highwayns\AgentAdmin\Http\Controllers\Customer\AddressController@massDestroy')->defaults('_config', [
                 'redirect' => 'agentadmin.customer.addresses.index'
             ])->name('agentadmin.customer.addresses.massdelete');
 
             // Configuration routes
-            Route::get('configuration/{slug?}/{slug2?}', 'Webkul\AgentAdmin\Http\Controllers\ConfigurationController@index')->defaults('_config', [
+            Route::get('configuration/{slug?}/{slug2?}', 'Highwayns\AgentAdmin\Http\Controllers\ConfigurationController@index')->defaults('_config', [
                 'view' => 'agentadmin::configuration.index'
             ])->name('agentadmin.configuration.index');
 
-            Route::post('configuration/{slug?}/{slug2?}', 'Webkul\AgentAdmin\Http\Controllers\ConfigurationController@store')->defaults('_config', [
+            Route::post('configuration/{slug?}/{slug2?}', 'Highwayns\AgentAdmin\Http\Controllers\ConfigurationController@store')->defaults('_config', [
                 'redirect' => 'agentadmin.configuration.index'
             ])->name('agentadmin.configuration.index.store');
 
-            Route::get('configuration/{slug?}/{slug2?}/{path}', 'Webkul\AgentAdmin\Http\Controllers\ConfigurationController@download')->defaults('_config', [
+            Route::get('configuration/{slug?}/{slug2?}/{path}', 'Highwayns\AgentAdmin\Http\Controllers\ConfigurationController@download')->defaults('_config', [
                 'redirect' => 'agentadmin.configuration.index'
             ])->name('agentadmin.configuration.download');
 
@@ -149,103 +149,103 @@ Route::group(['middleware' => ['web']], function () {
             ])->name('agentadmin.customer.review.massupdate');
 
             // Customer Groups Routes
-            Route::get('groups', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@index')->defaults('_config',[
+            Route::get('groups', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@index')->defaults('_config',[
                 'view' => 'agentadmin::customers.groups.index'
             ])->name('agentadmin.groups.index');
 
-            Route::get('groups/create', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@create')->defaults('_config',[
+            Route::get('groups/create', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@create')->defaults('_config',[
                 'view' => 'agentadmin::customers.groups.create'
             ])->name('agentadmin.groups.create');
 
-            Route::post('groups/create', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@store')->defaults('_config',[
+            Route::post('groups/create', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@store')->defaults('_config',[
                 'redirect' => 'agentadmin.groups.index'
             ])->name('agentadmin.groups.store');
 
-            Route::get('groups/edit/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@edit')->defaults('_config',[
+            Route::get('groups/edit/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@edit')->defaults('_config',[
                 'view' => 'agentadmin::customers.groups.edit'
             ])->name('agentadmin.groups.edit');
 
-            Route::put('groups/edit/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@update')->defaults('_config',[
+            Route::put('groups/edit/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@update')->defaults('_config',[
                 'redirect' => 'agentadmin.groups.index'
             ])->name('agentadmin.groups.update');
 
-            Route::post('groups/delete/{id}', 'Webkul\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@destroy')->name('agentadmin.groups.delete');
+            Route::post('groups/delete/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Customer\CustomerGroupController@destroy')->name('agentadmin.groups.delete');
 
 
             // Sales Routes
             Route::prefix('sales')->group(function () {
                 // Sales Order Routes
-                Route::get('/orders', 'Webkul\AgentAdmin\Http\Controllers\Sales\OrderController@index')->defaults('_config', [
+                Route::get('/orders', 'Highwayns\AgentAdmin\Http\Controllers\Sales\OrderController@index')->defaults('_config', [
                     'view' => 'agentadmin::sales.orders.index'
                 ])->name('agentadmin.sales.orders.index');
 
-                Route::get('/orders/view/{id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\OrderController@view')->defaults('_config', [
+                Route::get('/orders/view/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\OrderController@view')->defaults('_config', [
                     'view' => 'agentadmin::sales.orders.view'
                 ])->name('agentadmin.sales.orders.view');
 
-                Route::get('/orders/cancel/{id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\OrderController@cancel')->defaults('_config', [
+                Route::get('/orders/cancel/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\OrderController@cancel')->defaults('_config', [
                     'view' => 'agentadmin::sales.orders.cancel'
                 ])->name('agentadmin.sales.orders.cancel');
 
 
                 // Sales Invoices Routes
-                Route::get('/invoices', 'Webkul\AgentAdmin\Http\Controllers\Sales\InvoiceController@index')->defaults('_config', [
+                Route::get('/invoices', 'Highwayns\AgentAdmin\Http\Controllers\Sales\InvoiceController@index')->defaults('_config', [
                     'view' => 'agentadmin::sales.invoices.index'
                 ])->name('agentadmin.sales.invoices.index');
 
-                Route::get('/invoices/create/{order_id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\InvoiceController@create')->defaults('_config', [
+                Route::get('/invoices/create/{order_id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\InvoiceController@create')->defaults('_config', [
                     'view' => 'agentadmin::sales.invoices.create'
                 ])->name('agentadmin.sales.invoices.create');
 
-                Route::post('/invoices/create/{order_id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\InvoiceController@store')->defaults('_config', [
+                Route::post('/invoices/create/{order_id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\InvoiceController@store')->defaults('_config', [
                     'redirect' => 'agentadmin.sales.orders.view'
                 ])->name('agentadmin.sales.invoices.store');
 
-                Route::get('/invoices/view/{id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\InvoiceController@view')->defaults('_config', [
+                Route::get('/invoices/view/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\InvoiceController@view')->defaults('_config', [
                     'view' => 'agentadmin::sales.invoices.view'
                 ])->name('agentadmin.sales.invoices.view');
 
-                Route::get('/invoices/print/{id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\InvoiceController@print')->defaults('_config', [
+                Route::get('/invoices/print/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\InvoiceController@print')->defaults('_config', [
                     'view' => 'agentadmin::sales.invoices.print'
                 ])->name('agentadmin.sales.invoices.print');
 
 
                 // Sales Shipments Routes
-                Route::get('/shipments', 'Webkul\AgentAdmin\Http\Controllers\Sales\ShipmentController@index')->defaults('_config', [
+                Route::get('/shipments', 'Highwayns\AgentAdmin\Http\Controllers\Sales\ShipmentController@index')->defaults('_config', [
                     'view' => 'agentadmin::sales.shipments.index'
                 ])->name('agentadmin.sales.shipments.index');
 
-                Route::get('/shipments/create/{order_id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\ShipmentController@create')->defaults('_config', [
+                Route::get('/shipments/create/{order_id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\ShipmentController@create')->defaults('_config', [
                     'view' => 'agentadmin::sales.shipments.create'
                 ])->name('agentadmin.sales.shipments.create');
 
-                Route::post('/shipments/create/{order_id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\ShipmentController@store')->defaults('_config', [
+                Route::post('/shipments/create/{order_id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\ShipmentController@store')->defaults('_config', [
                     'redirect' => 'agentadmin.sales.orders.view'
                 ])->name('agentadmin.sales.shipments.store');
 
-                Route::get('/shipments/view/{id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\ShipmentController@view')->defaults('_config', [
+                Route::get('/shipments/view/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\ShipmentController@view')->defaults('_config', [
                     'view' => 'agentadmin::sales.shipments.view'
                 ])->name('agentadmin.sales.shipments.view');
 
 
                 // Sales Redunds Routes
-                Route::get('/refunds', 'Webkul\AgentAdmin\Http\Controllers\Sales\RefundController@index')->defaults('_config', [
+                Route::get('/refunds', 'Highwayns\AgentAdmin\Http\Controllers\Sales\RefundController@index')->defaults('_config', [
                     'view' => 'agentadmin::sales.refunds.index'
                 ])->name('agentadmin.sales.refunds.index');
 
-                Route::get('/refunds/create/{order_id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\RefundController@create')->defaults('_config', [
+                Route::get('/refunds/create/{order_id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\RefundController@create')->defaults('_config', [
                     'view' => 'agentadmin::sales.refunds.create'
                 ])->name('agentadmin.sales.refunds.create');
 
-                Route::post('/refunds/create/{order_id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\RefundController@store')->defaults('_config', [
+                Route::post('/refunds/create/{order_id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\RefundController@store')->defaults('_config', [
                     'redirect' => 'agentadmin.sales.orders.view'
                 ])->name('agentadmin.sales.refunds.store');
 
-                Route::post('/refunds/update-qty/{order_id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\RefundController@updateQty')->defaults('_config', [
+                Route::post('/refunds/update-qty/{order_id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\RefundController@updateQty')->defaults('_config', [
                     'redirect' => 'agentadmin.sales.orders.view'
                 ])->name('agentadmin.sales.refunds.update_qty');
 
-                Route::get('/refunds/view/{id}', 'Webkul\AgentAdmin\Http\Controllers\Sales\RefundController@view')->defaults('_config', [
+                Route::get('/refunds/view/{id}', 'Highwayns\AgentAdmin\Http\Controllers\Sales\RefundController@view')->defaults('_config', [
                     'view' => 'agentadmin::sales.refunds.view'
                 ])->name('agentadmin.sales.refunds.view');
             });
@@ -767,7 +767,7 @@ Route::group(['middleware' => ['web']], function () {
             //tax rate ends
 
             //DataGrid Export
-            Route::post('agentadmin/export', 'Webkul\AgentAdmin\Http\Controllers\ExportController@export')->name('agentadmin.datagrid.export');
+            Route::post('agentadmin/export', 'Highwayns\AgentAdmin\Http\Controllers\ExportController@export')->name('agentadmin.datagrid.export');
 
             Route::prefix('promotion')->group(function () {
                 Route::get('/catalog-rules', 'Webkul\Discount\Http\Controllers\CatalogRuleController@index')->defaults('_config', [
@@ -863,7 +863,7 @@ Route::group(['middleware' => ['web']], function () {
 
             // Development settings
             Route::prefix('development')->group(function () {
-                Route::get('/', 'Webkul\AgentAdmin\Http\Controllers\Development\DashboardController@index')
+                Route::get('/', 'Highwayns\AgentAdmin\Http\Controllers\Development\DashboardController@index')
                     ->name('agentadmin.development.index');
             });
         });

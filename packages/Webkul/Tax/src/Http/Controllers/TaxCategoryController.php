@@ -10,7 +10,7 @@ use Webkul\Tax\Repositories\TaxRateRepository;
  * Tax controller
  *
  * @author    Prashant Singh <prashant.singh852@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class TaxCategoryController extends Controller
 {

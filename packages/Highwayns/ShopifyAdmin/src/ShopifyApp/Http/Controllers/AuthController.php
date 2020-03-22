@@ -1,9 +1,9 @@
 <?php
 
-namespace Osiset\ShopifyApp\Http\Controllers;
+namespace Highwayns\ShopifyAdmin\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Osiset\ShopifyApp\Traits\AuthController as AuthControllerTrait;
+use Highwayns\ShopifyAdmin\Traits\AuthController as AuthControllerTrait;
 
 /**
  * Responsible for authenticating the shop.

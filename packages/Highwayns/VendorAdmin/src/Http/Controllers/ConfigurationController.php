@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\VendorAdmin\Http\Controllers;
+namespace Highwayns\VendorAdmin\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
 use Webkul\Core\Repositories\CoreConfigRepository;
@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Storage;
 /**
  * Configuration controller
  *
- * @author    Jitendra Singh <jitendra@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @author    Tei Gun <tei952@hotmail.com>
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class ConfigurationController extends Controller
 {
@@ -113,7 +113,7 @@ class ConfigurationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Webkul\VendorAdmin\Http\Requests\ConfigurationForm $request
+     * @param  \Highwayns\VendorAdmin\Http\Requests\ConfigurationForm $request
      * @return \Illuminate\Http\Response
      */
     public function store()

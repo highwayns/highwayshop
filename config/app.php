@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Bagisto'),
+    'name' => env('APP_NAME', 'Highwayshop'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE','Asia/Kolkata'),
+    'timezone' => env('APP_TIMEZONE','Asia/Tokyo'),
 
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +117,7 @@ return [
     |
     */
 
-    'currency' => env('APP_CURRENCY','USD'),
+    'currency' => env('APP_CURRENCY','JPY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -267,6 +267,13 @@ return [
         Webkul\Rule\Providers\RuleServiceProvider::class,
         Webkul\CMS\Providers\CMSServiceProvider::class,
         Webkul\Velocity\Providers\VelocityServiceProvider::class,
+        Highwayns\Agent\Providers\AgentServiceProvider::class,
+        Highwayns\AgentAdmin\Providers\AgentAdminServiceProvider::class,
+        Highwayns\Merchant\Providers\MerchantServiceProvider::class,
+        Highwayns\MerchantAdmin\Providers\MerchantAdminServiceProvider::class,
+        Highwayns\Vendor\Providers\VendorServiceProvider::class,
+        Highwayns\VendorAdmin\Providers\VendorAdminServiceProvider::class,
+        Highwayns\ShopifyAdmin\ShopifyAppProvider::class
     ],
 
     /*
@@ -316,7 +323,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Datagrid' => Webkul\Ui\DataGrid\Facades\DataGrid::class,
-        'ProductGrid' => Webkul\Ui\DataGrid\Facades\ProductGrid::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Cart' => Webkul\Checkout\Facades\Cart::class,
         'Core' => Webkul\Core\Facades\Core::class,

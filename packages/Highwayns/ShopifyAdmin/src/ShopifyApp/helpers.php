@@ -1,6 +1,6 @@
 <?php
 
-namespace Osiset\ShopifyApp;
+namespace Highwayns\ShopifyAdmin;
 
 /**
  * HMAC creation helper.

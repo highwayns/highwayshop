@@ -9,7 +9,7 @@ use Webkul\Product\Repositories\ProductRepository;
 /**
  * Review Reposotory
  *
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
  */
 class ReviewRepository extends Repository
 {

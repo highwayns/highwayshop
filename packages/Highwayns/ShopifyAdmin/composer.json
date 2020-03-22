@@ -1,5 +1,5 @@
 {
-    "name": "highwayns/laravel-shopify",
+    "name": "highwayns/laravel-shopifyadmin",
     "description": "Shopify package for Laravel to aide in app development",
     "keywords": [
         "laravel",
@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Osiset\\ShopifyApp\\": "src/ShopifyApp"
+            "Highwayns\\ShopifyAdmin\\": "src/ShopifyApp"
         },
         "files": [
             "src/ShopifyApp/helpers.php"
@@ -41,7 +41,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Osiset\\ShopifyApp\\Test\\": "tests"
+            "Highwayns\\ShopifyAdmin\\Test\\": "tests"
         }
     },
     "config": {
@@ -53,10 +53,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Osiset\\ShopifyApp\\ShopifyAppProvider"
+                "Highwayns\\ShopifyAdmin\\ShopifyAppProvider"
             ],
             "aliases": {
-                "ShopifyApp": "Osiset\\ShopifyApp\\Facades\\ShopifyApp"
+                "ShopifyApp": "Highwayns\\ShopifyAdmin\\Facades\\ShopifyApp"
             }
         }
     }

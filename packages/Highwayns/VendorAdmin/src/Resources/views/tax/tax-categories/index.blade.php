@@ -19,7 +19,7 @@
         </div>
 
         <div class="page-content">
-            @inject('taxCategories','Webkul\VendorAdmin\DataGrids\TaxCategoryDataGrid')
+            @inject('taxCategories','Highwayns\VendorAdmin\DataGrids\TaxCategoryDataGrid')
             {!! $taxCategories->render() !!}
         </div>
     </div>

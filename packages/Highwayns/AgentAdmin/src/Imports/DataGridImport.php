@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\AgentAdmin\Imports;
+namespace Highwayns\AgentAdmin\Imports;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -12,7 +12,7 @@ use Maatwebsite\Excel\Concerns\Importable;
  * DataGridImport class
  *
  * @author    Rahul Shukla <rahulshukla.symfony517@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
 */
 
 class DataGridImport implements ToCollection, WithHeadingRow

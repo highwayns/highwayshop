@@ -1,5 +1,5 @@
 {
-    "name": "highwayns/agent-admin",
+    "name": "highwayns/laravel-agentadmin",
     "license": "MIT",
     "description" : "package for agent admin",
     "authors": [
@@ -15,13 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Webkul\\AgentAdmin\\": "src/"
+            "Highwayns\\AgentAdmin\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\AgentAdmin\\AgentAdminServiceProvider"
+                "Highwayns\\AgentAdmin\\AgentAdminServiceProvider"
             ],
             "aliases": {}
         }

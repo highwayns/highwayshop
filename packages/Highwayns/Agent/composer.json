@@ -1,0 +1,30 @@
+{
+    "name": "highwayns/laravel-agent",
+    "license": "MIT",
+    "description" : "package of agent",
+    "authors": [
+        {
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
+        }
+    ],
+    "require": {
+        "propaganistas/laravel-intl": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Highwayns\\Agent\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Highwayns\\Agent\\AgentServiceProvider"
+            ],
+            "aliases": {
+                "AgentBouncer": "Highwayns\\Agent\\Facades\\AgentBouncer"
+            }
+        }
+    },
+    "minimum-stability": "dev"
+}

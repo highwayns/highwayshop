@@ -1,21 +1,21 @@
 <?php
 
-namespace Osiset\ShopifyApp\Traits;
+namespace Highwayns\ShopifyAdmin\Traits;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Osiset\ShopifyApp\Actions\GetPlanUrl;
-use Osiset\ShopifyApp\Actions\ActivatePlan;
-use Osiset\ShopifyApp\Services\ShopSession;
-use Osiset\ShopifyApp\Objects\Values\PlanId;
+use Highwayns\ShopifyAdmin\Actions\GetPlanUrl;
+use Highwayns\ShopifyAdmin\Actions\ActivatePlan;
+use Highwayns\ShopifyAdmin\Services\ShopSession;
+use Highwayns\ShopifyAdmin\Objects\Values\PlanId;
 use Illuminate\Contracts\View\View as ViewView;
-use Osiset\ShopifyApp\Actions\ActivateUsageCharge;
-use Osiset\ShopifyApp\Objects\Values\NullablePlanId;
-use Osiset\ShopifyApp\Http\Requests\StoreUsageCharge;
-use Osiset\ShopifyApp\Objects\Values\ChargeReference;
-use Osiset\ShopifyApp\Objects\Transfers\UsageChargeDetails as UsageChargeDetailsTransfer;
+use Highwayns\ShopifyAdmin\Actions\ActivateUsageCharge;
+use Highwayns\ShopifyAdmin\Objects\Values\NullablePlanId;
+use Highwayns\ShopifyAdmin\Http\Requests\StoreUsageCharge;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
+use Highwayns\ShopifyAdmin\Objects\Transfers\UsageChargeDetails as UsageChargeDetailsTransfer;
 
 /**
  * Responsible for billing a shop for plans and usage charges.

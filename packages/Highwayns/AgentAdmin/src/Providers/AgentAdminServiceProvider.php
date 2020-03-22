@@ -1,18 +1,18 @@
 <?php
 
-namespace Webkul\AgentAdmin\Providers;
+namespace Highwayns\AgentAdmin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Webkul\AgentAdmin\Providers\EventServiceProvider;
+use Highwayns\AgentAdmin\Providers\EventServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Webkul\AgentAdmin\Exceptions\Handler;
+use Highwayns\AgentAdmin\Exceptions\Handler;
 use Webkul\Core\Tree;
 
 /**
  * Admin service provider
  *
- * @author    Jitendra Singh <jitendra@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @author    Tei Gun <tei952@hotmail.com>
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class AgentAdminServiceProvider extends ServiceProvider
 {

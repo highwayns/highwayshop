@@ -3,7 +3,7 @@
 Route::group(['middleware' => ['web']], function () {
     Route::prefix('vendoradmin')->group(function () {
 
-        Route::get('/', 'Webkul\VendorAdmin\Http\Controllers\Controller@redirectToLogin');
+        Route::get('/', 'Highwayns\VendorAdmin\Http\Controllers\Controller@redirectToLogin');
 
         // Login Routes
         Route::get('/login', 'Webkul\Vendor\Http\Controllers\SessionController@create')->defaults('_config', [
@@ -39,89 +39,89 @@ Route::group(['middleware' => ['web']], function () {
             ])->name('vendoradmin.session.destroy');
 
             // Dashboard Route
-            Route::get('dashboard', 'Webkul\VendorAdmin\Http\Controllers\DashboardController@index')->defaults('_config', [
+            Route::get('dashboard', 'Highwayns\VendorAdmin\Http\Controllers\DashboardController@index')->defaults('_config', [
                 'view' => 'vendoradmin::dashboard.index'
             ])->name('vendoradmin.dashboard.index');
 
             //Customer Management Routes
-            Route::get('customers', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@index')->defaults('_config', [
+            Route::get('customers', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@index')->defaults('_config', [
                 'view' => 'vendoradmin::customers.index'
             ])->name('vendoradmin.customer.index');
 
-            Route::get('customers/create', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@create')->defaults('_config',[
+            Route::get('customers/create', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@create')->defaults('_config',[
                 'view' => 'vendoradmin::customers.create'
             ])->name('vendoradmin.customer.create');
 
-            Route::post('customers/create', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@store')->defaults('_config',[
+            Route::post('customers/create', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@store')->defaults('_config',[
                 'redirect' => 'vendoradmin.customer.index'
             ])->name('vendoradmin.customer.store');
 
-            Route::get('customers/edit/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@edit')->defaults('_config',[
+            Route::get('customers/edit/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@edit')->defaults('_config',[
                 'view' => 'vendoradmin::customers.edit'
             ])->name('vendoradmin.customer.edit');
 
-            Route::get('customers/note/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@createNote')->defaults('_config',[
+            Route::get('customers/note/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@createNote')->defaults('_config',[
                 'view' => 'vendoradmin::customers.note'
             ])->name('vendoradmin.customer.note.create');
 
-            Route::put('customers/note/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@storeNote')->defaults('_config',[
+            Route::put('customers/note/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@storeNote')->defaults('_config',[
                 'redirect' => 'vendoradmin.customer.index'
             ])->name('vendoradmin.customer.note.store');
 
-            Route::put('customers/edit/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@update')->defaults('_config', [
+            Route::put('customers/edit/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@update')->defaults('_config', [
                 'redirect' => 'vendoradmin.customer.index'
             ])->name('vendoradmin.customer.update');
 
-            Route::post('customers/delete/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@destroy')->name('vendoradmin.customer.delete');
+            Route::post('customers/delete/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@destroy')->name('vendoradmin.customer.delete');
 
-            Route::post('customers/masssdelete', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@massDestroy')->name('vendoradmin.customer.mass-delete');
+            Route::post('customers/masssdelete', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@massDestroy')->name('vendoradmin.customer.mass-delete');
 
-            Route::post('customers/masssupdate', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerController@massUpdate')->name('vendoradmin.customer.mass-update');
+            Route::post('customers/masssupdate', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerController@massUpdate')->name('vendoradmin.customer.mass-update');
 
             Route::get('reviews', 'Webkul\Product\Http\Controllers\ReviewController@index')->defaults('_config',[
                 'view' => 'vendoradmin::customers.reviews.index'
             ])->name('vendoradmin.customer.review.index');
 
             //Customer's addresses routes
-            Route::get('customers/{id}/addresses', 'Webkul\VendorAdmin\Http\Controllers\Customer\AddressController@index')->defaults('_config', [
+            Route::get('customers/{id}/addresses', 'Highwayns\VendorAdmin\Http\Controllers\Customer\AddressController@index')->defaults('_config', [
                 'view' => 'vendoradmin::customers.addresses.index'
             ])->name('vendoradmin.customer.addresses.index');
 
-            Route::get('customers/{id}/addresses/create', 'Webkul\VendorAdmin\Http\Controllers\Customer\AddressController@create')->defaults('_config',[
+            Route::get('customers/{id}/addresses/create', 'Highwayns\VendorAdmin\Http\Controllers\Customer\AddressController@create')->defaults('_config',[
                 'view' => 'vendoradmin::customers.addresses.create'
             ])->name('vendoradmin.customer.addresses.create');
 
-            Route::post('customers/{id}/addresses/create', 'Webkul\VendorAdmin\Http\Controllers\Customer\AddressController@store')->defaults('_config',[
+            Route::post('customers/{id}/addresses/create', 'Highwayns\VendorAdmin\Http\Controllers\Customer\AddressController@store')->defaults('_config',[
                 'redirect' => 'vendoradmin.customer.addresses.index'
             ])->name('vendoradmin.customer.addresses.store');
 
-            Route::get('customers/addresses/edit/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\AddressController@edit')->defaults('_config',[
+            Route::get('customers/addresses/edit/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\AddressController@edit')->defaults('_config',[
                 'view' => 'vendoradmin::customers.addresses.edit'
             ])->name('vendoradmin.customer.addresses.edit');
 
-            Route::put('customers/addresses/edit/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\AddressController@update')->defaults('_config', [
+            Route::put('customers/addresses/edit/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\AddressController@update')->defaults('_config', [
                 'redirect' => 'vendoradmin.customer.addresses.index'
             ])->name('vendoradmin.customer.addresses.update');
 
-            Route::post('customers/addresses/delete/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\AddressController@destroy')->defaults('_config', [
+            Route::post('customers/addresses/delete/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\AddressController@destroy')->defaults('_config', [
                 'redirect' => 'vendoradmin.customer.addresses.index'
             ])->name('vendoradmin.customer.addresses.delete');
 
             //mass destroy
-            Route::post('customers/{id}/addresses', 'Webkul\VendorAdmin\Http\Controllers\Customer\AddressController@massDestroy')->defaults('_config', [
+            Route::post('customers/{id}/addresses', 'Highwayns\VendorAdmin\Http\Controllers\Customer\AddressController@massDestroy')->defaults('_config', [
                 'redirect' => 'vendoradmin.customer.addresses.index'
             ])->name('vendoradmin.customer.addresses.massdelete');
 
             // Configuration routes
-            Route::get('configuration/{slug?}/{slug2?}', 'Webkul\VendorAdmin\Http\Controllers\ConfigurationController@index')->defaults('_config', [
+            Route::get('configuration/{slug?}/{slug2?}', 'Highwayns\VendorAdmin\Http\Controllers\ConfigurationController@index')->defaults('_config', [
                 'view' => 'vendoradmin::configuration.index'
             ])->name('vendoradmin.configuration.index');
 
-            Route::post('configuration/{slug?}/{slug2?}', 'Webkul\VendorAdmin\Http\Controllers\ConfigurationController@store')->defaults('_config', [
+            Route::post('configuration/{slug?}/{slug2?}', 'Highwayns\VendorAdmin\Http\Controllers\ConfigurationController@store')->defaults('_config', [
                 'redirect' => 'vendoradmin.configuration.index'
             ])->name('vendoradmin.configuration.index.store');
 
-            Route::get('configuration/{slug?}/{slug2?}/{path}', 'Webkul\VendorAdmin\Http\Controllers\ConfigurationController@download')->defaults('_config', [
+            Route::get('configuration/{slug?}/{slug2?}/{path}', 'Highwayns\VendorAdmin\Http\Controllers\ConfigurationController@download')->defaults('_config', [
                 'redirect' => 'vendoradmin.configuration.index'
             ])->name('vendoradmin.configuration.download');
 
@@ -149,103 +149,103 @@ Route::group(['middleware' => ['web']], function () {
             ])->name('vendoradmin.customer.review.massupdate');
 
             // Customer Groups Routes
-            Route::get('groups', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@index')->defaults('_config',[
+            Route::get('groups', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@index')->defaults('_config',[
                 'view' => 'vendoradmin::customers.groups.index'
             ])->name('vendoradmin.groups.index');
 
-            Route::get('groups/create', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@create')->defaults('_config',[
+            Route::get('groups/create', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@create')->defaults('_config',[
                 'view' => 'vendoradmin::customers.groups.create'
             ])->name('vendoradmin.groups.create');
 
-            Route::post('groups/create', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@store')->defaults('_config',[
+            Route::post('groups/create', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@store')->defaults('_config',[
                 'redirect' => 'vendoradmin.groups.index'
             ])->name('vendoradmin.groups.store');
 
-            Route::get('groups/edit/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@edit')->defaults('_config',[
+            Route::get('groups/edit/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@edit')->defaults('_config',[
                 'view' => 'vendoradmin::customers.groups.edit'
             ])->name('vendoradmin.groups.edit');
 
-            Route::put('groups/edit/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@update')->defaults('_config',[
+            Route::put('groups/edit/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@update')->defaults('_config',[
                 'redirect' => 'vendoradmin.groups.index'
             ])->name('vendoradmin.groups.update');
 
-            Route::post('groups/delete/{id}', 'Webkul\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@destroy')->name('vendoradmin.groups.delete');
+            Route::post('groups/delete/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Customer\CustomerGroupController@destroy')->name('vendoradmin.groups.delete');
 
 
             // Sales Routes
             Route::prefix('sales')->group(function () {
                 // Sales Order Routes
-                Route::get('/orders', 'Webkul\VendorAdmin\Http\Controllers\Sales\OrderController@index')->defaults('_config', [
+                Route::get('/orders', 'Highwayns\VendorAdmin\Http\Controllers\Sales\OrderController@index')->defaults('_config', [
                     'view' => 'vendoradmin::sales.orders.index'
                 ])->name('vendoradmin.sales.orders.index');
 
-                Route::get('/orders/view/{id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\OrderController@view')->defaults('_config', [
+                Route::get('/orders/view/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\OrderController@view')->defaults('_config', [
                     'view' => 'vendoradmin::sales.orders.view'
                 ])->name('vendoradmin.sales.orders.view');
 
-                Route::get('/orders/cancel/{id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\OrderController@cancel')->defaults('_config', [
+                Route::get('/orders/cancel/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\OrderController@cancel')->defaults('_config', [
                     'view' => 'vendoradmin::sales.orders.cancel'
                 ])->name('vendoradmin.sales.orders.cancel');
 
 
                 // Sales Invoices Routes
-                Route::get('/invoices', 'Webkul\VendorAdmin\Http\Controllers\Sales\InvoiceController@index')->defaults('_config', [
+                Route::get('/invoices', 'Highwayns\VendorAdmin\Http\Controllers\Sales\InvoiceController@index')->defaults('_config', [
                     'view' => 'vendoradmin::sales.invoices.index'
                 ])->name('vendoradmin.sales.invoices.index');
 
-                Route::get('/invoices/create/{order_id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\InvoiceController@create')->defaults('_config', [
+                Route::get('/invoices/create/{order_id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\InvoiceController@create')->defaults('_config', [
                     'view' => 'vendoradmin::sales.invoices.create'
                 ])->name('vendoradmin.sales.invoices.create');
 
-                Route::post('/invoices/create/{order_id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\InvoiceController@store')->defaults('_config', [
+                Route::post('/invoices/create/{order_id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\InvoiceController@store')->defaults('_config', [
                     'redirect' => 'vendoradmin.sales.orders.view'
                 ])->name('vendoradmin.sales.invoices.store');
 
-                Route::get('/invoices/view/{id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\InvoiceController@view')->defaults('_config', [
+                Route::get('/invoices/view/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\InvoiceController@view')->defaults('_config', [
                     'view' => 'vendoradmin::sales.invoices.view'
                 ])->name('vendoradmin.sales.invoices.view');
 
-                Route::get('/invoices/print/{id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\InvoiceController@print')->defaults('_config', [
+                Route::get('/invoices/print/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\InvoiceController@print')->defaults('_config', [
                     'view' => 'vendoradmin::sales.invoices.print'
                 ])->name('vendoradmin.sales.invoices.print');
 
 
                 // Sales Shipments Routes
-                Route::get('/shipments', 'Webkul\VendorAdmin\Http\Controllers\Sales\ShipmentController@index')->defaults('_config', [
+                Route::get('/shipments', 'Highwayns\VendorAdmin\Http\Controllers\Sales\ShipmentController@index')->defaults('_config', [
                     'view' => 'vendoradmin::sales.shipments.index'
                 ])->name('vendoradmin.sales.shipments.index');
 
-                Route::get('/shipments/create/{order_id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\ShipmentController@create')->defaults('_config', [
+                Route::get('/shipments/create/{order_id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\ShipmentController@create')->defaults('_config', [
                     'view' => 'vendoradmin::sales.shipments.create'
                 ])->name('vendoradmin.sales.shipments.create');
 
-                Route::post('/shipments/create/{order_id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\ShipmentController@store')->defaults('_config', [
+                Route::post('/shipments/create/{order_id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\ShipmentController@store')->defaults('_config', [
                     'redirect' => 'vendoradmin.sales.orders.view'
                 ])->name('vendoradmin.sales.shipments.store');
 
-                Route::get('/shipments/view/{id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\ShipmentController@view')->defaults('_config', [
+                Route::get('/shipments/view/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\ShipmentController@view')->defaults('_config', [
                     'view' => 'vendoradmin::sales.shipments.view'
                 ])->name('vendoradmin.sales.shipments.view');
 
 
                 // Sales Redunds Routes
-                Route::get('/refunds', 'Webkul\VendorAdmin\Http\Controllers\Sales\RefundController@index')->defaults('_config', [
+                Route::get('/refunds', 'Highwayns\VendorAdmin\Http\Controllers\Sales\RefundController@index')->defaults('_config', [
                     'view' => 'vendoradmin::sales.refunds.index'
                 ])->name('vendoradmin.sales.refunds.index');
 
-                Route::get('/refunds/create/{order_id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\RefundController@create')->defaults('_config', [
+                Route::get('/refunds/create/{order_id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\RefundController@create')->defaults('_config', [
                     'view' => 'vendoradmin::sales.refunds.create'
                 ])->name('vendoradmin.sales.refunds.create');
 
-                Route::post('/refunds/create/{order_id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\RefundController@store')->defaults('_config', [
+                Route::post('/refunds/create/{order_id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\RefundController@store')->defaults('_config', [
                     'redirect' => 'vendoradmin.sales.orders.view'
                 ])->name('vendoradmin.sales.refunds.store');
 
-                Route::post('/refunds/update-qty/{order_id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\RefundController@updateQty')->defaults('_config', [
+                Route::post('/refunds/update-qty/{order_id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\RefundController@updateQty')->defaults('_config', [
                     'redirect' => 'vendoradmin.sales.orders.view'
                 ])->name('vendoradmin.sales.refunds.update_qty');
 
-                Route::get('/refunds/view/{id}', 'Webkul\VendorAdmin\Http\Controllers\Sales\RefundController@view')->defaults('_config', [
+                Route::get('/refunds/view/{id}', 'Highwayns\VendorAdmin\Http\Controllers\Sales\RefundController@view')->defaults('_config', [
                     'view' => 'vendoradmin::sales.refunds.view'
                 ])->name('vendoradmin.sales.refunds.view');
             });
@@ -767,7 +767,7 @@ Route::group(['middleware' => ['web']], function () {
             //tax rate ends
 
             //DataGrid Export
-            Route::post('vendoradmin/export', 'Webkul\VendorAdmin\Http\Controllers\ExportController@export')->name('vendoradmin.datagrid.export');
+            Route::post('vendoradmin/export', 'Highwayns\VendorAdmin\Http\Controllers\ExportController@export')->name('vendoradmin.datagrid.export');
 
             Route::prefix('promotion')->group(function () {
                 Route::get('/catalog-rules', 'Webkul\Discount\Http\Controllers\CatalogRuleController@index')->defaults('_config', [
@@ -863,7 +863,7 @@ Route::group(['middleware' => ['web']], function () {
 
             // Development settings
             Route::prefix('development')->group(function () {
-                Route::get('/', 'Webkul\VendorAdmin\Http\Controllers\Development\DashboardController@index')
+                Route::get('/', 'Highwayns\VendorAdmin\Http\Controllers\Development\DashboardController@index')
                     ->name('vendoradmin.development.index');
             });
         });

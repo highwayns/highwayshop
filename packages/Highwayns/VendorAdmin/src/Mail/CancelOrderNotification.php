@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Webkul\VendorAdmin\Mail;
+namespace Highwayns\VendorAdmin\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;

@@ -1,21 +1,21 @@
 <?php
 
-namespace Osiset\ShopifyApp\Services;
+namespace Highwayns\ShopifyAdmin\Services;
 
 use Closure;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\URL;
 use Osiset\BasicShopifyAPI;
-use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
-use Osiset\ShopifyApp\Exceptions\ApiException;
-use Osiset\ShopifyApp\Objects\Enums\ApiMethod;
-use Osiset\ShopifyApp\Objects\Enums\AuthMode;
-use Osiset\ShopifyApp\Objects\Enums\ChargeType;
-use Osiset\ShopifyApp\Objects\Transfers\ApiSession as ApiSessionTransfer;
-use Osiset\ShopifyApp\Objects\Transfers\PlanDetails as PlanDetailsTransfer;
-use Osiset\ShopifyApp\Objects\Transfers\UsageChargeDetails as UsageChargeDetailsTransfer;
-use Osiset\ShopifyApp\Objects\Values\ChargeReference;
-use Osiset\ShopifyApp\Traits\ConfigAccessible;
+use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
+use Highwayns\ShopifyAdmin\Exceptions\ApiException;
+use Highwayns\ShopifyAdmin\Objects\Enums\ApiMethod;
+use Highwayns\ShopifyAdmin\Objects\Enums\AuthMode;
+use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
+use Highwayns\ShopifyAdmin\Objects\Transfers\ApiSession as ApiSessionTransfer;
+use Highwayns\ShopifyAdmin\Objects\Transfers\PlanDetails as PlanDetailsTransfer;
+use Highwayns\ShopifyAdmin\Objects\Transfers\UsageChargeDetails as UsageChargeDetailsTransfer;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
+use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
 use stdClass;
 
 /**

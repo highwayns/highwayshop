@@ -1,8 +1,8 @@
 <?php
 
-namespace Webkul\VendorAdmin\Http\Controllers\Sales;
+namespace Highwayns\VendorAdmin\Http\Controllers\Sales;
 
-use Webkul\VendorAdmin\Http\Controllers\Controller;
+use Highwayns\VendorAdmin\Http\Controllers\Controller;
 use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Sales\Repositories\OrderItemRepository;
 use Webkul\Sales\Repositories\RefundRepository;
@@ -10,8 +10,8 @@ use Webkul\Sales\Repositories\RefundRepository;
 /**
  * Sales Refund controller
  *
- * @author    Jitendra Singh <jitendra@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @author    Tei Gun <tei952@hotmail.com>
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class RefundController extends Controller
 {

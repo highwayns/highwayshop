@@ -19,7 +19,7 @@
         </div>
 
         <div class="page-content">
-            @inject('channels','Webkul\VendorAdmin\DataGrids\ChannelDataGrid')
+            @inject('channels','Highwayns\VendorAdmin\DataGrids\ChannelDataGrid')
             {!! $channels->render() !!}
         </div>
     </div>

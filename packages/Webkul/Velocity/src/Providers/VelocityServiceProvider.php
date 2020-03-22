@@ -16,7 +16,7 @@ use Webkul\Velocity\Facades\Velocity as VelocityFacade;
  *
  * @author Vivek Sharma <viveksh047@webkul.com> @vivek-webkul
  * @author Shubham Mehrotra <shubhammehrotra.symfony@webkul.com> @shubhwebkul
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
  */
 class VelocityServiceProvider extends ServiceProvider
 {

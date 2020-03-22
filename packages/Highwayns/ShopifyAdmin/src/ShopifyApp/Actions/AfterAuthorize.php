@@ -1,11 +1,11 @@
 <?php
 
-namespace Osiset\ShopifyApp\Actions;
+namespace Highwayns\ShopifyAdmin\Actions;
 
-use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
-use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Traits\ConfigAccessible;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
+use Highwayns\ShopifyAdmin\Contracts\ShopModel as IShopModel;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
 
 /**
  * Run after authentication jobs.

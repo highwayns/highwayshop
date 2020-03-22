@@ -10,7 +10,7 @@ use Webkul\Customer\Repositories\CustomerRepository as Customer;
  * Address Data Grid class
  *
  * @author Vivek Sharma <viveksh047@webkul.com>
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
  */
 class AddressDataGrid extends DataGrid
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\VendorAdmin\Http\Requests;
+namespace Highwayns\VendorAdmin\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

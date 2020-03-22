@@ -1,11 +1,11 @@
 <?php
 
-namespace Osiset\ShopifyApp\Actions;
+namespace Highwayns\ShopifyAdmin\Actions;
 
-use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
-use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Traits\ConfigAccessible;
+use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
 
 /**
  * Create webhooks for this app on the shop.

@@ -1,11 +1,11 @@
 <?php
 
-namespace Osiset\ShopifyApp\Contracts\Queries;
+namespace Highwayns\ShopifyAdmin\Contracts\Queries;
 
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Objects\Values\ChargeId;
-use Osiset\ShopifyApp\Objects\Values\ChargeReference;
-use Osiset\ShopifyApp\Storage\Models\Charge as ChargeModel;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeId;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
+use Highwayns\ShopifyAdmin\Storage\Models\Charge as ChargeModel;
 
 /**
  * Reprecents a queries for charges.

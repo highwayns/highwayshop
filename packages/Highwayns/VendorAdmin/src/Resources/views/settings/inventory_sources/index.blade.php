@@ -19,7 +19,7 @@
         </div>
 
         <div class="page-content">
-            @inject('inventory_sources','Webkul\VendorAdmin\DataGrids\InventorySourcesDataGrid')
+            @inject('inventory_sources','Highwayns\VendorAdmin\DataGrids\InventorySourcesDataGrid')
             {!! $inventory_sources->render() !!}
         </div>
     </div>

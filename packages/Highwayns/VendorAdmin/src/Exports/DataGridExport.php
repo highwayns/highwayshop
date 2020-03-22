@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\VendorAdmin\Exports;
+namespace Highwayns\VendorAdmin\Exports;
 
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
  * DataGridExport class
  *
  * @author    Rahul Shukla <rahulshukla.symfony517@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 
 class DataGridExport implements FromView, ShouldAutoSize

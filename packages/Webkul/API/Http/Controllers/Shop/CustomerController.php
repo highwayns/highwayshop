@@ -9,9 +9,9 @@ use Webkul\Customer\Repositories\CustomerGroupRepository;
 /**
  * Customer controller
  *
- * @author    Jitendra Singh <jitendra@webkul.com>
+ * @author    Tei Gun <tei952@hotmail.com>
  * @author    Vivek Sharma <viveksh047@webkul.com> @vivek-webkul
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class CustomerController extends Controller
 {

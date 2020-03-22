@@ -9,7 +9,7 @@ use DB;
  * Category DataGrid
  *
  * @author Vivek Sharma <viveksh047@webkul.com> @viveksh-webkul
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
  */
 class CategoryDataGrid extends DataGrid
 {

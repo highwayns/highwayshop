@@ -11,7 +11,7 @@ use Webkul\Velocity\Repositories\VelocityMetadataRepository;
  *
  * @author    Shubham Mehrotra <shubhammehrotra.symfony@webkul.com> @shubhwebkul
  * @author    Vivek Sharma <viveksh047@webkul.com> @vivek-webkul
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
  */
 
 class ConfigurationController extends Controller

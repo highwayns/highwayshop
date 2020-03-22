@@ -1,13 +1,13 @@
 <?php
 
-namespace Osiset\ShopifyApp\Actions;
+namespace Highwayns\ShopifyAdmin\Actions;
 
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Objects\Values\NullablePlanId;
-use Osiset\ShopifyApp\Contracts\Queries\Plan as IPlanQuery;
-use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
-use Osiset\ShopifyApp\Objects\Enums\ChargeType;
-use Osiset\ShopifyApp\Services\ChargeHelper;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Objects\Values\NullablePlanId;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Plan as IPlanQuery;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
+use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
+use Highwayns\ShopifyAdmin\Services\ChargeHelper;
 
 /**
  * Retrieve the a billing plan's URL.

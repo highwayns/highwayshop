@@ -1,20 +1,20 @@
 <?php
 
-namespace Webkul\AgentAdmin\Listeners;
+namespace Highwayns\AgentAdmin\Listeners;
 
 use Illuminate\Support\Facades\Mail;
-use Webkul\AgentAdmin\Mail\NewOrderNotification;
-use Webkul\AgentAdmin\Mail\NewAdminNotification;
-use Webkul\AgentAdmin\Mail\NewInvoiceNotification;
-use Webkul\AgentAdmin\Mail\NewShipmentNotification;
-use Webkul\AgentAdmin\Mail\NewInventorySourceNotification;
-use Webkul\AgentAdmin\Mail\CancelOrderNotification;
-use Webkul\AgentAdmin\Mail\NewRefundNotification;
+use Highwayns\AgentAdmin\Mail\NewOrderNotification;
+use Highwayns\AgentAdmin\Mail\NewAdminNotification;
+use Highwayns\AgentAdmin\Mail\NewInvoiceNotification;
+use Highwayns\AgentAdmin\Mail\NewShipmentNotification;
+use Highwayns\AgentAdmin\Mail\NewInventorySourceNotification;
+use Highwayns\AgentAdmin\Mail\CancelOrderNotification;
+use Highwayns\AgentAdmin\Mail\NewRefundNotification;
 /**
  * Order event handler
  *
- * @author    Jitendra Singh <jitendra@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @author    Tei Gun <tei952@hotmail.com>
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class Order {
 

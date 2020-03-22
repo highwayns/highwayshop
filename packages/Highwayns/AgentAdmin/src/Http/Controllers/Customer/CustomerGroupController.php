@@ -1,15 +1,15 @@
 <?php
 
-namespace Webkul\AgentAdmin\Http\Controllers\Customer;
+namespace Highwayns\AgentAdmin\Http\Controllers\Customer;
 
-use Webkul\AgentAdmin\Http\Controllers\Controller;
+use Highwayns\AgentAdmin\Http\Controllers\Controller;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 
 /**
  * Customer Group controlller
  *
  * @author    Rahul Shukla <rahulshukla.symfony517@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class CustomerGroupController extends Controller
 {

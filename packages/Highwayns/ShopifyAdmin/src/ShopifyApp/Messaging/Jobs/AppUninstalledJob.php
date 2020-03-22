@@ -1,6 +1,6 @@
 <?php
 
-namespace Osiset\ShopifyApp\Messaging\Jobs;
+namespace Highwayns\ShopifyAdmin\Messaging\Jobs;
 
 use stdClass;
 use Illuminate\Bus\Queueable;
@@ -8,8 +8,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Contracts\Commands\Shop as IShopCommand;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Contracts\Commands\Shop as IShopCommand;
 
 /**
  * Webhook job responsible for handling when the app is uninstalled.

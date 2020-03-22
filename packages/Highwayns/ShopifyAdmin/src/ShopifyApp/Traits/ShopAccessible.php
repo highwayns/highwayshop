@@ -1,8 +1,8 @@
 <?php
 
-namespace Osiset\ShopifyApp\Traits;
+namespace Highwayns\ShopifyAdmin\Traits;
 
-use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
+use Highwayns\ShopifyAdmin\Contracts\ShopModel as IShopModel;
 
 /**
  * Allows for setting of a shop and accessing it.

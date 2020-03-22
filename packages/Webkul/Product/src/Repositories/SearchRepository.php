@@ -10,7 +10,7 @@ use Webkul\Product\Repositories\ProductRepository;
  * Search Reposotory
  *
  * @author    Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class SearchRepository extends Repository
 {

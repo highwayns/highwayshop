@@ -1,10 +1,10 @@
 <?php
 
-namespace Osiset\ShopifyApp\Actions;
+namespace Highwayns\ShopifyAdmin\Actions;
 
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Traits\ConfigAccessible;
-use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
 
 /**
  * Attempt to install webhooks on a shop.

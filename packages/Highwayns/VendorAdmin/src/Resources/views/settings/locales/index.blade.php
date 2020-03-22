@@ -20,7 +20,7 @@
 
         <div class="page-content">
 
-            @inject('locales','Webkul\VendorAdmin\DataGrids\LocalesDataGrid')
+            @inject('locales','Highwayns\VendorAdmin\DataGrids\LocalesDataGrid')
             {!! $locales->render() !!}
         </div>
     </div>

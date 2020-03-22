@@ -19,7 +19,7 @@
         </div>
 
         <div class="page-content">
-            @inject('currencies','Webkul\VendorAdmin\DataGrids\CurrencyDataGrid')
+            @inject('currencies','Highwayns\VendorAdmin\DataGrids\CurrencyDataGrid')
             {!! $currencies->render() !!}
         </div>
     </div>

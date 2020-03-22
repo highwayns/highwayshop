@@ -1,8 +1,8 @@
 <?php
 
-namespace Webkul\AgentAdmin\Http\Controllers\Customer;
+namespace Highwayns\AgentAdmin\Http\Controllers\Customer;
 
-use Webkul\AgentAdmin\Http\Controllers\Controller;
+use Highwayns\AgentAdmin\Http\Controllers\Controller;
 use Webkul\Customer\Repositories\CustomerRepository as Customer;
 use Webkul\Customer\Repositories\CustomerAddressRepository as CustomerAddress;
 
@@ -10,7 +10,7 @@ use Webkul\Customer\Repositories\CustomerAddressRepository as CustomerAddress;
  * Customer's Address controller
  *
  * @author    Vivek Sharma <viveksh047@webkul.com>
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
  */
 class AddressController extends Controller
 {

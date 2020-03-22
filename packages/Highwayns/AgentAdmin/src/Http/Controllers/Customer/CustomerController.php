@@ -1,19 +1,19 @@
 <?php
 
-namespace Webkul\AgentAdmin\Http\Controllers\Customer;
+namespace Highwayns\AgentAdmin\Http\Controllers\Customer;
 
-use Webkul\AgentAdmin\Http\Controllers\Controller;
+use Highwayns\AgentAdmin\Http\Controllers\Controller;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Core\Repositories\ChannelRepository;
-use Webkul\AgentAdmin\Mail\NewCustomerNotification;
+use Highwayns\AgentAdmin\Mail\NewCustomerNotification;
 use Mail;
 
 /**
  * Customer controlller
  *
  * @author    Rahul Shukla <rahulshukla.symfony517@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class CustomerController extends Controller
 {

@@ -22,7 +22,7 @@
         </div>
 
         <div class="page-content">
-            @inject('refundGrid', 'Webkul\VendorAdmin\DataGrids\OrderRefundDataGrid')
+            @inject('refundGrid', 'Highwayns\VendorAdmin\DataGrids\OrderRefundDataGrid')
             
             {!! $refundGrid->render() !!}
         </div>

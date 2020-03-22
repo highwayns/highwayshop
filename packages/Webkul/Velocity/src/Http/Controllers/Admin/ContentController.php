@@ -11,7 +11,7 @@ use Webkul\Velocity\Repositories\ContentRepository;
  *
  * @author    Vivek Sharma <viveksh047@webkul.com> @vivek
  * @author    Shubham Mehrotra <shubhammehrotra.symfony@webkul.com> @shubhwebkul
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
  */
 class ContentController extends Controller
 {

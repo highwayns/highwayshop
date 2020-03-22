@@ -1,19 +1,19 @@
 <?php
 
-namespace Webkul\VendorAdmin\Http\Controllers\Customer;
+namespace Highwayns\VendorAdmin\Http\Controllers\Customer;
 
-use Webkul\VendorAdmin\Http\Controllers\Controller;
+use Highwayns\VendorAdmin\Http\Controllers\Controller;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Customer\Repositories\CustomerGroupRepository;
 use Webkul\Core\Repositories\ChannelRepository;
-use Webkul\VendorAdmin\Mail\NewCustomerNotification;
+use Highwayns\VendorAdmin\Mail\NewCustomerNotification;
 use Mail;
 
 /**
  * Customer controlller
  *
  * @author    Rahul Shukla <rahulshukla.symfony517@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class CustomerController extends Controller
 {

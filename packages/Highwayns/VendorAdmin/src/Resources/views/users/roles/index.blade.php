@@ -19,7 +19,7 @@
         </div>
 
         <div class="page-content">
-            @inject('roles','Webkul\VendorAdmin\DataGrids\RolesDataGrid')
+            @inject('roles','Highwayns\VendorAdmin\DataGrids\RolesDataGrid')
             {!! $roles->render() !!}
         </div>
     </div>

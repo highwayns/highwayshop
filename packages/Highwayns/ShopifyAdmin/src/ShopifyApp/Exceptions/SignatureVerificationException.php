@@ -1,6 +1,6 @@
 <?php
 
-namespace Osiset\ShopifyApp\Exceptions;
+namespace Highwayns\ShopifyAdmin\Exceptions;
 
 /**
  * Exception for handling a bad signature verification.

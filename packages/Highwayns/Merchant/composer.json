@@ -1,0 +1,30 @@
+{
+    "name": "highwayns/laravel-merchant",
+    "license": "MIT",
+    "description" : "package of merchant",
+    "authors": [
+        {
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
+        }
+    ],
+    "require": {
+        "propaganistas/laravel-intl": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Highwayns\\Merchant\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Highwayns\\Merchant\\MerchantServiceProvider"
+            ],
+            "aliases": {
+                "MerchantBouncer": "Highwayns\\Merchant\\Facades\\MerchantBouncer"
+            }
+        }
+    },
+    "minimum-stability": "dev"
+}

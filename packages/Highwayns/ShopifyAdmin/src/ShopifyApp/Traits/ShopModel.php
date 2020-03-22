@@ -1,21 +1,21 @@
 <?php
 
-namespace Osiset\ShopifyApp\Traits;
+namespace Highwayns\ShopifyAdmin\Traits;
 
 use Osiset\BasicShopifyAPI;
-use Osiset\ShopifyApp\Storage\Models\Plan;
+use Highwayns\ShopifyAdmin\Storage\Models\Plan;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Storage\Models\Charge;
-use Osiset\ShopifyApp\Objects\Values\ShopDomain;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Storage\Models\Charge;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Osiset\ShopifyApp\Objects\Values\AccessToken;
-use Osiset\ShopifyApp\Storage\Scopes\Namespacing;
+use Highwayns\ShopifyAdmin\Objects\Values\AccessToken;
+use Highwayns\ShopifyAdmin\Storage\Scopes\Namespacing;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
-use Osiset\ShopifyApp\Objects\Transfers\ApiSession as ApiSessionTransfer;
-use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
-use Osiset\ShopifyApp\Contracts\Objects\Values\AccessToken as AccessTokenValue;
+use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
+use Highwayns\ShopifyAdmin\Objects\Transfers\ApiSession as ApiSessionTransfer;
+use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Highwayns\ShopifyAdmin\Contracts\Objects\Values\AccessToken as AccessTokenValue;
 
 /**
  * Responsible for reprecenting a shop record.

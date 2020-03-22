@@ -1,8 +1,8 @@
 <?php
 
-namespace Osiset\ShopifyApp\Objects\Transfers;
+namespace Highwayns\ShopifyAdmin\Objects\Transfers;
 
-use Osiset\ShopifyApp\Objects\Values\ChargeReference;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
 
 /**
  * Reprecents details for a usage charge.

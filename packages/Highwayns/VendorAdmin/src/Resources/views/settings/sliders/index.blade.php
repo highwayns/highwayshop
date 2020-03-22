@@ -21,7 +21,7 @@
         </div>
 
         <div class="page-content">
-            @inject('sliders','Webkul\VendorAdmin\DataGrids\SliderDataGrid')
+            @inject('sliders','Highwayns\VendorAdmin\DataGrids\SliderDataGrid')
             {!! $sliders->render() !!}
         </div>
     </div>

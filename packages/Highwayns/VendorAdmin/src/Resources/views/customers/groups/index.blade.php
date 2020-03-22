@@ -19,7 +19,7 @@
         </div>
 
         <div class="page-content">
-            @inject('customerGroup','Webkul\VendorAdmin\DataGrids\CustomerGroupDataGrid')
+            @inject('customerGroup','Highwayns\VendorAdmin\DataGrids\CustomerGroupDataGrid')
             {!! $customerGroup->render() !!}
         </div>
     </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\VendorAdmin\DataGrids;
+namespace Highwayns\VendorAdmin\DataGrids;
 
 use Webkul\Ui\DataGrid\DataGrid;
 use DB;
@@ -9,7 +9,7 @@ use DB;
  * OrderDataGrid Class
  *
  * @author Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class OrderDataGrid extends DataGrid
 {

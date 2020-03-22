@@ -29,7 +29,7 @@
         </div>
 
         <div class="page-content">
-            @inject('exchange_rates','Webkul\VendorAdmin\DataGrids\ExchangeRatesDataGrid')
+            @inject('exchange_rates','Highwayns\VendorAdmin\DataGrids\ExchangeRatesDataGrid')
             {!! $exchange_rates->render() !!}
         </div>
     </div>

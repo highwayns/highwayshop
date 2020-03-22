@@ -1,16 +1,16 @@
 <?php
 
-namespace Osiset\ShopifyApp\Traits;
+namespace Highwayns\ShopifyAdmin\Traits;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Osiset\ShopifyApp\Actions\AuthorizeShop;
+use Highwayns\ShopifyAdmin\Actions\AuthorizeShop;
 use Illuminate\Contracts\View\View as ViewView;
-use Osiset\ShopifyApp\Actions\AuthenticateShop;
-use Osiset\ShopifyApp\Objects\Values\ShopDomain;
+use Highwayns\ShopifyAdmin\Actions\AuthenticateShop;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
 
 /**
  * Responsible for authenticating the shop.

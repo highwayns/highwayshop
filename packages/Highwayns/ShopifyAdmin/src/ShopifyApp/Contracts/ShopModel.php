@@ -1,15 +1,15 @@
 <?php
 
-namespace Osiset\ShopifyApp\Contracts;
+namespace Highwayns\ShopifyAdmin\Contracts;
 
 use Osiset\BasicShopifyAPI;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
-use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
-use Osiset\ShopifyApp\Contracts\Objects\Values\AccessToken as AccessTokenValue;
+use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
+use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Highwayns\ShopifyAdmin\Contracts\Objects\Values\AccessToken as AccessTokenValue;
 
 /**
  * Reprecents the shop model.

@@ -1,11 +1,11 @@
 <?php
 
-namespace Osiset\ShopifyApp\Traits;
+namespace Highwayns\ShopifyAdmin\Traits;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as ResponseResponse;
 use Illuminate\Support\Facades\Response;
-use Osiset\ShopifyApp\Objects\Values\ShopDomain;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
 
 /**
  * Responsible for handling incoming webhook requests.

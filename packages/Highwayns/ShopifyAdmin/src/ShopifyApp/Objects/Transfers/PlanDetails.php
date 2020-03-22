@@ -1,6 +1,6 @@
 <?php
 
-namespace Osiset\ShopifyApp\Objects\Transfers;
+namespace Highwayns\ShopifyAdmin\Objects\Transfers;
 
 /**
  * Reprecents details for a plan.

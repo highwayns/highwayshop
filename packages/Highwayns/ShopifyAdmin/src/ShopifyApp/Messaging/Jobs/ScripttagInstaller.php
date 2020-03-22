@@ -1,13 +1,13 @@
 <?php
 
-namespace Osiset\ShopifyApp\Messaging\Jobs;
+namespace Highwayns\ShopifyAdmin\Messaging\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
 
 /**
  * Webhook job responsible for handling installing scripttag.

@@ -1,21 +1,21 @@
 <?php
 
-namespace Osiset\ShopifyApp\Actions;
+namespace Highwayns\ShopifyAdmin\Actions;
 
 use Illuminate\Support\Carbon;
-use Osiset\ShopifyApp\Objects\Values\ShopId;
-use Osiset\ShopifyApp\Services\ChargeHelper;
-use Osiset\ShopifyApp\Objects\Enums\PlanType;
-use Osiset\ShopifyApp\Objects\Values\ChargeId;
-use Osiset\ShopifyApp\Objects\Enums\ChargeType;
-use Osiset\ShopifyApp\Objects\Enums\ChargeStatus;
-use Osiset\ShopifyApp\Objects\Values\ChargeReference;
-use Osiset\ShopifyApp\Contracts\Objects\Values\PlanId;
-use Osiset\ShopifyApp\Contracts\Queries\Plan as IPlanQuery;
-use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
-use Osiset\ShopifyApp\Contracts\Commands\Shop as IShopCommand;
-use Osiset\ShopifyApp\Objects\Transfers\Charge as ChargeTransfer;
-use Osiset\ShopifyApp\Contracts\Commands\Charge as IChargeCommand;
+use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Highwayns\ShopifyAdmin\Services\ChargeHelper;
+use Highwayns\ShopifyAdmin\Objects\Enums\PlanType;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeId;
+use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
+use Highwayns\ShopifyAdmin\Objects\Enums\ChargeStatus;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
+use Highwayns\ShopifyAdmin\Contracts\Objects\Values\PlanId;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Plan as IPlanQuery;
+use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
+use Highwayns\ShopifyAdmin\Contracts\Commands\Shop as IShopCommand;
+use Highwayns\ShopifyAdmin\Objects\Transfers\Charge as ChargeTransfer;
+use Highwayns\ShopifyAdmin\Contracts\Commands\Charge as IChargeCommand;
 
 /**
  * Activates a plan for a shop.

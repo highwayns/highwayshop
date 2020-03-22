@@ -1,18 +1,18 @@
 <?php
 
-namespace Webkul\VendorAdmin\Providers;
+namespace Highwayns\VendorAdmin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Webkul\VendorAdmin\Providers\EventServiceProvider;
+use Highwayns\VendorAdmin\Providers\EventServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Webkul\VendorAdmin\Exceptions\Handler;
+use Highwayns\VendorAdmin\Exceptions\Handler;
 use Webkul\Core\Tree;
 
 /**
  * Admin service provider
  *
- * @author    Jitendra Singh <jitendra@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @author    Tei Gun <tei952@hotmail.com>
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class VendorAdminServiceProvider extends ServiceProvider
 {

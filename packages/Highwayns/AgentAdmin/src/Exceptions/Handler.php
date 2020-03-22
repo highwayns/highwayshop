@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\AgentAdmin\Exceptions;
+namespace Highwayns\AgentAdmin\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

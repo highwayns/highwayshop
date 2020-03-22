@@ -1,0 +1,30 @@
+{
+    "name": "highwayns/laravel-vendor",
+    "license": "MIT",
+    "description" : "package of vendor",
+    "authors": [
+        {
+            "name": "Tei Gun",
+            "email": "tei952@hotmail.com"
+        }
+    ],
+    "require": {
+        "propaganistas/laravel-intl": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Highwayns\\Vendor\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Highwayns\\Vendor\\VendorServiceProvider"
+            ],
+            "aliases": {
+                "VendorBouncer": "Highwayns\\Vendor\\Facades\\VendorBouncer"
+            }
+        }
+    },
+    "minimum-stability": "dev"
+}

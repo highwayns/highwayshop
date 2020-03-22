@@ -22,7 +22,7 @@
         </div>
 
         <div class="page-content">
-            @inject('orderInvoicesGrid', 'Webkul\VendorAdmin\DataGrids\OrderInvoicesDataGrid')
+            @inject('orderInvoicesGrid', 'Highwayns\VendorAdmin\DataGrids\OrderInvoicesDataGrid')
             {!! $orderInvoicesGrid->render() !!}
         </div>
     </div>

@@ -1,13 +1,13 @@
 <?php
 
-namespace Osiset\ShopifyApp\Actions;
+namespace Highwayns\ShopifyAdmin\Actions;
 
 use Illuminate\Support\Carbon;
-use Osiset\ShopifyApp\Services\ChargeHelper;
-use Osiset\ShopifyApp\Objects\Enums\ChargeType;
-use Osiset\ShopifyApp\Objects\Values\ChargeReference;
-use Osiset\ShopifyApp\Contracts\Commands\Charge as IChargeCommand;
-use Osiset\ShopifyApp\Exceptions\ChargeNotRecurringOrOnetimeException;
+use Highwayns\ShopifyAdmin\Services\ChargeHelper;
+use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
+use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
+use Highwayns\ShopifyAdmin\Contracts\Commands\Charge as IChargeCommand;
+use Highwayns\ShopifyAdmin\Exceptions\ChargeNotRecurringOrOnetimeException;
 
 /**
  * Cancels a charge for a shop.

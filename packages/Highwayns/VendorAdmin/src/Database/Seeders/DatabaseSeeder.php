@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\VendorAdmin\Database\Seeders;
+namespace Highwayns\VendorAdmin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Webkul\Category\Database\Seeders\DatabaseSeeder as CategorySeeder;

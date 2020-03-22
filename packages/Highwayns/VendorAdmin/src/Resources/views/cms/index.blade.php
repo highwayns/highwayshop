@@ -26,7 +26,7 @@
         </div>
 
         <div class="page-content">
-            @inject('cmsGrid', 'Webkul\VendorAdmin\DataGrids\CMSPageDataGrid')
+            @inject('cmsGrid', 'Highwayns\VendorAdmin\DataGrids\CMSPageDataGrid')
 
             {!! $cmsGrid->render() !!}
         </div>

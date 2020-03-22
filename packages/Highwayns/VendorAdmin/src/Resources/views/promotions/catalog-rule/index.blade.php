@@ -28,7 +28,7 @@
         </div>
 
         <div class="page-content">
-            @inject('catalogRuleGrid','Webkul\VendorAdmin\DataGrids\CatalogRuleDataGrid')
+            @inject('catalogRuleGrid','Highwayns\VendorAdmin\DataGrids\CatalogRuleDataGrid')
             {!! $catalogRuleGrid->render() !!}
         </div>
     </div>

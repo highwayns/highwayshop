@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\VendorAdmin\Mail;
+namespace Highwayns\VendorAdmin\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -11,7 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
  * New Admin Mail class
  *
  * @author    Rahul Shukla <rahulshukla.symfony517@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class NewCustomerNotification extends Mailable
 {

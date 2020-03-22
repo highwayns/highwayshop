@@ -1,6 +1,6 @@
 <?php
 
-namespace Osiset\ShopifyApp\Contracts\Objects\Values;
+namespace Highwayns\ShopifyAdmin\Contracts\Objects\Values;
 
 use Funeralzone\ValueObjects\ValueObject;
 

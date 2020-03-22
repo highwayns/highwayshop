@@ -28,7 +28,7 @@
         {!! view_render_event('bagisto.admin.catalog.products.list.before') !!}
 
         <div class="page-content">
-            @inject('products', 'Webkul\VendorAdmin\DataGrids\ProductDataGrid')
+            @inject('products', 'Highwayns\VendorAdmin\DataGrids\ProductDataGrid')
             {!! $products->render() !!}
         </div>
 

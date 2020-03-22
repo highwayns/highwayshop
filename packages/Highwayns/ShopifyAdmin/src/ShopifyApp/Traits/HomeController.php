@@ -1,6 +1,6 @@
 <?php
 
-namespace Osiset\ShopifyApp\Traits;
+namespace Highwayns\ShopifyAdmin\Traits;
 
 use Illuminate\Contracts\View\View as ViewView;
 use Illuminate\Support\Facades\View;

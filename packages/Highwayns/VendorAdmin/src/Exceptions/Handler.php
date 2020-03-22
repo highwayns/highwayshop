@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\VendorAdmin\Exceptions;
+namespace Highwayns\VendorAdmin\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\VendorAdmin\Http\Controllers;
+namespace Highwayns\VendorAdmin\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

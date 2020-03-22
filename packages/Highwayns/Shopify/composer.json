@@ -1,5 +1,5 @@
 {
-    "name": "highwayns/shopify-shop",
+    "name": "highwayns/laravel-shopify",
     "license": "MIT",
     "description" : "Shop package for shopify store front and customers",
     "authors": [
@@ -11,7 +11,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Webkul\\Shop\\": "src/"
+            "Highwayns\\Shopify\\": "src/"
         }
     },
     "extra": {

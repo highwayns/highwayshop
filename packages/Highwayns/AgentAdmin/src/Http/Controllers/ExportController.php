@@ -1,15 +1,15 @@
 <?php
 
-namespace Webkul\AgentAdmin\Http\Controllers;
+namespace Highwayns\AgentAdmin\Http\Controllers;
 
-use Webkul\AgentAdmin\Exports\DataGridExport;
+use Highwayns\AgentAdmin\Exports\DataGridExport;
 use Excel;
 
 /**
  * Export controlller
  *
  * @author    Rahul Shukla <rahulshukla.symfony517@webkul.com>
- * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
+ * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
 class ExportController extends Controller
 {
@@ -38,7 +38,7 @@ class ExportController extends Controller
         $format = $criteria['format'];
 
         $gridName = explode('\\', $criteria['gridName']);
-        $path = '\Webkul\AgentAdmin\DataGrids'.'\\'.last($gridName);
+        $path = '\Highwayns\AgentAdmin\DataGrids'.'\\'.last($gridName);
 
         $proceed = false;
 
