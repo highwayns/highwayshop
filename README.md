@@ -203,3 +203,11 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 ####php.ini
 ; http://php.net/memory-limit
 memory_limit=2G
+
+####フォルダー作成
+mkdir -p storage/framework/cache/data
+mkdir -p storage/framework/sessions
+mkdir -p storage/framework/views
+mkdir -p storage/framework/testing
+mkdir -p storage/app/db-blade-compiler/views
+php artisan storage:link
