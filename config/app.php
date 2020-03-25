@@ -273,7 +273,9 @@ return [
         Highwayns\MerchantAdmin\Providers\MerchantAdminServiceProvider::class,
         Highwayns\Vendor\Providers\VendorServiceProvider::class,
         Highwayns\VendorAdmin\Providers\VendorAdminServiceProvider::class,
-        Highwayns\ShopifyAdmin\ShopifyAppProvider::class
+        Highwayns\ShopifyAdmin\ShopifyAppProvider::class,
+        Webkul\Dropship\Providers\DropshipServiceProvider::class,
+        Webkul\CustomerDocument\Providers\CustomerDocumentServiceProvider::class
     ],
 
     /*

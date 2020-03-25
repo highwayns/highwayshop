@@ -34,11 +34,14 @@
         "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "3.1.18",
+        "mll-lab/laravel-graphql-playground": "^2.1",
+        "nuwave/lighthouse": "^4.10",
         "nwidart/laravel-modules": "^3.2",
         "osiset/basic-shopify-api": "6.1.2",
         "prettus/l5-repository": "^2.6",
+        "symfony/flex": "1.6.2",
         "tymon/jwt-auth": "^1.0.0",
-        "symfony/flex": "1.6.2"
+        "webonyx/graphql-php": "^0.13.8"
     },
 
     "require-dev": {
@@ -47,6 +50,7 @@
         "codeception/module-filesystem": "^1.0",
         "codeception/module-laravel5": "^1.0",
         "filp/whoops": "^2.0",
+        "haydenpierce/class-finder": "^0.4.0",
         "laravel/dusk": "^5.7.0",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^2.0",
@@ -73,6 +77,8 @@
         "bagisto/laravel-api": "v0.1.0",
         "bagisto/laravel-paypal": "v0.1.0",
         "bagisto/laravel-discount": "v0.1.0",
+        "bagisto/customer-document": "v0.1.0",
+        "bagisto/dropship": "v0.1.0",
         "highwayns/laravel-agent": "v0.1.0",
         "highwayns/laravel-agentadmin": "v0.1.0",
         "highwayns/laravel-jadelivery": "v0.1.0",
@@ -115,6 +121,8 @@
         "Webkul\\Rule\\": "packages/Webkul/Rule/src",
         "Webkul\\CMS\\": "packages/Webkul/CMS/src",
         "Webkul\\Velocity\\": "packages/Webkul/Velocity/src",
+        "Webkul\\CustomerDocument\\": "packages/Webkul/CustomerDocument/src",
+        "Webkul\\Dropship\\": "packages/Webkul/Dropship/src",
         "Highwayns\\Agent\\": "packages/Highwayns/Agent/src",
         "Highwayns\\AgentAdmin\\": "packages/Highwayns/AgentAdmin/src",
         "Highwayns\\JaDelivery\\": "packages/Highwayns/JaDelivery/src",

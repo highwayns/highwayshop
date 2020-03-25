@@ -1,4 +1,13 @@
 {
+    "haydenpierce/class-finder": {
+        "version": "0.4.0"
+    },
+    "mll-lab/laravel-graphql-playground": {
+        "version": "v2.1.0"
+    },
+    "nuwave/lighthouse": {
+        "version": "4.10.2"
+    },
     "php": {
         "version": "7.4"
     },
@@ -13,5 +22,8 @@
         "files": [
             "./.env"
         ]
+    },
+    "webonyx/graphql-php": {
+        "version": "v0.13.8"
     }
 }
