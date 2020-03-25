@@ -4,8 +4,8 @@
 --
 -- ホスト: 127.0.0.1
 -- 生成日時: 
--- サーバのバージョン： 10.4.11-MariaDB
--- PHP のバージョン: 7.4.1
+-- サーバのバージョン： 10.4.10-MariaDB
+-- PHP のバージョン: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -103,6 +103,65 @@ CREATE TABLE `admin_password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `agent_password_resets`
+--
+
+CREATE TABLE `agent_password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `agent_roles`
+--
+
+CREATE TABLE `agent_roles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `permissions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`permissions`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `agent_sources`
+--
+
+CREATE TABLE `agent_sources` (
+  `id` int(10) UNSIGNED NOT NULL COMMENT '代理店ID',
+  `vendor_id` int(11) NOT NULL COMMENT 'ベンダーID',
+  `agency_group_id` int(11) NOT NULL COMMENT '代理店グループID',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代理店名',
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `role_id` int(10) UNSIGNED NOT NULL,
+  `postal_code` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '郵便番号',
+  `pref` int(11) NOT NULL COMMENT '都道府県',
+  `city` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '市町村',
+  `address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '番地',
+  `building_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '建物名',
+  `tel` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電話番号',
+  `fax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'FAX番号',
+  `agency_denki_shop_code` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'SmartCIS代理店ID',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '作成日時',
+  `created_user_id` int(11) NOT NULL COMMENT '作成ユーザーID',
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新日時',
+  `updated_user_id` int(11) NOT NULL COMMENT '更新ユーザーID',
+  `del_flg` tinyint(1) NOT NULL DEFAULT 0,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -4820,6 +4879,65 @@ INSERT INTO `locales` (`id`, `code`, `name`, `created_at`, `updated_at`, `direct
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `merchant_password_resets`
+--
+
+CREATE TABLE `merchant_password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `merchant_roles`
+--
+
+CREATE TABLE `merchant_roles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `permissions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`permissions`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `merchant_sources`
+--
+
+CREATE TABLE `merchant_sources` (
+  `id` int(10) UNSIGNED NOT NULL COMMENT '製造者ID',
+  `vendor_id` int(11) NOT NULL COMMENT 'ベンダーID',
+  `merchant_group_id` int(11) NOT NULL COMMENT '製造者グループID',
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '製造者名',
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `role_id` int(10) UNSIGNED NOT NULL,
+  `postal_code` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '郵便番号',
+  `pref` int(11) NOT NULL COMMENT '都道府県',
+  `city` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '市町村',
+  `address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '番地',
+  `building_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '建物名',
+  `tel` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電話番号',
+  `fax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'FAX番号',
+  `agency_denki_shop_code` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'SmartCIS製造者ID',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '作成日時',
+  `created_user_id` int(11) NOT NULL COMMENT '作成ユーザーID',
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新日時',
+  `updated_user_id` int(11) NOT NULL COMMENT '更新ユーザーID',
+  `del_flg` tinyint(1) NOT NULL DEFAULT 0,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `migrations`
 --
 
@@ -4989,7 +5107,17 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (153, '2020_01_28_102422_add_new_column_and_rename_name_column_in_customer_addresses_table', 1),
 (154, '2020_01_29_010501_create_plans_table', 1),
 (155, '2020_01_29_124748_alter_name_column_in_country_state_translations_table', 1),
-(156, '2020_01_29_230905_create_shops_table', 1);
+(156, '2020_01_29_230905_create_shops_table', 1),
+(157, '2014_10_12_100000_create_agent_password_resets_table', 2),
+(158, '2014_10_12_100000_create_merchant_password_resets_table', 2),
+(159, '2014_10_12_100000_create_vendor_password_resets_table', 2),
+(160, '2018_06_13_055341_create_agent_roles_table', 2),
+(161, '2018_06_13_055341_create_merchant_roles_table', 2),
+(162, '2018_06_13_055341_create_vendor_roles_table', 2),
+(163, '2018_07_23_110040_create_agent_sources_table', 2),
+(164, '2018_07_23_110040_create_merchant_sources_table', 2),
+(165, '2018_07_23_110040_create_vendor_sources_table', 2),
+(166, '2020_01_29_231006_create_charges_table', 3);
 
 -- --------------------------------------------------------
 
@@ -5833,6 +5961,73 @@ INSERT INTO `velocity_meta_data` (`id`, `home_page_content`, `footer_left_conten
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `vendor_password_resets`
+--
+
+CREATE TABLE `vendor_password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `vendor_roles`
+--
+
+CREATE TABLE `vendor_roles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `permissions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`permissions`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `vendor_sources`
+--
+
+CREATE TABLE `vendor_sources` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `role_id` int(10) UNSIGNED NOT NULL,
+  `name_kana` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `creditcard_main_apikey` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `creditcard_denki_apikey` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_transfer_company_code` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `smartcis_my_auth_id` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `smartcis_my_auth_key` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vendor_denki_shop_code` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_user_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `created_user_id` int(11) NOT NULL,
+  `gmo_main_site_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gmo_main_site_pass` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gmo_main_shop_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gmo_main_shop_pass` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gmo_denki_site_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gmo_denki_site_pass` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gmo_denki_shop_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gmo_denki_shop_pass` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `aplus_bank_consignor_number` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `aplus_division` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `aplus_conveni_consignor_number` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `aplus_transfer_date` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `wishlist`
 --
 
@@ -5867,6 +6062,25 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `admin_password_resets`
   ADD KEY `admin_password_resets_email_index` (`email`);
+
+--
+-- テーブルのインデックス `agent_password_resets`
+--
+ALTER TABLE `agent_password_resets`
+  ADD KEY `agent_password_resets_email_index` (`email`);
+
+--
+-- テーブルのインデックス `agent_roles`
+--
+ALTER TABLE `agent_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- テーブルのインデックス `agent_sources`
+--
+ALTER TABLE `agent_sources`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `agent_sources_email_unique` (`email`);
 
 --
 -- テーブルのインデックス `attributes`
@@ -6108,7 +6322,8 @@ ALTER TABLE `channel_locales`
 -- テーブルのインデックス `charges`
 --
 ALTER TABLE `charges`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `charges_plan_id_foreign` (`plan_id`);
 
 --
 -- テーブルのインデックス `cms_pages`
@@ -6244,6 +6459,25 @@ ALTER TABLE `invoice_items`
 ALTER TABLE `locales`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `locales_code_unique` (`code`);
+
+--
+-- テーブルのインデックス `merchant_password_resets`
+--
+ALTER TABLE `merchant_password_resets`
+  ADD KEY `merchant_password_resets_email_index` (`email`);
+
+--
+-- テーブルのインデックス `merchant_roles`
+--
+ALTER TABLE `merchant_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- テーブルのインデックス `merchant_sources`
+--
+ALTER TABLE `merchant_sources`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `merchant_sources_email_unique` (`email`);
 
 --
 -- テーブルのインデックス `migrations`
@@ -6558,6 +6792,25 @@ ALTER TABLE `velocity_meta_data`
   ADD PRIMARY KEY (`id`);
 
 --
+-- テーブルのインデックス `vendor_password_resets`
+--
+ALTER TABLE `vendor_password_resets`
+  ADD KEY `vendor_password_resets_email_index` (`email`);
+
+--
+-- テーブルのインデックス `vendor_roles`
+--
+ALTER TABLE `vendor_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- テーブルのインデックス `vendor_sources`
+--
+ALTER TABLE `vendor_sources`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `vendor_sources_email_unique` (`email`);
+
+--
 -- テーブルのインデックス `wishlist`
 --
 ALTER TABLE `wishlist`
@@ -6575,6 +6828,18 @@ ALTER TABLE `wishlist`
 --
 ALTER TABLE `admins`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- テーブルのAUTO_INCREMENT `agent_roles`
+--
+ALTER TABLE `agent_roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `agent_sources`
+--
+ALTER TABLE `agent_sources`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理店ID';
 
 --
 -- テーブルのAUTO_INCREMENT `attributes`
@@ -6823,10 +7088,22 @@ ALTER TABLE `locales`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- テーブルのAUTO_INCREMENT `merchant_roles`
+--
+ALTER TABLE `merchant_roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `merchant_sources`
+--
+ALTER TABLE `merchant_sources`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '製造者ID';
+
+--
 -- テーブルのAUTO_INCREMENT `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- テーブルのAUTO_INCREMENT `orders`
@@ -7039,6 +7316,18 @@ ALTER TABLE `velocity_meta_data`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- テーブルのAUTO_INCREMENT `vendor_roles`
+--
+ALTER TABLE `vendor_roles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `vendor_sources`
+--
+ALTER TABLE `vendor_sources`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- テーブルのAUTO_INCREMENT `wishlist`
 --
 ALTER TABLE `wishlist`
@@ -7228,6 +7517,12 @@ ALTER TABLE `channel_inventory_sources`
 ALTER TABLE `channel_locales`
   ADD CONSTRAINT `channel_locales_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `channel_locales_locale_id_foreign` FOREIGN KEY (`locale_id`) REFERENCES `locales` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `charges`
+--
+ALTER TABLE `charges`
+  ADD CONSTRAINT `charges_plan_id_foreign` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`);
 
 --
 -- テーブルの制約 `cms_page_channels`
