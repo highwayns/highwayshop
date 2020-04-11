@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Vendor\Models;
+namespace Highwayns\Vendor\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Webkul\Vendor\Models\VendorRole;
-use Webkul\Vendor\Notifications\VendorResetPassword;
-use Webkul\Vendor\Contracts\VendorSource as VendorSourceContract;
+use Highwayns\Vendor\Models\VendorRole;
+use Highwayns\Vendor\Notifications\VendorResetPassword;
+use Highwayns\Vendor\Contracts\VendorSource as VendorSourceContract;
 
 
 class VendorSource extends Authenticatable implements VendorSourceContract

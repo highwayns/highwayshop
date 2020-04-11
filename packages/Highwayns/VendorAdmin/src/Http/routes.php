@@ -6,35 +6,35 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/', 'Highwayns\VendorAdmin\Http\Controllers\Controller@redirectToLogin');
 
         // Login Routes
-        Route::get('/login', 'Webkul\Vendor\Http\Controllers\SessionController@create')->defaults('_config', [
+        Route::get('/login', 'Highwayns\Vendor\Http\Controllers\SessionController@create')->defaults('_config', [
             'view' => 'vendoradmin::users.sessions.create'
         ])->name('vendoradmin.session.create');
 
         //login post route to admin auth controller
-        Route::post('/login', 'Webkul\Vendor\Http\Controllers\SessionController@store')->defaults('_config', [
+        Route::post('/login', 'Highwayns\Vendor\Http\Controllers\SessionController@store')->defaults('_config', [
             'redirect' => 'vendoradmin.dashboard.index'
         ])->name('vendoradmin.session.store');
 
         // Forget Password Routes
-        Route::get('/forget-password', 'Webkul\Vendor\Http\Controllers\ForgetPasswordController@create')->defaults('_config', [
+        Route::get('/forget-password', 'Highwayns\Vendor\Http\Controllers\ForgetPasswordController@create')->defaults('_config', [
             'view' => 'vendoradmin::users.forget-password.create'
         ])->name('vendoradmin.forget-password.create');
 
-        Route::post('/forget-password', 'Webkul\Vendor\Http\Controllers\ForgetPasswordController@store')->name('vendoradmin.forget-password.store');
+        Route::post('/forget-password', 'Highwayns\Vendor\Http\Controllers\ForgetPasswordController@store')->name('vendoradmin.forget-password.store');
 
         // Reset Password Routes
-        Route::get('/reset-password/{token}', 'Webkul\Vendor\Http\Controllers\ResetPasswordController@create')->defaults('_config', [
+        Route::get('/reset-password/{token}', 'Highwayns\Vendor\Http\Controllers\ResetPasswordController@create')->defaults('_config', [
             'view' => 'vendoradmin::users.reset-password.create'
         ])->name('vendoradmin.reset-password.create');
 
-        Route::post('/reset-password', 'Webkul\Vendor\Http\Controllers\ResetPasswordController@store')->defaults('_config', [
+        Route::post('/reset-password', 'Highwayns\Vendor\Http\Controllers\ResetPasswordController@store')->defaults('_config', [
             'redirect' => 'vendoradmin.dashboard.index'
         ])->name('vendoradmin.reset-password.store');
 
 
         // Admin Routes
         Route::group(['middleware' => ['admin']], function () {
-            Route::get('/logout', 'Webkul\Vendor\Http\Controllers\SessionController@destroy')->defaults('_config', [
+            Route::get('/logout', 'Highwayns\Vendor\Http\Controllers\SessionController@destroy')->defaults('_config', [
                 'redirect' => 'vendoradmin.session.create'
             ])->name('vendoradmin.session.destroy');
 
@@ -381,59 +381,59 @@ Route::group(['middleware' => ['web']], function () {
 
             // User Routes
             //datagrid for backend users
-            Route::get('/users', 'Webkul\Vendor\Http\Controllers\UserController@index')->defaults('_config', [
+            Route::get('/users', 'Highwayns\Vendor\Http\Controllers\UserController@index')->defaults('_config', [
                 'view' => 'vendoradmin::users.users.index'
             ])->name('vendoradmin.users.index');
 
             //create backend user get
-            Route::get('/users/create', 'Webkul\Vendor\Http\Controllers\UserController@create')->defaults('_config', [
+            Route::get('/users/create', 'Highwayns\Vendor\Http\Controllers\UserController@create')->defaults('_config', [
                 'view' => 'vendoradmin::users.users.create'
             ])->name('vendoradmin.users.create');
 
             //create backend user post
-            Route::post('/users/create', 'Webkul\Vendor\Http\Controllers\UserController@store')->defaults('_config', [
+            Route::post('/users/create', 'Highwayns\Vendor\Http\Controllers\UserController@store')->defaults('_config', [
                 'redirect' => 'vendoradmin.users.index'
             ])->name('vendoradmin.users.store');
 
             //delete backend user view
-            Route::get('/users/edit/{id}', 'Webkul\Vendor\Http\Controllers\UserController@edit')->defaults('_config', [
+            Route::get('/users/edit/{id}', 'Highwayns\Vendor\Http\Controllers\UserController@edit')->defaults('_config', [
                 'view' => 'vendoradmin::users.users.edit'
             ])->name('vendoradmin.users.edit');
 
             //edit backend user submit
-            Route::put('/users/edit/{id}', 'Webkul\Vendor\Http\Controllers\UserController@update')->defaults('_config', [
+            Route::put('/users/edit/{id}', 'Highwayns\Vendor\Http\Controllers\UserController@update')->defaults('_config', [
                 'redirect' => 'vendoradmin.users.index'
             ])->name('vendoradmin.users.update');
 
             //delete backend user
-            Route::post('/users/delete/{id}', 'Webkul\Vendor\Http\Controllers\UserController@destroy')->name('vendoradmin.users.delete');
+            Route::post('/users/delete/{id}', 'Highwayns\Vendor\Http\Controllers\UserController@destroy')->name('vendoradmin.users.delete');
 
-            Route::post('/confirm/destroy', 'Webkul\Vendor\Http\Controllers\UserController@destroySelf')->defaults('_config', [
+            Route::post('/confirm/destroy', 'Highwayns\Vendor\Http\Controllers\UserController@destroySelf')->defaults('_config', [
                 'redirect' => 'vendoradmin.users.index'
             ])->name('vendoradmin.users.confirm.destroy');
 
             // User Role Routes
-            Route::get('/roles', 'Webkul\Vendor\Http\Controllers\RoleController@index')->defaults('_config', [
+            Route::get('/roles', 'Highwayns\Vendor\Http\Controllers\RoleController@index')->defaults('_config', [
                 'view' => 'vendoradmin::users.roles.index'
             ])->name('vendoradmin.roles.index');
 
-            Route::get('/roles/create', 'Webkul\Vendor\Http\Controllers\RoleController@create')->defaults('_config', [
+            Route::get('/roles/create', 'Highwayns\Vendor\Http\Controllers\RoleController@create')->defaults('_config', [
                 'view' => 'vendoradmin::users.roles.create'
             ])->name('vendoradmin.roles.create');
 
-            Route::post('/roles/create', 'Webkul\Vendor\Http\Controllers\RoleController@store')->defaults('_config', [
+            Route::post('/roles/create', 'Highwayns\Vendor\Http\Controllers\RoleController@store')->defaults('_config', [
                 'redirect' => 'vendoradmin.roles.index'
             ])->name('vendoradmin.roles.store');
 
-            Route::get('/roles/edit/{id}', 'Webkul\Vendor\Http\Controllers\RoleController@edit')->defaults('_config', [
+            Route::get('/roles/edit/{id}', 'Highwayns\Vendor\Http\Controllers\RoleController@edit')->defaults('_config', [
                 'view' => 'vendoradmin::users.roles.edit'
             ])->name('vendoradmin.roles.edit');
 
-            Route::put('/roles/edit/{id}', 'Webkul\Vendor\Http\Controllers\RoleController@update')->defaults('_config', [
+            Route::put('/roles/edit/{id}', 'Highwayns\Vendor\Http\Controllers\RoleController@update')->defaults('_config', [
                 'redirect' => 'vendoradmin.roles.index'
             ])->name('vendoradmin.roles.update');
 
-            Route::post('/roles/delete/{id}', 'Webkul\Vendor\Http\Controllers\RoleController@destroy')->name('vendoradmin.roles.delete');
+            Route::post('/roles/delete/{id}', 'Highwayns\Vendor\Http\Controllers\RoleController@destroy')->name('vendoradmin.roles.delete');
 
 
             // Locale Routes
@@ -536,104 +536,104 @@ Route::group(['middleware' => ['web']], function () {
             Route::post('/inventory_sources/delete/{id}', 'Webkul\Inventory\Http\Controllers\InventorySourceController@destroy')->name('vendoradmin.inventory_sources.delete');
 
             // Vendor Source Routes
-            Route::get('/vendor_sources', 'Webkul\Vendor\Http\Controllers\VendorSourceController@index')->defaults('_config', [
+            Route::get('/vendor_sources', 'Highwayns\Vendor\Http\Controllers\VendorSourceController@index')->defaults('_config', [
                 'view' => 'vendoradmin::settings.vendor_sources.index'
             ])->name('vendoradmin.vendor_sources.index');
 
-            Route::get('/vendor_sources/create', 'Webkul\Vendor\Http\Controllers\VendorSourceController@create')->defaults('_config', [
+            Route::get('/vendor_sources/create', 'Highwayns\Vendor\Http\Controllers\VendorSourceController@create')->defaults('_config', [
                 'view' => 'vendoradmin::settings.vendor_sources.create'
             ])->name('vendoradmin.vendor_sources.create');
 
-            Route::post('/vendor_sources/create', 'Webkul\Vendor\Http\Controllers\VendorSourceController@store')->defaults('_config', [
+            Route::post('/vendor_sources/create', 'Highwayns\Vendor\Http\Controllers\VendorSourceController@store')->defaults('_config', [
                 'redirect' => 'vendoradmin.vendor_sources.index'
             ])->name('vendoradmin.vendor_sources.store');
 
-            Route::get('/vendor_sources/edit/{id}', 'Webkul\Vendor\Http\Controllers\VendorSourceController@edit')->defaults('_config', [
+            Route::get('/vendor_sources/edit/{id}', 'Highwayns\Vendor\Http\Controllers\VendorSourceController@edit')->defaults('_config', [
                 'view' => 'vendoradmin::settings.vendor_sources.edit'
             ])->name('vendoradmin.vendor_sources.edit');
 
-            Route::put('/vendor_sources/edit/{id}', 'Webkul\Vendor\Http\Controllers\VendorSourceController@update')->defaults('_config', [
+            Route::put('/vendor_sources/edit/{id}', 'Highwayns\Vendor\Http\Controllers\VendorSourceController@update')->defaults('_config', [
                 'redirect' => 'vendoradmin.vendor_sources.index'
             ])->name('vendoradmin.vendor_sources.update');
 
-            Route::post('/vendor_sources/delete/{id}', 'Webkul\Vendor\Http\Controllers\VendorSourceController@destroy')->name('vendoradmin.vendor_sources.delete');
+            Route::post('/vendor_sources/delete/{id}', 'Highwayns\Vendor\Http\Controllers\VendorSourceController@destroy')->name('vendoradmin.vendor_sources.delete');
 
-            Route::post('/vendorconfirm/destroy', 'Webkul\Vendor\Http\Controllers\VendorSourceController@destroySelf')->defaults('_config', [
+            Route::post('/vendorconfirm/destroy', 'Highwayns\Vendor\Http\Controllers\VendorSourceController@destroySelf')->defaults('_config', [
                 'redirect' => 'vendoradmin.vendor_sources.index'
             ])->name('vendoradmin.vendors.confirm.destroy');
 
             // Vendor Role Routes
-            Route::get('/vendorroles', 'Webkul\Vendor\Http\Controllers\VendorRoleController@index')->defaults('_config', [
+            Route::get('/vendorroles', 'Highwayns\Vendor\Http\Controllers\VendorRoleController@index')->defaults('_config', [
                 'view' => 'vendoradmin::settings.vendor_roles.index'
             ])->name('vendoradmin.vendorroles.index');
 
-            Route::get('/vendorroles/create', 'Webkul\Vendor\Http\Controllers\VendorRoleController@create')->defaults('_config', [
+            Route::get('/vendorroles/create', 'Highwayns\Vendor\Http\Controllers\VendorRoleController@create')->defaults('_config', [
                 'view' => 'vendoradmin::settings.vendor_roles.create'
             ])->name('vendoradmin.vendorroles.create');
 
-            Route::post('/vendorroles/create', 'Webkul\Vendor\Http\Controllers\VendorRoleController@store')->defaults('_config', [
+            Route::post('/vendorroles/create', 'Highwayns\Vendor\Http\Controllers\VendorRoleController@store')->defaults('_config', [
                 'redirect' => 'vendoradmin.vendorroles.index'
             ])->name('vendoradmin.vendorroles.store');
 
-            Route::get('/vendorroles/edit/{id}', 'Webkul\Vendor\Http\Controllers\VendorRoleController@edit')->defaults('_config', [
+            Route::get('/vendorroles/edit/{id}', 'Highwayns\Vendor\Http\Controllers\VendorRoleController@edit')->defaults('_config', [
                 'view' => 'vendoradmin::settings.vendor_roles.edit'
             ])->name('vendoradmin.vendorroles.edit');
 
-            Route::put('/vendorroles/edit/{id}', 'Webkul\Vendor\Http\Controllers\VendorRoleController@update')->defaults('_config', [
+            Route::put('/vendorroles/edit/{id}', 'Highwayns\Vendor\Http\Controllers\VendorRoleController@update')->defaults('_config', [
                 'redirect' => 'vendoradmin.vendorroles.index'
             ])->name('vendoradmin.vendorroles.update');
 
-            Route::post('/vendorroles/delete/{id}', 'Webkul\Vendor\Http\Controllers\VendorRoleController@destroy')->name('vendoradmin.vendorroles.delete');
+            Route::post('/vendorroles/delete/{id}', 'Highwayns\Vendor\Http\Controllers\VendorRoleController@destroy')->name('vendoradmin.vendorroles.delete');
 
             // Agent Source Routes
-            Route::get('/agent_sources', 'Webkul\Agent\Http\Controllers\AgentSourceController@index')->defaults('_config', [
+            Route::get('/agent_sources', 'Highwayns\Agent\Http\Controllers\AgentSourceController@index')->defaults('_config', [
                 'view' => 'vendoradmin::settings.agent_sources.index'
             ])->name('vendoradmin.agent_sources.index');
 
-            Route::get('/agent_sources/create', 'Webkul\Agent\Http\Controllers\AgentSourceController@create')->defaults('_config', [
+            Route::get('/agent_sources/create', 'Highwayns\Agent\Http\Controllers\AgentSourceController@create')->defaults('_config', [
                 'view' => 'vendoradmin::settings.agent_sources.create'
             ])->name('vendoradmin.agent_sources.create');
 
-            Route::post('/agent_sources/create', 'Webkul\Agent\Http\Controllers\AgentSourceController@store')->defaults('_config', [
+            Route::post('/agent_sources/create', 'Highwayns\Agent\Http\Controllers\AgentSourceController@store')->defaults('_config', [
                 'redirect' => 'vendoradmin.agent_sources.index'
             ])->name('vendoradmin.agent_sources.store');
 
-            Route::get('/agent_sources/edit/{id}', 'Webkul\Agent\Http\Controllers\AgentSourceController@edit')->defaults('_config', [
+            Route::get('/agent_sources/edit/{id}', 'Highwayns\Agent\Http\Controllers\AgentSourceController@edit')->defaults('_config', [
                 'view' => 'vendoradmin::settings.agent_sources.edit'
             ])->name('vendoradmin.agent_sources.edit');
 
-            Route::put('/agent_sources/edit/{id}', 'Webkul\Agent\Http\Controllers\AgentSourceController@update')->defaults('_config', [
+            Route::put('/agent_sources/edit/{id}', 'Highwayns\Agent\Http\Controllers\AgentSourceController@update')->defaults('_config', [
                 'redirect' => 'vendoradmin.agent_sources.index'
             ])->name('vendoradmin.agent_sources.update');
 
-            Route::post('/agent_sources/delete/{id}', 'Webkul\Agent\Http\Controllers\AgentSourceController@destroy')->name('vendoradmin.agent_sources.delete');
+            Route::post('/agent_sources/delete/{id}', 'Highwayns\Agent\Http\Controllers\AgentSourceController@destroy')->name('vendoradmin.agent_sources.delete');
 
-            Route::post('/agentconfirm/destroy', 'Webkul\Agent\Http\Controllers\AgentSourceController@destroySelf')->defaults('_config', [
+            Route::post('/agentconfirm/destroy', 'Highwayns\Agent\Http\Controllers\AgentSourceController@destroySelf')->defaults('_config', [
                 'redirect' => 'vendoradmin.agent_sources.index'
             ])->name('vendoradmin.agents.confirm.destroy');
 
             // Agent Role Routes
-            Route::get('/agentroles', 'Webkul\Agent\Http\Controllers\AgentRoleController@index')->defaults('_config', [
+            Route::get('/agentroles', 'Highwayns\Agent\Http\Controllers\AgentRoleController@index')->defaults('_config', [
                 'view' => 'vendoradmin::settings.agent_roles.index'
             ])->name('vendoradmin.agentroles.index');
 
-            Route::get('/agentroles/create', 'Webkul\Agent\Http\Controllers\AgentRoleController@create')->defaults('_config', [
+            Route::get('/agentroles/create', 'Highwayns\Agent\Http\Controllers\AgentRoleController@create')->defaults('_config', [
                 'view' => 'vendoradmin::settings.agent_roles.create'
             ])->name('vendoradmin.agentroles.create');
 
-            Route::post('/agentroles/create', 'Webkul\Agent\Http\Controllers\AgentRoleController@store')->defaults('_config', [
+            Route::post('/agentroles/create', 'Highwayns\Agent\Http\Controllers\AgentRoleController@store')->defaults('_config', [
                 'redirect' => 'vendoradmin.agentroles.index'
             ])->name('vendoradmin.agentroles.store');
 
-            Route::get('/agentroles/edit/{id}', 'Webkul\Agent\Http\Controllers\AgentRoleController@edit')->defaults('_config', [
+            Route::get('/agentroles/edit/{id}', 'Highwayns\Agent\Http\Controllers\AgentRoleController@edit')->defaults('_config', [
                 'view' => 'vendoradmin::settings.agent_roles.edit'
             ])->name('vendoradmin.agentroles.edit');
 
-            Route::put('/agentroles/edit/{id}', 'Webkul\Agent\Http\Controllers\AgentRoleController@update')->defaults('_config', [
+            Route::put('/agentroles/edit/{id}', 'Highwayns\Agent\Http\Controllers\AgentRoleController@update')->defaults('_config', [
                 'redirect' => 'vendoradmin.agentroles.index'
             ])->name('vendoradmin.agentroles.update');
 
-            Route::post('/agentroles/delete/{id}', 'Webkul\Agent\Http\Controllers\AgentRoleController@destroy')->name('vendoradmin.agentroles.delete');
+            Route::post('/agentroles/delete/{id}', 'Highwayns\Agent\Http\Controllers\AgentRoleController@destroy')->name('vendoradmin.agentroles.delete');
 
             // Channel Routes
             Route::get('/channels', 'Webkul\Core\Http\Controllers\ChannelController@index')->defaults('_config', [
@@ -660,11 +660,11 @@ Route::group(['middleware' => ['web']], function () {
 
 
             // Admin Profile route
-            Route::get('/account', 'Webkul\Vendor\Http\Controllers\AccountController@edit')->defaults('_config', [
+            Route::get('/account', 'Highwayns\Vendor\Http\Controllers\AccountController@edit')->defaults('_config', [
                 'view' => 'vendoradmin::account.edit'
             ])->name('vendoradmin.account.edit');
 
-            Route::put('/account', 'Webkul\Vendor\Http\Controllers\AccountController@update')->name('vendoradmin.account.update');
+            Route::put('/account', 'Highwayns\Vendor\Http\Controllers\AccountController@update')->name('vendoradmin.account.update');
 
 
             // Admin Store Front Settings Route

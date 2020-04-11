@@ -48,8 +48,8 @@ class AgentSourceController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Highwayns\User\Repositories\agentSourceRepository $agentSourceRepository
-     * @param  \Highwayns\User\Repositories\RoleRepository $roleRepository
+     * @param  \Highwayns\Agent\Repositories\agentSourceRepository $agentSourceRepository
+     * @param  \Highwayns\Agent\Repositories\RoleRepository $roleRepository
      * @return void
      */
     public function __construct(

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Agent\Database\Seeders;
+namespace Highwayns\Agent\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use DB;

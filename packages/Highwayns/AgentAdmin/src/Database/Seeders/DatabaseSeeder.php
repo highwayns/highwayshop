@@ -10,7 +10,7 @@ use Webkul\User\Database\Seeders\DatabaseSeeder as UserSeeder;
 use Webkul\Customer\Database\Seeders\DatabaseSeeder as CustomerSeeder;
 use Webkul\Inventory\Database\Seeders\DatabaseSeeder as InventorySeeder;
 use Webkul\CMS\Database\Seeders\DatabaseSeeder as CMSSeeder;
-use Webkul\Vendor\Database\Seeders\DatabaseSeeder as VendorSeeder;
+use Highwayns\Vendor\Database\Seeders\DatabaseSeeder as VendorSeeder;
 
 class DatabaseSeeder extends Seeder
 {

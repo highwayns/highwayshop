@@ -48,8 +48,8 @@ class MerchantSourceController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Highwayns\User\Repositories\merchantSourceRepository $merchantSourceRepository
-     * @param  \Highwayns\User\Repositories\RoleRepository $roleRepository
+     * @param  \Highwayns\Agent\Repositories\merchantSourceRepository $merchantSourceRepository
+     * @param  \Highwayns\Agent\Repositories\RoleRepository $roleRepository
      * @return void
      */
     public function __construct(

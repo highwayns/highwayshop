@@ -3,7 +3,7 @@
 namespace Highwayns\Agent\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
-use Highwayns\User\Repositories\RoleRepository;
+use Webkul\User\Repositories\RoleRepository;
 
 /**
  * Admin user role controller
@@ -30,7 +30,7 @@ class AgentRoleController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Highwayns\User\Repositories\RoleRepository $roleRepository
+     * @param  \Webkul\User\Repositories\RoleRepository $roleRepository
      * @return void
      */
     public function __construct(RoleRepository $roleRepository)

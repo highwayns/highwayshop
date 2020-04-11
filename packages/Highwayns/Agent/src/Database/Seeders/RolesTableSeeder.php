@@ -1,9 +1,9 @@
 <?php
 
-namespace Webkul\Agent\Database\Seeders;
+namespace Highwayns\Agent\Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Webkul\Agent\Models\AgentRole;
+use Highwayns\Agent\Models\AgentRole;
 use DB;
 
 class RolesTableSeeder extends Seeder

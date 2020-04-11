@@ -40,8 +40,8 @@ class VendorSourceController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Highwayns\User\Repositories\vendorSourceRepository $vendorSourceRepository
-     * @param  \Highwayns\User\Repositories\RoleRepository $roleRepository
+     * @param  \Highwayns\Agent\Repositories\vendorSourceRepository $vendorSourceRepository
+     * @param  \Highwayns\Agent\Repositories\RoleRepository $roleRepository
      * @return void
      */
     public function __construct(
