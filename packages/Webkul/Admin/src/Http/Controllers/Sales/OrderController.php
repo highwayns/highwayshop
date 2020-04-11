@@ -5,12 +5,6 @@ namespace Webkul\Admin\Http\Controllers\Sales;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Sales\Repositories\OrderRepository;
 
-/**
- * Sales Order controller
- *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
- */
 class OrderController extends Controller
 {
     /**
@@ -23,14 +17,14 @@ class OrderController extends Controller
     /**
      * OrderRepository object
      *
-     * @var array
+     * @var \Webkul\Sales\Repositories\OrderRepository
      */
     protected $orderRepository;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Sales\Repositories\OrderRepository $orderRepository
+     * @param  \Webkul\Sales\Repositories\OrderRepository  $orderRepository
      * @return void
      */
     public function __construct(OrderRepository $orderRepository)
@@ -40,7 +34,6 @@ class OrderController extends Controller
         $this->_config = request('_config');
 
         $this->orderRepository = $orderRepository;
-
     }
 
     /**

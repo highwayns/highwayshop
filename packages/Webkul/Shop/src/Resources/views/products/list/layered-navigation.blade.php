@@ -161,6 +161,10 @@
             props: ['index', 'attribute', 'appliedFilterValues'],
 
             data: function() {
+                let maxPrice  = '{{ core()->convertPrice($productFlatRepository->getCategoryProductMaximumPrice($category)) }}';
+
+                maxPrice = maxPrice ? ((parseInt(maxPrice) !== 0 || maxPrice) ? parseInt(maxPrice) : 500) : 500;
+
                 return {
                     appliedFilters: [],
 
@@ -171,7 +175,7 @@
                             0,
                             0
                         ],
-                        max: {{ core()->convertPrice($productFlatRepository->getCategoryProductMaximumPrice($category)) ?? 0 }},
+                        max: maxPrice,
                         processStyle: {
                             "backgroundColor": "#FF6472"
                         },

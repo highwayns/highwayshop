@@ -33,11 +33,14 @@
                 @endphp
 
                 @include ('shop::products.list.card', [
-                    'checkmode' => true,
-                    'itemId' => $item->id,
-                    'removeWishlist' => true,
-                    'product' => $item->product,
-                    'btnText' => $moveToCartText,
+                    'checkmode'         => true,
+                    'moveToCart'        => true,
+                    'addToCartForm'     => true,
+                    'removeWishlist'    => true,
+                    'reloadPage'        => true,
+                    'itemId'            => $item->id,
+                    'product'           => $item->product,
+                    'btnText'           => $moveToCartText,
                     'addToCartBtnClass' => 'small-padding',
                 ])
             @endforeach

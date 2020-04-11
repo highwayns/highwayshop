@@ -2,11 +2,20 @@
     "haydenpierce/class-finder": {
         "version": "0.4.0"
     },
+    "laravel/socialite": {
+        "version": "v4.3.2"
+    },
+    "league/oauth1-client": {
+        "version": "1.7.0"
+    },
     "mll-lab/laravel-graphql-playground": {
         "version": "v2.1.0"
     },
     "nuwave/lighthouse": {
         "version": "4.10.2"
+    },
+    "osiset/basic-shopify-api": {
+        "version": "v6.1.2"
     },
     "php": {
         "version": "7.3"

@@ -5,12 +5,6 @@ namespace Webkul\Core\Http\Controllers;
 use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
 
-/**
- * Country controller
- *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
- */
 class CountryStateController extends Controller
 {
     /**
@@ -23,22 +17,22 @@ class CountryStateController extends Controller
     /**
      * CountryRepository object
      *
-     * @var array
+     * @var \Webkul\Core\Repositories\CountryRepository
      */
     protected $countryRepository;
 
     /**
      * CountryStateRepository object
      *
-     * @var array
+     * @var Webkul\Core\Repositories\CountryStateRepository
      */
     protected $countryStateRepository;
 
     /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Core\Repositories\CountryRepository      $countryRepository
-     * @param  \Webkul\Core\Repositories\CountryStateRepository $countryStateRepository
+     * @param  \Webkul\Core\Repositories\CountryRepository       $countryRepository
+     * @param  \Webkul\Core\Repositories\CountryStateRepository  $countryStateRepository
      * @return void
      */
     public function __construct(
@@ -77,6 +71,10 @@ class CountryStateController extends Controller
         return view($this->_config['view'])->with('statesCountries', $nestedArray);
     }
 
+    /**
+     *
+     * @return \Illuminate\View\View
+     */
     public function getStates($country)
     {
         $countries = $this->countryRepository->all();

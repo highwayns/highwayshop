@@ -2,23 +2,21 @@
 
 namespace Webkul\Sales\Repositories;
 
-use Illuminate\Container\Container as App;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Sales\Contracts\OrderAddress;
 
 /**
- * Order Address Reposotory
+ * Order Address Repository
  *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
+ * @author    Jitendra Singh <jitendra@webkul.com>
+ * @copyright 2018 Webkul Software Pvt Ltd (http://www.webkul.com)
  */
-
 class OrderAddressRepository extends Repository
 {
     /**
      * Specify Model class name
      *
-     * @return Mixed
+     * @return string
      */
 
     function model()

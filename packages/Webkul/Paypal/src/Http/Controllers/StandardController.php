@@ -6,25 +6,19 @@ use Webkul\Checkout\Facades\Cart;
 use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Paypal\Helpers\Ipn;
 
-/**
- * Paypal Standard controller
- *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
- */
 class StandardController extends Controller
 {
     /**
      * OrderRepository object
      *
-     * @var array
+     * @var \Webkul\Sales\Repositories\OrderRepository
      */
     protected $orderRepository;
 
     /**
      * Ipn object
      *
-     * @var array
+     * @var \Webkul\Paypal\Helpers\Ipn
      */
     protected $ipnHelper;
 
@@ -32,6 +26,7 @@ class StandardController extends Controller
      * Create a new controller instance.
      *
      * @param  \Webkul\Attribute\Repositories\OrderRepository  $orderRepository
+     * @param  \Webkul\Paypal\Helpers\Ipn  $ipnHelper
      * @return void
      */
     public function __construct(

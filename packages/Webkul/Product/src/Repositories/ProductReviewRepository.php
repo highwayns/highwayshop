@@ -5,12 +5,6 @@ namespace Webkul\Product\Repositories;
 use Illuminate\Container\Container as App;
 use Webkul\Core\Eloquent\Repository;
 
-/**
- * Product Review Reposotory
- *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
- */
 class ProductReviewRepository extends Repository
 {
     /**

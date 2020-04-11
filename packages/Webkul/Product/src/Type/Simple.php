@@ -2,12 +2,6 @@
 
 namespace Webkul\Product\Type;
 
-/**
- * Class Simple.
- *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
- */
 class Simple extends AbstractType
 {
     /**
@@ -33,34 +27,36 @@ class Simple extends AbstractType
     /**
      * Show quantity box
      *
-     * @var boolean
+     * @var bool
      */
     protected $showQuantityBox = true;
 
     /**
      * Return true if this product type is saleable
      *
-     * @return boolean
+     * @return bool
      */
     public function isSaleable()
     {
-        if (! $this->product->status)
+        if (! $this->product->status) {
             return false;
+        }
 
-        if ($this->haveSufficientQuantity(1))
+        if ($this->haveSufficientQuantity(1)) {
             return true;
+        }
 
         return false;
     }
 
     /**
-     * @param integer $qty
-     *
-     * @return boolean
+     * @param  int  $qty
+     * @return bool
      */
     public function haveSufficientQuantity($qty)
     {
         $backorders = core()->getConfigData('catalog.inventory.stock_options.backorders');
+        
         return $qty <= $this->totalQuantity() ? true : $backorders;
     }
 }

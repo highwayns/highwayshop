@@ -10,7 +10,7 @@ use Webkul\Customer\Repositories\CustomerAddressRepository as CustomerAddress;
  * Customer's Address controller
  *
  * @author    Vivek Sharma <viveksh047@webkul.com>
- * @copyright 2019 Webkul Software Pvt Ltd (http://www.highwayns.com)
+ * @copyright 2019 Highwayns Software Pvt Ltd (http://www.highwayns.com)
  */
 class AddressController extends Controller
 {

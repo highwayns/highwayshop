@@ -4,8 +4,8 @@
 --
 -- ホスト: 127.0.0.1
 -- 生成日時: 
--- サーバのバージョン： 10.4.10-MariaDB
--- PHP のバージョン: 7.3.12
+-- サーバのバージョン： 10.4.11-MariaDB
+-- PHP のバージョン: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -188,40 +188,41 @@ CREATE TABLE `attributes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `swatch_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `use_in_flat` tinyint(1) NOT NULL DEFAULT 1
+  `use_in_flat` tinyint(1) NOT NULL DEFAULT 1,
+  `is_comparable` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- テーブルのデータのダンプ `attributes`
 --
 
-INSERT INTO `attributes` (`id`, `code`, `admin_name`, `type`, `validation`, `position`, `is_required`, `is_unique`, `value_per_locale`, `value_per_channel`, `is_filterable`, `is_configurable`, `is_user_defined`, `is_visible_on_front`, `created_at`, `updated_at`, `swatch_type`, `use_in_flat`) VALUES
-(1, 'sku', 'SKU', 'text', NULL, 1, 1, 1, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(2, 'name', 'Name', 'text', NULL, 2, 1, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(3, 'url_key', 'URL Key', 'text', NULL, 3, 1, 1, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(4, 'tax_category_id', 'Tax Category', 'select', NULL, 4, 0, 0, 0, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(5, 'new', 'New', 'boolean', NULL, 5, 0, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(6, 'featured', 'Featured', 'boolean', NULL, 6, 0, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(7, 'visible_individually', 'Visible Individually', 'boolean', NULL, 7, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(8, 'status', 'Status', 'boolean', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(9, 'short_description', 'Short Description', 'textarea', NULL, 9, 1, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(10, 'description', 'Description', 'textarea', NULL, 10, 1, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(11, 'price', 'Price', 'price', 'decimal', 11, 1, 0, 0, 0, 1, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(12, 'cost', 'Cost', 'price', 'decimal', 12, 0, 0, 0, 1, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(13, 'special_price', 'Special Price', 'price', 'decimal', 13, 0, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(14, 'special_price_from', 'Special Price From', 'date', NULL, 14, 0, 0, 0, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(15, 'special_price_to', 'Special Price To', 'date', NULL, 15, 0, 0, 0, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(16, 'meta_title', 'Meta Title', 'textarea', NULL, 16, 0, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(17, 'meta_keywords', 'Meta Keywords', 'textarea', NULL, 17, 0, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(18, 'meta_description', 'Meta Description', 'textarea', NULL, 18, 0, 0, 1, 1, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(19, 'width', 'Width', 'text', 'decimal', 19, 0, 0, 0, 0, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(20, 'height', 'Height', 'text', 'decimal', 20, 0, 0, 0, 0, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(21, 'depth', 'Depth', 'text', 'decimal', 21, 0, 0, 0, 0, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(22, 'weight', 'Weight', 'text', 'decimal', 22, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(23, 'color', 'Color', 'select', NULL, 23, 0, 0, 0, 0, 1, 1, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(24, 'size', 'Size', 'select', NULL, 24, 0, 0, 0, 0, 1, 1, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(25, 'brand', 'Brand', 'select', NULL, 25, 0, 0, 0, 0, 1, 0, 0, 1, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1),
-(26, 'guest_checkout', 'Guest Checkout', 'boolean', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1);
+INSERT INTO `attributes` (`id`, `code`, `admin_name`, `type`, `validation`, `position`, `is_required`, `is_unique`, `value_per_locale`, `value_per_channel`, `is_filterable`, `is_configurable`, `is_user_defined`, `is_visible_on_front`, `created_at`, `updated_at`, `swatch_type`, `use_in_flat`, `is_comparable`) VALUES
+(1, 'sku', 'SKU', 'text', NULL, 1, 1, 1, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(2, 'name', 'Name', 'text', NULL, 2, 1, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(3, 'url_key', 'URL Key', 'text', NULL, 3, 1, 1, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(4, 'tax_category_id', 'Tax Category', 'select', NULL, 4, 0, 0, 0, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(5, 'new', 'New', 'boolean', NULL, 5, 0, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(6, 'featured', 'Featured', 'boolean', NULL, 6, 0, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(7, 'visible_individually', 'Visible Individually', 'boolean', NULL, 7, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(8, 'status', 'Status', 'boolean', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(9, 'short_description', 'Short Description', 'textarea', NULL, 9, 1, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(10, 'description', 'Description', 'textarea', NULL, 10, 1, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(11, 'price', 'Price', 'price', 'decimal', 11, 1, 0, 0, 0, 1, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(12, 'cost', 'Cost', 'price', 'decimal', 12, 0, 0, 0, 1, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(13, 'special_price', 'Special Price', 'price', 'decimal', 13, 0, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(14, 'special_price_from', 'Special Price From', 'date', NULL, 14, 0, 0, 0, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(15, 'special_price_to', 'Special Price To', 'date', NULL, 15, 0, 0, 0, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(16, 'meta_title', 'Meta Title', 'textarea', NULL, 16, 0, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(17, 'meta_keywords', 'Meta Keywords', 'textarea', NULL, 17, 0, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(18, 'meta_description', 'Meta Description', 'textarea', NULL, 18, 0, 0, 1, 1, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(19, 'width', 'Width', 'text', 'decimal', 19, 0, 0, 0, 0, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(20, 'height', 'Height', 'text', 'decimal', 20, 0, 0, 0, 0, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(21, 'depth', 'Depth', 'text', 'decimal', 21, 0, 0, 0, 0, 0, 0, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(22, 'weight', 'Weight', 'text', 'decimal', 22, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(23, 'color', 'Color', 'select', NULL, 23, 0, 0, 0, 0, 1, 1, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(24, 'size', 'Size', 'select', NULL, 24, 0, 0, 0, 0, 1, 1, 1, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(25, 'brand', 'Brand', 'select', NULL, 25, 0, 0, 0, 0, 1, 0, 0, 1, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
+(26, 'guest_checkout', 'Guest Checkout', 'boolean', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -418,6 +419,134 @@ INSERT INTO `attribute_translations` (`id`, `locale`, `name`, `attribute_id`) VA
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `qty` int(11) DEFAULT 0,
+  `from` int(11) DEFAULT NULL,
+  `to` int(11) DEFAULT NULL,
+  `order_item_id` int(10) UNSIGNED DEFAULT NULL,
+  `booking_product_event_ticket_id` int(10) UNSIGNED DEFAULT NULL,
+  `order_id` int(10) UNSIGNED DEFAULT NULL,
+  `product_id` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `booking_products`
+--
+
+CREATE TABLE `booking_products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qty` int(11) DEFAULT 0,
+  `location` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `show_location` tinyint(1) NOT NULL DEFAULT 0,
+  `available_every_week` tinyint(1) DEFAULT NULL,
+  `available_from` datetime DEFAULT NULL,
+  `available_to` datetime DEFAULT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `booking_product_appointment_slots`
+--
+
+CREATE TABLE `booking_product_appointment_slots` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `break_time` int(11) DEFAULT NULL,
+  `same_slot_all_days` tinyint(1) DEFAULT NULL,
+  `slots` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`slots`)),
+  `booking_product_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `booking_product_default_slots`
+--
+
+CREATE TABLE `booking_product_default_slots` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `booking_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `break_time` int(11) DEFAULT NULL,
+  `slots` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`slots`)),
+  `booking_product_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `booking_product_event_tickets`
+--
+
+CREATE TABLE `booking_product_event_tickets` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `price` decimal(12,4) DEFAULT 0.0000,
+  `qty` int(11) DEFAULT 0,
+  `booking_product_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `booking_product_event_ticket_translations`
+--
+
+CREATE TABLE `booking_product_event_ticket_translations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `booking_product_event_ticket_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `booking_product_rental_slots`
+--
+
+CREATE TABLE `booking_product_rental_slots` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `renting_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `daily_price` decimal(12,4) DEFAULT 0.0000,
+  `hourly_price` decimal(12,4) DEFAULT 0.0000,
+  `same_slot_all_days` tinyint(1) DEFAULT NULL,
+  `slots` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`slots`)),
+  `booking_product_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `booking_product_table_slots`
+--
+
+CREATE TABLE `booking_product_table_slots` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `price_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guest_limit` int(11) NOT NULL DEFAULT 0,
+  `duration` int(11) NOT NULL,
+  `break_time` int(11) NOT NULL,
+  `prevent_scheduling_before` int(11) NOT NULL,
+  `same_slot_all_days` tinyint(1) DEFAULT NULL,
+  `slots` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`slots`)),
+  `booking_product_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `cart`
 --
 
@@ -466,6 +595,8 @@ CREATE TABLE `cart_address` (
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `company_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vat_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -557,8 +688,8 @@ CREATE TABLE `cart_rules` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `starts_from` date DEFAULT NULL,
-  `ends_till` date DEFAULT NULL,
+  `starts_from` datetime DEFAULT NULL,
+  `ends_till` datetime DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
   `coupon_type` int(11) NOT NULL DEFAULT 1,
   `use_auto_generation` tinyint(1) NOT NULL DEFAULT 0,
@@ -4697,6 +4828,24 @@ CREATE TABLE `customer_addresses` (
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `customer_documents`
+--
+
+CREATE TABLE `customer_documents` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `path` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_id` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `customer_groups`
 --
 
@@ -4750,6 +4899,108 @@ CREATE TABLE `downloadable_link_purchased` (
   `customer_id` int(10) UNSIGNED NOT NULL,
   `order_id` int(10) UNSIGNED NOT NULL,
   `order_item_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `dropship_ali_express_attributes`
+--
+
+CREATE TABLE `dropship_ali_express_attributes` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ali_express_attribute_id` int(11) NOT NULL,
+  `attribute_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `dropship_ali_express_attribute_options`
+--
+
+CREATE TABLE `dropship_ali_express_attribute_options` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ali_express_attribute_option_id` int(11) NOT NULL,
+  `ali_express_swatch_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ali_express_swatch_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ali_express_attribute_id` int(10) UNSIGNED NOT NULL,
+  `attribute_option_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `dropship_ali_express_orders`
+--
+
+CREATE TABLE `dropship_ali_express_orders` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `is_placed` tinyint(1) NOT NULL DEFAULT 0,
+  `ali_express_add_cart_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `dropship_ali_express_order_items`
+--
+
+CREATE TABLE `dropship_ali_express_order_items` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ali_express_product_id` int(10) UNSIGNED NOT NULL,
+  `order_item_id` int(10) UNSIGNED NOT NULL,
+  `ali_express_order_id` int(10) UNSIGNED NOT NULL,
+  `parent_id` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `dropship_ali_express_products`
+--
+
+CREATE TABLE `dropship_ali_express_products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ali_express_product_url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ali_express_product_description_url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ali_express_product_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `combination_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_id` int(10) UNSIGNED NOT NULL,
+  `parent_id` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `dropship_ali_express_product_images`
+--
+
+CREATE TABLE `dropship_ali_express_product_images` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_image_id` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `dropship_ali_express_product_reviews`
+--
+
+CREATE TABLE `dropship_ali_express_product_reviews` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ali_express_review_id` int(11) NOT NULL,
+  `product_review_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -5117,7 +5368,29 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (163, '2018_07_23_110040_create_agent_sources_table', 2),
 (164, '2018_07_23_110040_create_merchant_sources_table', 2),
 (165, '2018_07_23_110040_create_vendor_sources_table', 2),
-(166, '2020_01_29_231006_create_charges_table', 3);
+(166, '2020_01_29_231006_create_charges_table', 3),
+(167, '2019_02_13_170142_create_dropship_ali_express_products_table', 4),
+(168, '2019_02_15_150617_create_dropship_ali_express_product_images_table', 4),
+(169, '2019_02_19_155507_create_dropship_ali_express_attributes_table', 4),
+(170, '2019_02_19_155531_create_dropship_ali_express_attribute_options_table', 4),
+(171, '2019_02_27_144807_create_dropship_ali_express_product_reviews_table', 4),
+(172, '2019_02_28_122205_create_dropship_ali_express_orders_table', 4),
+(173, '2019_02_28_124922_create_dropship_ali_express_order_items_table', 4),
+(174, '2019_06_07_122059_customer_documents_table', 4),
+(175, '2019_07_02_180307_create_booking_products_table', 4),
+(176, '2019_07_05_154415_create_booking_product_default_slots_table', 4),
+(177, '2019_07_05_154429_create_booking_product_appointment_slots_table', 4),
+(178, '2019_07_05_154440_create_booking_product_event_tickets_table', 4),
+(179, '2019_07_05_154451_create_booking_product_rental_slots_table', 4),
+(180, '2019_07_05_154502_create_booking_product_table_slots_table', 4),
+(181, '2020_02_18_165639_create_bookings_table', 4),
+(182, '2020_02_21_121201_create_booking_product_event_ticket_translations_table', 4),
+(183, '2020_02_24_190025_add_is_comparable_column_in_attributes_table', 4),
+(184, '2020_02_25_181902_propagate_company_name', 4),
+(185, '2020_02_26_163908_change_column_type_in_cart_rules_table', 4),
+(186, '2020_02_28_105104_fix_order_columns', 4),
+(187, '2020_02_28_111958_create_customer_compare_products_table', 4),
+(188, '2020_03_23_201431_alter_booking_products_table', 4);
 
 -- --------------------------------------------------------
 
@@ -5200,6 +5473,8 @@ CREATE TABLE `order_address` (
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `company_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vat_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `address1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5931,6 +6206,20 @@ CREATE TABLE `velocity_contents_translations` (
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `velocity_customer_compare_products`
+--
+
+CREATE TABLE `velocity_customer_compare_products` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `product_flat_id` int(10) UNSIGNED NOT NULL,
+  `customer_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `velocity_meta_data`
 --
 
@@ -6129,6 +6418,63 @@ ALTER TABLE `attribute_option_translations`
 ALTER TABLE `attribute_translations`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `attribute_translations_attribute_id_locale_unique` (`attribute_id`,`locale`);
+
+--
+-- テーブルのインデックス `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bookings_order_id_foreign` (`order_id`),
+  ADD KEY `bookings_product_id_foreign` (`product_id`);
+
+--
+-- テーブルのインデックス `booking_products`
+--
+ALTER TABLE `booking_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `booking_products_product_id_foreign` (`product_id`);
+
+--
+-- テーブルのインデックス `booking_product_appointment_slots`
+--
+ALTER TABLE `booking_product_appointment_slots`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `booking_product_appointment_slots_booking_product_id_foreign` (`booking_product_id`);
+
+--
+-- テーブルのインデックス `booking_product_default_slots`
+--
+ALTER TABLE `booking_product_default_slots`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `booking_product_default_slots_booking_product_id_foreign` (`booking_product_id`);
+
+--
+-- テーブルのインデックス `booking_product_event_tickets`
+--
+ALTER TABLE `booking_product_event_tickets`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `booking_product_event_tickets_booking_product_id_foreign` (`booking_product_id`);
+
+--
+-- テーブルのインデックス `booking_product_event_ticket_translations`
+--
+ALTER TABLE `booking_product_event_ticket_translations`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `booking_product_event_ticket_translations_locale_unique` (`booking_product_event_ticket_id`,`locale`);
+
+--
+-- テーブルのインデックス `booking_product_rental_slots`
+--
+ALTER TABLE `booking_product_rental_slots`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `booking_product_rental_slots_booking_product_id_foreign` (`booking_product_id`);
+
+--
+-- テーブルのインデックス `booking_product_table_slots`
+--
+ALTER TABLE `booking_product_table_slots`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `booking_product_table_slots_booking_product_id_foreign` (`booking_product_id`);
 
 --
 -- テーブルのインデックス `cart`
@@ -6409,6 +6755,12 @@ ALTER TABLE `customer_addresses`
   ADD KEY `customer_addresses_customer_id_foreign` (`customer_id`);
 
 --
+-- テーブルのインデックス `customer_documents`
+--
+ALTER TABLE `customer_documents`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- テーブルのインデックス `customer_groups`
 --
 ALTER TABLE `customer_groups`
@@ -6429,6 +6781,60 @@ ALTER TABLE `downloadable_link_purchased`
   ADD KEY `downloadable_link_purchased_customer_id_foreign` (`customer_id`),
   ADD KEY `downloadable_link_purchased_order_id_foreign` (`order_id`),
   ADD KEY `downloadable_link_purchased_order_item_id_foreign` (`order_item_id`);
+
+--
+-- テーブルのインデックス `dropship_ali_express_attributes`
+--
+ALTER TABLE `dropship_ali_express_attributes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dropship_ali_express_attributes_attribute_id_foreign` (`attribute_id`);
+
+--
+-- テーブルのインデックス `dropship_ali_express_attribute_options`
+--
+ALTER TABLE `dropship_ali_express_attribute_options`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ali_attribute_options_attribute_id_foreign` (`ali_express_attribute_id`),
+  ADD KEY `ali_attribute_options_attribute_option_id_foreign` (`attribute_option_id`);
+
+--
+-- テーブルのインデックス `dropship_ali_express_orders`
+--
+ALTER TABLE `dropship_ali_express_orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dropship_ali_express_orders_order_id_foreign` (`order_id`);
+
+--
+-- テーブルのインデックス `dropship_ali_express_order_items`
+--
+ALTER TABLE `dropship_ali_express_order_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dropship_ali_express_order_items_ali_express_product_id_foreign` (`ali_express_product_id`),
+  ADD KEY `dropship_ali_express_order_items_order_item_id_foreign` (`order_item_id`),
+  ADD KEY `dropship_ali_express_order_items_ali_express_order_id_foreign` (`ali_express_order_id`),
+  ADD KEY `dropship_ali_express_order_items_parent_id_foreign` (`parent_id`);
+
+--
+-- テーブルのインデックス `dropship_ali_express_products`
+--
+ALTER TABLE `dropship_ali_express_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dropship_ali_express_products_product_id_foreign` (`product_id`),
+  ADD KEY `dropship_ali_express_products_parent_id_foreign` (`parent_id`);
+
+--
+-- テーブルのインデックス `dropship_ali_express_product_images`
+--
+ALTER TABLE `dropship_ali_express_product_images`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dropship_ali_express_product_images_product_image_id_foreign` (`product_image_id`);
+
+--
+-- テーブルのインデックス `dropship_ali_express_product_reviews`
+--
+ALTER TABLE `dropship_ali_express_product_reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `dropship_ali_express_product_reviews_product_review_id_foreign` (`product_review_id`);
 
 --
 -- テーブルのインデックス `inventory_sources`
@@ -6786,6 +7192,14 @@ ALTER TABLE `velocity_contents_translations`
   ADD KEY `velocity_contents_translations_content_id_foreign` (`content_id`);
 
 --
+-- テーブルのインデックス `velocity_customer_compare_products`
+--
+ALTER TABLE `velocity_customer_compare_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `velocity_customer_compare_products_product_flat_id_foreign` (`product_flat_id`),
+  ADD KEY `velocity_customer_compare_products_customer_id_foreign` (`customer_id`);
+
+--
 -- テーブルのインデックス `velocity_meta_data`
 --
 ALTER TABLE `velocity_meta_data`
@@ -6876,6 +7290,54 @@ ALTER TABLE `attribute_option_translations`
 --
 ALTER TABLE `attribute_translations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- テーブルのAUTO_INCREMENT `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `booking_products`
+--
+ALTER TABLE `booking_products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `booking_product_appointment_slots`
+--
+ALTER TABLE `booking_product_appointment_slots`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `booking_product_default_slots`
+--
+ALTER TABLE `booking_product_default_slots`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `booking_product_event_tickets`
+--
+ALTER TABLE `booking_product_event_tickets`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `booking_product_event_ticket_translations`
+--
+ALTER TABLE `booking_product_event_ticket_translations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `booking_product_rental_slots`
+--
+ALTER TABLE `booking_product_rental_slots`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `booking_product_table_slots`
+--
+ALTER TABLE `booking_product_table_slots`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- テーブルのAUTO_INCREMENT `cart`
@@ -7052,6 +7514,12 @@ ALTER TABLE `customer_addresses`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- テーブルのAUTO_INCREMENT `customer_documents`
+--
+ALTER TABLE `customer_documents`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- テーブルのAUTO_INCREMENT `customer_groups`
 --
 ALTER TABLE `customer_groups`
@@ -7061,6 +7529,48 @@ ALTER TABLE `customer_groups`
 -- テーブルのAUTO_INCREMENT `downloadable_link_purchased`
 --
 ALTER TABLE `downloadable_link_purchased`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `dropship_ali_express_attributes`
+--
+ALTER TABLE `dropship_ali_express_attributes`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `dropship_ali_express_attribute_options`
+--
+ALTER TABLE `dropship_ali_express_attribute_options`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `dropship_ali_express_orders`
+--
+ALTER TABLE `dropship_ali_express_orders`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `dropship_ali_express_order_items`
+--
+ALTER TABLE `dropship_ali_express_order_items`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `dropship_ali_express_products`
+--
+ALTER TABLE `dropship_ali_express_products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `dropship_ali_express_product_images`
+--
+ALTER TABLE `dropship_ali_express_product_images`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `dropship_ali_express_product_reviews`
+--
+ALTER TABLE `dropship_ali_express_product_reviews`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -7103,7 +7613,7 @@ ALTER TABLE `merchant_sources`
 -- テーブルのAUTO_INCREMENT `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- テーブルのAUTO_INCREMENT `orders`
@@ -7310,6 +7820,12 @@ ALTER TABLE `velocity_contents_translations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- テーブルのAUTO_INCREMENT `velocity_customer_compare_products`
+--
+ALTER TABLE `velocity_customer_compare_products`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- テーブルのAUTO_INCREMENT `velocity_meta_data`
 --
 ALTER TABLE `velocity_meta_data`
@@ -7367,6 +7883,55 @@ ALTER TABLE `attribute_option_translations`
 --
 ALTER TABLE `attribute_translations`
   ADD CONSTRAINT `attribute_translations_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `bookings`
+--
+ALTER TABLE `bookings`
+  ADD CONSTRAINT `bookings_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bookings_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE SET NULL;
+
+--
+-- テーブルの制約 `booking_products`
+--
+ALTER TABLE `booking_products`
+  ADD CONSTRAINT `booking_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `booking_product_appointment_slots`
+--
+ALTER TABLE `booking_product_appointment_slots`
+  ADD CONSTRAINT `booking_product_appointment_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `booking_product_default_slots`
+--
+ALTER TABLE `booking_product_default_slots`
+  ADD CONSTRAINT `booking_product_default_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `booking_product_event_tickets`
+--
+ALTER TABLE `booking_product_event_tickets`
+  ADD CONSTRAINT `booking_product_event_tickets_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `booking_product_event_ticket_translations`
+--
+ALTER TABLE `booking_product_event_ticket_translations`
+  ADD CONSTRAINT `booking_product_event_ticket_translations_locale_foreign` FOREIGN KEY (`booking_product_event_ticket_id`) REFERENCES `booking_product_event_tickets` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `booking_product_rental_slots`
+--
+ALTER TABLE `booking_product_rental_slots`
+  ADD CONSTRAINT `booking_product_rental_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `booking_product_table_slots`
+--
+ALTER TABLE `booking_product_table_slots`
+  ADD CONSTRAINT `booking_product_table_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
 
 --
 -- テーブルの制約 `cart`
@@ -7580,6 +8145,53 @@ ALTER TABLE `downloadable_link_purchased`
   ADD CONSTRAINT `downloadable_link_purchased_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `downloadable_link_purchased_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `downloadable_link_purchased_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `dropship_ali_express_attributes`
+--
+ALTER TABLE `dropship_ali_express_attributes`
+  ADD CONSTRAINT `dropship_ali_express_attributes_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `dropship_ali_express_attribute_options`
+--
+ALTER TABLE `dropship_ali_express_attribute_options`
+  ADD CONSTRAINT `ali_attribute_options_attribute_id_foreign` FOREIGN KEY (`ali_express_attribute_id`) REFERENCES `dropship_ali_express_attributes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ali_attribute_options_attribute_option_id_foreign` FOREIGN KEY (`attribute_option_id`) REFERENCES `attribute_options` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `dropship_ali_express_orders`
+--
+ALTER TABLE `dropship_ali_express_orders`
+  ADD CONSTRAINT `dropship_ali_express_orders_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `dropship_ali_express_order_items`
+--
+ALTER TABLE `dropship_ali_express_order_items`
+  ADD CONSTRAINT `dropship_ali_express_order_items_ali_express_order_id_foreign` FOREIGN KEY (`ali_express_order_id`) REFERENCES `dropship_ali_express_orders` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `dropship_ali_express_order_items_ali_express_product_id_foreign` FOREIGN KEY (`ali_express_product_id`) REFERENCES `dropship_ali_express_products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `dropship_ali_express_order_items_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `dropship_ali_express_order_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `dropship_ali_express_order_items` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `dropship_ali_express_products`
+--
+ALTER TABLE `dropship_ali_express_products`
+  ADD CONSTRAINT `dropship_ali_express_products_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `dropship_ali_express_products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `dropship_ali_express_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `dropship_ali_express_product_images`
+--
+ALTER TABLE `dropship_ali_express_product_images`
+  ADD CONSTRAINT `dropship_ali_express_product_images_product_image_id_foreign` FOREIGN KEY (`product_image_id`) REFERENCES `product_images` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `dropship_ali_express_product_reviews`
+--
+ALTER TABLE `dropship_ali_express_product_reviews`
+  ADD CONSTRAINT `dropship_ali_express_product_reviews_product_review_id_foreign` FOREIGN KEY (`product_review_id`) REFERENCES `product_reviews` (`id`) ON DELETE CASCADE;
 
 --
 -- テーブルの制約 `invoices`
@@ -7827,6 +8439,13 @@ ALTER TABLE `users`
 --
 ALTER TABLE `velocity_contents_translations`
   ADD CONSTRAINT `velocity_contents_translations_content_id_foreign` FOREIGN KEY (`content_id`) REFERENCES `velocity_contents` (`id`) ON DELETE CASCADE;
+
+--
+-- テーブルの制約 `velocity_customer_compare_products`
+--
+ALTER TABLE `velocity_customer_compare_products`
+  ADD CONSTRAINT `velocity_customer_compare_products_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `velocity_customer_compare_products_product_flat_id_foreign` FOREIGN KEY (`product_flat_id`) REFERENCES `product_flat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- テーブルの制約 `wishlist`

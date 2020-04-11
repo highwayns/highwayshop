@@ -36,7 +36,9 @@
                     title="{{ $product->name }}"
                     href="{{ route('shop.productOrCategory.index', $product->url_key) }}">
 
-                    <img src="{{ $productBaseImage['medium_image_url'] }}" />
+                    <img
+                        src="{{ $productBaseImage['medium_image_url'] }}"
+                        :onerror="`this.src='${this.$root.baseUrl}/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'`" />
                 </a>
             </div>
 
@@ -65,6 +67,7 @@
                     <div class="cart-wish-wrap mt5">
                         @include ('shop::products.add-to-cart', [
                             'product' => $product,
+                            'showCompare' => true,
                             'addWishlistClass' => 'pl10',
                             'addToCartBtnClass' => 'medium-padding'
                         ])
@@ -82,10 +85,11 @@
                 <img
 					loading="lazy"
                     class="card-img-top"
-                    src="{{ $productBaseImage['medium_image_url'] }}"
-                    alt="{{ $product->name }}">
+                    alt="{{ $product->name }}"
+                    src="{{ $productBaseImage['large_image_url'] }}"
+                    :onerror="`this.src='${this.$root.baseUrl}/vendor/webkul/ui/assets/images/product/large-product-placeholder.png'`" />
 
-                 {{-- <quick-view-btn details="{{ $product }}"></quick-view-btn> --}}
+                    {{-- <product-quick-view-btn :quick-view-details="product"></product-quick-view-btn> --}}
             </a>
 
             <div class="card-body">
@@ -116,12 +120,15 @@
                     </div>
                 @endif
 
-                <div class="cart-wish-wrap row col-12 no-padding ml0">
+                <div class="cart-wish-wrap no-padding ml0">
                     @include ('shop::products.add-to-cart', [
-                        'product' => $product,
-                        'addWishlistClass' => 'col-lg-4 col-md-4 col-sm-12 offset-lg-4 pr0',
+                        'showCompare'       => true,
+                        'product'           => $product,
+                        'btnText'           => $btnText ?? null,
+                        'moveToCart'        => $moveToCart ?? null,
+                        'reloadPage'        => $reloadPage ?? null,
+                        'addToCartForm'     => $addToCartForm ?? false,
                         'addToCartBtnClass' => $addToCartBtnClass ?? '',
-                        'btnText' => $btnText ?? null
                     ])
                 </div>
             </div>

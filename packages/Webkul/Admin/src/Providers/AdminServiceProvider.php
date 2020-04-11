@@ -8,12 +8,6 @@ use Illuminate\Contracts\Debug\ExceptionHandler;
 use Webkul\Admin\Exceptions\Handler;
 use Webkul\Core\Tree;
 
-/**
- * Admin service provider
- *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
- */
 class AdminServiceProvider extends ServiceProvider
 {
     /**
@@ -139,8 +133,9 @@ class AdminServiceProvider extends ServiceProvider
     {
         static $tree;
 
-        if ($tree)
+        if ($tree) {
             return $tree;
+        }
 
         $tree = Tree::create();
 

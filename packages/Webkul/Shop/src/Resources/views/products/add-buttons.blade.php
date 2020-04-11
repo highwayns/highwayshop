@@ -7,4 +7,8 @@
     </form>
 
     @include('shop::products.wishlist')
+
+    @include('shop::products.compare', [
+        'productId' => $product->id
+    ])
 </div>

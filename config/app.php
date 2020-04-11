@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'ja',
+    'locale' => env('APP_LOCALE', 'ja'),
 
     /*
     |--------------------------------------------------------------------------
@@ -116,8 +116,8 @@ return [
     | Here you may specify the base currency code for your application.
     |
     */
-
-    'currency' => env('APP_CURRENCY','JPY'),
+    
+    'currency' => env('APP_CURRENCY', 'JPY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -153,7 +153,7 @@ return [
     /*
         Application Version
     */
-    'version' => env('APP_VERSION', '0.1.6'),
+    'version' => env('APP_VERSION', '1.1.0'),
 
     /**
      * Blacklisting attributes while debugging
@@ -267,6 +267,7 @@ return [
         Webkul\Rule\Providers\RuleServiceProvider::class,
         Webkul\CMS\Providers\CMSServiceProvider::class,
         Webkul\Velocity\Providers\VelocityServiceProvider::class,
+        Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
         Highwayns\Agent\Providers\AgentServiceProvider::class,
         Highwayns\AgentAdmin\Providers\AgentAdminServiceProvider::class,
         Highwayns\Merchant\Providers\MerchantServiceProvider::class,
@@ -325,6 +326,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Datagrid' => Webkul\Ui\DataGrid\Facades\DataGrid::class,
+        'ProductGrid' => Webkul\Ui\DataGrid\Facades\ProductGrid::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Cart' => Webkul\Checkout\Facades\Cart::class,
         'Core' => Webkul\Core\Facades\Core::class,

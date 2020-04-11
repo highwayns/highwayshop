@@ -4,12 +4,6 @@ namespace Webkul\User\Http\Controllers;
 
 use Auth;
 
-/**
- * Admin user session controller
- *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
- */
 class SessionController extends Controller
 {
     /**
@@ -63,8 +57,8 @@ class SessionController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'email' => 'required|email',
-            'password' => 'required'
+            'email'   => 'required|email',
+            'password' => 'required',
         ]);
 
         $remember = request('remember');

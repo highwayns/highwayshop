@@ -124,7 +124,7 @@
     margin-top: 10px;
 }
 .mt15 {
-    margin-top: 15px;
+    margin-top: 15px !important;
 }
 .mr5 {
     margin-right: 5px;
@@ -448,7 +448,14 @@
             height: 270px;
             max-width: 200px;
             max-height: 200px;
+            position: relative;
             background: #f2f2f2;
+
+            .quick-view-btn-container {
+                button {
+                    left: calc(50% - 40px);
+                }
+            }
         }
 
         .product-information {
@@ -485,16 +492,26 @@
 
         .wishlist-icon {
             height: 40px;
-            display: table;
+            vertical-align: top;
+            display: inline-table;
+            padding-left: 0 !important;
 
             i {
                 display: table-cell;
                 vertical-align: middle;
+                padding-left: 0 !important;
             }
         }
 
+        .compare-icon {
+            padding-left: 0;
+            display: inline-table;
+        }
+
         .add-to-cart-btn {
+            float: left;
             max-width: 150px;
+            display: inline-block;
         }
     }
 
@@ -666,20 +683,20 @@ a {
         text-decoration: none !important;
     }
 
-    &.remove-decoration {
-        text-decoration: none;
-    }
-
-    &.remove-decoration:hover,
-    &.remove-decoration:active,
-    &.remove-decoration:focus {
-        text-decoration: none;
-    }
-
     &.active-hover {
         &:hover {
             color: $link-color !important;
             text-decoration: underline !important;
+        }
+    }
+
+    &.remove-decoration {
+        text-decoration: none !important;
+
+        &:hover,
+        &:active,
+        &:focus {
+            text-decoration: none !important;
         }
     }
 }
@@ -876,4 +893,17 @@ button[disabled] {
     z-index: 5000;
     position: fixed;
     background: rgba(255, 255, 255, 0.9);
+}
+
+.compare-icon,
+.wishlist-icon {
+    height: 38px;
+    display: table;
+    cursor: pointer;
+    margin-left: 10px;
+
+    i {
+        display: table-cell;
+        vertical-align: middle;
+    }
 }

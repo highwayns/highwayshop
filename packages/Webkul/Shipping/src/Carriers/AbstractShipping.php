@@ -4,15 +4,8 @@ namespace Webkul\Shipping\Carriers;
 
 use Illuminate\Support\Facades\Config;
 
-/**
- * Abstract class Shipping
- *
- * @author    Tei Gun <tei952@hotmail.com>
- * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
- */
 abstract class AbstractShipping
 {
-
     abstract public function calculate();
 
     /**
@@ -62,9 +55,8 @@ abstract class AbstractShipping
     /**
      * Retrieve information from payment configuration
      *
-     * @param string $field
-     * @param int|string|null $channelId
-     *
+     * @param  string  $field
+     * @param  int|string|null  $channelId
      * @return mixed
      */
     public function getConfigData($field)
@@ -72,4 +64,3 @@ abstract class AbstractShipping
         return core()->getConfigData('sales.carriers.' . $this->getCode() . '.' . $field);
     }
 }
-?>

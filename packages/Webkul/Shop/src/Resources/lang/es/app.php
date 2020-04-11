@@ -245,7 +245,14 @@ return [
                     'date' => 'Fecha',
                     'status' => 'Estado',
                     'total' => 'Total',
-                    'order_number' => 'Número de pedido'
+                    'order_number' => 'Número de pedido',
+                    'processing' => 'Processing',
+                    'completed' => 'Completed',
+                    'canceled' => 'Canceled',
+                    'closed' => 'Closed',
+                    'pending' => 'Pending',
+                    'pending-payment' => 'Pending Payment',
+                    'fraud' => 'Fraud'
                 ],
 
                 'view' => [
@@ -374,7 +381,8 @@ return [
         'out-of-stock' => 'Sin estoc',
         'view-all' => 'Ver todo',
         'select-above-options' => 'Primero selecciona las opciones de arriba.',
-        'less-quantity' => 'La cantidad no debe ser inferior a uno.'
+        'less-quantity' => 'La cantidad no debe ser inferior a uno.',
+        'available' => 'Available'
     ],
 
     // 'reviews' => [
