@@ -23,7 +23,7 @@ class VendorServiceProvider extends ServiceProvider
         
         $this->loadRoutesFrom(__DIR__ . '/../Http/routes.php');
 
-        // $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'admin');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'vendoradmin');
 
         $router->aliasMiddleware('vendoradmin', BouncerMiddleware::class);
 
@@ -32,8 +32,6 @@ class VendorServiceProvider extends ServiceProvider
         $this->composeView();
 
         $this->registerACL();
-
-        $this->registerConfig();
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
@@ -111,6 +109,7 @@ class VendorServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerBouncer();
+        $this->registerConfig();
     }
 
     /**

@@ -23,7 +23,7 @@ class AgentServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__ . '/../Http/routes.php');
 
-        // $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'admin');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'agentadmin');
 
         $router->aliasMiddleware('agentadmin', BouncerMiddleware::class);
 

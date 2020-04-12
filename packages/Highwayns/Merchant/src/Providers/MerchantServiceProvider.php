@@ -25,7 +25,7 @@ class MerchantServiceProvider extends ServiceProvider
 
         $router->aliasMiddleware('agentadmin', BouncerMiddleware::class);
 
-        // $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'admin');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'merchantadmin');
 
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'admin');
 
@@ -33,8 +33,6 @@ class MerchantServiceProvider extends ServiceProvider
 
         $this->registerACL();
         
-        $this->registerConfig();
-
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
         $this->app->register(ModuleServiceProvider::class);
@@ -111,6 +109,7 @@ class MerchantServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerBouncer();
+        $this->registerConfig();
     }
 
     /**
