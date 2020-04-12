@@ -35,7 +35,7 @@ class VendorRoleController extends Controller
      */
     public function __construct(RoleRepository $roleRepository)
     {
-        $this->middleware('vendoradmin');
+        $this->middleware('admin');
 
         $this->roleRepository = $roleRepository;
 

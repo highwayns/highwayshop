@@ -97,7 +97,7 @@ class ResetPasswordController extends Controller
 
         event(new PasswordReset($admin));
 
-        auth()->guard('merchantadmin')->login($admin);
+        auth()->guard('admin')->login($admin);
     }
 
     /**
@@ -107,6 +107,6 @@ class ResetPasswordController extends Controller
      */
     public function broker()
     {
-        return Password::broker('merchantadmins');
+        return Password::broker('admins');
     }
 }

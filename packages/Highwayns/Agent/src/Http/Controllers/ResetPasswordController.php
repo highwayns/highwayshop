@@ -97,7 +97,7 @@ class ResetPasswordController extends Controller
 
         event(new PasswordReset($admin));
 
-        auth()->guard('agentadmin')->login($admin);
+        auth()->guard('admin')->login($admin);
     }
 
     /**
@@ -107,6 +107,6 @@ class ResetPasswordController extends Controller
      */
     public function broker()
     {
-        return Password::broker('agentadmins');
+        return Password::broker('admins');
     }
 }

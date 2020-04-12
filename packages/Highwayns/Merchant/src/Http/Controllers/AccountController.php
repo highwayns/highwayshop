@@ -36,7 +36,7 @@ class AccountController extends Controller
      */
     public function edit()
     {
-        $user = auth()->guard('merchantadmin')->user();
+        $user = auth()->guard('admin')->user();
 
         return view($this->_config['view'], compact('user'));
     }
@@ -48,7 +48,7 @@ class AccountController extends Controller
      */
     public function update()
     {
-        $user = auth()->guard('merchantadmin')->user();
+        $user = auth()->guard('admin')->user();
 
         $this->validate(request(), [
             'name' => 'required',
@@ -59,7 +59,7 @@ class AccountController extends Controller
 
         $data = request()->input();
 
-        if (! Hash::check($data['current_password'], auth()->guard('merchantadmin')->user()->password)) {
+        if (! Hash::check($data['current_password'], auth()->guard('admin')->user()->password)) {
             session()->flash('warning', trans('admin::app.users.users.password-match'));
 
             return redirect()->back();

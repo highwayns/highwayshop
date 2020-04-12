@@ -35,7 +35,7 @@ class AgentRoleController extends Controller
      */
     public function __construct(RoleRepository $roleRepository)
     {
-        $this->middleware('agentadmin');
+        $this->middleware('admin');
 
         $this->roleRepository = $roleRepository;
 

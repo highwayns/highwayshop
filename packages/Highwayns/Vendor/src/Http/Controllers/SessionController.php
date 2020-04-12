@@ -26,7 +26,7 @@ class SessionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('vendoradmin')->except(['create','store']);
+        $this->middleware('admin')->except(['create','store']);
 
         $this->_config = request('_config');
 
@@ -40,13 +40,13 @@ class SessionController extends Controller
      */
     public function create()
     {
-        if (auth()->guard('vendoradmin')->check()) {
-            return redirect()->route('vendoradmin.dashboard.index');
+        if (auth()->guard('admin')->check()) {
+            return redirect()->route('admin.dashboard.index');
         } else {
-            if (strpos(url()->previous(), 'vendoradmin') !== false) {
+            if (strpos(url()->previous(), 'admin') !== false) {
                 $intendedUrl = url()->previous();
             } else {
-                $intendedUrl = route('vendoradmin.dashboard.index');
+                $intendedUrl = route('admin.dashboard.index');
             }
 
             session()->put('url.intended', $intendedUrl);
@@ -69,18 +69,18 @@ class SessionController extends Controller
 
         $remember = request('remember');
 
-        if (! auth()->guard('vendoradmin')->attempt(request(['email', 'password']), $remember)) {
+        if (! auth()->guard('admin')->attempt(request(['email', 'password']), $remember)) {
             session()->flash('error', trans('admin::app.users.users.login-error'));
 
             return redirect()->back();
         }
 
-        if (auth()->guard('vendoradmin')->user()->status == 0) {
+        if (auth()->guard('admin')->user()->status == 0) {
             session()->flash('warning', trans('admin::app.users.users.activate-warning'));
 
-            auth()->guard('vendoradmin')->logout();
+            auth()->guard('admin')->logout();
 
-            return redirect()->route('vendoradmin.session.create');
+            return redirect()->route('admin.session.create');
         }
 
         return redirect()->intended(route($this->_config['redirect']));
@@ -94,7 +94,7 @@ class SessionController extends Controller
      */
     public function destroy($id)
     {
-        auth()->guard('vendoradmin')->logout();
+        auth()->guard('admin')->logout();
 
         return redirect()->route($this->_config['redirect']);
     }

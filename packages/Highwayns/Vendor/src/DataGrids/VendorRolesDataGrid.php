@@ -1,17 +1,17 @@
 <?php
 
-namespace Webkul\Admin\DataGrids;
+namespace Highwayns\Vendor\DataGrids;
 
 use Webkul\Ui\DataGrid\DataGrid;
 use DB;
 
 /**
- * VendorSourcesDataGrid Class
+ * RolesDataGrid Class
  *
  * @author Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
  * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
-class VendorSourcesDataGrid extends DataGrid
+class VendorRolesDataGrid extends DataGrid
 {
     protected $index = 'id';
 
@@ -19,7 +19,7 @@ class VendorSourcesDataGrid extends DataGrid
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('vendor_sources')->addSelect('id', 'name', 'name_kana', 'created_at');
+        $queryBuilder = DB::table('vendor_roles')->addSelect('id', 'name', 'permission_type');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -32,6 +32,7 @@ class VendorSourcesDataGrid extends DataGrid
             'type' => 'number',
             'searchable' => false,
             'sortable' => true,
+            'width' => '40px',
             'filterable' => true
         ]);
 
@@ -45,38 +46,27 @@ class VendorSourcesDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index' => 'name_kana',
-            'label' => trans('admin::app.datagrid.name_kana'),
+            'index' => 'permission_type',
+            'label' => trans('admin::app.datagrid.permission-type'),
             'type' => 'string',
             'searchable' => true,
             'sortable' => true,
             'filterable' => true
         ]);
-
-        $this->addColumn([
-            'index' => 'created_at',
-            'label' => trans('admin::app.datagrid.created_at'),
-            'type' => 'datetime',
-            'searchable' => false,
-            'sortable' => true,
-            'filterable' => true
-        ]);
-
     }
 
     public function prepareActions() {
         $this->addAction([
-            'title' => 'Edit Vendor Source',
+            'title' => 'Edit',
             'method' => 'GET', // use GET request only for redirect purposes
-            'route' => 'admin.vendor_sources.edit',
+            'route' => 'admin.vendorroles.edit',
             'icon' => 'icon pencil-lg-icon'
         ]);
 
         $this->addAction([
-            'title' => 'Delete Vendor Source',
+            'title' => 'Delete',
             'method' => 'POST', // use GET request only for redirect purposes
-            'route' => 'admin.vendor_sources.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'Exchange Rate']),
+            'route' => 'admin.vendorroles.delete',
             'icon' => 'icon trash-icon'
         ]);
     }

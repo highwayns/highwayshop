@@ -12,14 +12,14 @@
             </div>
 
             <div class="page-action">
-                <a href="{{ route('admin.vendorroles.create') }}" class="btn btn-lg btn-primary">
+                <a href="{{ route('admin.agentroles.create') }}" class="btn btn-lg btn-primary">
                     {{ __('Add Role') }}
                 </a>
             </div>
         </div>
 
         <div class="page-content">
-            @inject('roles','Webkul\Admin\DataGrids\VendorRolesDataGrid')
+            @inject('roles','Highwayns\Agent\DataGrids\AgentRolesDataGrid')
             {!! $roles->render() !!}
         </div>
     </div>

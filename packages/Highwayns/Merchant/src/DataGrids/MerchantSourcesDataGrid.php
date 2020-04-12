@@ -1,17 +1,17 @@
 <?php
 
-namespace Webkul\Admin\DataGrids;
+namespace Highwayns\Merchant\DataGrids;
 
 use Webkul\Ui\DataGrid\DataGrid;
 use DB;
 
 /**
- * AgentRolesDataGrid Class
+ * MerchantSourcesDataGrid Class
  *
  * @author Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
  * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
-class AgentRolesDataGrid extends DataGrid
+class MerchantSourcesDataGrid extends DataGrid
 {
     protected $index = 'id';
 
@@ -19,7 +19,7 @@ class AgentRolesDataGrid extends DataGrid
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('agent_roles')->addSelect('id', 'name', 'permission_type');
+        $queryBuilder = DB::table('merchant_sources')->addSelect('id', 'name', 'vendor_id', 'agency_group_id', 'created_at');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -32,7 +32,6 @@ class AgentRolesDataGrid extends DataGrid
             'type' => 'number',
             'searchable' => false,
             'sortable' => true,
-            'width' => '40px',
             'filterable' => true
         ]);
 
@@ -46,27 +45,47 @@ class AgentRolesDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index' => 'permission_type',
-            'label' => trans('admin::app.datagrid.permission-type'),
+            'index' => 'vendor_id',
+            'label' => trans('admin::app.datagrid.vendor_id'),
             'type' => 'string',
             'searchable' => true,
             'sortable' => true,
             'filterable' => true
         ]);
+
+        $this->addColumn([
+            'index' => 'agency_group_id',
+            'label' => trans('admin::app.datagrid.agency_group_id'),
+            'type' => 'string',
+            'searchable' => true,
+            'sortable' => true,
+            'filterable' => true
+        ]);
+
+        $this->addColumn([
+            'index' => 'created_at',
+            'label' => trans('admin::app.datagrid.created_at'),
+            'type' => 'datetime',
+            'searchable' => false,
+            'sortable' => true,
+            'filterable' => true
+        ]);
+
     }
 
     public function prepareActions() {
         $this->addAction([
-            'title' => 'Edit',
+            'title' => 'Edit Merchant Source',
             'method' => 'GET', // use GET request only for redirect purposes
-            'route' => 'admin.agentroles.edit',
+            'route' => 'admin.merchant_sources.edit',
             'icon' => 'icon pencil-lg-icon'
         ]);
 
         $this->addAction([
-            'title' => 'Delete',
+            'title' => 'Delete Merchant Source',
             'method' => 'POST', // use GET request only for redirect purposes
-            'route' => 'admin.agentroles.delete',
+            'route' => 'admin.merchant_sources.delete',
+            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'Exchange Rate']),
             'icon' => 'icon trash-icon'
         ]);
     }

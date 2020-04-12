@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\DataGrids;
+namespace Highwayns\Agent\DataGrids;
 
 use Webkul\Ui\DataGrid\DataGrid;
 use DB;

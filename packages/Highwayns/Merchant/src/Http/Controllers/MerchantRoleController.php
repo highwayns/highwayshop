@@ -35,7 +35,7 @@ class MerchantRoleController extends Controller
      */
     public function __construct(RoleRepository $roleRepository)
     {
-        $this->middleware('merchantadmin');
+        $this->middleware('admin');
 
         $this->roleRepository = $roleRepository;
 

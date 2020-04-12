@@ -1,17 +1,17 @@
 <?php
 
-namespace Webkul\Admin\DataGrids;
+namespace Highwayns\Merchant\DataGrids;
 
 use Webkul\Ui\DataGrid\DataGrid;
 use DB;
 
 /**
- * RolesDataGrid Class
+ * MerchantRolesDataGrid Class
  *
  * @author Prashant Singh <prashant.singh852@webkul.com> @prashant-webkul
  * @copyright 2019 Highwayns Software Tokyo Ltd (http://www.highwayns.com)
  */
-class VendorRolesDataGrid extends DataGrid
+class MerchantRolesDataGrid extends DataGrid
 {
     protected $index = 'id';
 
@@ -19,7 +19,7 @@ class VendorRolesDataGrid extends DataGrid
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('vendor_roles')->addSelect('id', 'name', 'permission_type');
+        $queryBuilder = DB::table('merchant_roles')->addSelect('id', 'name', 'permission_type');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -59,14 +59,14 @@ class VendorRolesDataGrid extends DataGrid
         $this->addAction([
             'title' => 'Edit',
             'method' => 'GET', // use GET request only for redirect purposes
-            'route' => 'admin.vendorroles.edit',
+            'route' => 'admin.merchantroles.edit',
             'icon' => 'icon pencil-lg-icon'
         ]);
 
         $this->addAction([
             'title' => 'Delete',
             'method' => 'POST', // use GET request only for redirect purposes
-            'route' => 'admin.vendorroles.delete',
+            'route' => 'admin.merchantroles.delete',
             'icon' => 'icon trash-icon'
         ]);
     }
