@@ -2,65 +2,65 @@
 
 return [
     'layouts' => [
-        'agentroles' => 'ロール一覧',        
-        'agent-sources' => '代理店ソース一覧'
+        'merchantroles' => 'merchantroles',        
+        'merchant-sources' => 'merchant-sources'
     ],
 
     'acl' => [
-        'agent-sources' => '代理店ソース一覧'
+        'merchant-sources' => 'merchant-sources'
     ],
 
     'datagrid' => [
-        'agent-source' => '代理店ソース',
+        'merchant-source' => 'merchant-source',
     ],
 
     'sales' => [
 
         'shipments' => [
-            'agent-source' => '代理店ソース'
+            'merchant-source' => 'merchant-source'
         ]
     ],
 
     'settings' => [
-        'agent_sources' => [
-            'title' => '代理店一覧',
-            'add-title' => '代理店追加',
-            'edit-title' => '代理店編集',
-            'save-btn-title' => '代理店保存',
-            'general' => '一般',
-            'id' =>'代理店ID',
-            'email' => 'Eメール',
-            'name' => '名称',
-            'password' => 'パスワード',
-            'confirm-password' => 'パスワード（確認）',
-            'status-and-role' => 'ステータス＆ロール',
-            'role' => 'ロール',
-            'status' => 'ステータス',
-            'account-is-active' => 'アカウントは活性化している',
-            'vendor_id' => 'ベンダーID',
-            'agency_group_id' => '代理店グループID',
-            'postal_code' => '郵便番号',
-            'pref' => '都道府県',
-            'city' => '市町村',
-            'address' => '番地',
-            'building_name' => '建物名',
-            'tel' => '電話番号',
-            'fax' => 'FAX番号',
-            'agency_denki_shop_code' => 'SmartCIS代理店ID',
-            'created_at' => '作成日時',
-            'created_user_id' => '作成ユーザーID',
-            'updated_at' => '更新日時',
-            'updated_user_id' => '更新ユーザーID',
-            'create-success' => 'ベンダー作成成功.',
-            'update-success' => 'ベンダー更新成功.',
-            'delete-success' => 'ベンダー削除成功.',
-            'last-delete-error' => '少なくとも１ベンダーが必要.',
+        'merchant_sources' => [
+            'title' => 'title',
+            'add-title' => 'add-title',
+            'edit-title' => 'edit-title',
+            'save-btn-title' => 'save-btn-title',
+            'general' => 'general',
+            'id' =>'ID',
+            'email' => 'email',
+            'name' => 'name',
+            'password' => 'password',
+            'confirm-password' => 'confirm-password',
+            'status-and-role' => 'status-and-role',
+            'role' => 'role',
+            'status' => 'status',
+            'account-is-active' => 'account-is-active',
+            'vendor_id' => 'vendor_id',
+            'agency_group_id' => 'agency_group_id',
+            'postal_code' => 'postal_code',
+            'pref' => 'pref',
+            'city' => 'city',
+            'address' => 'address',
+            'building_name' => 'building_name',
+            'tel' => 'tel',
+            'fax' => 'fax',
+            'agency_denki_shop_code' => 'agency_denki_shop_code',
+            'created_at' => 'created_at',
+            'created_user_id' => 'created_user_id',
+            'updated_at' => 'updated_at',
+            'updated_user_id' => 'updated_user_id',
+            'create-success' => 'create-success.',
+            'update-success' => 'update-success.',
+            'delete-success' => 'delete-success.',
+            'last-delete-error' => 'last-delete-error.',
         ]
     ],
 
     'admin' => [
         'system' => [
-            'agent' => '代理店',
+            'merchant' => 'merchant',
         ]
     ]
 ];

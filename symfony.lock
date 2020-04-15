@@ -1,6 +1,6 @@
 {
-    "haydenpierce/class-finder": {
-        "version": "0.4.0"
+    "codeception/module-webdriver": {
+        "version": "1.0.7"
     },
     "laravel/socialite": {
         "version": "v4.3.2"
@@ -18,7 +18,7 @@
         "version": "v6.1.2"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "symfony/flex": {
         "version": "1.0",

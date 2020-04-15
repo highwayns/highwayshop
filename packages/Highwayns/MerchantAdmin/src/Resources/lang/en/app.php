@@ -75,7 +75,9 @@ return [
         'tax-rates' => 'Tax Rates',
         'promotion' => 'Promotions',
         'discount' => 'Discount',
-        'cms' => 'CMS'
+        'cms' => 'CMS',
+        'merchantroles' => 'merchantroles',
+        'merchant-sources' => 'merchant-sources'
     ],
 
     'acl' => [
@@ -110,7 +112,8 @@ return [
         'create' => 'Add',
         'delete' => 'Delete',
         'promotions' => 'Promotions',
-        'cart-rules' => 'Cart Rules'
+        'cart-rules' => 'Cart Rules',
+        'merchant-sources' => 'merchant-sources'
     ],
 
     'dashboard' => [
@@ -203,7 +206,8 @@ return [
         'for-guest' => 'For Guest',
         'order_number' => 'Order Number',
         'refund-date' => 'Refund Date',
-        'refunded' => 'Refunded'
+        'refunded' => 'Refunded',
+        'merchant-source' => 'merchant-source',
     ],
 
     'account' => [
@@ -394,6 +398,7 @@ return [
             'creation-error' => 'Shipment can not be created for this order.',
             'order-error' => 'Order shipment creation is not allowed.',
             'quantity-invalid' => 'Requested quantity is invalid or not available.',
+            'merchant-source' => 'merchant-source'
         ],
 
         'refunds' => [
@@ -734,7 +739,46 @@ return [
             'update-success' => 'Inventory source updated successfully.',
             'delete-success' => 'Inventory source deleted successfully.',
             'last-delete-error' => 'At least one Inventory source is required.',
-        ],
+             ],
+    'merchant_sources' => [
+            'title' => 'title',
+            'add-title' => 'add-title',
+            'edit-title' => 'edit-title',
+            'save-btn-title' => 'save-btn-title',
+            'general' => 'general',
+            'id' =>'ID',
+            'email' => 'email',
+            'name' => 'name',
+            'password' => 'password',
+            'confirm-password' => 'confirm-password',
+            'status-and-role' => 'status-and-role',
+            'role' => 'role',
+            'status' => 'status',
+            'account-is-active' => 'account-is-active',
+            'vendor' => 'vendor',
+            'vendor_id' => 'vendor_id',
+            'agency_group_id' => 'agency_group_id',
+            'postcode' => 'postcode',
+            'pref' => 'pref',
+            'city' => 'city',
+            'address' => 'address',
+            'building_name' => 'building_name',
+            'tel' => 'tel',
+            'fax' => 'fax',
+            'agency_denki_shop_code' => 'agency_denki_shop_code',
+            'created_at' => 'created_at',
+            'created_user_id' => 'created_user_id',
+            'updated_at' => 'updated_at',
+            'updated_user_id' => 'updated_user_id',
+            'create-success' => 'create-success.',
+            'update-success' => 'update-success.',
+            'delete-success' => 'delete-success.',
+            'last-delete-error' => 'last-delete-error.',
+    ],
+    'merchantroles' => [
+            'title' =>'merchantroles',
+            'add-title' => 'Add Role'
+    ],
         'channels' => [
             'title' => 'Channels',
             'add-title' => 'Add Channel',
@@ -1233,7 +1277,8 @@ return [
             'order-number-length' => 'Order Number Length',
             'order-number-suffix' => 'Order Number Suffix',
             'default' => 'Default',
-            'sandbox' => 'Sandbox'
+            'sandbox' => 'Sandbox',
+            'merchant' => 'merchant',
         ]
     ]
 ];
