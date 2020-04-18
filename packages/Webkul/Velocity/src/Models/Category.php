@@ -16,5 +16,4 @@ class Category extends Model implements CategoryContract
         'tooltip',
         'status',
     ];
-    protected $with = ['translations'];
 }
