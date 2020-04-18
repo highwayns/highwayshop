@@ -17,7 +17,7 @@ class CreateVelocityCategoryTranslations extends Migration
             $table->bigIncrements('id');
 
             $table->integer('category_id')->unsigned()->nullable();
-            $table->foreign('category_id')->references('id')->on('velocity_category')->onDelete('cascade');
+            // $table->foreign('category_id')->references('id')->on('velocity_category')->onDelete('cascade');
             $table->text('products')->nullable();
 
             $table->timestamps();
