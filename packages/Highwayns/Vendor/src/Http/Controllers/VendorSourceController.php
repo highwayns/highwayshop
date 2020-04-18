@@ -93,11 +93,11 @@ class VendorSourceController extends Controller
         if (isset($data['password']) && $data['password'])
             $data['password'] = bcrypt($data['password']);
 
-        Event::fire('vendor.vendor_source.create.before');
+        Event::dispatch('vendor.vendor_source.create.before');
 
         $vendorSource = $this->vendorSourceRepository->create($data);
 
-        Event::fire('vendor.vendor_source.create.after', $vendorSource);
+        Event::dispatch('vendor.vendor_source.create.after', $vendorSource);
     
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'User']));
 
@@ -141,11 +141,11 @@ class VendorSourceController extends Controller
             $data['status'] = 0;
         }
 
-        Event::fire('vendor.vendor_source.update.before', $id);
+        Event::dispatch('vendor.vendor_source.update.before', $id);
 
         $vendorSource = $this->vendorSourceRepository->update($data, $id);
 
-        Event::fire('vendor.vendor_source.update.after', $vendorSource);
+        Event::dispatch('vendor.vendor_source.update.after', $vendorSource);
 
         session()->flash('success', trans('admin::app.response.update-success', ['name' => 'User']));
 
@@ -165,14 +165,14 @@ class VendorSourceController extends Controller
         if ($this->vendorSourceRepository->count() == 1) {
             session()->flash('error', trans('admin::app.settings.vendor_sources.last-delete-error', ['name' => 'Vendor']));
         } else {
-            Event::fire('vendor.vendor_source.delete.before', $id);
+            Event::dispatch('vendor.vendor_source.delete.before', $id);
 
             try {
                 $this->vendorSourceRepository->delete($id);
 
                 session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Vendor']));
 
-                Event::fire('vendor.vendor_source.delete.after', $id);
+                Event::dispatch('vendor.vendor_source.delete.after', $id);
 
                 return response()->json(['message' => true], 200);
             } catch (Exception $e) {

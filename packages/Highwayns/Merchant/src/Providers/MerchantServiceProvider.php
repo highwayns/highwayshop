@@ -82,7 +82,7 @@ class MerchantServiceProvider extends ServiceProvider
             $view->with('menu', $tree);
         });
 
-        view()->composer(['admin::users.roles.create', 'admin::users.roles.edit'], function ($view) {
+        view()->composer(['admin::settings.merchant_roles.create', 'admin::settings.merchant_roles.edit'], function ($view) {
             $view->with('acl', $this->createACL());
         });
         

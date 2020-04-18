@@ -106,11 +106,11 @@ class AgentSourceController extends Controller
         if (isset($data['password']) && $data['password'])
             $data['password'] = bcrypt($data['password']);
 
-        Event::fire('agent.agent_source.create.before');
+        Event::dispatch('agent.agent_source.create.before');
 
         $agentSource = $this->agentSourceRepository->create($data);
 
-        Event::fire('agent.agent_source.create.after', $agentSource);
+        Event::dispatch('agent.agent_source.create.after', $agentSource);
     
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'User']));
 
@@ -156,11 +156,11 @@ class AgentSourceController extends Controller
             $data['status'] = 0;
         }
 
-        Event::fire('agent.agent_source.update.before', $id);
+        Event::dispatch('agent.agent_source.update.before', $id);
 
         $agentSource = $this->agentSourceRepository->update($data, $id);
 
-        Event::fire('agent.agent_source.update.after', $agentSource);
+        Event::dispatch('agent.agent_source.update.after', $agentSource);
 
         session()->flash('success', trans('admin::app.response.update-success', ['name' => 'User']));
 
@@ -180,14 +180,14 @@ class AgentSourceController extends Controller
         if ($this->agentSourceRepository->count() == 1) {
             session()->flash('error', trans('admin::app.settings.agent_sources.last-delete-error', ['name' => 'Agent']));
         } else {
-            Event::fire('agent.agent_source.delete.before', $id);
+            Event::dispatch('agent.agent_source.delete.before', $id);
 
             try {
                 $this->agentSourceRepository->delete($id);
 
                 session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Agent']));
 
-                Event::fire('agent.agent_source.delete.after', $id);
+                Event::dispatch('agent.agent_source.delete.after', $id);
 
                 return response()->json(['message' => true], 200);
             } catch (Exception $e) {
