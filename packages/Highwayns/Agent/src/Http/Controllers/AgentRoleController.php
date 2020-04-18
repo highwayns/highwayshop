@@ -3,7 +3,7 @@
 namespace Highwayns\Agent\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
-use Webkul\User\Repositories\RoleRepository;
+use Highwayns\Agent\Repositories\AgentRoleRepository;
 
 /**
  * Admin user role controller
@@ -30,10 +30,10 @@ class AgentRoleController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\User\Repositories\RoleRepository $roleRepository
+     * @param  \Highwayns\Agent\Repositories\AgentRoleRepository $roleRepository
      * @return void
      */
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(AgentRoleRepository $roleRepository)
     {
         $this->middleware('admin');
 

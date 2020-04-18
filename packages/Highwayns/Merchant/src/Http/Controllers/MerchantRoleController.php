@@ -3,7 +3,7 @@
 namespace Highwayns\Merchant\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
-use Webkul\User\Repositories\RoleRepository;
+use Highwayns\Merchant\Repositories\MerchantRoleRepository;
 
 /**
  * Admin user role controller
@@ -30,10 +30,10 @@ class MerchantRoleController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\User\Repositories\RoleRepository $roleRepository
+     * @param  \Highwayns\Merchant\Repositories\MerchantRoleRepository $roleRepository
      * @return void
      */
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(MerchantRoleRepository $roleRepository)
     {
         $this->middleware('admin');
 
