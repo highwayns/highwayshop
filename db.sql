@@ -1054,7 +1054,8 @@ CREATE TABLE `category_translations` (
 --
 
 INSERT INTO `category_translations` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keywords`, `category_id`, `locale`, `locale_id`, `url_path`) VALUES
-(1, 'Root', 'root', 'Root', '', '', '', 1, 'en', NULL, '');
+(1, 'Root', 'root', 'Root', '', '', '', 1, 'en', NULL, ''),
+(2, '消毒カード', 'it-goodfor-cov-19', '<p>消毒カード</p>', '', '', '', 1, 'ja', NULL, '');
 
 --
 -- トリガ `category_translations`
@@ -4800,6 +4801,13 @@ CREATE TABLE `customers` (
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `customers`
+--
+
+INSERT INTO `customers` (`id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `email`, `status`, `password`, `api_token`, `customer_group_id`, `subscribed_to_news_letter`, `remember_token`, `created_at`, `updated_at`, `is_verified`, `token`, `notes`, `phone`) VALUES
+(1, 'tei952', '鄭', NULL, NULL, 'tei952@hotmail.com', 1, '$2y$10$z9zglFH/q3gh5PhzBnZK8uvFTYk4CY5oAFJtkYgvoWn5ArapdBf3K', 'BprkTcoADaLOl7DBU3hFsXj1UQlsN7yhyDrCLDALB2qJSFOInDSn4xRCD5LrmC70o2EK58k0xs77NRZO', 2, 0, NULL, '2020-04-11 06:21:36', '2020-04-11 06:21:36', 1, '2c0c04030360ec5e542081ef5e395d32', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -4842,6 +4850,13 @@ CREATE TABLE `customer_documents` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- テーブルのデータのダンプ `customer_documents`
+--
+
+INSERT INTO `customer_documents` (`id`, `name`, `description`, `status`, `type`, `path`, `customer_id`, `created_at`, `updated_at`) VALUES
+(1, 'sss', 'sssについて', 1, 'product', 'customer/KlsrFtxkFoUdkWFA4h5ycLAYUFJ5WxMREHewln9c.pdf', 0, '2020-04-11 06:14:13', '2020-04-11 06:14:13');
 
 -- --------------------------------------------------------
 
@@ -5390,7 +5405,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (185, '2020_02_26_163908_change_column_type_in_cart_rules_table', 4),
 (186, '2020_02_28_105104_fix_order_columns', 4),
 (187, '2020_02_28_111958_create_customer_compare_products_table', 4),
-(188, '2020_03_23_201431_alter_booking_products_table', 4);
+(188, '2020_03_23_201431_alter_booking_products_table', 4),
+(190, '2020_04_13_124753_create_velocity_category', 5),
+(191, '2020_04_13_124950_create_velocity_category_translations', 6),
+(192, '2020_04_13_224524_add_locale_in_sliders_table', 6);
 
 -- --------------------------------------------------------
 
@@ -6076,7 +6094,8 @@ CREATE TABLE `sliders` (
   `channel_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `slider_path` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `slider_path` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -6164,6 +6183,37 @@ CREATE TABLE `users` (
   `shopify_freemium` tinyint(1) NOT NULL DEFAULT 0,
   `plan_id` int(10) UNSIGNED DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `velocity_category`
+--
+
+CREATE TABLE `velocity_category` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` int(10) UNSIGNED DEFAULT NULL,
+  `category_menu_id` int(10) UNSIGNED DEFAULT NULL,
+  `icon` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tooltip` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `velocity_category_translations`
+--
+
+CREATE TABLE `velocity_category_translations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `category_id` int(10) UNSIGNED DEFAULT NULL,
+  `products` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -7179,6 +7229,18 @@ ALTER TABLE `users`
   ADD KEY `users_plan_id_foreign` (`plan_id`);
 
 --
+-- テーブルのインデックス `velocity_category`
+--
+ALTER TABLE `velocity_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- テーブルのインデックス `velocity_category_translations`
+--
+ALTER TABLE `velocity_category_translations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- テーブルのインデックス `velocity_contents`
 --
 ALTER TABLE `velocity_contents`
@@ -7433,7 +7495,7 @@ ALTER TABLE `categories`
 -- テーブルのAUTO_INCREMENT `category_translations`
 --
 ALTER TABLE `category_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- テーブルのAUTO_INCREMENT `channels`
@@ -7505,7 +7567,7 @@ ALTER TABLE `currency_exchange_rates`
 -- テーブルのAUTO_INCREMENT `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルのAUTO_INCREMENT `customer_addresses`
@@ -7517,7 +7579,7 @@ ALTER TABLE `customer_addresses`
 -- テーブルのAUTO_INCREMENT `customer_documents`
 --
 ALTER TABLE `customer_documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルのAUTO_INCREMENT `customer_groups`
@@ -7613,7 +7675,7 @@ ALTER TABLE `merchant_sources`
 -- テーブルのAUTO_INCREMENT `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
 
 --
 -- テーブルのAUTO_INCREMENT `orders`
@@ -7806,6 +7868,18 @@ ALTER TABLE `tax_rates`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `velocity_category`
+--
+ALTER TABLE `velocity_category`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `velocity_category_translations`
+--
+ALTER TABLE `velocity_category_translations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- テーブルのAUTO_INCREMENT `velocity_contents`
