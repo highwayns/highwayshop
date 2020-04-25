@@ -30,7 +30,11 @@ class AgentRoleController extends Controller
     /**
      * Create a new controller instance.
      *
+<<<<<<< HEAD
      * @param  Highwayns\Agent\Repositories\AgentRoleRepository $roleRepository
+=======
+     * @param  \Highwayns\Agent\Repositories\AgentRoleRepository $roleRepository
+>>>>>>> f25dafdf9aa091d313cdba289bcffaa30bdaff2a
      * @return void
      */
     public function __construct(AgentRoleRepository $roleRepository)

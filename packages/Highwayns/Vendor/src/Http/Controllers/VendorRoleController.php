@@ -30,7 +30,11 @@ class VendorRoleController extends Controller
     /**
      * Create a new controller instance.
      *
+<<<<<<< HEAD
      * @param  Highwayns\Vendor\Repositories\VendorRoleRepository $roleRepository
+=======
+     * @param  \Highwayns\Vendor\Repositories\VendorRoleRepository $roleRepository
+>>>>>>> f25dafdf9aa091d313cdba289bcffaa30bdaff2a
      * @return void
      */
     public function __construct(VendorRoleRepository $roleRepository)

@@ -48,7 +48,7 @@
                         <div slot="body">
                             <div class="control-group" :class="[errors.has('password') ? 'has-error' : '']">
                                 <label for="password">{{ __('agentadmin::app.settings.agent_sources.password') }}</label>
-                                <input type="password" v-validate="'min:6|max:18'" class="control" id="password" name="password" data-vv-as="&quot;{{ __('agentadmin::app.settings.agent_sources.password') }}&quot;"/>
+                                <input type="password" v-validate="'min:6|max:18'" class="control" id="password" name="password" ref="password" data-vv-as="&quot;{{ __('agentadmin::app.settings.agent_sources.password') }}&quot;"/>
                                 <span class="control-error" v-if="errors.has('password')">@{{ errors.first('password') }}</span>
                             </div>
 
