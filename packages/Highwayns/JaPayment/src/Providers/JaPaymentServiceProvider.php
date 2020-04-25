@@ -15,7 +15,7 @@ class JaPaymentServiceProvider extends ServiceProvider
     {
         include __DIR__ . '/../Http/routes.php';
 
-        include __DIR__ . '/../Http/helpers.php';
+        // include __DIR__ . '/../Http/helpers.php';
     }
     /**
      * Register services.
@@ -24,7 +24,7 @@ class JaPaymentServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //$this->registerConfig();
+        $this->registerConfig();
     }
 
     /**
@@ -38,9 +38,9 @@ class JaPaymentServiceProvider extends ServiceProvider
             dirname(__DIR__) . '/Config/paymentmethods.php', 'paymentmethods'
         );
 
-        $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/system.php', 'core'
-        );
+        // $this->mergeConfigFrom(
+        //    dirname(__DIR__) . '/Config/system.php', 'core'
+        // );
     }
 
 }

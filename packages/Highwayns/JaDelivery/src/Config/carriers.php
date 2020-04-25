@@ -1,22 +1,23 @@
 <?php
 
 return [
-    'flatrate' => [
-        'code'         => 'flatrate',
-        'title'        => 'Flat Rate',
-        'description'  => 'Flat Rate Shipping',
+    'sagawa' => [
+        'code'         => 'sagawa',
+        'title'        => '佐川急便',
+        'description'  => '佐川急便',
         'active'       => true,
         'default_rate' => '10',
         'type'         => 'per_unit',
-        'class'        => 'Webkul\Shipping\Carriers\FlatRate',
+        'class'        => 'Highwayns\JaDelivery\Carriers\Sagawa',
     ],
 
-    'free'     => [
-        'code'         => 'free',
-        'title'        => 'Free Shipping',
-        'description'  => 'Free Shipping',
+    'yamato'     => [
+        'code'         => 'yamato',
+        'title'        => 'ヤマト運輸',
+        'description'  => 'ヤマト運輸',
         'active'       => true,
-        'default_rate' => '0',
-        'class'        => 'Webkul\Shipping\Carriers\Free',
+        'default_rate' => '10',
+        'type'         => 'per_unit',
+        'class'        => 'Highwayns\JaDelivery\Carriers\Yamato',
     ]
 ];

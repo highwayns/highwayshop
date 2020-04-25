@@ -20,7 +20,6 @@
                 "Highwayns\\JaPayment\\Providers\\JaPaymentServiceProvider"
             ],
             "aliases": {
-                "Bouncer": "Webkul\\Payment\\Facades\\Bouncer"
             }
         }
     },

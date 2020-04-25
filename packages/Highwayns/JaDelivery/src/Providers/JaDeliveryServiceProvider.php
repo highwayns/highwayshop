@@ -25,7 +25,7 @@ class JaDeliveryServiceProvider extends ServiceProvider
     {
         $this->registerFacades();
 
-        // $this->registerConfig();
+        $this->registerConfig();
     }
 
     /**
@@ -48,8 +48,8 @@ class JaDeliveryServiceProvider extends ServiceProvider
             dirname(__DIR__) . '/Config/carriers.php', 'carriers'
         );
 
-        $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/system.php', 'core'
-        );
+        // $this->mergeConfigFrom(
+        //    dirname(__DIR__) . '/Config/system.php', 'core'
+        // );
     }
 }

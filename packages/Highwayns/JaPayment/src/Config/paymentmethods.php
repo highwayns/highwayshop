@@ -6,7 +6,7 @@ return [
         'description' => 'AuPayment',
         'class'       => 'Highwayns\JaPament\Payment\AuPayment',
         'active'      => true,
-        'sort'        => 1,
+        'sort'        => 4,
     ],
 
     'docomo_payment'   => [
@@ -15,7 +15,7 @@ return [
         'description' => 'DocomoPayment',
         'class'       => 'Highwayns\JaPament\Payment\DocomoPayment',
         'active'      => true,
-        'sort'        => 2,
+        'sort'        => 5,
     ],
 
     'softbank_payment' => [
@@ -26,6 +26,6 @@ return [
         'sandbox'          => true,
         'active'           => true,
         // 'business_account' => 'test@webkul.com',
-        'sort'             => 3,
+        'sort'             => 6,
     ]
 ];
