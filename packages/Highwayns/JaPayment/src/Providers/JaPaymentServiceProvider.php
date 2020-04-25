@@ -1,6 +1,6 @@
 <?php
 
-namespace Highwayns\JaPament\Providers;
+namespace Highwayns\JaPayment\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

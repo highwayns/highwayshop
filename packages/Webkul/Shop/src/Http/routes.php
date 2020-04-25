@@ -138,7 +138,9 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             'redirect' => 'customer.profile.index'
         ])->name('customer.session.create');
 
-        // Registration Routes
+        Route::get('login/github', 'Webkul\Customer\Http\Controllers\CustomerController@redirectToProvider')->name('customer.login.github');
+        Route::get('login/github/callback', 'Webkul\Customer\Http\Controllers\CustomerController@handleProviderCallback');
+                // Registration Routes
         //registration form show
         Route::get('register', 'Webkul\Customer\Http\Controllers\RegistrationController@show')->defaults('_config', [
             'view' => 'shop::customers.signup.index'

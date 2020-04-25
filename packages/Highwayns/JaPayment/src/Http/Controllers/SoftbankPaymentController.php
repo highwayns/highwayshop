@@ -1,10 +1,10 @@
 <?php
 
-namespace Highwayns\JaPament\Http\Controllers;
+namespace Highwayns\JaPayment\Http\Controllers;
 
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Sales\Repositories\OrderRepository;
-use Highwayns\JaPament\Helpers\Ipn;
+use Highwayns\JaPayment\Helpers\Ipn;
 
 class SoftbankPaymentController extends Controller
 {
@@ -18,7 +18,7 @@ class SoftbankPaymentController extends Controller
     /**
      * Ipn object
      *
-     * @var Highwayns\JaPament\Helpers\Ipn
+     * @var Highwayns\JaPayment\Helpers\Ipn
      */
     protected $ipnHelper;
 
@@ -27,7 +27,7 @@ class SoftbankPaymentController extends Controller
      * Create a new controller instance.
      *
      * @param  \Webkul\Attribute\Repositories\OrderRepository  $orderRepository
-     * @param  Highwayns\JaPament\Helpers\Ipn  $ipnHelper
+     * @param  Highwayns\JaPayment\Helpers\Ipn  $ipnHelper
      * @return void
      */
     public function __construct(

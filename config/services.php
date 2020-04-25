@@ -37,7 +37,11 @@ return [
             'class' => 'Webkul\Core\Helpers\Exchange\FixerExchange'
         ]
     ],
-
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => 'http://highwayns.com/login/github/callback',
+    ],
     'stripe' => [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),

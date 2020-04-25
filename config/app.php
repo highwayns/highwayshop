@@ -242,6 +242,7 @@ return [
         Flynsarmy\DbBladeCompiler\DbBladeCompilerServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
         //Webkul packages
         Webkul\Theme\Providers\ThemeServiceProvider::class,
@@ -275,6 +276,8 @@ return [
         Highwayns\Vendor\Providers\VendorServiceProvider::class,
         Highwayns\VendorAdmin\Providers\VendorAdminServiceProvider::class,
         Highwayns\ShopifyAdmin\ShopifyAppProvider::class,
+        Highwayns\JaDelivery\Providers\JaDeliveryServiceProvider::class,
+        Highwayns\JaPayment\Providers\JaPaymentServiceProvider::class,
         Webkul\Dropship\Providers\DropshipServiceProvider::class,
         Webkul\CustomerDocument\Providers\CustomerDocumentServiceProvider::class
     ],

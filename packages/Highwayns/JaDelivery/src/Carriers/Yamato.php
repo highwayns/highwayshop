@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Shipping\Carriers;
+namespace Highwayns\JaDelivery\Carriers;
 
 use Config;
 use Webkul\Checkout\Models\CartShippingRate;

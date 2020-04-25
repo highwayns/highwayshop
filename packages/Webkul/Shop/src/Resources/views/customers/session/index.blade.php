@@ -47,6 +47,7 @@
                 </div>
 
                 <input class="btn btn-primary btn-lg" type="submit" value="{{ __('shop::app.customer.login-form.button_title') }}">
+                <input class="btn btn-primary btn-lg" type="submit" value="Github Login">
             </div>
         </form>
 

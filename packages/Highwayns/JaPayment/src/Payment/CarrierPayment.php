@@ -1,8 +1,11 @@
 <?php
-namespace App\Library;
-use Illuminate\Support\Facades\Log;
 
-class CarrierPayment
+namespace Highwayns\JaPayment\Payment;
+
+use Illuminate\Support\Facades\Log;
+use Webkul\Payment\Payment;
+
+class CarrierPayment extends Payment
 {
     /** マーチャントID */
     protected $sbp_merchat_id;
@@ -82,14 +85,14 @@ class CarrierPayment
         $this->sbp_hashkey = $vendor['sbp_hashkey'] ?? '8435dbd48f2249807ec216c3d5ecab714264cc4a';
         $this->user = $vendor['sbp_user'] ?? '30132002';
         $this->sbp_hashkey = $vendor['sbp_password'] ?? '8435dbd48f2249807ec216c3d5ecab714264cc4a';
-        $this->billing_settlement_model = new \App\billing_settlement_model($db_name);
-        $this->settlement_status_carrier_model = new \App\settlement_status_carrier_model($db_name);
-        $this->billing_model = new \App\billing_model($db_name);
+        //$this->billing_settlement_model = new \App\billing_settlement_model($db_name);
+        //$this->settlement_status_carrier_model = new \App\settlement_status_carrier_model($db_name);
+        //$this->billing_model = new \App\billing_model($db_name);
 
         $this->is_sandbox = $debug;
         $this->user_id = $user_id;
-        $tax_model = new \App\tax_model();
-        $this->tax = $tax_model->tax();
+        //$tax_model = new \App\tax_model();
+        //$this->tax = $tax_model->tax();
 
     }
 

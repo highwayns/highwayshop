@@ -5,6 +5,7 @@ namespace Webkul\Customer\Http\Controllers;
 use Hash;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Product\Repositories\ProductReviewRepository;
+use Socialite;
 
 class CustomerController extends Controller
 {
@@ -177,4 +178,25 @@ class CustomerController extends Controller
 
         return view($this->_config['view'], compact('reviews'));
     }
+   /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('github')->user();
+
+        // $user->token;
+    }    
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Highwayns\JaPament\Helpers;
+namespace Highwayns\JaPayment\Helpers;
 
 use Webkul\Sales\Repositories\OrderRepository;
 use Webkul\Sales\Repositories\InvoiceRepository;
