@@ -49,7 +49,7 @@ class ContentRepository extends Repository
      */
     public function create(array $data)
     {
-        // Event::dispatch('velocity.content.create.before');
+        // Event::fire('velocity.content.create.before');
 
         if (isset($data['locale']) && $data['locale'] == 'all') {
             $model = app()->make($this->model());
@@ -65,7 +65,7 @@ class ContentRepository extends Repository
 
         $content = $this->model->create($data);
 
-        // Event::dispatch('velocity.content.create.after', $content);
+        // Event::fire('velocity.content.create.after', $content);
 
         return $content;
     }
@@ -79,11 +79,11 @@ class ContentRepository extends Repository
     {
         $content = $this->find($id);
 
-        // Event::dispatch('velocity.content.update.before', $id);
+        // Event::fire('velocity.content.update.before', $id);
 
         $content->update($data);
 
-        // Event::dispatch('velocity.content.update.after', $id);
+        // Event::fire('velocity.content.update.after', $id);
 
         return $content;
     }
