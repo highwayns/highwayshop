@@ -14,6 +14,8 @@ class JaPaymentServiceProvider extends ServiceProvider
     public function boot()
     {
         include __DIR__ . '/../Http/routes.php';
+
+        include __DIR__ . '/../Http/helpers.php';
     }
     /**
      * Register services.

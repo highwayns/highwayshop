@@ -5,7 +5,7 @@
         @else
             <div class="col-lg-6 col-md-12 col-sm-12 no-padding">
                 <ul type="none">
-                    <li><a href="https://webkul.com/about-us/company-profile/">About Us</a></li>
+                    <li><a href="https://webkul.com/about-us/company-profile/">About us</a></li>
                     <li><a href="https://webkul.com/about-us/company-profile/">Customer Service</a></li>
                     <li><a href="https://webkul.com/about-us/company-profile/">What&rsquo;s New</a></li>
                     <li><a href="https://webkul.com/about-us/company-profile/">Contact Us </a></li>

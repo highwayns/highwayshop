@@ -10,8 +10,8 @@ return [
         'name' => 'admin::app.admin.system.payment-methods',
         'sort' => 2,
     ], [
-        'key'    => 'sales.paymentmethods.cashondelivery',
-        'name'   => 'admin::app.admin.system.cash-on-delivery',
+        'key'    => 'sales.paymentmethods.au_payment',
+        'name'   => 'admin::app.admin.system.au_payment',
         'sort'   => 1,
         'fields' => [
             [
@@ -56,8 +56,8 @@ return [
             ]
         ]
     ], [
-        'key'    => 'sales.paymentmethods.moneytransfer',
-        'name'   => 'admin::app.admin.system.money-transfer',
+        'key'    => 'sales.paymentmethods.docomo_payment',
+        'name'   => 'admin::app.admin.system.docomo_payment',
         'sort'   => 2,
         'fields' => [
             [
@@ -102,8 +102,8 @@ return [
             ]
         ]
     ], [
-        'key'    => 'sales.paymentmethods.paypal_standard',
-        'name'   => 'admin::app.admin.system.paypal-standard',
+        'key'    => 'sales.paymentmethods.softbank_payment',
+        'name'   => 'admin::app.admin.system.softbank_payment',
         'sort'   => 3,
         'fields' => [
             [

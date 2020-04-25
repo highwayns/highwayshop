@@ -106,11 +106,11 @@ class MerchantSourceController extends Controller
         if (isset($data['password']) && $data['password'])
             $data['password'] = bcrypt($data['password']);
 
-        Event::fire('merchant.merchant_source.create.before');
+        Event::dispatch('merchant.merchant_source.create.before');
 
         $merchantSource = $this->merchantSourceRepository->create($data);
 
-        Event::fire('merchant.merchant_source.create.after', $merchantSource);
+        Event::dispatch('merchant.merchant_source.create.after', $merchantSource);
     
         session()->flash('success', trans('admin::app.response.create-success', ['name' => 'User']));
 
@@ -156,11 +156,11 @@ class MerchantSourceController extends Controller
             $data['status'] = 0;
         }
 
-        Event::fire('merchant.merchant_source.update.before', $id);
+        Event::dispatch('merchant.merchant_source.update.before', $id);
 
         $merchantSource = $this->merchantSourceRepository->update($data, $id);
 
-        Event::fire('merchant.merchant_source.update.after', $merchantSource);
+        Event::dispatch('merchant.merchant_source.update.after', $merchantSource);
 
         session()->flash('success', trans('admin::app.response.update-success', ['name' => 'User']));
 
@@ -180,14 +180,14 @@ class MerchantSourceController extends Controller
         if ($this->merchantSourceRepository->count() == 1) {
             session()->flash('error', trans('admin::app.settings.merchant_sources.last-delete-error', ['name' => 'Merchant']));
         } else {
-            Event::fire('merchant.merchant_source.delete.before', $id);
+            Event::dispatch('merchant.merchant_source.delete.before', $id);
 
             try {
                 $this->merchantSourceRepository->delete($id);
 
                 session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Merchant']));
 
-                Event::fire('merchant.merchant_source.delete.after', $id);
+                Event::dispatch('merchant.merchant_source.delete.after', $id);
 
                 return response()->json(['message' => true], 200);
             } catch (Exception $e) {

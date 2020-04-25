@@ -4,8 +4,9 @@ namespace Highwayns\JaPament\Http\Controllers;
 
 use Webkul\Checkout\Facades\Cart;
 use Webkul\Sales\Repositories\OrderRepository;
+use Highwayns\JaPament\Helpers\Ipn;
 
-class AUPaymentController extends Controller
+class AuPaymentController extends Controller
 {
     /**
      * OrderRepository object
@@ -13,40 +14,51 @@ class AUPaymentController extends Controller
      * @var \Webkul\Sales\Repositories\OrderRepository
      */
     protected $orderRepository;
+    
+    /**
+     * Ipn object
+     *
+     * @var Highwayns\JaPament\Helpers\Ipn
+     */
+    protected $ipnHelper;
 
 
     /**
      * Create a new controller instance.
      *
      * @param  \Webkul\Attribute\Repositories\OrderRepository  $orderRepository
+     * @param  Highwayns\JaPament\Helpers\Ipn  $ipnHelper
      * @return void
      */
     public function __construct(
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository,
+        Ipn $ipnHelper
     )
     {
         $this->orderRepository = $orderRepository;
 
+        $this->ipnHelper = $ipnHelper;
+
     }
 
     /**
-     * Redirects to the paypal.
+     * Redirects to the AuPayment.
      *
      * @return \Illuminate\View\View
      */
     public function redirect()
     {
-        return view('paypal::standard-redirect');
+        return view('JaPayment::aupayment-redirect');
     }
 
     /**
-     * Cancel payment from paypal.
+     * Cancel Japayment from AuPayment.
      *
      * @return \Illuminate\Http\Response
      */
     public function cancel()
     {
-        session()->flash('error', 'Paypal payment has been canceled.');
+        session()->flash('error', 'AuPayment has been canceled.');
 
         return redirect()->route('shop.checkout.cart.index');
     }
@@ -65,6 +77,15 @@ class AUPaymentController extends Controller
         session()->flash('order', $order);
 
         return redirect()->route('shop.checkout.success');
+    }
+        /**
+     * AuPayment Ipn listener
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function ipn()
+    {
+        $this->ipnHelper->processIpn(request()->all());
     }
 
 }

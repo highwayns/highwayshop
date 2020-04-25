@@ -75,7 +75,8 @@ return [
         'tax-rates' => 'Tax Rates',
         'promotion' => 'Promotions',
         'discount' => 'Discount',
-        'cms' => 'CMS'
+        'cms' => 'CMS',
+        'merchant-sources' => 'merchant-sources'
     ],
 
     'acl' => [
@@ -110,7 +111,8 @@ return [
         'create' => 'Add',
         'delete' => 'Delete',
         'promotions' => 'Promotions',
-        'cart-rules' => 'Cart Rules'
+        'cart-rules' => 'Cart Rules',
+        'merchant-sources' => 'merchant-sources'
     ],
 
     'dashboard' => [

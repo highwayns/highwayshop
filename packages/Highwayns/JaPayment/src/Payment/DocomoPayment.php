@@ -30,7 +30,7 @@ class DocomoPayment extends CarrierPayment
      */
     public function getRedirectUrl()
     {
-        return route('paypal.standard.redirect');
+        return route('Japayment.DocomoPayment.redirect');
     }
 
     /**
@@ -47,9 +47,9 @@ class DocomoPayment extends CarrierPayment
             'invoice'         => $cart->id,
             'currency_code'   => $cart->cart_currency_code,
             'paymentaction'   => 'sale',
-            'return'          => route('paypal.standard.success'),
-            'cancel_return'   => route('paypal.standard.cancel'),
-            'notify_url'      => route('paypal.standard.ipn'),
+            'return'          => route('Japayment.DocomoPayment.success'),
+            'cancel_return'   => route('Japayment.DocomoPayment.cancel'),
+            'notify_url'      => route('Japayment.DocomoPayment.ipn'),
             'charset'         => 'utf-8',
             'item_name'       => core()->getCurrentChannel()->name,
             'amount'          => $cart->sub_total,

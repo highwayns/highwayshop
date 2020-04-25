@@ -526,7 +526,7 @@ return [
             'checkbox' => 'チェック',
             'multiselect' => 'マルチ選択',
             'new-option' => 'オプション新規',
-            'is-default' => '初期化'
+            'is-default' => '初期化',
         ],
 
         'attributes' => [
@@ -1364,6 +1364,11 @@ return [
             'newsletter-subscription' => 'ニュースサブスクリプト許可',
             'email' => 'Eメールバリュエーション',
             'email-verification' => 'Eメールバリュエーション許可',
+            'email-settings' => 'メール設定',
+            'email-sender-name' => 'メール送信者名',
+            'shop-email-from' => 'ショップのメールアドレス',
+            'admin-name' => '管理者名',
+            'admin-email' => '管理者のメール',
             'sort_order' => 'ソート順',
             'general' => '一般',
             'footer' => 'フッター',
@@ -1387,7 +1392,9 @@ return [
             'default' => '初期',
             'sandbox' => 'サンドボックス',
             'all-channels' => 'すべて',
-            'all-locales' => 'すべて'
+            'all-locales' => 'すべて',
+            'allow-guest-checkout' =>'ゲストチェックアウトを許可',
+           
         ]
     ]
 ];

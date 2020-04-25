@@ -84,7 +84,7 @@ class AgentServiceProvider extends ServiceProvider
             $view->with('menu', $tree);
         });
 
-        view()->composer(['admin::users.roles.create', 'admin::users.roles.edit'], function ($view) {
+        view()->composer(['admin::settings.agent_roles.create', 'admin::settings.agent_roles.edit'], function ($view) {
             $view->with('acl', $this->createACL());
         });
         

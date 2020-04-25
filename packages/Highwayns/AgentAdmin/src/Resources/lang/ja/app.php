@@ -79,7 +79,8 @@ return [
         'discount' => '割引',
         'cms' => 'コンテンツ管理システム',
         'vendor-sources' => 'ベンダーソース一覧',
-        'agent-sources' => '代理店ソース一覧'
+        'agent-sources' => '代理店ソース一覧',
+        'merchant-sources' => '製造業者ソース一覧'
     ],
 
     'acl' => [
@@ -116,7 +117,8 @@ return [
         'promotions' => '促販一覧',
         'cart-rules' => 'カートルール一覧',
         'vendor-sources' => 'ベンダーソース一覧',
-        'agent-sources' => '代理店ソース一覧'
+        'agent-sources' => '代理店ソース一覧',
+        'merchant-sources' => '製造業者ソース一覧'
     ],
 
     'dashboard' => [
