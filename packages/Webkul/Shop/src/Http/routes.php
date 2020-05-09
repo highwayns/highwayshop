@@ -138,9 +138,7 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
             'redirect' => 'customer.profile.index'
         ])->name('customer.session.create');
 
-        Route::get('login/github', 'Webkul\Customer\Http\Controllers\CustomerController@redirectToProvider')->name('customer.login.github');
-        Route::get('login/github/callback', 'Webkul\Customer\Http\Controllers\CustomerController@handleProviderCallback');
-                // Registration Routes
+        // Registration Routes
         //registration form show
         Route::get('register', 'Webkul\Customer\Http\Controllers\RegistrationController@show')->defaults('_config', [
             'view' => 'shop::customers.signup.index'
@@ -276,6 +274,8 @@ Route::group(['middleware' => ['web', 'locale', 'theme', 'currency']], function 
                 Route::get('orders/print/{id}', 'Webkul\Shop\Http\Controllers\OrderController@print')->defaults('_config', [
                     'view' => 'shop::customers.account.orders.print'
                 ])->name('customer.orders.print');
+
+                Route::get('/orders/cancel/{id}', 'Webkul\Shop\Http\Controllers\OrderController@cancel')->name('customer.orders.cancel');
 
                 /* Reviews route */
                 //Customer reviews

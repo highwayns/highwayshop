@@ -94,12 +94,7 @@
                             {!! view_render_event('bagisto.shop.customers.login_form_controls.after') !!}
 
                             <input class="theme-btn" type="submit" value="{{ __('shop::app.customer.login-form.button_title') }}">
-                            <a href="{{ route('customer.login.github') }}" class="btn-new-customer">
-                                <button type="button" class="theme-btn light">
-                                    Github Login
-                                </button>
-                            </a>
-    
+
                         </form>
                     </div>
                 </div>

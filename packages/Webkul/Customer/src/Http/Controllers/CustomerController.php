@@ -3,9 +3,9 @@
 namespace Webkul\Customer\Http\Controllers;
 
 use Hash;
+use Illuminate\Support\Facades\Event;
 use Webkul\Customer\Repositories\CustomerRepository;
 use Webkul\Product\Repositories\ProductReviewRepository;
-use Socialite;
 
 class CustomerController extends Controller
 {
@@ -115,7 +115,12 @@ class CustomerController extends Controller
             }
         }
 
-        if ($this->customerRepository->update($data, $id)) {
+        Event::dispatch('customer.update.before');
+
+        if ($customer = $this->customerRepository->update($data, $id)) {
+
+            Event::dispatch('customer.update.after', $customer);
+
             Session()->flash('success', trans('shop::app.customer.account.profile.edit-success'));
 
             return redirect()->route($this->_config['redirect']);
@@ -178,25 +183,4 @@ class CustomerController extends Controller
 
         return view($this->_config['view'], compact('reviews'));
     }
-   /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function redirectToProvider()
-    {
-        return Socialite::driver('github')->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function handleProviderCallback()
-    {
-        $user = Socialite::driver('github')->user();
-
-        // $user->token;
-    }    
 }

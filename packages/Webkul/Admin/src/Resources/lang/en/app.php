@@ -42,6 +42,7 @@ return [
     ],
 
     'layouts' => [
+        'app-version' => 'Version : :version',
         'my-account' => 'My Account',
         'logout' => 'Logout',
         'visit-shop' => 'Visit Shop',
@@ -370,7 +371,13 @@ return [
             'total-due' => 'Total Due',
             'cancel-confirm-msg' => 'Are you sure you want to cancel this order ?',
             'refund-btn-title' => 'Refund',
-            'refunds' => 'Refunds'
+            'refunds' => 'Refunds',
+            'comment-added-success' => 'Comment addded successfully.',
+            'comment' => 'Comment',
+            'submit-comment' => 'Submit Comment',
+            'notify-customer' => 'Notify Customer',
+            'customer-notified' => ':date | Customer <b>Notified</b>',
+            'customer-not-notified' => ':date | Customer <b>Not Notified</b>'
         ],
 
         'invoices' => [
@@ -729,7 +736,7 @@ return [
             'target_currency' => 'Target Currency',
             'rate' => 'Rate',
             'exchange-class-not-found' => ':service exchange rate class not found',
-            'update-rates' => 'Update rates using :service',
+            'update-rates' => 'Update Rates',
             'create-success' => 'Exchange Rate created successfully.',
             'update-success' => 'Exchange Rate updated successfully.',
             'delete-success' => 'Exchange Rate deleted successfully.',
@@ -1306,10 +1313,25 @@ return [
             'order-number-suffix' => 'Order Number Suffix',
             'default' => 'Default',
             'sandbox' => 'Sandbox',
-            'all-channels' => 'All',
-            'all-locales' => 'All',
+            'all-channels' => 'All Channels',
+            'all-locales' => 'All Locales',
+            'all-customer-groups' => 'All Customer groups',
             'invoice-slip-design' => 'Invoice Slip Design',
-            'logo' => 'logo'
+            'logo' => 'Logo',
+            'storefront' => 'Storefront',
+            'default-list-mode' => 'Default List Mode',
+            'grid' => 'Grid',
+            'list' => 'List',
+            'products-per-page' => 'Products Per Page',
+            'sort-by' => 'Sort By',
+            'from-z-a' => 'From Z-A',
+            'from-a-z' => 'From A-Z',
+            'newest-first' => 'Newest First',
+            'oldest-first' => 'Oldest First',
+            'cheapest-first' => 'Cheapest First',
+            'expensive-first' => 'Expensive First',
+            'comma-seperated' => 'Comma Seperated',
+            'favicon' => 'Favicon'
        ]
     ]
 ];

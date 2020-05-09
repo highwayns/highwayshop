@@ -42,6 +42,7 @@ return [
     ],
 
     'layouts' => [
+        'app-version' => 'Version : :version',
         'account' => 'حساب',
         'my-account' => 'پروفایل من',
         'logout' => 'خروج',
@@ -370,7 +371,11 @@ return [
             'cancel-confirm-msg' => 'مطمئن هستید که می خواهید این سفارش را لغو کنید ؟',
             'refunds' => 'بازپرداخت',
             'refund-btn-title' => 'بازپرداخت',
-            'refunded' => 'بازپرداخت'
+            'refunded' => 'بازپرداخت',
+            'comment-added-success' => 'Comment addded successfully.',
+            'comment' => 'Comment',
+            'submit-comment' => 'Submit Comment',
+            'notify-customer' => 'Notify Customer',
         ],
 
         'invoices' => [
@@ -729,7 +734,7 @@ return [
             'target_currency' => 'هدف ارز',
             'rate' => 'نرخ',
             'exchange-class-not-found' => 'کلاس نرخ ارز :service یافت نشد',
-            'update-rates' => ' به روز کنید :service    نرخ ها را با استفاده از',
+            'update-rates' => 'نرخ ها را به روز کنید',
             'create-success' => 'نرخ ارز با موفقیت ایجاد شد.',
             'update-success' => 'نرخ ارز با موفقیت به روز شد.',
             'delete-success' => 'نرخ ارز با موفقیت حذف شد.',
@@ -1310,7 +1315,21 @@ return [
             'all-locales' => 'همه',
             'sandbox' => 'Sandbox',
             'invoice-slip-design' => 'Invoice Slip Design',
-            'logo' => 'logo'
+            'logo' => 'Logo',
+            'storefront' => 'Storefront',
+            'default-list-mode' => 'Default List Mode',
+            'grid' => 'Grid',
+            'list' => 'List',
+            'products-per-page' => 'Products Per Page',
+            'sort-by' => 'Sort By',
+            'from-z-a' => 'From Z-A',
+            'from-a-z' => 'From A-Z',
+            'newest-first' => 'Newest First',
+            'oldest-first' => 'Oldest First',
+            'cheapest-first' => 'Cheapest First',
+            'expensive-first' => 'Expensive First',
+            'comma-seperated' => 'Comma Seperated',
+            'favicon' => 'Favicon'
         ]
     ]
 ];

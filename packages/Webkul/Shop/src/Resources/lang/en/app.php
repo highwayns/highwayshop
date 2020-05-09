@@ -313,6 +313,7 @@ return [
                     'individual-refund' => 'Refund #:refund_id',
                     'adjustment-refund' => 'Adjustment Refund',
                     'adjustment-fee' => 'Adjustment Fee',
+                    'cancel-btn-title' => 'Cancel',
                 ]
             ],
 
@@ -570,6 +571,15 @@ return [
             'final-summary' => 'Thanks for showing your interest in our store we will send you tracking number once it shipped',
             'help' => 'If you need any kind of help please contact us at :support_email',
             'thanks' => 'Thanks!',
+            
+            'comment' => [
+                'subject' => 'New comment added to your order',
+                'dear' => 'Dear :customer_name',
+                'final-summary' => 'Thanks for showing your interest in our store',
+                'help' => 'If you need any kind of help please contact us at :support_email',
+                'thanks' => 'Thanks!',
+            ],
+
             'cancel' => [
                 'subject' => 'Order Cancel Confirmation',
                 'heading' => 'Order Cancelled',
