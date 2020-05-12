@@ -1,9 +1,9 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Objects\Values;
+namespace Osiset\ShopifyApp\Objects\Values;
 
 use Funeralzone\ValueObjects\Scalars\IntegerTrait;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\PlanId as PlanIdValue;
+use Osiset\ShopifyApp\Contracts\Objects\Values\PlanId as PlanIdValue;
 
 /**
  * Value object for plan's ID.

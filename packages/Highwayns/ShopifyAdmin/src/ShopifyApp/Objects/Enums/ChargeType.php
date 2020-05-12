@@ -1,6 +1,6 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Objects\Enums;
+namespace Osiset\ShopifyApp\Objects\Enums;
 
 use Funeralzone\ValueObjects\Enums\EnumTrait;
 use Funeralzone\ValueObjects\ValueObject;
@@ -30,6 +30,13 @@ final class ChargeType implements ValueObject
      * @var int
      */
     public const CHARGE = 2;
+
+    /**
+     * Charge: Alias for onetime.
+     *
+     * @var int
+     */
+    public const ONETIME = 2;
 
     /**
      * Charge: Usage.

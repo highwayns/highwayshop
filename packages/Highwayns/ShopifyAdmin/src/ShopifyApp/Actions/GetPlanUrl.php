@@ -1,13 +1,13 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Actions;
+namespace Osiset\ShopifyApp\Actions;
 
-use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
-use Highwayns\ShopifyAdmin\Objects\Values\NullablePlanId;
-use Highwayns\ShopifyAdmin\Contracts\Queries\Plan as IPlanQuery;
-use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
-use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
-use Highwayns\ShopifyAdmin\Services\ChargeHelper;
+use Osiset\ShopifyApp\Objects\Values\ShopId;
+use Osiset\ShopifyApp\Objects\Values\NullablePlanId;
+use Osiset\ShopifyApp\Contracts\Queries\Plan as IPlanQuery;
+use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
+use Osiset\ShopifyApp\Objects\Enums\ChargeType;
+use Osiset\ShopifyApp\Services\ChargeHelper;
 
 /**
  * Retrieve the a billing plan's URL.
@@ -65,10 +65,8 @@ class GetPlanUrl
         // Get the shop
         $shop = $this->shopQuery->getById($shopId);
 
-        // If the plan is null, get a plan
-        if ($planId->isNull()) {
-            $plan = $this->planQuery->getDefault();
-        }
+        // Get the plan
+        $plan = $planId->isNull() ? $this->planQuery->getDefault() : $this->planQuery->getById($planId);
 
         $api = $shop->apiHelper()->createCharge(
             ChargeType::fromNative($plan->getType()->toNative()),

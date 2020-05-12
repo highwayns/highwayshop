@@ -1,9 +1,9 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Objects\Values;
+namespace Osiset\ShopifyApp\Objects\Values;
 
 use Funeralzone\ValueObjects\Scalars\StringTrait;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\AccessToken as AccessTokenValue;
+use Osiset\ShopifyApp\Contracts\Objects\Values\AccessToken as AccessTokenValue;
 
 /**
  * Value object for shop's offline access token.

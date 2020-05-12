@@ -1,13 +1,13 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Http\Middleware;
+namespace Osiset\ShopifyApp\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
 
-use function Highwayns\ShopifyAdmin\createHmac;
+use function Osiset\ShopifyApp\createHmac;
 
 /**
  * Response for ensuring a proper webhook request.

@@ -1,9 +1,9 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Http\Controllers;
+namespace Osiset\ShopifyApp\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Highwayns\ShopifyAdmin\Traits\WebhookController as WebhookControllerTrait;
+use Osiset\ShopifyApp\Traits\WebhookController as WebhookControllerTrait;
 
 /**
  * Responsible for handling incoming webhook requests.

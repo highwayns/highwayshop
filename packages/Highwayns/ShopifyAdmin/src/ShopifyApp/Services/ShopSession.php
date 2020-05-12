@@ -1,23 +1,23 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Services;
+namespace Osiset\ShopifyApp\Services;
 
 use stdClass;
 use Osiset\BasicShopifyAPI;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
-use Highwayns\ShopifyAdmin\Objects\Enums\AuthMode;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
-use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
-use Highwayns\ShopifyAdmin\Objects\Values\AccessToken;
-use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
-use Highwayns\ShopifyAdmin\Contracts\ShopModel as IShopModel;
-use Highwayns\ShopifyAdmin\Objects\Values\NullableAccessToken;
-use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
-use Highwayns\ShopifyAdmin\Contracts\Commands\Shop as IShopCommand;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\AccessToken as AccessTokenValue;
+use Osiset\ShopifyApp\Objects\Enums\AuthMode;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Objects\Values\ShopDomain;
+use Osiset\ShopifyApp\Objects\Values\AccessToken;
+use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
+use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
+use Osiset\ShopifyApp\Objects\Values\NullableAccessToken;
+use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
+use Osiset\ShopifyApp\Contracts\Commands\Shop as IShopCommand;
+use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Osiset\ShopifyApp\Contracts\Objects\Values\AccessToken as AccessTokenValue;
 
 /**
  * Responsible for handling session retreival and storage.

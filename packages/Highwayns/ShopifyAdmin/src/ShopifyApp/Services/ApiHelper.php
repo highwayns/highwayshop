@@ -1,21 +1,21 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Services;
+namespace Osiset\ShopifyApp\Services;
 
 use Closure;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\URL;
 use Osiset\BasicShopifyAPI;
-use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
-use Highwayns\ShopifyAdmin\Exceptions\ApiException;
-use Highwayns\ShopifyAdmin\Objects\Enums\ApiMethod;
-use Highwayns\ShopifyAdmin\Objects\Enums\AuthMode;
-use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
-use Highwayns\ShopifyAdmin\Objects\Transfers\ApiSession as ApiSessionTransfer;
-use Highwayns\ShopifyAdmin\Objects\Transfers\PlanDetails as PlanDetailsTransfer;
-use Highwayns\ShopifyAdmin\Objects\Transfers\UsageChargeDetails as UsageChargeDetailsTransfer;
-use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
+use Osiset\ShopifyApp\Exceptions\ApiException;
+use Osiset\ShopifyApp\Objects\Enums\ApiMethod;
+use Osiset\ShopifyApp\Objects\Enums\AuthMode;
+use Osiset\ShopifyApp\Objects\Enums\ChargeType;
+use Osiset\ShopifyApp\Objects\Transfers\ApiSession as ApiSessionTransfer;
+use Osiset\ShopifyApp\Objects\Transfers\PlanDetails as PlanDetailsTransfer;
+use Osiset\ShopifyApp\Objects\Transfers\UsageChargeDetails as UsageChargeDetailsTransfer;
+use Osiset\ShopifyApp\Objects\Values\ChargeReference;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
 use stdClass;
 
 /**
@@ -314,9 +314,13 @@ class ApiHelper implements IApiHelper
     protected function chargeApiPath(ChargeType $chargeType): string
     {
         // Convert to API path
-        $format = $chargeType->isSame(ChargeType::RECURRING()) ?
-            '%s_application_charge' :
-            'application_%s';
+        if ($chargeType->isSame(ChargeType::RECURRING())) {
+            $format =  '%s_application_charge';
+        } elseif ($chargeType->isSame(ChargeType::CHARGE())) {
+            $format = 'application_charge';
+        } else {
+            $format = 'application_%s';
+        }
 
         return sprintf($format, strtolower($chargeType->toNative()));
     }

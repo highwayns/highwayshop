@@ -1,16 +1,17 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Http\Middleware;
+namespace Osiset\ShopifyApp\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use function Highwayns\ShopifyAdmin\createHmac;
-use Highwayns\ShopifyAdmin\Services\ShopSession;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
-use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
-use Highwayns\ShopifyAdmin\Objects\Values\NullShopDomain;
-use Highwayns\ShopifyAdmin\Objects\Values\NullableShopDomain;
+use function Osiset\ShopifyApp\createHmac;
+use function Osiset\ShopifyApp\parseQueryString;
+use Osiset\ShopifyApp\Services\ShopSession;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Objects\Values\ShopDomain;
+use Osiset\ShopifyApp\Objects\Values\NullShopDomain;
+use Osiset\ShopifyApp\Objects\Values\NullableShopDomain;
 
 /**
  * Responsible for ensuring a proper app proxy request.
@@ -49,7 +50,7 @@ class AuthProxy
     public function handle(Request $request, Closure $next)
     {
         // Grab the query parameters we need
-        $query = $request->query->all();
+        $query = $this->getQueryStringParameters($request);
         $signature = isset($query['signature']) ? $query['signature'] : null;
         $shop = NullableShopDomain::fromNative($query['shop'] ?? null);
 
@@ -70,5 +71,17 @@ class AuthProxy
 
         // All good, process proxy request
         return $next($request);
+    }
+
+    /**
+     * Parse query strings the same way Shopify does.
+     *
+     * @param Request  $request The request object.
+     *
+     * @return array
+     */
+    protected function getQueryStringParameters(Request $request): array
+    {
+        return parseQueryString($request->server->get('QUERY_STRING'));
     }
 }

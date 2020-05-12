@@ -77,14 +77,14 @@ class CreateChargesTable extends Migration
             // Allows for soft deleting
             $table->softDeletes();
 
-            if ($this->getLaravelVersion() < 5.9) {
+            if ($this->getLaravelVersion() < 5.8) {
                 $table->integer('user_id')->unsigned();
             } else {
                 $table->bigInteger('user_id')->unsigned();
             }
 
             // Linking
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('plan_id')->references('id')->on('plans');
         });
     }

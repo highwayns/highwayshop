@@ -1,10 +1,10 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Contracts\Queries;
+namespace Osiset\ShopifyApp\Contracts\Queries;
 
 use Illuminate\Support\Collection;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\PlanId;
-use Highwayns\ShopifyAdmin\Storage\Models\Plan as PlanModel;
+use Osiset\ShopifyApp\Contracts\Objects\Values\PlanId;
+use Osiset\ShopifyApp\Storage\Models\Plan as PlanModel;
 
 /**
  * Reprecents a queries for plans.

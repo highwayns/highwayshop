@@ -1,18 +1,18 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Http\Middleware;
+namespace Osiset\ShopifyApp\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Highwayns\ShopifyAdmin\Services\ShopSession;
-use Highwayns\ShopifyAdmin\Objects\Enums\DataSource;
-use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
-use Highwayns\ShopifyAdmin\Objects\Values\NullShopDomain;
-use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
-use Highwayns\ShopifyAdmin\Exceptions\SignatureVerificationException;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Osiset\ShopifyApp\Services\ShopSession;
+use Osiset\ShopifyApp\Objects\Enums\DataSource;
+use Osiset\ShopifyApp\Objects\Values\ShopDomain;
+use Osiset\ShopifyApp\Objects\Values\NullShopDomain;
+use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
+use Osiset\ShopifyApp\Exceptions\SignatureVerificationException;
+use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
 
 /**
  * Response for ensuring an authenticated request.
@@ -64,10 +64,15 @@ class AuthShopify
     {
         // Grab the domain and check the HMAC (if present)
         $domain = $this->getShopDomainFromData($request);
-        $this->verifyHmac($request);
+        $hmac = $this->verifyHmac($request);
 
         $checks = [];
         if ($this->shopSession->guest()) {
+            if ($hmac === null) {
+                // Auth flow required if not yet logged in
+                return $this->handleBadVerification($request, $domain);
+            }
+
             // Login the shop and verify their data
             $checks[] = 'loginShop';
         }
@@ -93,20 +98,20 @@ class AuthShopify
      *
      * @throws SignatureVerificationException
      *
-     * @return void
+     * @return bool|null
      */
-    private function verifyHmac(Request $request): void
+    private function verifyHmac(Request $request): ?bool
     {
         $hmac = $this->getHmac($request);
         if ($hmac === null) {
             // No HMAC, move on...
-            return;
+            return null;
         }
 
         // We have HMAC, validate it
         $data = $this->getData($request, $hmac[1]);
         if ($this->apiHelper->verifyRequest($data)) {
-            return;
+            return true;
         }
 
         // Something didn't match
@@ -237,7 +242,7 @@ class AuthShopify
             DataSource::INPUT()->toNative() => function () use ($request): array {
                 // Verify
                 $verify = [];
-                foreach ($request->all() as $key => $value) {
+                foreach ($request->query() as $key => $value) {
                     $verify[$key] = is_array($value) ? '["'.implode('", "', $value).'"]' : $value;
                 }
 
