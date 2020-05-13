@@ -275,7 +275,7 @@ return [
         Highwayns\MerchantAdmin\Providers\MerchantAdminServiceProvider::class,
         Highwayns\Vendor\Providers\VendorServiceProvider::class,
         Highwayns\VendorAdmin\Providers\VendorAdminServiceProvider::class,
-        Highwayns\ShopifyAdmin\ShopifyAppProvider::class,
+        // Osiset\ShopifyApp\ShopifyAppProvider::class,
         Highwayns\JaDelivery\Providers\JaDeliveryServiceProvider::class,
         Highwayns\JaPayment\Providers\JaPaymentServiceProvider::class,
         Webkul\Dropship\Providers\DropshipServiceProvider::class,
