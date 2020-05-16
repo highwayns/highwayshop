@@ -368,6 +368,7 @@ return [
         'layered-nav-title' => 'خرید بوسیله ی',
         'price-label' => 'به اندازه کم',
         'remove-filter-link-title' => 'همه را پاک کن',
+        'filter-to' => 'to',
         'sort-by' => 'مرتب سازی بر اساس',
         'from-a-z' => 'از A-Z',
         'from-z-a' => 'از Z-A',
@@ -411,7 +412,7 @@ return [
         'your-customization' => 'شخصی سازی شما',
         'total-amount' => 'مقدار کل',
         'none' => 'هیچ یک',
-        'available' => 'Available'
+        'available-for-order' => 'Available for Order',
     ],
 
     // 'reviews' => [
