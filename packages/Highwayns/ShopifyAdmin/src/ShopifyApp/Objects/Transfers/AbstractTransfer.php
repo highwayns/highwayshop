@@ -1,6 +1,6 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Objects\Transfers;
+namespace Osiset\ShopifyApp\Objects\Transfers;
 
 use ArrayIterator;
 use Exception;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Objects\Values;
+namespace Osiset\ShopifyApp\Objects\Values;
 
 use Funeralzone\ValueObjects\Scalars\StringTrait;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
 
 /**
  * Value object for shop's domain.

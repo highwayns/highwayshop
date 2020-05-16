@@ -1,21 +1,21 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Actions;
+namespace Osiset\ShopifyApp\Actions;
 
 use Illuminate\Support\Carbon;
-use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
-use Highwayns\ShopifyAdmin\Services\ChargeHelper;
-use Highwayns\ShopifyAdmin\Objects\Enums\PlanType;
-use Highwayns\ShopifyAdmin\Objects\Values\ChargeId;
-use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
-use Highwayns\ShopifyAdmin\Objects\Enums\ChargeStatus;
-use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\PlanId;
-use Highwayns\ShopifyAdmin\Contracts\Queries\Plan as IPlanQuery;
-use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
-use Highwayns\ShopifyAdmin\Contracts\Commands\Shop as IShopCommand;
-use Highwayns\ShopifyAdmin\Objects\Transfers\Charge as ChargeTransfer;
-use Highwayns\ShopifyAdmin\Contracts\Commands\Charge as IChargeCommand;
+use Osiset\ShopifyApp\Objects\Values\ShopId;
+use Osiset\ShopifyApp\Services\ChargeHelper;
+use Osiset\ShopifyApp\Objects\Enums\PlanType;
+use Osiset\ShopifyApp\Objects\Values\ChargeId;
+use Osiset\ShopifyApp\Objects\Enums\ChargeType;
+use Osiset\ShopifyApp\Objects\Enums\ChargeStatus;
+use Osiset\ShopifyApp\Objects\Values\ChargeReference;
+use Osiset\ShopifyApp\Contracts\Objects\Values\PlanId;
+use Osiset\ShopifyApp\Contracts\Queries\Plan as IPlanQuery;
+use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
+use Osiset\ShopifyApp\Contracts\Commands\Shop as IShopCommand;
+use Osiset\ShopifyApp\Objects\Transfers\Charge as ChargeTransfer;
+use Osiset\ShopifyApp\Contracts\Commands\Charge as IChargeCommand;
 
 /**
  * Activates a plan for a shop.
@@ -128,7 +128,7 @@ class ActivatePlan
         $transfer->chargeReference = $chargeRef;
         $transfer->chargeType = $chargeType;
         $transfer->chargeStatus = ChargeStatus::fromNative(strtoupper($response->status));
-        $transfer->activatedOn = $response->activated_on ? new Carbon($response->activated_on) : Carbon::today();
+        $transfer->activatedOn = $isRecurring ? new Carbon($response->activated_on) : Carbon::today();
         $transfer->billingOn = $isRecurring ? new Carbon($response->billing_on) : null;
         $transfer->trialEndsOn = $isRecurring ? new Carbon($response->trial_ends_on) : null;
         $transfer->planDetails = $this->chargeHelper->details($plan, $shop);

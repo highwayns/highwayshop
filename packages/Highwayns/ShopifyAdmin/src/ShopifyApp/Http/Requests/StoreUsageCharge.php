@@ -1,11 +1,11 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Http\Requests;
+namespace Osiset\ShopifyApp\Http\Requests;
 
 use Illuminate\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
-use function Highwayns\ShopifyAdmin\createHmac;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
+use function Osiset\ShopifyApp\createHmac;
 
 /**
  * Handles validating a usage charge.

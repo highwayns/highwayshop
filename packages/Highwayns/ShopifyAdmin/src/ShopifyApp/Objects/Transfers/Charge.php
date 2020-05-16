@@ -1,13 +1,13 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Objects\Transfers;
+namespace Osiset\ShopifyApp\Objects\Transfers;
 
 use Illuminate\Support\Carbon;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\PlanId;
-use Highwayns\ShopifyAdmin\Objects\Enums\ChargeStatus;
-use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
-use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
-use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
+use Osiset\ShopifyApp\Contracts\Objects\Values\PlanId;
+use Osiset\ShopifyApp\Objects\Enums\ChargeStatus;
+use Osiset\ShopifyApp\Objects\Enums\ChargeType;
+use Osiset\ShopifyApp\Objects\Values\ChargeReference;
+use Osiset\ShopifyApp\Objects\Values\ShopId;
 
 /**
  * Reprecents create charge.

@@ -1,9 +1,9 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Objects\Values;
+namespace Osiset\ShopifyApp\Objects\Values;
 
 use Funeralzone\ValueObjects\NullTrait;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
 
 /**
  * Value object for the shop's domain (null).

@@ -1,9 +1,9 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Http\Controllers;
+namespace Osiset\ShopifyApp\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Highwayns\ShopifyAdmin\Traits\HomeController as HomeControllerTrait;
+use Osiset\ShopifyApp\Traits\HomeController as HomeControllerTrait;
 
 /**
  * Responsible for showing the main homescreen for the app.

@@ -1,9 +1,9 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Http\Controllers;
+namespace Osiset\ShopifyApp\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Highwayns\ShopifyAdmin\Traits\BillingController as BillingControllerTrait;
+use Osiset\ShopifyApp\Traits\BillingController as BillingControllerTrait;
 
 /**
  * Responsible for billing a shop for plans and usage charges.

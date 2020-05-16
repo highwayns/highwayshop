@@ -1,16 +1,16 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Contracts;
+namespace Osiset\ShopifyApp\Contracts;
 
 use stdClass;
 use Osiset\BasicShopifyAPI;
 use GuzzleHttp\Exception\RequestException;
-use Highwayns\ShopifyAdmin\Objects\Enums\AuthMode;
-use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
-use Highwayns\ShopifyAdmin\Objects\Transfers\PlanDetails;
-use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
-use Highwayns\ShopifyAdmin\Objects\Transfers\UsageChargeDetails;
-use Highwayns\ShopifyAdmin\Objects\Transfers\ApiSession as ApiSessionTransfer;
+use Osiset\ShopifyApp\Objects\Enums\AuthMode;
+use Osiset\ShopifyApp\Objects\Enums\ChargeType;
+use Osiset\ShopifyApp\Objects\Transfers\PlanDetails;
+use Osiset\ShopifyApp\Objects\Values\ChargeReference;
+use Osiset\ShopifyApp\Objects\Transfers\UsageChargeDetails;
+use Osiset\ShopifyApp\Objects\Transfers\ApiSession as ApiSessionTransfer;
 
 /**
  * Reprecents the API helper.

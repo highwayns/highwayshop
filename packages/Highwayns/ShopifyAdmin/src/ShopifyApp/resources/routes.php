@@ -21,8 +21,8 @@ Route::group(['prefix' => config('shopify-app.prefix'), 'middleware' => ['web']]
     */
 
     Route::get(
-        '/shopify',
-        'Highwayns\ShopifyAdmin\Http\Controllers\HomeController@index'
+        '/',
+        'Osiset\ShopifyApp\Http\Controllers\HomeController@index'
     )
     ->middleware(['auth.shopify', 'billable'])
     ->name('home');
@@ -38,7 +38,7 @@ Route::group(['prefix' => config('shopify-app.prefix'), 'middleware' => ['web']]
 
     Route::get(
         '/login',
-        'Highwayns\ShopifyAdmin\Http\Controllers\AuthController@index'
+        'Osiset\ShopifyApp\Http\Controllers\AuthController@index'
     )->name('login');
 
     /*
@@ -53,7 +53,7 @@ Route::group(['prefix' => config('shopify-app.prefix'), 'middleware' => ['web']]
     Route::match(
         ['get', 'post'],
         '/authenticate',
-        'Highwayns\ShopifyAdmin\Http\Controllers\AuthController@authenticate'
+        'Osiset\ShopifyApp\Http\Controllers\AuthController@authenticate'
     )
     ->name('authenticate');
 
@@ -68,7 +68,7 @@ Route::group(['prefix' => config('shopify-app.prefix'), 'middleware' => ['web']]
 
     Route::get(
         '/authenticate/oauth',
-        'Highwayns\ShopifyAdmin\Http\Controllers\AuthController@oauth'
+        'Osiset\ShopifyApp\Http\Controllers\AuthController@oauth'
     )
     ->name('authenticate.oauth');
 
@@ -83,7 +83,7 @@ Route::group(['prefix' => config('shopify-app.prefix'), 'middleware' => ['web']]
 
     Route::get(
         '/billing/{plan?}',
-        'Highwayns\ShopifyAdmin\Http\Controllers\BillingController@index'
+        'Osiset\ShopifyApp\Http\Controllers\BillingController@index'
     )
     ->middleware(['auth.shopify'])
     ->where('plan', '^([0-9]+|)$')
@@ -100,7 +100,7 @@ Route::group(['prefix' => config('shopify-app.prefix'), 'middleware' => ['web']]
 
     Route::get(
         '/billing/process/{plan?}',
-        'Highwayns\ShopifyAdmin\Http\Controllers\BillingController@process'
+        'Osiset\ShopifyApp\Http\Controllers\BillingController@process'
     )
     ->middleware(['auth.shopify'])
     ->where('plan', '^([0-9]+|)$')
@@ -118,7 +118,7 @@ Route::group(['prefix' => config('shopify-app.prefix'), 'middleware' => ['web']]
     Route::match(
         ['get', 'post'],
         '/billing/usage-charge',
-        'Highwayns\ShopifyAdmin\Http\Controllers\BillingController@usageCharge'
+        'Osiset\ShopifyApp\Http\Controllers\BillingController@usageCharge'
     )
     ->middleware(['auth.shopify'])
     ->name('billing.usage_charge');
@@ -136,7 +136,7 @@ Route::group(['middleware' => ['api']], function () {
 
     Route::post(
         '/webhook/{type}',
-        'Highwayns\ShopifyAdmin\Http\Controllers\WebhookController@handle'
+        'Osiset\ShopifyApp\Http\Controllers\WebhookController@handle'
     )
     ->middleware('auth.webhook')
     ->name('webhook');

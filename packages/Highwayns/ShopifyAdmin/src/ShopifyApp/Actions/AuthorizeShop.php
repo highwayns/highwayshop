@@ -1,15 +1,15 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Actions;
+namespace Osiset\ShopifyApp\Actions;
 
 use stdClass;
-use Highwayns\ShopifyAdmin\Services\ShopSession;
-use Highwayns\ShopifyAdmin\Objects\Enums\AuthMode;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
-use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
-use Highwayns\ShopifyAdmin\Objects\Values\NullAccessToken;
-use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
-use Highwayns\ShopifyAdmin\Contracts\Commands\Shop as IShopCommand;
+use Osiset\ShopifyApp\Services\ShopSession;
+use Osiset\ShopifyApp\Objects\Enums\AuthMode;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Objects\Values\ShopDomain;
+use Osiset\ShopifyApp\Objects\Values\NullAccessToken;
+use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
+use Osiset\ShopifyApp\Contracts\Commands\Shop as IShopCommand;
 
 /**
  * Authenticates a shop via HTTP request.
@@ -69,7 +69,7 @@ class AuthorizeShop
     public function __invoke(ShopDomain $shopDomain, ?string $code): stdClass
     {
         // Get the shop
-        $shop = $this->shopQuery->getByDomain($shopDomain);
+        $shop = $this->shopQuery->getByDomain($shopDomain, [], true);
         if ($shop === null) {
             // Shop does not exist, make them and re-get
             $this->shopCommand->make($shopDomain, new NullAccessToken(null));
@@ -93,6 +93,11 @@ class AuthorizeShop
             // Call the partial callback with the shop and auth URL as params
             $return['url'] = $apiHelper->buildAuthUrl($grantMode, $this->getConfig('api_scopes'));
         } else {
+            // if the store has been deleted, restore the store to set the access token
+            if ($shop->trashed()) {
+                $shop->restore();
+            }
+
             // We have a good code, get the access details
             $this->shopSession->make($shop->getDomain());
             $this->shopSession->setAccess($apiHelper->getAccessData($code));

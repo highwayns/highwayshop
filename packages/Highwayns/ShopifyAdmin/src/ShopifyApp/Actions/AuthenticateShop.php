@@ -1,14 +1,14 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Actions;
+namespace Osiset\ShopifyApp\Actions;
 
 use Illuminate\Http\Request;
-use Highwayns\ShopifyAdmin\Services\ShopSession;
-use Highwayns\ShopifyAdmin\Actions\AfterAuthorize;
-use Highwayns\ShopifyAdmin\Actions\DispatchScripts;
-use Highwayns\ShopifyAdmin\Actions\DispatchWebhooks;
-use Highwayns\ShopifyAdmin\Objects\Values\ShopDomain;
-use Highwayns\ShopifyAdmin\Contracts\ApiHelper as IApiHelper;
+use Osiset\ShopifyApp\Services\ShopSession;
+use Osiset\ShopifyApp\Actions\AfterAuthorize;
+use Osiset\ShopifyApp\Actions\DispatchScripts;
+use Osiset\ShopifyApp\Actions\DispatchWebhooks;
+use Osiset\ShopifyApp\Objects\Values\ShopDomain;
+use Osiset\ShopifyApp\Contracts\ApiHelper as IApiHelper;
 
 /**
  * Authenticates a shop and fires post authentication actions.

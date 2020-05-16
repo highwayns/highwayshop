@@ -53,7 +53,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Highwayns\\ShopifyAdmin\\ShopifyAppProvider"
+                "Osiset\\ShopifyApp\\ShopifyAppProvider"
             ],
             "aliases": {
                 "ShopifyApp": "Highwayns\\ShopifyAdmin\\Facades\\ShopifyApp"

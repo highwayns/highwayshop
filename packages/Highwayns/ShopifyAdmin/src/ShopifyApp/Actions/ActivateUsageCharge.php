@@ -1,18 +1,18 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Actions;
+namespace Osiset\ShopifyApp\Actions;
 
 use Illuminate\Support\Carbon;
-use Highwayns\ShopifyAdmin\Objects\Values\ShopId;
-use Highwayns\ShopifyAdmin\Services\ChargeHelper;
-use Highwayns\ShopifyAdmin\Objects\Values\ChargeId;
-use Highwayns\ShopifyAdmin\Objects\Enums\ChargeType;
-use Highwayns\ShopifyAdmin\Objects\Values\ChargeReference;
-use Highwayns\ShopifyAdmin\Contracts\Queries\Shop as IShopQuery;
-use Highwayns\ShopifyAdmin\Exceptions\ChargeNotRecurringException;
-use Highwayns\ShopifyAdmin\Contracts\Commands\Charge as IChargeCommand;
-use Highwayns\ShopifyAdmin\Objects\Transfers\UsageCharge as UsageChargeTransfer;
-use Highwayns\ShopifyAdmin\Objects\Transfers\UsageChargeDetails as UsageChargeDetailsTransfer;
+use Osiset\ShopifyApp\Objects\Values\ShopId;
+use Osiset\ShopifyApp\Services\ChargeHelper;
+use Osiset\ShopifyApp\Objects\Values\ChargeId;
+use Osiset\ShopifyApp\Objects\Enums\ChargeType;
+use Osiset\ShopifyApp\Objects\Values\ChargeReference;
+use Osiset\ShopifyApp\Contracts\Queries\Shop as IShopQuery;
+use Osiset\ShopifyApp\Exceptions\ChargeNotRecurringException;
+use Osiset\ShopifyApp\Contracts\Commands\Charge as IChargeCommand;
+use Osiset\ShopifyApp\Objects\Transfers\UsageCharge as UsageChargeTransfer;
+use Osiset\ShopifyApp\Objects\Transfers\UsageChargeDetails as UsageChargeDetailsTransfer;
 
 /**
  * Activates a usage charge for a shop.

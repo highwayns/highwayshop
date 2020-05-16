@@ -1,11 +1,11 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Exceptions;
+namespace Osiset\ShopifyApp\Exceptions;
 
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
 
 /**
  * Base exception for all exceptions of the package.

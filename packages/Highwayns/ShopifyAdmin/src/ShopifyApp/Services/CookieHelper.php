@@ -1,9 +1,9 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Services;
+namespace Osiset\ShopifyApp\Services;
 
 use Jenssegers\Agent\Agent;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
 
 /**
  * Helper for dealing with cookie and cookie issues.

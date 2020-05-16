@@ -1,10 +1,10 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Messaging\Events;
+namespace Osiset\ShopifyApp\Messaging\Events;
 
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Highwayns\ShopifyAdmin\Contracts\ShopModel as IShopModel;
+use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
 
 /**
  * Event fired when a shop passes through authentication.

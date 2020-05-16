@@ -1,9 +1,9 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Objects\Transfers;
+namespace Osiset\ShopifyApp\Objects\Transfers;
 
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\AccessToken as AccessTokenValue;
-use Highwayns\ShopifyAdmin\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
+use Osiset\ShopifyApp\Contracts\Objects\Values\AccessToken as AccessTokenValue;
+use Osiset\ShopifyApp\Contracts\Objects\Values\ShopDomain as ShopDomainValue;
 
 /**
  * Reprecents details for API session used by API helper.

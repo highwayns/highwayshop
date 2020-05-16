@@ -1,13 +1,13 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Http\Middleware;
+namespace Osiset\ShopifyApp\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Highwayns\ShopifyAdmin\Services\ShopSession;
-use Highwayns\ShopifyAdmin\Traits\ConfigAccessible;
+use Osiset\ShopifyApp\Services\ShopSession;
+use Osiset\ShopifyApp\Traits\ConfigAccessible;
 
 /**
  * Responsible for ensuring the shop is being billed.

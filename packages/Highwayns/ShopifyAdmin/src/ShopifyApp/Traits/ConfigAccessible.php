@@ -1,6 +1,6 @@
 <?php
 
-namespace Highwayns\ShopifyAdmin\Traits;
+namespace Osiset\ShopifyApp\Traits;
 
 use Illuminate\Support\Facades\Config;
 
