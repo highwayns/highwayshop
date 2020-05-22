@@ -312,7 +312,10 @@ return [
                     'refunds' => 'المسترجع',
                     'individual-refund' => '#:refund_id مسترجع',
                     'adjustment-refund' => 'تعديلات عملية الإسترجاع',
-                    'adjustment-fee' => 'تكلفة تعديلات عملية الإسترجاع'
+                    'adjustment-fee' => 'تكلفة تعديلات عملية الإسترجاع',
+                    'cancel-confirm-msg' => 'هل أنت متأكد من أنك تريد إلغاء هذا الطلب ؟',
+                    'tracking-number' => 'Tracking Number',
+                    'cancel-confirm-msg' => 'هل أنت متأكد أنك تريد إلغاء هذا الطلب ?'
                 ]
             ],
 

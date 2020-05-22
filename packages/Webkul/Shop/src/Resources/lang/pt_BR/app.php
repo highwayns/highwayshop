@@ -306,6 +306,8 @@ return [
                     'individual-refund' => 'Refund #:refund_id',
                     'adjustment-refund' => 'Adjustment Refund',
                     'adjustment-fee' => 'Adjustment Fee',
+                    'tracking-number' => 'Numero de rastreio',
+                    'cancel-confirm-msg'  => 'Tem certeza de que deseja cancelar este pedido ?'
                 ]
             ],
 

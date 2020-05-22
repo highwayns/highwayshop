@@ -293,6 +293,8 @@ return [
                     'individual-refund' => '返金 #:refund_id',
                     'adjustment-refund' => '返金調整',
                     'adjustment-fee' => '調整手数料',
+                    'tracking-number' => '追跡番号',
+                    'cancel-confirm-msg' => 'この注文をキャンセルしてもよろしいですか ?'
                 ]
             ],
 

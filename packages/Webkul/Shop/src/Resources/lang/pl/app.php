@@ -313,6 +313,8 @@ return [
                     'adjustment-refund' => 'Wyrównania kosztów zwrotu',
                     'adjustment-fee' => 'Opłata za dostosowanie',
                     'cancel-btn-title' => 'Anuluj',
+                    'tracking-number' => 'numer przesyłki',
+                    'cancel-confirm-msg' => 'Czy na pewno chcesz anulować to zamówienie ?'
                 ]
             ],
 
