@@ -26,3 +26,8 @@ storage/
 storage/*.key
 /docker-compose-collection/
 /resources/themes/velocity/*
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

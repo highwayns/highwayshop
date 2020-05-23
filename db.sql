@@ -70,10 +70,41 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `admins`
+-- テーブルの構造 `ADDRESSES`
 --
 
-CREATE TABLE `admins` (
+CREATE TABLE `ADDRESSES` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `address_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_id` int(10) UNSIGNED DEFAULT NULL COMMENT 'null if guest checkout',
+  `cart_id` int(10) UNSIGNED DEFAULT NULL COMMENT 'only for cart_addresses',
+  `order_id` int(10) UNSIGNED DEFAULT NULL COMMENT 'only for order_addresses',
+  `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `company_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `state` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vat_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `default_address` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'only for customer_addresses',
+  `additional` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`additional`)),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `ADMINS`
+--
+
+CREATE TABLE `ADMINS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -87,19 +118,19 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `admins`
+-- テーブルのデータのダンプ `ADMINS`
 --
 
-INSERT INTO `admins` (`id`, `name`, `email`, `password`, `api_token`, `status`, `role_id`, `remember_token`, `created_at`, `updated_at`) VALUES
+INSERT INTO `ADMINS` (`id`, `name`, `email`, `password`, `api_token`, `status`, `role_id`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Example', 'admin@example.com', '$2y$10$ekN3NRExPIysz66nS4CbyeX6zD0BRKyt3xsQMi6izPX./ye1k596G', 'wzyV8KYZXz9ynfPx8OCJaP6DY72Lt3iaxDZBupcVySgiGgUfQEvq19ZdHHUHCz6SSuHtm7Kl6OdAEnHz', 1, 1, NULL, '2020-03-21 02:35:21', '2020-03-21 02:35:21');
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `admin_password_resets`
+-- テーブルの構造 `ADMIN_PASSWORD_RESETS`
 --
 
-CREATE TABLE `admin_password_resets` (
+CREATE TABLE `ADMIN_PASSWORD_RESETS` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -108,10 +139,10 @@ CREATE TABLE `admin_password_resets` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `agent_password_resets`
+-- テーブルの構造 `AGENT_PASSWORD_RESETS`
 --
 
-CREATE TABLE `agent_password_resets` (
+CREATE TABLE `AGENT_PASSWORD_RESETS` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -120,10 +151,10 @@ CREATE TABLE `agent_password_resets` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `agent_roles`
+-- テーブルの構造 `AGENT_ROLES`
 --
 
-CREATE TABLE `agent_roles` (
+CREATE TABLE `AGENT_ROLES` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -133,13 +164,20 @@ CREATE TABLE `agent_roles` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `AGENT_ROLES`
+--
+
+INSERT INTO `AGENT_ROLES` (`id`, `name`, `description`, `permission_type`, `permissions`, `created_at`, `updated_at`) VALUES
+(1, 'administrator', '管理者', 'all', NULL, '2020-05-16 02:13:02', '2020-05-16 02:13:02');
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `agent_sources`
+-- テーブルの構造 `AGENT_SOURCES`
 --
 
-CREATE TABLE `agent_sources` (
+CREATE TABLE `AGENT_SOURCES` (
   `id` int(10) UNSIGNED NOT NULL COMMENT '代理店ID',
   `vendor_id` int(11) NOT NULL COMMENT 'ベンダーID',
   `agency_group_id` int(11) NOT NULL COMMENT '代理店グループID',
@@ -164,13 +202,20 @@ CREATE TABLE `agent_sources` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `AGENT_SOURCES`
+--
+
+INSERT INTO `AGENT_SOURCES` (`id`, `vendor_id`, `agency_group_id`, `name`, `email`, `password`, `status`, `role_id`, `postal_code`, `pref`, `city`, `address`, `building_name`, `tel`, `fax`, `agency_denki_shop_code`, `created_at`, `created_user_id`, `updated_at`, `updated_user_id`, `del_flg`, `remember_token`) VALUES
+(1, 0, 0, '鄭', 'tei952@gmail.com', '$2y$10$7NDImEZIRRSa6HM5Oy7n0udR6BhxED5Zf9HzBB/ifEKbjdjJLd3jG', 1, 1, '', 0, '', '', NULL, '', NULL, NULL, '2020-05-16 02:15:34', 0, '2020-05-16 02:15:34', 0, 0, NULL);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `attributes`
+-- テーブルの構造 `ATTRIBUTES`
 --
 
-CREATE TABLE `attributes` (
+CREATE TABLE `ATTRIBUTES` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -193,10 +238,10 @@ CREATE TABLE `attributes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `attributes`
+-- テーブルのデータのダンプ `ATTRIBUTES`
 --
 
-INSERT INTO `attributes` (`id`, `code`, `admin_name`, `type`, `validation`, `position`, `is_required`, `is_unique`, `value_per_locale`, `value_per_channel`, `is_filterable`, `is_configurable`, `is_user_defined`, `is_visible_on_front`, `created_at`, `updated_at`, `swatch_type`, `use_in_flat`, `is_comparable`) VALUES
+INSERT INTO `ATTRIBUTES` (`id`, `code`, `admin_name`, `type`, `validation`, `position`, `is_required`, `is_unique`, `value_per_locale`, `value_per_channel`, `is_filterable`, `is_configurable`, `is_user_defined`, `is_visible_on_front`, `created_at`, `updated_at`, `swatch_type`, `use_in_flat`, `is_comparable`) VALUES
 (1, 'sku', 'SKU', 'text', NULL, 1, 1, 1, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
 (2, 'name', 'Name', 'text', NULL, 2, 1, 0, 1, 1, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
 (3, 'url_key', 'URL Key', 'text', NULL, 3, 1, 1, 0, 0, 0, 0, 0, 0, '2020-03-21 02:35:21', '2020-03-21 02:35:21', NULL, 1, 0),
@@ -227,10 +272,10 @@ INSERT INTO `attributes` (`id`, `code`, `admin_name`, `type`, `validation`, `pos
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `attribute_families`
+-- テーブルの構造 `ATTRIBUTE_FAMILIES`
 --
 
-CREATE TABLE `attribute_families` (
+CREATE TABLE `ATTRIBUTE_FAMILIES` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -239,19 +284,19 @@ CREATE TABLE `attribute_families` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `attribute_families`
+-- テーブルのデータのダンプ `ATTRIBUTE_FAMILIES`
 --
 
-INSERT INTO `attribute_families` (`id`, `code`, `name`, `status`, `is_user_defined`) VALUES
+INSERT INTO `ATTRIBUTE_FAMILIES` (`id`, `code`, `name`, `status`, `is_user_defined`) VALUES
 (1, 'default', 'Default', 0, 1);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `attribute_groups`
+-- テーブルの構造 `ATTRIBUTE_GROUPS`
 --
 
-CREATE TABLE `attribute_groups` (
+CREATE TABLE `ATTRIBUTE_GROUPS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `position` int(11) NOT NULL,
@@ -260,10 +305,10 @@ CREATE TABLE `attribute_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `attribute_groups`
+-- テーブルのデータのダンプ `ATTRIBUTE_GROUPS`
 --
 
-INSERT INTO `attribute_groups` (`id`, `name`, `position`, `is_user_defined`, `attribute_family_id`) VALUES
+INSERT INTO `ATTRIBUTE_GROUPS` (`id`, `name`, `position`, `is_user_defined`, `attribute_family_id`) VALUES
 (1, 'General', 1, 0, 1),
 (2, 'Description', 2, 0, 1),
 (3, 'Meta Description', 3, 0, 1),
@@ -273,20 +318,20 @@ INSERT INTO `attribute_groups` (`id`, `name`, `position`, `is_user_defined`, `at
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `attribute_group_mappings`
+-- テーブルの構造 `ATTRIBUTE_GROUP_MAPPINGS`
 --
 
-CREATE TABLE `attribute_group_mappings` (
+CREATE TABLE `ATTRIBUTE_GROUP_MAPPINGS` (
   `attribute_id` int(10) UNSIGNED NOT NULL,
   `attribute_group_id` int(10) UNSIGNED NOT NULL,
   `position` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `attribute_group_mappings`
+-- テーブルのデータのダンプ `ATTRIBUTE_GROUP_MAPPINGS`
 --
 
-INSERT INTO `attribute_group_mappings` (`attribute_id`, `attribute_group_id`, `position`) VALUES
+INSERT INTO `ATTRIBUTE_GROUP_MAPPINGS` (`attribute_id`, `attribute_group_id`, `position`) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
@@ -317,10 +362,10 @@ INSERT INTO `attribute_group_mappings` (`attribute_id`, `attribute_group_id`, `p
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `attribute_options`
+-- テーブルの構造 `ATTRIBUTE_OPTIONS`
 --
 
-CREATE TABLE `attribute_options` (
+CREATE TABLE `ATTRIBUTE_OPTIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `admin_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sort_order` int(11) DEFAULT NULL,
@@ -329,10 +374,10 @@ CREATE TABLE `attribute_options` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `attribute_options`
+-- テーブルのデータのダンプ `ATTRIBUTE_OPTIONS`
 --
 
-INSERT INTO `attribute_options` (`id`, `admin_name`, `sort_order`, `attribute_id`, `swatch_value`) VALUES
+INSERT INTO `ATTRIBUTE_OPTIONS` (`id`, `admin_name`, `sort_order`, `attribute_id`, `swatch_value`) VALUES
 (1, 'Red', 1, 23, NULL),
 (2, 'Green', 2, 23, NULL),
 (3, 'Yellow', 3, 23, NULL),
@@ -346,10 +391,10 @@ INSERT INTO `attribute_options` (`id`, `admin_name`, `sort_order`, `attribute_id
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `attribute_option_translations`
+-- テーブルの構造 `ATTRIBUTE_OPTION_TRANSLATIONS`
 --
 
-CREATE TABLE `attribute_option_translations` (
+CREATE TABLE `ATTRIBUTE_OPTION_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `label` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -357,10 +402,10 @@ CREATE TABLE `attribute_option_translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `attribute_option_translations`
+-- テーブルのデータのダンプ `ATTRIBUTE_OPTION_TRANSLATIONS`
 --
 
-INSERT INTO `attribute_option_translations` (`id`, `locale`, `label`, `attribute_option_id`) VALUES
+INSERT INTO `ATTRIBUTE_OPTION_TRANSLATIONS` (`id`, `locale`, `label`, `attribute_option_id`) VALUES
 (1, 'en', 'Red', 1),
 (2, 'en', 'Green', 2),
 (3, 'en', 'Yellow', 3),
@@ -374,10 +419,10 @@ INSERT INTO `attribute_option_translations` (`id`, `locale`, `label`, `attribute
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `attribute_translations`
+-- テーブルの構造 `ATTRIBUTE_TRANSLATIONS`
 --
 
-CREATE TABLE `attribute_translations` (
+CREATE TABLE `ATTRIBUTE_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -385,10 +430,10 @@ CREATE TABLE `attribute_translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `attribute_translations`
+-- テーブルのデータのダンプ `ATTRIBUTE_TRANSLATIONS`
 --
 
-INSERT INTO `attribute_translations` (`id`, `locale`, `name`, `attribute_id`) VALUES
+INSERT INTO `ATTRIBUTE_TRANSLATIONS` (`id`, `locale`, `name`, `attribute_id`) VALUES
 (1, 'en', 'SKU', 1),
 (2, 'en', 'Name', 2),
 (3, 'en', 'URL Key', 3),
@@ -419,10 +464,10 @@ INSERT INTO `attribute_translations` (`id`, `locale`, `name`, `attribute_id`) VA
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `bookings`
+-- テーブルの構造 `BOOKINGS`
 --
 
-CREATE TABLE `bookings` (
+CREATE TABLE `BOOKINGS` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `qty` int(11) DEFAULT 0,
   `from` int(11) DEFAULT NULL,
@@ -436,10 +481,10 @@ CREATE TABLE `bookings` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `booking_products`
+-- テーブルの構造 `BOOKING_PRODUCTS`
 --
 
-CREATE TABLE `booking_products` (
+CREATE TABLE `BOOKING_PRODUCTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `qty` int(11) DEFAULT 0,
@@ -456,10 +501,10 @@ CREATE TABLE `booking_products` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `booking_product_appointment_slots`
+-- テーブルの構造 `BOOKING_PRODUCT_APPOINTMENT_SLOTS`
 --
 
-CREATE TABLE `booking_product_appointment_slots` (
+CREATE TABLE `BOOKING_PRODUCT_APPOINTMENT_SLOTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `duration` int(11) DEFAULT NULL,
   `break_time` int(11) DEFAULT NULL,
@@ -471,10 +516,10 @@ CREATE TABLE `booking_product_appointment_slots` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `booking_product_default_slots`
+-- テーブルの構造 `BOOKING_PRODUCT_DEFAULT_SLOTS`
 --
 
-CREATE TABLE `booking_product_default_slots` (
+CREATE TABLE `BOOKING_PRODUCT_DEFAULT_SLOTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `booking_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `duration` int(11) DEFAULT NULL,
@@ -486,10 +531,10 @@ CREATE TABLE `booking_product_default_slots` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `booking_product_event_tickets`
+-- テーブルの構造 `BOOKING_PRODUCT_EVENT_TICKETS`
 --
 
-CREATE TABLE `booking_product_event_tickets` (
+CREATE TABLE `BOOKING_PRODUCT_EVENT_TICKETS` (
   `id` int(10) UNSIGNED NOT NULL,
   `price` decimal(12,4) DEFAULT 0.0000,
   `qty` int(11) DEFAULT 0,
@@ -499,10 +544,10 @@ CREATE TABLE `booking_product_event_tickets` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `booking_product_event_ticket_translations`
+-- テーブルの構造 `BOOKING_PRODUCT_EVENT_TICKET_TRANSLATIONS`
 --
 
-CREATE TABLE `booking_product_event_ticket_translations` (
+CREATE TABLE `BOOKING_PRODUCT_EVENT_TICKET_TRANSLATIONS` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -513,10 +558,10 @@ CREATE TABLE `booking_product_event_ticket_translations` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `booking_product_rental_slots`
+-- テーブルの構造 `BOOKING_PRODUCT_RENTAL_SLOTS`
 --
 
-CREATE TABLE `booking_product_rental_slots` (
+CREATE TABLE `BOOKING_PRODUCT_RENTAL_SLOTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `renting_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `daily_price` decimal(12,4) DEFAULT 0.0000,
@@ -529,10 +574,10 @@ CREATE TABLE `booking_product_rental_slots` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `booking_product_table_slots`
+-- テーブルの構造 `BOOKING_PRODUCT_TABLE_SLOTS`
 --
 
-CREATE TABLE `booking_product_table_slots` (
+CREATE TABLE `BOOKING_PRODUCT_TABLE_SLOTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `price_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `guest_limit` int(11) NOT NULL DEFAULT 0,
@@ -547,10 +592,10 @@ CREATE TABLE `booking_product_table_slots` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart`
+-- テーブルの構造 `CART`
 --
 
-CREATE TABLE `cart` (
+CREATE TABLE `CART` (
   `id` int(10) UNSIGNED NOT NULL,
   `customer_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_first_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -584,40 +629,20 @@ CREATE TABLE `cart` (
   `applied_cart_rule_ids` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
--- --------------------------------------------------------
-
 --
--- テーブルの構造 `cart_address`
+-- テーブルのデータのダンプ `CART`
 --
 
-CREATE TABLE `cart_address` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `company_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vat_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `cart_id` int(10) UNSIGNED DEFAULT NULL,
-  `customer_id` int(10) UNSIGNED DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+INSERT INTO `CART` (`id`, `customer_email`, `customer_first_name`, `customer_last_name`, `shipping_method`, `coupon_code`, `is_gift`, `items_count`, `items_qty`, `exchange_rate`, `global_currency_code`, `base_currency_code`, `channel_currency_code`, `cart_currency_code`, `grand_total`, `base_grand_total`, `sub_total`, `base_sub_total`, `tax_total`, `base_tax_total`, `discount_amount`, `base_discount_amount`, `checkout_method`, `is_guest`, `is_active`, `conversion_time`, `customer_id`, `channel_id`, `created_at`, `updated_at`, `applied_cart_rule_ids`) VALUES
+(1, 'tei952@hotmail.com', 'tei952', '鄭', NULL, NULL, 0, 1, '1.0000', NULL, 'JPY', 'JPY', 'JPY', 'JPY', '2000.0000', '2000.0000', '2000.0000', '2000.0000', '0.0000', '0.0000', '0.0000', '0.0000', NULL, 0, 1, NULL, 1, 1, '2020-04-18 05:30:31', '2020-04-18 09:03:15', '');
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_items`
+-- テーブルの構造 `CART_ITEMS`
 --
 
-CREATE TABLE `cart_items` (
+CREATE TABLE `CART_ITEMS` (
   `id` int(10) UNSIGNED NOT NULL,
   `quantity` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `sku` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -648,13 +673,20 @@ CREATE TABLE `cart_items` (
   `applied_cart_rule_ids` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `CART_ITEMS`
+--
+
+INSERT INTO `CART_ITEMS` (`id`, `quantity`, `sku`, `type`, `name`, `coupon_code`, `weight`, `total_weight`, `base_total_weight`, `price`, `base_price`, `total`, `base_total`, `tax_percent`, `tax_amount`, `base_tax_amount`, `discount_percent`, `discount_amount`, `base_discount_amount`, `additional`, `parent_id`, `product_id`, `cart_id`, `tax_category_id`, `created_at`, `updated_at`, `custom_price`, `applied_cart_rule_ids`) VALUES
+(1, 1, 'test', 'simple', 'g-minst100', NULL, '1.0000', '1.0000', '1.0000', '2000.0000', '2000.0000', '2000.0000', '2000.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '{\"_token\":\"q0mHfu33qEBy3N1E6uOkPHBMOwMggxwvFWUkFXKJ\",\"product_id\":\"2\",\"quantity\":\"1\"}', NULL, 2, 1, NULL, '2020-04-18 05:30:31', '2020-04-18 09:03:15', NULL, '');
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_item_inventories`
+-- テーブルの構造 `CART_ITEM_INVENTORIES`
 --
 
-CREATE TABLE `cart_item_inventories` (
+CREATE TABLE `CART_ITEM_INVENTORIES` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `inventory_source_id` int(10) UNSIGNED DEFAULT NULL,
@@ -666,10 +698,10 @@ CREATE TABLE `cart_item_inventories` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_payment`
+-- テーブルの構造 `CART_PAYMENT`
 --
 
-CREATE TABLE `cart_payment` (
+CREATE TABLE `CART_PAYMENT` (
   `id` int(10) UNSIGNED NOT NULL,
   `method` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `method_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -681,10 +713,10 @@ CREATE TABLE `cart_payment` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_rules`
+-- テーブルの構造 `CART_RULES`
 --
 
-CREATE TABLE `cart_rules` (
+CREATE TABLE `CART_RULES` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -714,10 +746,10 @@ CREATE TABLE `cart_rules` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_rule_channels`
+-- テーブルの構造 `CART_RULE_CHANNELS`
 --
 
-CREATE TABLE `cart_rule_channels` (
+CREATE TABLE `CART_RULE_CHANNELS` (
   `cart_rule_id` int(10) UNSIGNED NOT NULL,
   `channel_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -725,10 +757,10 @@ CREATE TABLE `cart_rule_channels` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_rule_coupons`
+-- テーブルの構造 `CART_RULE_COUPONS`
 --
 
-CREATE TABLE `cart_rule_coupons` (
+CREATE TABLE `CART_RULE_COUPONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `usage_limit` int(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -745,10 +777,10 @@ CREATE TABLE `cart_rule_coupons` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_rule_coupon_usage`
+-- テーブルの構造 `CART_RULE_COUPON_USAGE`
 --
 
-CREATE TABLE `cart_rule_coupon_usage` (
+CREATE TABLE `CART_RULE_COUPON_USAGE` (
   `id` int(10) UNSIGNED NOT NULL,
   `times_used` int(11) NOT NULL DEFAULT 0,
   `cart_rule_coupon_id` int(10) UNSIGNED NOT NULL,
@@ -758,10 +790,10 @@ CREATE TABLE `cart_rule_coupon_usage` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_rule_customers`
+-- テーブルの構造 `CART_RULE_CUSTOMERS`
 --
 
-CREATE TABLE `cart_rule_customers` (
+CREATE TABLE `CART_RULE_CUSTOMERS` (
   `id` int(10) UNSIGNED NOT NULL,
   `times_used` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
   `cart_rule_id` int(10) UNSIGNED NOT NULL,
@@ -771,10 +803,10 @@ CREATE TABLE `cart_rule_customers` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_rule_customer_groups`
+-- テーブルの構造 `CART_RULE_CUSTOMER_GROUPS`
 --
 
-CREATE TABLE `cart_rule_customer_groups` (
+CREATE TABLE `CART_RULE_CUSTOMER_GROUPS` (
   `cart_rule_id` int(10) UNSIGNED NOT NULL,
   `customer_group_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -782,10 +814,10 @@ CREATE TABLE `cart_rule_customer_groups` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_rule_translations`
+-- テーブルの構造 `CART_RULE_TRANSLATIONS`
 --
 
-CREATE TABLE `cart_rule_translations` (
+CREATE TABLE `CART_RULE_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `label` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -795,10 +827,10 @@ CREATE TABLE `cart_rule_translations` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cart_shipping_rates`
+-- テーブルの構造 `CART_SHIPPING_RATES`
 --
 
-CREATE TABLE `cart_shipping_rates` (
+CREATE TABLE `CART_SHIPPING_RATES` (
   `id` int(10) UNSIGNED NOT NULL,
   `carrier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `carrier_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -817,10 +849,10 @@ CREATE TABLE `cart_shipping_rates` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `catalog_rules`
+-- テーブルの構造 `CATALOG_RULES`
 --
 
-CREATE TABLE `catalog_rules` (
+CREATE TABLE `CATALOG_RULES` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -840,10 +872,10 @@ CREATE TABLE `catalog_rules` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `catalog_rule_channels`
+-- テーブルの構造 `CATALOG_RULE_CHANNELS`
 --
 
-CREATE TABLE `catalog_rule_channels` (
+CREATE TABLE `CATALOG_RULE_CHANNELS` (
   `catalog_rule_id` int(10) UNSIGNED NOT NULL,
   `channel_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -851,10 +883,10 @@ CREATE TABLE `catalog_rule_channels` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `catalog_rule_customer_groups`
+-- テーブルの構造 `CATALOG_RULE_CUSTOMER_GROUPS`
 --
 
-CREATE TABLE `catalog_rule_customer_groups` (
+CREATE TABLE `CATALOG_RULE_CUSTOMER_GROUPS` (
   `catalog_rule_id` int(10) UNSIGNED NOT NULL,
   `customer_group_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -862,10 +894,10 @@ CREATE TABLE `catalog_rule_customer_groups` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `catalog_rule_products`
+-- テーブルの構造 `CATALOG_RULE_PRODUCTS`
 --
 
-CREATE TABLE `catalog_rule_products` (
+CREATE TABLE `CATALOG_RULE_PRODUCTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `starts_from` datetime DEFAULT NULL,
   `ends_till` datetime DEFAULT NULL,
@@ -882,10 +914,10 @@ CREATE TABLE `catalog_rule_products` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `catalog_rule_product_prices`
+-- テーブルの構造 `CATALOG_RULE_PRODUCT_PRICES`
 --
 
-CREATE TABLE `catalog_rule_product_prices` (
+CREATE TABLE `CATALOG_RULE_PRODUCT_PRICES` (
   `id` int(10) UNSIGNED NOT NULL,
   `price` decimal(12,4) NOT NULL DEFAULT 0.0000,
   `rule_date` date NOT NULL,
@@ -900,10 +932,10 @@ CREATE TABLE `catalog_rule_product_prices` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `categories`
+-- テーブルの構造 `CATEGORIES`
 --
 
-CREATE TABLE `categories` (
+CREATE TABLE `CATEGORIES` (
   `id` int(10) UNSIGNED NOT NULL,
   `position` int(11) NOT NULL DEFAULT 0,
   `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -918,17 +950,24 @@ CREATE TABLE `categories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `categories`
+-- テーブルのデータのダンプ `CATEGORIES`
 --
 
-INSERT INTO `categories` (`id`, `position`, `image`, `status`, `_lft`, `_rgt`, `parent_id`, `created_at`, `updated_at`, `display_mode`, `category_icon_path`) VALUES
-(1, 1, NULL, 1, 1, 14, NULL, '2020-03-21 02:35:20', '2020-03-21 02:35:20', 'products_and_description', NULL);
+INSERT INTO `CATEGORIES` (`id`, `position`, `image`, `status`, `_lft`, `_rgt`, `parent_id`, `created_at`, `updated_at`, `display_mode`, `category_icon_path`) VALUES
+(1, 1, 'category/1/qqdJGyuYqDVTh9W7BAHfKXr28Fkiwc3EyI8pm6w5.png', 1, 2, 19, 6, '2020-03-21 02:35:20', '2020-04-25 04:19:27', 'products_and_description', NULL),
+(2, 2, 'category/2/BSoucwq0UjcUW3TJhTqikUvfA95C0aytETtcdSST.png', 1, 26, 27, 6, '2020-04-18 02:42:36', '2020-04-25 04:20:19', 'products_and_description', NULL),
+(3, 3, 'category/3/sovdqdJH5zafj6mqCWSBV7hhsorZ9ozJadASKtNH.jpeg', 1, 20, 25, 6, '2020-04-18 02:45:04', '2020-04-25 04:19:56', 'products_and_description', NULL),
+(4, 1, 'category/4/tnwmR69IbCilJQK54bzsxzFiuJpj52Ry9VmnBovA.jpeg', 1, 15, 16, 1, '2020-04-18 05:10:39', '2020-04-25 04:19:27', 'products_and_description', NULL),
+(5, 2, NULL, 1, 17, 18, 1, '2020-04-25 04:17:18', '2020-04-25 04:19:27', 'products_and_description', NULL),
+(6, 0, NULL, 1, 1, 28, NULL, '2020-04-25 04:19:03', '2020-04-25 04:19:03', 'products_and_description', NULL),
+(7, 0, NULL, 1, 21, 22, 3, '2020-04-25 04:21:55', '2020-04-25 04:21:55', 'products_and_description', NULL),
+(8, 1, NULL, 1, 23, 24, 3, '2020-04-25 04:23:00', '2020-04-25 04:23:00', 'products_and_description', NULL);
 
 --
--- トリガ `categories`
+-- トリガ `CATEGORIES`
 --
 DELIMITER $$
-CREATE TRIGGER `trig_categories_insert` AFTER INSERT ON `categories` FOR EACH ROW BEGIN
+CREATE TRIGGER `trig_categories_insert` AFTER INSERT ON `CATEGORIES` FOR EACH ROW BEGIN
                             DECLARE urlPath VARCHAR(255);
             DECLARE localeCode VARCHAR(255);
             DECLARE done INT;
@@ -973,7 +1012,7 @@ CREATE TRIGGER `trig_categories_insert` AFTER INSERT ON `categories` FOR EACH RO
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `trig_categories_update` AFTER UPDATE ON `categories` FOR EACH ROW BEGIN
+CREATE TRIGGER `trig_categories_update` AFTER UPDATE ON `CATEGORIES` FOR EACH ROW BEGIN
                             DECLARE urlPath VARCHAR(255);
             DECLARE localeCode VARCHAR(255);
             DECLARE done INT;
@@ -1021,21 +1060,59 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `category_filterable_attributes`
+-- テーブルの構造 `CATEGORY_FILTERABLE_ATTRIBUTES`
 --
 
-CREATE TABLE `category_filterable_attributes` (
+CREATE TABLE `CATEGORY_FILTERABLE_ATTRIBUTES` (
   `category_id` int(10) UNSIGNED NOT NULL,
   `attribute_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `CATEGORY_FILTERABLE_ATTRIBUTES`
+--
+
+INSERT INTO `CATEGORY_FILTERABLE_ATTRIBUTES` (`category_id`, `attribute_id`) VALUES
+(1, 11),
+(1, 23),
+(1, 24),
+(1, 25),
+(2, 11),
+(2, 23),
+(2, 24),
+(2, 25),
+(3, 11),
+(3, 23),
+(3, 24),
+(3, 25),
+(4, 11),
+(4, 23),
+(4, 24),
+(4, 25),
+(5, 11),
+(5, 23),
+(5, 24),
+(5, 25),
+(6, 11),
+(6, 23),
+(6, 24),
+(6, 25),
+(7, 11),
+(7, 23),
+(7, 24),
+(7, 25),
+(8, 11),
+(8, 23),
+(8, 24),
+(8, 25);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `category_translations`
+-- テーブルの構造 `CATEGORY_TRANSLATIONS`
 --
 
-CREATE TABLE `category_translations` (
+CREATE TABLE `CATEGORY_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1050,18 +1127,32 @@ CREATE TABLE `category_translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `category_translations`
+-- テーブルのデータのダンプ `CATEGORY_TRANSLATIONS`
 --
 
-INSERT INTO `category_translations` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keywords`, `category_id`, `locale`, `locale_id`, `url_path`) VALUES
-(1, 'Root', 'root', 'Root', '', '', '', 1, 'en', NULL, ''),
-(2, '消毒カード', 'it-goodfor-cov-19', '<p>消毒カード</p>', '', '', '', 1, 'ja', NULL, '');
+INSERT INTO `CATEGORY_TRANSLATIONS` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keywords`, `category_id`, `locale`, `locale_id`, `url_path`) VALUES
+(1, 'Root', 'root', 'Root', '', '', '', 1, 'en', NULL, 'root'),
+(2, '消毒カード', 'it-goodfor-cov-19', '<p>消毒カード</p>', '', '', '', 1, 'ja', NULL, 'it-goodfor-cov-19'),
+(3, '次亜塩素酸', 'hclo', '<p><span style=\"display: inline !important; float: none; background-color: #ffffff; color: #4d5156; font-family: arial,sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\">次亜塩素酸は塩素のオキソ酸の1つで、塩素の酸化数は+1である。組成式では HClO と表されるが、水素原子と塩素原子が酸素原子に結合した構造 H-O-Cl を持つ。不安定な物質であり、水溶液中で徐々に分解する。次亜塩素酸および次亜塩素酸の塩類は酸化剤、漂白剤、外用殺菌剤、消毒剤として利用される</span><u></u></p>', '', '', '', 2, 'ja', 2, 'hclo'),
+(4, '次亜塩素酸', 'hclo', '<p><span style=\"display: inline !important; float: none; background-color: #ffffff; color: #4d5156; font-family: arial,sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\">次亜塩素酸は塩素のオキソ酸の1つで、塩素の酸化数は+1である。組成式では HClO と表されるが、水素原子と塩素原子が酸素原子に結合した構造 H-O-Cl を持つ。不安定な物質であり、水溶液中で徐々に分解する。次亜塩素酸および次亜塩素酸の塩類は酸化剤、漂白剤、外用殺菌剤、消毒剤として利用される</span><u></u></p>', '', '', '', 2, 'en', 1, 'hclo'),
+(5, 'マスク', 'mask', '<p><span style=\"display: inline !important; float: none; background-color: #ffffff; color: #333333; font-family: \'Meiryo\',\'メイリオ\',\'MS PGothic\',\'ＭＳ Ｐゴシック\',\'Hiragino Kaku Gothic Pro\',\'ヒラギノ角ゴ Pro W3\',Helvetica,sans-serif; font-size: 100%; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\">精密立体構造で顔にぴったりフィット&times;ストレッチ素材採用で耳にやさしくフィット</span><u></u></p>', '', '', '', 3, 'ja', 2, 'mask'),
+(6, 'マスク', 'mask', '<p><span style=\"display: inline !important; float: none; background-color: #ffffff; color: #333333; font-family: \'Meiryo\',\'メイリオ\',\'MS PGothic\',\'ＭＳ Ｐゴシック\',\'Hiragino Kaku Gothic Pro\',\'ヒラギノ角ゴ Pro W3\',Helvetica,sans-serif; font-size: 100%; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\">精密立体構造で顔にぴったりフィット&times;ストレッチ素材採用で耳にやさしくフィット</span><u></u></p>', '', '', '', 3, 'en', 1, 'mask'),
+(7, '中国消毒カード', 'c-card', '<p>中国消毒カード</p>', '', '', '', 4, 'ja', 2, 'it-goodfor-cov-19/c-card'),
+(8, '中国消毒カード', 'c-card', '<p>中国消毒カード</p>', '', '', '', 4, 'en', 1, 'root/c-card'),
+(9, '日本消毒カード', 'jp-card', '<p>日本消毒カード</p>', '', '', '', 5, 'ja', 2, 'it-goodfor-cov-19/jp-card'),
+(10, '日本消毒カード', 'jp-card', '<p>日本消毒カード</p>', '', '', '', 5, 'en', 1, 'root/jp-card'),
+(11, '消毒製品', 'antivirus', '<p>消毒製品</p>', '', '', '', 6, 'ja', 2, ''),
+(12, '消毒製品', 'antivirus', '<p>消毒製品</p>', '', '', '', 6, 'en', 1, ''),
+(13, '医療用マスク', 'mask-for-hospital', '<p>医療用マスク</p>', '', '', '', 7, 'ja', 2, 'mask/mask-for-hospital'),
+(14, '医療用マスク', 'mask-for-hospital', '<p>医療用マスク</p>', '', '', '', 7, 'en', 1, 'mask/mask-for-hospital'),
+(15, '普通マスク', 'common-mask', '<p>普通マスク</p>', '', '', '', 8, 'ja', 2, 'mask/common-mask'),
+(16, '普通マスク', 'common-mask', '<p>普通マスク</p>', '', '', '', 8, 'en', 1, 'mask/common-mask');
 
 --
--- トリガ `category_translations`
+-- トリガ `CATEGORY_TRANSLATIONS`
 --
 DELIMITER $$
-CREATE TRIGGER `trig_category_translations_insert` BEFORE INSERT ON `category_translations` FOR EACH ROW BEGIN
+CREATE TRIGGER `trig_category_translations_insert` BEFORE INSERT ON `CATEGORY_TRANSLATIONS` FOR EACH ROW BEGIN
                             DECLARE parentUrlPath varchar(255);
             DECLARE urlPath varchar(255);
 
@@ -1104,7 +1195,7 @@ CREATE TRIGGER `trig_category_translations_insert` BEFORE INSERT ON `category_tr
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `trig_category_translations_update` BEFORE UPDATE ON `category_translations` FOR EACH ROW BEGIN
+CREATE TRIGGER `trig_category_translations_update` BEFORE UPDATE ON `CATEGORY_TRANSLATIONS` FOR EACH ROW BEGIN
                             DECLARE parentUrlPath varchar(255);
             DECLARE urlPath varchar(255);
 
@@ -1150,10 +1241,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `channels`
+-- テーブルの構造 `CHANNELS`
 --
 
-CREATE TABLE `channels` (
+CREATE TABLE `CHANNELS` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1174,73 +1265,81 @@ CREATE TABLE `channels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `channels`
+-- テーブルのデータのダンプ `CHANNELS`
 --
 
-INSERT INTO `channels` (`id`, `code`, `name`, `description`, `timezone`, `theme`, `hostname`, `logo`, `favicon`, `home_page_content`, `footer_content`, `default_locale_id`, `base_currency_id`, `created_at`, `updated_at`, `root_category_id`, `home_seo`) VALUES
-(1, 'default', 'Default', NULL, NULL, 'velocity', NULL, NULL, NULL, '<p>@include(\"shop::home.slider\") @include(\"shop::home.featured-products\") @include(\"shop::home.new-products\")</p><div class=\"banner-container\"><div class=\"left-banner\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581f9494b8a1.png\" /></div><div class=\"right-banner\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fb045cf02.png\" /> <img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fc352d803.png\" /></div></div>', '<div class=\"list-container\"><span class=\"list-heading\">Quick Links</span><ul class=\"list-group\"><li><a href=\"@php echo route(\'shop.cms.page\', \'about-us\') @endphp\">About Us</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'return-policy\') @endphp\">Return Policy</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'refund-policy\') @endphp\">Refund Policy</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'terms-conditions\') @endphp\">Terms and conditions</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'terms-of-use\') @endphp\">Terms of Use</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'contact-us\') @endphp\">Contact Us</a></li></ul></div><div class=\"list-container\"><span class=\"list-heading\">Connect With Us</span><ul class=\"list-group\"><li><a href=\"#\"><span class=\"icon icon-facebook\"></span>Facebook </a></li><li><a href=\"#\"><span class=\"icon icon-twitter\"></span> Twitter </a></li><li><a href=\"#\"><span class=\"icon icon-instagram\"></span> Instagram </a></li><li><a href=\"#\"> <span class=\"icon icon-google-plus\"></span>Google+ </a></li><li><a href=\"#\"> <span class=\"icon icon-linkedin\"></span>LinkedIn </a></li></ul></div>', 1, 1, NULL, NULL, 1, '{\"meta_title\": \"Demo store\", \"meta_keywords\": \"Demo store meta keyword\", \"meta_description\": \"Demo store meta description\"}');
+INSERT INTO `CHANNELS` (`id`, `code`, `name`, `description`, `timezone`, `theme`, `hostname`, `logo`, `favicon`, `home_page_content`, `footer_content`, `default_locale_id`, `base_currency_id`, `created_at`, `updated_at`, `root_category_id`, `home_seo`) VALUES
+(1, 'default', 'Default', '', NULL, 'velocity', '', NULL, NULL, '<p>@include(\"shop::home.slider\") @include(\"shop::home.featured-products\") @include(\"shop::home.new-products\")</p>\r\n<div class=\"banner-container\">\r\n<div class=\"left-banner\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581f9494b8a1.png\" /></div>\r\n<div class=\"right-banner\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fb045cf02.png\" /> <img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fc352d803.png\" /></div>\r\n</div>', '<div class=\"list-container\"><span class=\"list-heading\">Quick Links</span>\r\n<ul class=\"list-group\">\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'about-us\') @endphp\">About Us</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'return-policy\') @endphp\">Return Policy</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'refund-policy\') @endphp\">Refund Policy</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'terms-conditions\') @endphp\">Terms and conditions</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'terms-of-use\') @endphp\">Terms of Use</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'contact-us\') @endphp\">Contact Us</a></li>\r\n</ul>\r\n</div>\r\n<div class=\"list-container\"><span class=\"list-heading\">Connect With Us</span>\r\n<ul class=\"list-group\">\r\n<li><a href=\"#\"><span class=\"icon icon-facebook\"></span>Facebook </a></li>\r\n<li><a href=\"#\"><span class=\"icon icon-twitter\"></span> Twitter </a></li>\r\n<li><a href=\"#\"><span class=\"icon icon-instagram\"></span> Instagram </a></li>\r\n<li><a href=\"#\"> <span class=\"icon icon-google-plus\"></span>Google+ </a></li>\r\n<li><a href=\"#\"> <span class=\"icon icon-linkedin\"></span>LinkedIn </a></li>\r\n</ul>\r\n</div>', 2, 2, NULL, '2020-04-25 04:23:44', 6, '{\"meta_title\":\"\\u6d77\\u5a01\\u30b7\\u30e7\\u30c3\\u30d7\",\"meta_description\":\"\\u697d\\u3057\\u307f\\u306b\\u6d77\\u5a01\\u30b7\\u30e7\\u30c3\\u30d4\\u30f3\\u30b0\",\"meta_keywords\":\"\\u6d77\\u5a01\\u30b7\\u30e7\\u30c3\\u30d7\"}'),
+(2, 'tokyo', '東京通販', '', NULL, 'shopify', '', NULL, NULL, '', '', 2, 2, '2020-04-18 03:04:58', '2020-04-18 03:04:58', 1, '{\"meta_title\":\"\\u6771\\u4eac\\u901a\\u8ca9\",\"meta_description\":\"\\u6771\\u4eac\\u901a\\u8ca9\",\"meta_keywords\":\"\\u6771\\u4eac\\u901a\\u8ca9\"}'),
+(3, 'highwayns', '海威ショップ', '海威ショップ', NULL, 'default', 'http://localhost:8000/highwayns', 'channel/3/ikSBVU57BN9JGP6oRWctsUm34XeHxiKqeqgOvr4w.png', 'channel/3/iSLJjdhAMYQmJgMMgrTMwGqr6gNVqYDYlcq3TKEk.jpeg', '<p style=\"color: #000000; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; line-height: 1.2em; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\">@include(\"shop::home.slider\") @include(\"shop::home.featured-products\") @include(\"shop::home.new-products\")</p>\r\n<div class=\"banner-container\" style=\"color: #000000; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; line-height: 1.2em; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\">\r\n<div class=\"left-banner\" style=\"line-height: 1.2em;\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581f9494b8a1.png\" /></div>\r\n<div class=\"right-banner\" style=\"line-height: 1.2em;\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fb045cf02.png\" /> <img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fc352d803.png\" /></div>\r\n</div>\r\n<p><b></b><i></i><u></u><sub></sub><sup></sup><span style=\"text-decoration: line-through;\"></span></p>', '<div class=\"list-container\" style=\"color: #000000; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; line-height: 1.2em; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\"><span class=\"list-heading\">Quick Links</span>\r\n<ul class=\"list-group\">\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'about-us\') @endphp\">About Us</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'return-policy\') @endphp\">Return Policy</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'refund-policy\') @endphp\">Refund Policy</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'terms-conditions\') @endphp\">Terms and conditions</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'terms-of-use\') @endphp\">Terms of Use</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'contact-us\') @endphp\">Contact Us</a></li>\r\n</ul>\r\n</div>\r\n<div class=\"list-container\" style=\"color: #000000; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; line-height: 1.2em; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\"><span class=\"list-heading\">Connect With Us</span>\r\n<ul class=\"list-group\">\r\n<li><a href=\"#\"><span class=\"icon icon-facebook\"></span>Facebook </a></li>\r\n<li><a href=\"#\"><span class=\"icon icon-twitter\"></span> Twitter </a></li>\r\n<li><a href=\"#\"><span class=\"icon icon-instagram\"></span> Instagram </a></li>\r\n<li><a href=\"#\"> <span class=\"icon icon-google-plus\"></span>Google+ </a></li>\r\n<li><a href=\"#\"> <span class=\"icon icon-linkedin\"></span>LinkedIn </a></li>\r\n</ul>\r\n</div>\r\n<p><b></b><i></i><u></u><sub></sub><sup></sup><span style=\"text-decoration: line-through;\"></span></p>', 2, 2, '2020-04-25 02:57:43', '2020-04-25 03:43:46', 3, '{\"meta_title\":\"\\u6d77\\u5a01\\u30b7\\u30e7\\u30c3\\u30d7\",\"meta_description\":\"\\u6d77\\u5a01\\u30b7\\u30e7\\u30c3\\u30d7\",\"meta_keywords\":\"\\u6d77\\u5a01\\u30b7\\u30e7\\u30c3\\u30d7\"}');
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `channel_currencies`
+-- テーブルの構造 `CHANNEL_CURRENCIES`
 --
 
-CREATE TABLE `channel_currencies` (
+CREATE TABLE `CHANNEL_CURRENCIES` (
   `channel_id` int(10) UNSIGNED NOT NULL,
   `currency_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `channel_currencies`
+-- テーブルのデータのダンプ `CHANNEL_CURRENCIES`
 --
 
-INSERT INTO `channel_currencies` (`channel_id`, `currency_id`) VALUES
-(1, 1);
+INSERT INTO `CHANNEL_CURRENCIES` (`channel_id`, `currency_id`) VALUES
+(1, 2),
+(2, 2),
+(3, 2);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `channel_inventory_sources`
+-- テーブルの構造 `CHANNEL_INVENTORY_SOURCES`
 --
 
-CREATE TABLE `channel_inventory_sources` (
+CREATE TABLE `CHANNEL_INVENTORY_SOURCES` (
   `channel_id` int(10) UNSIGNED NOT NULL,
   `inventory_source_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `channel_inventory_sources`
+-- テーブルのデータのダンプ `CHANNEL_INVENTORY_SOURCES`
 --
 
-INSERT INTO `channel_inventory_sources` (`channel_id`, `inventory_source_id`) VALUES
-(1, 1);
+INSERT INTO `CHANNEL_INVENTORY_SOURCES` (`channel_id`, `inventory_source_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 1);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `channel_locales`
+-- テーブルの構造 `CHANNEL_LOCALES`
 --
 
-CREATE TABLE `channel_locales` (
+CREATE TABLE `CHANNEL_LOCALES` (
   `channel_id` int(10) UNSIGNED NOT NULL,
   `locale_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `channel_locales`
+-- テーブルのデータのダンプ `CHANNEL_LOCALES`
 --
 
-INSERT INTO `channel_locales` (`channel_id`, `locale_id`) VALUES
-(1, 1);
+INSERT INTO `CHANNEL_LOCALES` (`channel_id`, `locale_id`) VALUES
+(1, 2),
+(2, 2),
+(3, 2);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `charges`
+-- テーブルの構造 `CHARGES`
 --
 
-CREATE TABLE `charges` (
+CREATE TABLE `CHARGES` (
   `id` int(10) UNSIGNED NOT NULL,
   `charge_id` bigint(20) NOT NULL,
   `test` tinyint(1) NOT NULL DEFAULT 0,
@@ -1268,10 +1367,10 @@ CREATE TABLE `charges` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cms_pages`
+-- テーブルの構造 `CMS_PAGES`
 --
 
-CREATE TABLE `cms_pages` (
+CREATE TABLE `CMS_PAGES` (
   `id` int(10) UNSIGNED NOT NULL,
   `layout` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1279,10 +1378,10 @@ CREATE TABLE `cms_pages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `cms_pages`
+-- テーブルのデータのダンプ `CMS_PAGES`
 --
 
-INSERT INTO `cms_pages` (`id`, `layout`, `created_at`, `updated_at`) VALUES
+INSERT INTO `CMS_PAGES` (`id`, `layout`, `created_at`, `updated_at`) VALUES
 (1, NULL, '2020-03-21 02:35:21', '2020-03-21 02:35:21'),
 (2, NULL, '2020-03-21 02:35:21', '2020-03-21 02:35:21'),
 (3, NULL, '2020-03-21 02:35:21', '2020-03-21 02:35:21'),
@@ -1293,21 +1392,28 @@ INSERT INTO `cms_pages` (`id`, `layout`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cms_page_channels`
+-- テーブルの構造 `CMS_PAGE_CHANNELS`
 --
 
-CREATE TABLE `cms_page_channels` (
+CREATE TABLE `CMS_PAGE_CHANNELS` (
   `cms_page_id` int(10) UNSIGNED NOT NULL,
   `channel_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `CMS_PAGE_CHANNELS`
+--
+
+INSERT INTO `CMS_PAGE_CHANNELS` (`cms_page_id`, `channel_id`) VALUES
+(1, 1);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `cms_page_translations`
+-- テーブルの構造 `CMS_PAGE_TRANSLATIONS`
 --
 
-CREATE TABLE `cms_page_translations` (
+CREATE TABLE `CMS_PAGE_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `page_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url_key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1320,24 +1426,25 @@ CREATE TABLE `cms_page_translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `cms_page_translations`
+-- テーブルのデータのダンプ `CMS_PAGE_TRANSLATIONS`
 --
 
-INSERT INTO `cms_page_translations` (`id`, `page_title`, `url_key`, `html_content`, `meta_title`, `meta_description`, `meta_keywords`, `locale`, `cms_page_id`) VALUES
+INSERT INTO `CMS_PAGE_TRANSLATIONS` (`id`, `page_title`, `url_key`, `html_content`, `meta_title`, `meta_description`, `meta_keywords`, `locale`, `cms_page_id`) VALUES
 (1, 'About Us', 'about-us', '<div class=\"static-container\">\n                                   <div class=\"mb-5\">About us page content</div>\n                                   </div>', 'about us', '', 'aboutus', 'en', 1),
 (2, 'Return Policy', 'return-policy', '<div class=\"static-container\">\n                                   <div class=\"mb-5\">Return policy page content</div>\n                                   </div>', 'return policy', '', 'return, policy', 'en', 2),
 (3, 'Refund Policy', 'refund-policy', '<div class=\"static-container\">\n                                   <div class=\"mb-5\">Refund policy page content</div>\n                                   </div>', 'Refund policy', '', 'refund, policy', 'en', 3),
 (4, 'Terms & Conditions', 'terms-conditions', '<div class=\"static-container\">\n                                   <div class=\"mb-5\">Terms & conditions page content</div>\n                                   </div>', 'Terms & Conditions', '', 'term, conditions', 'en', 4),
 (5, 'Terms of use', 'terms-of-use', '<div class=\"static-container\">\n                                   <div class=\"mb-5\">Terms of use page content</div>\n                                   </div>', 'Terms of use', '', 'term, use', 'en', 5),
-(6, 'Contact Us', 'contact-us', '<div class=\"static-container\">\n                                   <div class=\"mb-5\">Contact us page content</div>\n                                   </div>', 'Contact Us', '', 'contact, us', 'en', 6);
+(6, 'Contact Us', 'contact-us', '<div class=\"static-container\">\n                                   <div class=\"mb-5\">Contact us page content</div>\n                                   </div>', 'Contact Us', '', 'contact, us', 'en', 6),
+(7, 'about us', 'about-us', '<ol style=\"color: #666666; font-family: &amp;quot; ヒラギノ角ゴ pro w3&amp;quot;,&amp;quot;hiragino kaku gothic pro&amp;quot;,osaka,&amp;quot;ｍｓ ｐゴシック&amp;quot;,&amp;quot;ms pgothic&amp;quot;,sans-serif; font-size: 100%; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; list-style-image: none; list-style-position: outside; list-style-type: none; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px; padding: 0px; margin: 0px 0px 20px 30px;\">\r\n<li style=\"font-size: 100%; list-style-image: none; list-style-position: outside; list-style-type: decimal; padding: 0px; margin: 0px 0px 10px 0px;\">お客様に対して、常に最善のシステムを提供し、ビジネス価値の向上に貢献する。</li>\r\n<li style=\"font-size: 100%; list-style-image: none; list-style-position: outside; list-style-type: decimal; padding: 0px; margin: 0px 0px 10px 0px;\">ＩＴの革新と向き合い、ソフトウェア価値の向上に貢献する。</li>\r\n<li style=\"font-size: 100%; list-style-image: none; list-style-position: outside; list-style-type: decimal; padding: 0px; margin: 0px 0px 10px 0px;\">日本と中国でネットワークを展開し、ソフトウェア開発サービスの充実をはかる。</li>\r\n<li style=\"font-size: 100%; list-style-image: none; list-style-position: outside; list-style-type: decimal; padding: 0px; margin: 0px 0px 10px 0px;\">ソフトウェア開発者から発想することで、人々の次世代の豊かさを創造し、社会の発展に寄与する。</li>\r\n<li style=\"font-size: 100%; list-style-image: none; list-style-position: outside; list-style-type: decimal; padding: 0px; margin: 0px 0px 10px 0px;\">自由と自律を尊重し、多様な個性とチーム力を価値創造の源泉とする。</li>\r\n<li style=\"font-size: 100%; list-style-image: none; list-style-position: outside; list-style-type: decimal; padding: 0px; margin: 0px 0px 10px 0px;\">競争と協調の精神で、新しい挑戦を続け、世界で有名な会社を目指す。</li>\r\n<li style=\"font-size: 100%; list-style-image: none; list-style-position: outside; list-style-type: decimal; padding: 0px; margin: 0px 0px 10px 0px;\">企業価値の継続的な向上をはかり、株主からの信頼と期待に応える。</li>\r\n</ol>\r\n<p><b></b><i></i><u></u><sub></sub><sup></sup><span style=\"text-decoration: line-through;\"></span></p>', '', '', '', 'ja', 1);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `core_config`
+-- テーブルの構造 `CORE_CONFIG`
 --
 
-CREATE TABLE `core_config` (
+CREATE TABLE `CORE_CONFIG` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1348,10 +1455,10 @@ CREATE TABLE `core_config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `core_config`
+-- テーブルのデータのダンプ `CORE_CONFIG`
 --
 
-INSERT INTO `core_config` (`id`, `code`, `value`, `channel_code`, `locale_code`, `created_at`, `updated_at`) VALUES
+INSERT INTO `CORE_CONFIG` (`id`, `code`, `value`, `channel_code`, `locale_code`, `created_at`, `updated_at`) VALUES
 (1, 'catalog.products.guest-checkout.allow-guest-checkout', '1', NULL, NULL, '2020-03-21 02:35:20', '2020-03-21 02:35:20'),
 (2, 'emails.general.notifications.emails.general.notifications.verification', '1', NULL, NULL, '2020-03-21 02:35:20', '2020-03-21 02:35:20'),
 (3, 'emails.general.notifications.emails.general.notifications.registration', '1', NULL, NULL, '2020-03-21 02:35:20', '2020-03-21 02:35:20'),
@@ -1371,20 +1478,20 @@ INSERT INTO `core_config` (`id`, `code`, `value`, `channel_code`, `locale_code`,
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `countries`
+-- テーブルの構造 `COUNTRIES`
 --
 
-CREATE TABLE `countries` (
+CREATE TABLE `COUNTRIES` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `countries`
+-- テーブルのデータのダンプ `COUNTRIES`
 --
 
-INSERT INTO `countries` (`id`, `code`, `name`) VALUES
+INSERT INTO `COUNTRIES` (`id`, `code`, `name`) VALUES
 (1, 'AF', 'Afghanistan'),
 (2, 'AX', 'Åland Islands'),
 (3, 'AL', 'Albania'),
@@ -1644,10 +1751,10 @@ INSERT INTO `countries` (`id`, `code`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `country_states`
+-- テーブルの構造 `COUNTRY_STATES`
 --
 
-CREATE TABLE `country_states` (
+CREATE TABLE `COUNTRY_STATES` (
   `id` int(10) UNSIGNED NOT NULL,
   `country_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1656,10 +1763,10 @@ CREATE TABLE `country_states` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `country_states`
+-- テーブルのデータのダンプ `COUNTRY_STATES`
 --
 
-INSERT INTO `country_states` (`id`, `country_code`, `code`, `default_name`, `country_id`) VALUES
+INSERT INTO `COUNTRY_STATES` (`id`, `country_code`, `code`, `default_name`, `country_id`) VALUES
 (1, 'US', 'AL', 'Alabama', 244),
 (2, 'US', 'AK', 'Alaska', 244),
 (3, 'US', 'AS', 'American Samoa', 244),
@@ -2232,10 +2339,10 @@ INSERT INTO `country_states` (`id`, `country_code`, `code`, `default_name`, `cou
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `country_state_translations`
+-- テーブルの構造 `COUNTRY_STATE_TRANSLATIONS`
 --
 
-CREATE TABLE `country_state_translations` (
+CREATE TABLE `COUNTRY_STATE_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `default_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2243,10 +2350,10 @@ CREATE TABLE `country_state_translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `country_state_translations`
+-- テーブルのデータのダンプ `COUNTRY_STATE_TRANSLATIONS`
 --
 
-INSERT INTO `country_state_translations` (`id`, `locale`, `default_name`, `country_state_id`) VALUES
+INSERT INTO `COUNTRY_STATE_TRANSLATIONS` (`id`, `locale`, `default_name`, `country_state_id`) VALUES
 (1, 'ar', 'ألاباما', 1),
 (2, 'ar', 'ألاسكا', 2),
 (3, 'ar', 'ساموا الأمريكية', 3),
@@ -3845,7 +3952,7 @@ INSERT INTO `country_state_translations` (`id`, `locale`, `default_name`, `count
 (1596, 'pt_BR', 'Valkas novads', 460),
 (1597, 'pt_BR', 'Valmieras novads', 461),
 (1598, 'pt_BR', 'Varaklani county', 462);
-INSERT INTO `country_state_translations` (`id`, `locale`, `default_name`, `country_state_id`) VALUES
+INSERT INTO `COUNTRY_STATE_TRANSLATIONS` (`id`, `locale`, `default_name`, `country_state_id`) VALUES
 (1599, 'pt_BR', 'Vecpiebalgas novads', 463),
 (1600, 'pt_BR', 'Vecumnieku novads', 464),
 (1601, 'pt_BR', 'Ventspils novads', 465),
@@ -3956,10 +4063,10 @@ INSERT INTO `country_state_translations` (`id`, `locale`, `default_name`, `count
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `country_translations`
+-- テーブルの構造 `COUNTRY_TRANSLATIONS`
 --
 
-CREATE TABLE `country_translations` (
+CREATE TABLE `COUNTRY_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -3967,10 +4074,10 @@ CREATE TABLE `country_translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `country_translations`
+-- テーブルのデータのダンプ `COUNTRY_TRANSLATIONS`
 --
 
-INSERT INTO `country_translations` (`id`, `locale`, `name`, `country_id`) VALUES
+INSERT INTO `COUNTRY_TRANSLATIONS` (`id`, `locale`, `name`, `country_id`) VALUES
 (1, 'ar', 'أفغانستان', 1),
 (2, 'ar', 'جزر آلاند', 2),
 (3, 'ar', 'ألبانيا', 3),
@@ -4740,10 +4847,10 @@ INSERT INTO `country_translations` (`id`, `locale`, `name`, `country_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `currencies`
+-- テーブルの構造 `CURRENCIES`
 --
 
-CREATE TABLE `currencies` (
+CREATE TABLE `CURRENCIES` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4753,20 +4860,20 @@ CREATE TABLE `currencies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `currencies`
+-- テーブルのデータのダンプ `CURRENCIES`
 --
 
-INSERT INTO `currencies` (`id`, `code`, `name`, `created_at`, `updated_at`, `symbol`) VALUES
-(1, 'USD', 'US Dollar', NULL, NULL, NULL),
+INSERT INTO `CURRENCIES` (`id`, `code`, `name`, `created_at`, `updated_at`, `symbol`) VALUES
+(1, 'USD', 'US Dollar', NULL, '2020-04-18 03:09:01', '$'),
 (2, 'JPY', '日本円', '2020-03-21 02:40:49', '2020-03-21 02:40:49', '￥');
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `currency_exchange_rates`
+-- テーブルの構造 `CURRENCY_EXCHANGE_RATES`
 --
 
-CREATE TABLE `currency_exchange_rates` (
+CREATE TABLE `CURRENCY_EXCHANGE_RATES` (
   `id` int(10) UNSIGNED NOT NULL,
   `rate` decimal(24,12) NOT NULL,
   `target_currency` int(10) UNSIGNED NOT NULL,
@@ -4777,10 +4884,10 @@ CREATE TABLE `currency_exchange_rates` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `customers`
+-- テーブルの構造 `CUSTOMERS`
 --
 
-CREATE TABLE `customers` (
+CREATE TABLE `CUSTOMERS` (
   `id` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4802,44 +4909,19 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `customers`
+-- テーブルのデータのダンプ `CUSTOMERS`
 --
 
-INSERT INTO `customers` (`id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `email`, `status`, `password`, `api_token`, `customer_group_id`, `subscribed_to_news_letter`, `remember_token`, `created_at`, `updated_at`, `is_verified`, `token`, `notes`, `phone`) VALUES
+INSERT INTO `CUSTOMERS` (`id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `email`, `status`, `password`, `api_token`, `customer_group_id`, `subscribed_to_news_letter`, `remember_token`, `created_at`, `updated_at`, `is_verified`, `token`, `notes`, `phone`) VALUES
 (1, 'tei952', '鄭', NULL, NULL, 'tei952@hotmail.com', 1, '$2y$10$z9zglFH/q3gh5PhzBnZK8uvFTYk4CY5oAFJtkYgvoWn5ArapdBf3K', 'BprkTcoADaLOl7DBU3hFsXj1UQlsN7yhyDrCLDALB2qJSFOInDSn4xRCD5LrmC70o2EK58k0xs77NRZO', 2, 0, NULL, '2020-04-11 06:21:36', '2020-04-11 06:21:36', 1, '2c0c04030360ec5e542081ef5e395d32', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `customer_addresses`
+-- テーブルの構造 `CUSTOMER_DOCUMENTS`
 --
 
-CREATE TABLE `customer_addresses` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `customer_id` int(10) UNSIGNED NOT NULL,
-  `company_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vat_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `default_address` tinyint(1) NOT NULL DEFAULT 0,
-  `first_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `customer_documents`
---
-
-CREATE TABLE `customer_documents` (
+CREATE TABLE `CUSTOMER_DOCUMENTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4852,19 +4934,19 @@ CREATE TABLE `customer_documents` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `customer_documents`
+-- テーブルのデータのダンプ `CUSTOMER_DOCUMENTS`
 --
 
-INSERT INTO `customer_documents` (`id`, `name`, `description`, `status`, `type`, `path`, `customer_id`, `created_at`, `updated_at`) VALUES
+INSERT INTO `CUSTOMER_DOCUMENTS` (`id`, `name`, `description`, `status`, `type`, `path`, `customer_id`, `created_at`, `updated_at`) VALUES
 (1, 'sss', 'sssについて', 1, 'product', 'customer/KlsrFtxkFoUdkWFA4h5ycLAYUFJ5WxMREHewln9c.pdf', 0, '2020-04-11 06:14:13', '2020-04-11 06:14:13');
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `customer_groups`
+-- テーブルの構造 `CUSTOMER_GROUPS`
 --
 
-CREATE TABLE `customer_groups` (
+CREATE TABLE `CUSTOMER_GROUPS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_user_defined` tinyint(1) NOT NULL DEFAULT 1,
@@ -4874,10 +4956,10 @@ CREATE TABLE `customer_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `customer_groups`
+-- テーブルのデータのダンプ `CUSTOMER_GROUPS`
 --
 
-INSERT INTO `customer_groups` (`id`, `name`, `is_user_defined`, `created_at`, `updated_at`, `code`) VALUES
+INSERT INTO `CUSTOMER_GROUPS` (`id`, `name`, `is_user_defined`, `created_at`, `updated_at`, `code`) VALUES
 (1, 'Guest', 0, NULL, NULL, 'guest'),
 (2, 'General', 0, NULL, NULL, 'general'),
 (3, 'Wholesale', 0, NULL, NULL, 'wholesale');
@@ -4885,10 +4967,10 @@ INSERT INTO `customer_groups` (`id`, `name`, `is_user_defined`, `created_at`, `u
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `customer_password_resets`
+-- テーブルの構造 `CUSTOMER_PASSWORD_RESETS`
 --
 
-CREATE TABLE `customer_password_resets` (
+CREATE TABLE `CUSTOMER_PASSWORD_RESETS` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -4897,10 +4979,10 @@ CREATE TABLE `customer_password_resets` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `downloadable_link_purchased`
+-- テーブルの構造 `DOWNLOADABLE_LINK_PURCHASED`
 --
 
-CREATE TABLE `downloadable_link_purchased` (
+CREATE TABLE `DOWNLOADABLE_LINK_PURCHASED` (
   `id` int(10) UNSIGNED NOT NULL,
   `product_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4921,10 +5003,10 @@ CREATE TABLE `downloadable_link_purchased` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `dropship_ali_express_attributes`
+-- テーブルの構造 `DROPSHIP_ALI_EXPRESS_ATTRIBUTES`
 --
 
-CREATE TABLE `dropship_ali_express_attributes` (
+CREATE TABLE `DROPSHIP_ALI_EXPRESS_ATTRIBUTES` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_attribute_id` int(11) NOT NULL,
   `attribute_id` int(10) UNSIGNED NOT NULL
@@ -4933,10 +5015,10 @@ CREATE TABLE `dropship_ali_express_attributes` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `dropship_ali_express_attribute_options`
+-- テーブルの構造 `DROPSHIP_ALI_EXPRESS_ATTRIBUTE_OPTIONS`
 --
 
-CREATE TABLE `dropship_ali_express_attribute_options` (
+CREATE TABLE `DROPSHIP_ALI_EXPRESS_ATTRIBUTE_OPTIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_attribute_option_id` int(11) NOT NULL,
   `ali_express_swatch_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4948,10 +5030,10 @@ CREATE TABLE `dropship_ali_express_attribute_options` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `dropship_ali_express_orders`
+-- テーブルの構造 `DROPSHIP_ALI_EXPRESS_ORDERS`
 --
 
-CREATE TABLE `dropship_ali_express_orders` (
+CREATE TABLE `DROPSHIP_ALI_EXPRESS_ORDERS` (
   `id` int(10) UNSIGNED NOT NULL,
   `is_placed` tinyint(1) NOT NULL DEFAULT 0,
   `ali_express_add_cart_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4963,10 +5045,10 @@ CREATE TABLE `dropship_ali_express_orders` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `dropship_ali_express_order_items`
+-- テーブルの構造 `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS`
 --
 
-CREATE TABLE `dropship_ali_express_order_items` (
+CREATE TABLE `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_product_id` int(10) UNSIGNED NOT NULL,
   `order_item_id` int(10) UNSIGNED NOT NULL,
@@ -4979,10 +5061,10 @@ CREATE TABLE `dropship_ali_express_order_items` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `dropship_ali_express_products`
+-- テーブルの構造 `DROPSHIP_ALI_EXPRESS_PRODUCTS`
 --
 
-CREATE TABLE `dropship_ali_express_products` (
+CREATE TABLE `DROPSHIP_ALI_EXPRESS_PRODUCTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_product_url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ali_express_product_description_url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4997,10 +5079,10 @@ CREATE TABLE `dropship_ali_express_products` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `dropship_ali_express_product_images`
+-- テーブルの構造 `DROPSHIP_ALI_EXPRESS_PRODUCT_IMAGES`
 --
 
-CREATE TABLE `dropship_ali_express_product_images` (
+CREATE TABLE `DROPSHIP_ALI_EXPRESS_PRODUCT_IMAGES` (
   `id` int(10) UNSIGNED NOT NULL,
   `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_image_id` int(10) UNSIGNED NOT NULL
@@ -5009,10 +5091,10 @@ CREATE TABLE `dropship_ali_express_product_images` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `dropship_ali_express_product_reviews`
+-- テーブルの構造 `DROPSHIP_ALI_EXPRESS_PRODUCT_REVIEWS`
 --
 
-CREATE TABLE `dropship_ali_express_product_reviews` (
+CREATE TABLE `DROPSHIP_ALI_EXPRESS_PRODUCT_REVIEWS` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_review_id` int(11) NOT NULL,
   `product_review_id` int(10) UNSIGNED NOT NULL,
@@ -5023,10 +5105,10 @@ CREATE TABLE `dropship_ali_express_product_reviews` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `inventory_sources`
+-- テーブルの構造 `INVENTORY_SOURCES`
 --
 
-CREATE TABLE `inventory_sources` (
+CREATE TABLE `INVENTORY_SOURCES` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5049,19 +5131,19 @@ CREATE TABLE `inventory_sources` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `inventory_sources`
+-- テーブルのデータのダンプ `INVENTORY_SOURCES`
 --
 
-INSERT INTO `inventory_sources` (`id`, `code`, `name`, `description`, `contact_name`, `contact_email`, `contact_number`, `contact_fax`, `country`, `state`, `city`, `street`, `postcode`, `priority`, `latitude`, `longitude`, `status`, `created_at`, `updated_at`) VALUES
+INSERT INTO `INVENTORY_SOURCES` (`id`, `code`, `name`, `description`, `contact_name`, `contact_email`, `contact_number`, `contact_fax`, `country`, `state`, `city`, `street`, `postcode`, `priority`, `latitude`, `longitude`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'default', 'Default', NULL, 'Detroit Warehouse', 'warehouse@example.com', '1234567899', NULL, 'US', 'MI', 'Detroit', '12th Street', '48127', 0, NULL, NULL, 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `invoices`
+-- テーブルの構造 `INVOICES`
 --
 
-CREATE TABLE `invoices` (
+CREATE TABLE `INVOICES` (
   `id` int(10) UNSIGNED NOT NULL,
   `increment_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `state` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5090,10 +5172,10 @@ CREATE TABLE `invoices` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `invoice_items`
+-- テーブルの構造 `INVOICE_ITEMS`
 --
 
-CREATE TABLE `invoice_items` (
+CREATE TABLE `INVOICE_ITEMS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5121,10 +5203,10 @@ CREATE TABLE `invoice_items` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `locales`
+-- テーブルの構造 `LOCALES`
 --
 
-CREATE TABLE `locales` (
+CREATE TABLE `LOCALES` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5135,20 +5217,20 @@ CREATE TABLE `locales` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `locales`
+-- テーブルのデータのダンプ `LOCALES`
 --
 
-INSERT INTO `locales` (`id`, `code`, `name`, `created_at`, `updated_at`, `direction`, `locale_image`) VALUES
+INSERT INTO `LOCALES` (`id`, `code`, `name`, `created_at`, `updated_at`, `direction`, `locale_image`) VALUES
 (1, 'en', 'English', NULL, NULL, 'ltr', NULL),
 (2, 'ja', 'JP_ja', '2020-03-21 02:40:01', '2020-03-21 02:40:01', 'ltr', NULL);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `merchant_password_resets`
+-- テーブルの構造 `MERCHANT_PASSWORD_RESETS`
 --
 
-CREATE TABLE `merchant_password_resets` (
+CREATE TABLE `MERCHANT_PASSWORD_RESETS` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -5157,10 +5239,10 @@ CREATE TABLE `merchant_password_resets` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `merchant_roles`
+-- テーブルの構造 `MERCHANT_ROLES`
 --
 
-CREATE TABLE `merchant_roles` (
+CREATE TABLE `MERCHANT_ROLES` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5173,10 +5255,10 @@ CREATE TABLE `merchant_roles` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `merchant_sources`
+-- テーブルの構造 `MERCHANT_SOURCES`
 --
 
-CREATE TABLE `merchant_sources` (
+CREATE TABLE `MERCHANT_SOURCES` (
   `id` int(10) UNSIGNED NOT NULL COMMENT '製造者ID',
   `vendor_id` int(11) NOT NULL COMMENT 'ベンダーID',
   `merchant_group_id` int(11) NOT NULL COMMENT '製造者グループID',
@@ -5204,20 +5286,20 @@ CREATE TABLE `merchant_sources` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `migrations`
+-- テーブルの構造 `MIGRATIONS`
 --
 
-CREATE TABLE `migrations` (
+CREATE TABLE `MIGRATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `migrations`
+-- テーブルのデータのダンプ `MIGRATIONS`
 --
 
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+INSERT INTO `MIGRATIONS` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
 (2, '2014_10_12_100000_create_admin_password_resets_table', 1),
 (3, '2014_10_12_100000_create_password_resets_table', 1),
@@ -5408,15 +5490,18 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (188, '2020_03_23_201431_alter_booking_products_table', 4),
 (190, '2020_04_13_124753_create_velocity_category', 5),
 (191, '2020_04_13_124950_create_velocity_category_translations', 6),
-(192, '2020_04_13_224524_add_locale_in_sliders_table', 6);
+(192, '2020_04_13_224524_add_locale_in_sliders_table', 6),
+(193, '2020_04_16_130351_remove_channel_from_tax_category', 7),
+(194, '2020_04_16_185147_add_table_addresses', 7),
+(195, '2020_05_06_171638_create_order_comments_table', 8);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `orders`
+-- テーブルの構造 `ORDERS`
 --
 
-CREATE TABLE `orders` (
+CREATE TABLE `ORDERS` (
   `id` int(10) UNSIGNED NOT NULL,
   `increment_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5483,37 +5568,10 @@ CREATE TABLE `orders` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `order_address`
+-- テーブルの構造 `ORDER_BRANDS`
 --
 
-CREATE TABLE `order_address` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `company_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vat_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address2` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `state` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order_id` int(10) UNSIGNED NOT NULL,
-  `customer_id` int(10) UNSIGNED DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `order_brands`
---
-
-CREATE TABLE `order_brands` (
+CREATE TABLE `ORDER_BRANDS` (
   `id` int(10) UNSIGNED NOT NULL,
   `order_id` int(10) UNSIGNED DEFAULT NULL,
   `order_item_id` int(10) UNSIGNED DEFAULT NULL,
@@ -5526,10 +5584,25 @@ CREATE TABLE `order_brands` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `order_items`
+-- テーブルの構造 `ORDER_COMMENTS`
 --
 
-CREATE TABLE `order_items` (
+CREATE TABLE `ORDER_COMMENTS` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_notified` tinyint(1) NOT NULL DEFAULT 0,
+  `order_id` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `ORDER_ITEMS`
+--
+
+CREATE TABLE `ORDER_ITEMS` (
   `id` int(10) UNSIGNED NOT NULL,
   `sku` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5576,10 +5649,10 @@ CREATE TABLE `order_items` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `order_payment`
+-- テーブルの構造 `ORDER_PAYMENT`
 --
 
-CREATE TABLE `order_payment` (
+CREATE TABLE `ORDER_PAYMENT` (
   `id` int(10) UNSIGNED NOT NULL,
   `method` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `method_title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5591,10 +5664,10 @@ CREATE TABLE `order_payment` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `password_resets`
+-- テーブルの構造 `PASSWORD_RESETS`
 --
 
-CREATE TABLE `password_resets` (
+CREATE TABLE `PASSWORD_RESETS` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -5603,10 +5676,10 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `plans`
+-- テーブルの構造 `PLANS`
 --
 
-CREATE TABLE `plans` (
+CREATE TABLE `PLANS` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5623,10 +5696,10 @@ CREATE TABLE `plans` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `products`
+-- テーブルの構造 `PRODUCTS`
 --
 
-CREATE TABLE `products` (
+CREATE TABLE `PRODUCTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `sku` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5636,13 +5709,21 @@ CREATE TABLE `products` (
   `attribute_family_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `PRODUCTS`
+--
+
+INSERT INTO `PRODUCTS` (`id`, `sku`, `type`, `created_at`, `updated_at`, `parent_id`, `attribute_family_id`) VALUES
+(1, 'package', 'simple', '2020-04-18 02:46:50', '2020-04-18 02:46:50', NULL, 1),
+(2, 'test', 'simple', '2020-04-18 05:24:46', '2020-04-18 05:24:46', NULL, 1);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_attribute_values`
+-- テーブルの構造 `PRODUCT_ATTRIBUTE_VALUES`
 --
 
-CREATE TABLE `product_attribute_values` (
+CREATE TABLE `PRODUCT_ATTRIBUTE_VALUES` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `channel` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5657,13 +5738,69 @@ CREATE TABLE `product_attribute_values` (
   `attribute_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `PRODUCT_ATTRIBUTE_VALUES`
+--
+
+INSERT INTO `PRODUCT_ATTRIBUTE_VALUES` (`id`, `locale`, `channel`, `text_value`, `boolean_value`, `integer_value`, `float_value`, `datetime_value`, `date_value`, `json_value`, `product_id`, `attribute_id`) VALUES
+(1, 'ja', 'default', '<p>&nbsp;</p>\r\n<h2 style=\"box-sizing: border-box; clear: both; color: #333333; display: inline; font-family: Hiragino Kaku Gothic ProN,HiraKakuProN-W3,Meiryo; font-size: 18px; font-style: normal; font-variant: normal; font-weight: bold; letter-spacing: normal; line-height: 1.4; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px; padding: 0px; margin: 0px;\">ユニトライク 次亜塩素酸水 ジーミスト100 Gミスト100 スプレー300ml 1本</h2>\r\n<p>&nbsp;</p>', NULL, NULL, NULL, NULL, NULL, NULL, 1, 9),
+(2, 'ja', 'default', '<p>&nbsp;</p>\r\n<h2 style=\"box-sizing: border-box; clear: both; color: #333333; display: inline; font-family: Hiragino Kaku Gothic ProN,HiraKakuProN-W3,Meiryo; font-size: 18px; font-style: normal; font-variant: normal; font-weight: bold; letter-spacing: normal; line-height: 1.4; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px; padding: 0px; margin: 0px;\">ユニトライク 次亜塩素酸水 ジーミスト100 Gミスト100 スプレー300ml 1本</h2>\r\n<p>&nbsp;</p>', NULL, NULL, NULL, NULL, NULL, NULL, 1, 10),
+(3, NULL, NULL, 'package', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
+(4, 'ja', 'default', 'G-MIST50', NULL, NULL, NULL, NULL, NULL, NULL, 1, 2),
+(5, NULL, NULL, 'g-mist50', NULL, NULL, NULL, NULL, NULL, NULL, 1, 3),
+(6, NULL, 'default', NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 4),
+(7, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 5),
+(8, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 6),
+(9, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 7),
+(10, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 8),
+(11, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 1, 23),
+(12, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 1, 24),
+(13, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 26),
+(14, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 16),
+(15, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 17),
+(16, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 18),
+(17, NULL, NULL, NULL, NULL, NULL, '2200.0000', NULL, NULL, NULL, 1, 11),
+(18, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 12),
+(19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 13),
+(20, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 14),
+(21, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 15),
+(22, NULL, NULL, '10', NULL, NULL, NULL, NULL, NULL, NULL, 1, 19),
+(23, NULL, NULL, '20', NULL, NULL, NULL, NULL, NULL, NULL, 1, 20),
+(24, NULL, NULL, '40', NULL, NULL, NULL, NULL, NULL, NULL, 1, 21),
+(25, NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, 1, 22),
+(26, 'ja', 'default', '<p>G-mist100</p>', NULL, NULL, NULL, NULL, NULL, NULL, 2, 9),
+(27, 'ja', 'default', '<p><span style=\"display: inline !important; float: none; background-color: #ffffff; color: #000000; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; line-height: 1.2em; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\">G-mist100</span><u></u></p>', NULL, NULL, NULL, NULL, NULL, NULL, 2, 10),
+(28, NULL, NULL, 'test', NULL, NULL, NULL, NULL, NULL, NULL, 2, 1),
+(29, 'ja', 'default', 'g-minst100', NULL, NULL, NULL, NULL, NULL, NULL, 2, 2),
+(30, NULL, NULL, 'g-minst100', NULL, NULL, NULL, NULL, NULL, NULL, 2, 3),
+(31, NULL, 'default', NULL, NULL, 0, NULL, NULL, NULL, NULL, 2, 4),
+(32, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 2, 5),
+(33, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 2, 6),
+(34, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 2, 7),
+(35, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 2, 8),
+(36, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 2, 23),
+(37, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 2, 24),
+(38, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 2, 26),
+(39, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 2, 16),
+(40, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 2, 17),
+(41, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 2, 18),
+(42, NULL, NULL, NULL, NULL, NULL, '2000.0000', NULL, NULL, NULL, 2, 11),
+(43, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 12),
+(44, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 13),
+(45, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 14),
+(46, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 15),
+(47, NULL, NULL, '10', NULL, NULL, NULL, NULL, NULL, NULL, 2, 19),
+(48, NULL, NULL, '20', NULL, NULL, NULL, NULL, NULL, NULL, 2, 20),
+(49, NULL, NULL, '30', NULL, NULL, NULL, NULL, NULL, NULL, 2, 21),
+(50, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, 2, 22);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_bundle_options`
+-- テーブルの構造 `PRODUCT_BUNDLE_OPTIONS`
 --
 
-CREATE TABLE `product_bundle_options` (
+CREATE TABLE `PRODUCT_BUNDLE_OPTIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_required` tinyint(1) NOT NULL DEFAULT 1,
@@ -5674,10 +5811,10 @@ CREATE TABLE `product_bundle_options` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_bundle_option_products`
+-- テーブルの構造 `PRODUCT_BUNDLE_OPTION_PRODUCTS`
 --
 
-CREATE TABLE `product_bundle_option_products` (
+CREATE TABLE `PRODUCT_BUNDLE_OPTION_PRODUCTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
   `is_user_defined` tinyint(1) NOT NULL DEFAULT 1,
@@ -5690,10 +5827,10 @@ CREATE TABLE `product_bundle_option_products` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_bundle_option_translations`
+-- テーブルの構造 `PRODUCT_BUNDLE_OPTION_TRANSLATIONS`
 --
 
-CREATE TABLE `product_bundle_option_translations` (
+CREATE TABLE `PRODUCT_BUNDLE_OPTION_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `label` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5703,21 +5840,29 @@ CREATE TABLE `product_bundle_option_translations` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_categories`
+-- テーブルの構造 `PRODUCT_CATEGORIES`
 --
 
-CREATE TABLE `product_categories` (
+CREATE TABLE `PRODUCT_CATEGORIES` (
   `product_id` int(10) UNSIGNED NOT NULL,
   `category_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `PRODUCT_CATEGORIES`
+--
+
+INSERT INTO `PRODUCT_CATEGORIES` (`product_id`, `category_id`) VALUES
+(1, 2),
+(2, 4);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_cross_sells`
+-- テーブルの構造 `PRODUCT_CROSS_SELLS`
 --
 
-CREATE TABLE `product_cross_sells` (
+CREATE TABLE `PRODUCT_CROSS_SELLS` (
   `parent_id` int(10) UNSIGNED NOT NULL,
   `child_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -5725,10 +5870,10 @@ CREATE TABLE `product_cross_sells` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_downloadable_links`
+-- テーブルの構造 `PRODUCT_DOWNLOADABLE_LINKS`
 --
 
-CREATE TABLE `product_downloadable_links` (
+CREATE TABLE `PRODUCT_DOWNLOADABLE_LINKS` (
   `id` int(10) UNSIGNED NOT NULL,
   `url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `file` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5749,10 +5894,10 @@ CREATE TABLE `product_downloadable_links` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_downloadable_link_translations`
+-- テーブルの構造 `PRODUCT_DOWNLOADABLE_LINK_TRANSLATIONS`
 --
 
-CREATE TABLE `product_downloadable_link_translations` (
+CREATE TABLE `PRODUCT_DOWNLOADABLE_LINK_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5762,10 +5907,10 @@ CREATE TABLE `product_downloadable_link_translations` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_downloadable_samples`
+-- テーブルの構造 `PRODUCT_DOWNLOADABLE_SAMPLES`
 --
 
-CREATE TABLE `product_downloadable_samples` (
+CREATE TABLE `PRODUCT_DOWNLOADABLE_SAMPLES` (
   `id` int(10) UNSIGNED NOT NULL,
   `url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `file` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5780,10 +5925,10 @@ CREATE TABLE `product_downloadable_samples` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_downloadable_sample_translations`
+-- テーブルの構造 `PRODUCT_DOWNLOADABLE_SAMPLE_TRANSLATIONS`
 --
 
-CREATE TABLE `product_downloadable_sample_translations` (
+CREATE TABLE `PRODUCT_DOWNLOADABLE_SAMPLE_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5793,10 +5938,10 @@ CREATE TABLE `product_downloadable_sample_translations` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_flat`
+-- テーブルの構造 `PRODUCT_FLAT`
 --
 
-CREATE TABLE `product_flat` (
+CREATE TABLE `PRODUCT_FLAT` (
   `id` int(10) UNSIGNED NOT NULL,
   `sku` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5834,13 +5979,22 @@ CREATE TABLE `product_flat` (
   `depth` decimal(12,4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `PRODUCT_FLAT`
+--
+
+INSERT INTO `PRODUCT_FLAT` (`id`, `sku`, `name`, `description`, `url_key`, `new`, `featured`, `status`, `thumbnail`, `price`, `cost`, `special_price`, `special_price_from`, `special_price_to`, `weight`, `color`, `color_label`, `size`, `size_label`, `created_at`, `locale`, `channel`, `product_id`, `updated_at`, `parent_id`, `visible_individually`, `min_price`, `max_price`, `short_description`, `meta_title`, `meta_keywords`, `meta_description`, `width`, `height`, `depth`) VALUES
+(1, 'package', 'g-minst50', NULL, 'g-mist50', 0, 0, 0, NULL, '2200.0000', NULL, NULL, NULL, NULL, '2.0000', 1, 'Red', 6, 'S', '2020-04-18 11:46:50', 'en', 'default', 1, '2020-04-18 11:46:50', NULL, 0, '2200.0000', '2200.0000', NULL, NULL, NULL, NULL, '10.0000', '20.0000', '40.0000'),
+(2, 'test', 'g-minst100', '<p><span style=\"display: inline !important; float: none; background-color: #ffffff; color: #000000; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; line-height: 1.2em; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px;\">G-mist100</span><u></u></p>', 'g-minst100', 1, 1, 1, NULL, '2000.0000', NULL, NULL, NULL, NULL, '1.0000', 1, 'Red', 6, 'S', '2020-04-18 14:24:46', 'ja', 'default', 2, '2020-04-18 14:24:46', NULL, 1, '2000.0000', '2000.0000', '<p>G-mist100</p>', '', '', '', '10.0000', '20.0000', '30.0000'),
+(3, 'package', 'G-MIST50', '<p>&nbsp;</p>\r\n<h2 style=\"box-sizing: border-box; clear: both; color: #333333; display: inline; font-family: Hiragino Kaku Gothic ProN,HiraKakuProN-W3,Meiryo; font-size: 18px; font-style: normal; font-variant: normal; font-weight: bold; letter-spacing: normal; line-height: 1.4; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px; padding: 0px; margin: 0px;\">ユニトライク 次亜塩素酸水 ジーミスト100 Gミスト100 スプレー300ml 1本</h2>\r\n<p>&nbsp;</p>', 'g-mist50', 1, 1, 1, NULL, '2200.0000', NULL, NULL, NULL, NULL, '2.0000', 1, 'Red', 6, 'S', '2020-04-18 11:46:50', 'ja', 'default', 1, '2020-04-18 11:46:50', NULL, 1, '2200.0000', '2200.0000', '<p>&nbsp;</p>\r\n<h2 style=\"box-sizing: border-box; clear: both; color: #333333; display: inline; font-family: Hiragino Kaku Gothic ProN,HiraKakuProN-W3,Meiryo; font-size: 18px; font-style: normal; font-variant: normal; font-weight: bold; letter-spacing: normal; line-height: 1.4; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-spacing: 0px; padding: 0px; margin: 0px;\">ユニトライク 次亜塩素酸水 ジーミスト100 Gミスト100 スプレー300ml 1本</h2>\r\n<p>&nbsp;</p>', '', '', '', '10.0000', '20.0000', '40.0000');
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_grouped_products`
+-- テーブルの構造 `PRODUCT_GROUPED_PRODUCTS`
 --
 
-CREATE TABLE `product_grouped_products` (
+CREATE TABLE `PRODUCT_GROUPED_PRODUCTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
   `sort_order` int(11) NOT NULL DEFAULT 0,
@@ -5851,10 +6005,10 @@ CREATE TABLE `product_grouped_products` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_images`
+-- テーブルの構造 `PRODUCT_IMAGES`
 --
 
-CREATE TABLE `product_images` (
+CREATE TABLE `PRODUCT_IMAGES` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `path` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5864,10 +6018,10 @@ CREATE TABLE `product_images` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_inventories`
+-- テーブルの構造 `PRODUCT_INVENTORIES`
 --
 
-CREATE TABLE `product_inventories` (
+CREATE TABLE `PRODUCT_INVENTORIES` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
   `product_id` int(10) UNSIGNED NOT NULL,
@@ -5875,13 +6029,21 @@ CREATE TABLE `product_inventories` (
   `vendor_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `PRODUCT_INVENTORIES`
+--
+
+INSERT INTO `PRODUCT_INVENTORIES` (`id`, `qty`, `product_id`, `inventory_source_id`, `vendor_id`) VALUES
+(1, 10, 1, 1, 0),
+(2, 20, 2, 1, 0);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_ordered_inventories`
+-- テーブルの構造 `PRODUCT_ORDERED_INVENTORIES`
 --
 
-CREATE TABLE `product_ordered_inventories` (
+CREATE TABLE `PRODUCT_ORDERED_INVENTORIES` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
   `product_id` int(10) UNSIGNED NOT NULL,
@@ -5891,10 +6053,10 @@ CREATE TABLE `product_ordered_inventories` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_relations`
+-- テーブルの構造 `PRODUCT_RELATIONS`
 --
 
-CREATE TABLE `product_relations` (
+CREATE TABLE `PRODUCT_RELATIONS` (
   `parent_id` int(10) UNSIGNED NOT NULL,
   `child_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -5902,10 +6064,10 @@ CREATE TABLE `product_relations` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_reviews`
+-- テーブルの構造 `PRODUCT_REVIEWS`
 --
 
-CREATE TABLE `product_reviews` (
+CREATE TABLE `PRODUCT_REVIEWS` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rating` int(11) NOT NULL,
@@ -5921,10 +6083,10 @@ CREATE TABLE `product_reviews` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_super_attributes`
+-- テーブルの構造 `PRODUCT_SUPER_ATTRIBUTES`
 --
 
-CREATE TABLE `product_super_attributes` (
+CREATE TABLE `PRODUCT_SUPER_ATTRIBUTES` (
   `product_id` int(10) UNSIGNED NOT NULL,
   `attribute_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -5932,10 +6094,10 @@ CREATE TABLE `product_super_attributes` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `product_up_sells`
+-- テーブルの構造 `PRODUCT_UP_SELLS`
 --
 
-CREATE TABLE `product_up_sells` (
+CREATE TABLE `PRODUCT_UP_SELLS` (
   `parent_id` int(10) UNSIGNED NOT NULL,
   `child_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
@@ -5943,10 +6105,10 @@ CREATE TABLE `product_up_sells` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `refunds`
+-- テーブルの構造 `REFUNDS`
 --
 
-CREATE TABLE `refunds` (
+CREATE TABLE `REFUNDS` (
   `id` int(10) UNSIGNED NOT NULL,
   `increment_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `state` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5978,10 +6140,10 @@ CREATE TABLE `refunds` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `refund_items`
+-- テーブルの構造 `REFUND_ITEMS`
 --
 
-CREATE TABLE `refund_items` (
+CREATE TABLE `REFUND_ITEMS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6009,10 +6171,10 @@ CREATE TABLE `refund_items` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `roles`
+-- テーブルの構造 `ROLES`
 --
 
-CREATE TABLE `roles` (
+CREATE TABLE `ROLES` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6023,19 +6185,19 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `roles`
+-- テーブルのデータのダンプ `ROLES`
 --
 
-INSERT INTO `roles` (`id`, `name`, `description`, `permission_type`, `permissions`, `created_at`, `updated_at`) VALUES
+INSERT INTO `ROLES` (`id`, `name`, `description`, `permission_type`, `permissions`, `created_at`, `updated_at`) VALUES
 (1, 'Administrator', 'Administrator rolem', 'all', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `shipments`
+-- テーブルの構造 `SHIPMENTS`
 --
 
-CREATE TABLE `shipments` (
+CREATE TABLE `SHIPMENTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total_qty` int(11) DEFAULT NULL,
@@ -6057,10 +6219,10 @@ CREATE TABLE `shipments` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `shipment_items`
+-- テーブルの構造 `SHIPMENT_ITEMS`
 --
 
-CREATE TABLE `shipment_items` (
+CREATE TABLE `SHIPMENT_ITEMS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6083,10 +6245,10 @@ CREATE TABLE `shipment_items` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `sliders`
+-- テーブルの構造 `SLIDERS`
 --
 
-CREATE TABLE `sliders` (
+CREATE TABLE `SLIDERS` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `path` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6101,10 +6263,10 @@ CREATE TABLE `sliders` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `subscribers_list`
+-- テーブルの構造 `SUBSCRIBERS_LIST`
 --
 
-CREATE TABLE `subscribers_list` (
+CREATE TABLE `SUBSCRIBERS_LIST` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_subscribed` tinyint(1) NOT NULL DEFAULT 0,
@@ -6117,12 +6279,11 @@ CREATE TABLE `subscribers_list` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `tax_categories`
+-- テーブルの構造 `TAX_CATEGORIES`
 --
 
-CREATE TABLE `tax_categories` (
+CREATE TABLE `TAX_CATEGORIES` (
   `id` int(10) UNSIGNED NOT NULL,
-  `channel_id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6133,10 +6294,10 @@ CREATE TABLE `tax_categories` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `tax_categories_tax_rates`
+-- テーブルの構造 `TAX_CATEGORIES_TAX_RATES`
 --
 
-CREATE TABLE `tax_categories_tax_rates` (
+CREATE TABLE `TAX_CATEGORIES_TAX_RATES` (
   `id` int(10) UNSIGNED NOT NULL,
   `tax_category_id` int(10) UNSIGNED NOT NULL,
   `tax_rate_id` int(10) UNSIGNED NOT NULL,
@@ -6147,10 +6308,10 @@ CREATE TABLE `tax_categories_tax_rates` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `tax_rates`
+-- テーブルの構造 `TAX_RATES`
 --
 
-CREATE TABLE `tax_rates` (
+CREATE TABLE `TAX_RATES` (
   `id` int(10) UNSIGNED NOT NULL,
   `identifier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_zip` tinyint(1) NOT NULL DEFAULT 0,
@@ -6167,10 +6328,10 @@ CREATE TABLE `tax_rates` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `users`
+-- テーブルの構造 `USERS`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `USERS` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6188,10 +6349,10 @@ CREATE TABLE `users` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `velocity_category`
+-- テーブルの構造 `VELOCITY_CATEGORY`
 --
 
-CREATE TABLE `velocity_category` (
+CREATE TABLE `VELOCITY_CATEGORY` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `category_id` int(10) UNSIGNED DEFAULT NULL,
   `category_menu_id` int(10) UNSIGNED DEFAULT NULL,
@@ -6205,10 +6366,10 @@ CREATE TABLE `velocity_category` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `velocity_category_translations`
+-- テーブルの構造 `VELOCITY_CATEGORY_TRANSLATIONS`
 --
 
-CREATE TABLE `velocity_category_translations` (
+CREATE TABLE `VELOCITY_CATEGORY_TRANSLATIONS` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `category_id` int(10) UNSIGNED DEFAULT NULL,
   `products` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6219,10 +6380,10 @@ CREATE TABLE `velocity_category_translations` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `velocity_contents`
+-- テーブルの構造 `VELOCITY_CONTENTS`
 --
 
-CREATE TABLE `velocity_contents` (
+CREATE TABLE `VELOCITY_CONTENTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `content_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `position` int(10) UNSIGNED DEFAULT NULL,
@@ -6231,13 +6392,20 @@ CREATE TABLE `velocity_contents` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `VELOCITY_CONTENTS`
+--
+
+INSERT INTO `VELOCITY_CONTENTS` (`id`, `content_type`, `position`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'category', 0, 1, '2020-04-25 02:42:25', '2020-04-25 02:42:25');
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `velocity_contents_translations`
+-- テーブルの構造 `VELOCITY_CONTENTS_TRANSLATIONS`
 --
 
-CREATE TABLE `velocity_contents_translations` (
+CREATE TABLE `VELOCITY_CONTENTS_TRANSLATIONS` (
   `id` int(10) UNSIGNED NOT NULL,
   `content_id` int(10) UNSIGNED DEFAULT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6253,13 +6421,21 @@ CREATE TABLE `velocity_contents_translations` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `VELOCITY_CONTENTS_TRANSLATIONS`
+--
+
+INSERT INTO `VELOCITY_CONTENTS_TRANSLATIONS` (`id`, `content_id`, `title`, `custom_title`, `custom_heading`, `page_link`, `link_target`, `catalog_type`, `PRODUCTS`, `description`, `locale`, `created_at`, `updated_at`) VALUES
+(1, 1, 'about us', NULL, NULL, 'page/about-us', 0, NULL, NULL, NULL, 'ja', NULL, NULL),
+(2, 1, 'about us', NULL, NULL, NULL, 0, NULL, NULL, NULL, 'en', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `velocity_customer_compare_products`
+-- テーブルの構造 `VELOCITY_CUSTOMER_COMPARE_PRODUCTS`
 --
 
-CREATE TABLE `velocity_customer_compare_products` (
+CREATE TABLE `VELOCITY_CUSTOMER_COMPARE_PRODUCTS` (
   `id` int(10) UNSIGNED NOT NULL,
   `product_flat_id` int(10) UNSIGNED NOT NULL,
   `customer_id` int(10) UNSIGNED NOT NULL,
@@ -6270,10 +6446,10 @@ CREATE TABLE `velocity_customer_compare_products` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `velocity_meta_data`
+-- テーブルの構造 `VELOCITY_META_DATA`
 --
 
-CREATE TABLE `velocity_meta_data` (
+CREATE TABLE `VELOCITY_META_DATA` (
   `id` int(10) UNSIGNED NOT NULL,
   `home_page_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `footer_left_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6291,19 +6467,19 @@ CREATE TABLE `velocity_meta_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
--- テーブルのデータのダンプ `velocity_meta_data`
+-- テーブルのデータのダンプ `VELOCITY_META_DATA`
 --
 
-INSERT INTO `velocity_meta_data` (`id`, `home_page_content`, `footer_left_content`, `footer_middle_content`, `slider`, `advertisement`, `sidebar_category_count`, `featured_product_count`, `new_products_count`, `subscription_bar_content`, `created_at`, `updated_at`, `product_view_images`, `product_policy`) VALUES
-(1, '<p>@include(\'shop::home.advertisements.advertisement-four\')@include(\'shop::home.featured-products\') @include(\'shop::home.product-policy\') @include(\'shop::home.advertisements.advertisement-three\') @include(\'shop::home.new-products\') @include(\'shop::home.advertisements.advertisement-two\')</p>', '<p>We love to craft softwares and solve the real world problems with the binaries. We are highly committed to our goals. We invest our resources to create world class easy to use softwares and applications for the enterprise business with the top notch, on the edge technology expertise.</p>', '<div class=\"col-lg-6 col-md-12 col-sm-12 no-padding\"><ul type=\"none\"><li><a href=\"https://webkul.com/about-us/company-profile/\">About Us</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">Customer Service</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">What&rsquo;s New</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">Contact Us </a></li></ul></div><div class=\"col-lg-6 col-md-12 col-sm-12 no-padding\"><ul type=\"none\"><li><a href=\"https://webkul.com/about-us/company-profile/\"> Order and Returns </a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Payment Policy </a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Shipping Policy</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Privacy and Cookies Policy </a></li></ul></div>', 1, NULL, 9, 10, 10, '<div class=\"social-icons col-lg-6\"><a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-facebook\" title=\"facebook\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-twitter\" title=\"twitter\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-linked-in\" title=\"linkedin\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-pintrest\" title=\"Pinterest\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-youtube\" title=\"Youtube\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-instagram\" title=\"instagram\"></i></a></div>', NULL, NULL, NULL, '<div class=\"row col-12 remove-padding-margin\"><div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-van-ship fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Free Shipping on Order $20 or More</span></div></div></div></div> <div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-exchnage fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Product Replace &amp; Return Available </span></div></div></div></div> <div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-exchnage fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Product Exchange and EMI Available </span></div></div></div></div></div>');
+INSERT INTO `VELOCITY_META_DATA` (`id`, `home_page_content`, `footer_left_content`, `footer_middle_content`, `slider`, `advertisement`, `sidebar_category_count`, `featured_product_count`, `new_products_count`, `subscription_bar_content`, `created_at`, `updated_at`, `product_view_images`, `product_policy`) VALUES
+(1, '<p>@include(\'shop::home.advertisements.advertisement-four\')@include(\'shop::home.featured-products\') @include(\'shop::home.product-policy\') @include(\'shop::home.advertisements.advertisement-three\') @include(\'shop::home.new-products\') @include(\'shop::home.advertisements.advertisement-two\')</p>', '<p>We love to craft softwares and solve the real world problems with the binaries. We are highly committed to our goals. We invest our resources to create world class easy to use softwares and applications for the enterprise business with the top notch, on the edge technology expertise.</p>', '<div class=\"col-lg-6 col-md-12 col-sm-12 no-padding\">\r\n<ul type=\"none\">\r\n<li><a href=\"../../page/about-us\">About Us</a></li>\r\n<li><a href=\"https://webkul.com/about-us/company-profile/\">Customer Service</a></li>\r\n<li><a href=\"https://webkul.com/about-us/company-profile/\">What&rsquo;s New</a></li>\r\n<li><a href=\"https://webkul.com/about-us/company-profile/\">Contact Us </a></li>\r\n</ul>\r\n</div>\r\n<div class=\"col-lg-6 col-md-12 col-sm-12 no-padding\">\r\n<ul type=\"none\">\r\n<li><a href=\"https://webkul.com/about-us/company-profile/\"> Order and Returns </a></li>\r\n<li><a href=\"https://webkul.com/about-us/company-profile/\"> Payment Policy </a></li>\r\n<li><a href=\"https://webkul.com/about-us/company-profile/\"> Shipping Policy</a></li>\r\n<li><a href=\"https://webkul.com/about-us/company-profile/\"> Privacy and Cookies Policy </a></li>\r\n</ul>\r\n</div>', 1, '{\"4\":[],\"3\":[],\"2\":[]}', 9, 10, 10, '<div class=\"social-icons col-lg-6\"><a class=\"unset\" href=\"https://webkul.com\" target=\"_blank\" rel=\"noopener noreferrer\"><i title=\"facebook\" class=\"fs24 within-circle rango-facebook\"></i> </a> <a class=\"unset\" href=\"https://webkul.com\" target=\"_blank\" rel=\"noopener noreferrer\"><i title=\"twitter\" class=\"fs24 within-circle rango-twitter\"></i> </a> <a class=\"unset\" href=\"https://webkul.com\" target=\"_blank\" rel=\"noopener noreferrer\"><i title=\"linkedin\" class=\"fs24 within-circle rango-linked-in\"></i> </a> <a class=\"unset\" href=\"https://webkul.com\" target=\"_blank\" rel=\"noopener noreferrer\"><i title=\"Pinterest\" class=\"fs24 within-circle rango-pintrest\"></i> </a> <a class=\"unset\" href=\"https://webkul.com\" target=\"_blank\" rel=\"noopener noreferrer\"><i title=\"Youtube\" class=\"fs24 within-circle rango-youtube\"></i> </a> <a class=\"unset\" href=\"https://webkul.com\" target=\"_blank\" rel=\"noopener noreferrer\"><i title=\"instagram\" class=\"fs24 within-circle rango-instagram\"></i></a></div>', NULL, '2020-04-25 04:12:10', NULL, '<div class=\"row col-12 remove-padding-margin\">\r\n<div class=\"col-lg-4 col-sm-12 product-policy-wrapper\">\r\n<div class=\"card\">\r\n<div class=\"policy\">\r\n<div class=\"left\"><i class=\"rango-van-ship fs40\"></i></div>\r\n<div class=\"right\"><span class=\"font-setting fs20\">Free Shipping on Order $20 or More</span></div>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-4 col-sm-12 product-policy-wrapper\">\r\n<div class=\"card\">\r\n<div class=\"policy\">\r\n<div class=\"left\"><i class=\"rango-exchnage fs40\"></i></div>\r\n<div class=\"right\"><span class=\"font-setting fs20\">Product Replace &amp; Return Available </span></div>\r\n</div>\r\n</div>\r\n</div>\r\n<div class=\"col-lg-4 col-sm-12 product-policy-wrapper\">\r\n<div class=\"card\">\r\n<div class=\"policy\">\r\n<div class=\"left\"><i class=\"rango-exchnage fs40\"></i></div>\r\n<div class=\"right\"><span class=\"font-setting fs20\">Product Exchange and EMI Available </span></div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>');
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `vendor_password_resets`
+-- テーブルの構造 `VENDOR_PASSWORD_RESETS`
 --
 
-CREATE TABLE `vendor_password_resets` (
+CREATE TABLE `VENDOR_PASSWORD_RESETS` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
@@ -6312,10 +6488,10 @@ CREATE TABLE `vendor_password_resets` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `vendor_roles`
+-- テーブルの構造 `VENDOR_ROLES`
 --
 
-CREATE TABLE `vendor_roles` (
+CREATE TABLE `VENDOR_ROLES` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6325,13 +6501,21 @@ CREATE TABLE `vendor_roles` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `VENDOR_ROLES`
+--
+
+INSERT INTO `VENDOR_ROLES` (`id`, `name`, `description`, `permission_type`, `permissions`, `created_at`, `updated_at`) VALUES
+(1, 'Administrator', 'Administrator rolem', 'all', NULL, NULL, NULL),
+(2, 'product manager', 'product manager', 'custom', '[\"dashboard\"]', '2020-04-18 07:42:18', '2020-04-18 07:42:18');
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `vendor_sources`
+-- テーブルの構造 `VENDOR_SOURCES`
 --
 
-CREATE TABLE `vendor_sources` (
+CREATE TABLE `VENDOR_SOURCES` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6364,13 +6548,20 @@ CREATE TABLE `vendor_sources` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `VENDOR_SOURCES`
+--
+
+INSERT INTO `VENDOR_SOURCES` (`id`, `name`, `email`, `password`, `status`, `role_id`, `name_kana`, `creditcard_main_apikey`, `creditcard_denki_apikey`, `account_transfer_company_code`, `smartcis_my_auth_id`, `smartcis_my_auth_key`, `vendor_denki_shop_code`, `updated_at`, `updated_user_id`, `created_at`, `created_user_id`, `gmo_main_site_id`, `gmo_main_site_pass`, `gmo_main_shop_id`, `gmo_main_shop_pass`, `gmo_denki_site_id`, `gmo_denki_site_pass`, `gmo_denki_shop_id`, `gmo_denki_shop_pass`, `aplus_bank_consignor_number`, `aplus_division`, `aplus_conveni_consignor_number`, `aplus_transfer_date`, `remember_token`) VALUES
+(1, 'テイグン', 'tei952@gmail.com', '$2y$10$HX90PtTYjjojMSu.aenCJ.VyBzJG8pMW.zCQjrqOgV74TS56EHviC', 1, 1, '', NULL, NULL, '', NULL, NULL, NULL, '2020-04-18 16:50:38', 0, '2020-04-18 16:50:38', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `wishlist`
+-- テーブルの構造 `WISHLIST`
 --
 
-CREATE TABLE `wishlist` (
+CREATE TABLE `WISHLIST` (
   `id` int(10) UNSIGNED NOT NULL,
   `channel_id` int(10) UNSIGNED NOT NULL,
   `product_id` int(10) UNSIGNED NOT NULL,
@@ -6389,163 +6580,164 @@ CREATE TABLE `wishlist` (
 --
 
 --
--- テーブルのインデックス `admins`
+-- テーブルのインデックス `ADDRESSES`
 --
-ALTER TABLE `admins`
+ALTER TABLE `ADDRESSES`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `addresses_customer_id_foreign` (`customer_id`),
+  ADD KEY `addresses_cart_id_foreign` (`cart_id`),
+  ADD KEY `addresses_order_id_foreign` (`order_id`);
+
+--
+-- テーブルのインデックス `ADMINS`
+--
+ALTER TABLE `ADMINS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `admins_email_unique` (`email`),
   ADD UNIQUE KEY `admins_api_token_unique` (`api_token`);
 
 --
--- テーブルのインデックス `admin_password_resets`
+-- テーブルのインデックス `ADMIN_PASSWORD_RESETS`
 --
-ALTER TABLE `admin_password_resets`
+ALTER TABLE `ADMIN_PASSWORD_RESETS`
   ADD KEY `admin_password_resets_email_index` (`email`);
 
 --
--- テーブルのインデックス `agent_password_resets`
+-- テーブルのインデックス `AGENT_PASSWORD_RESETS`
 --
-ALTER TABLE `agent_password_resets`
+ALTER TABLE `AGENT_PASSWORD_RESETS`
   ADD KEY `agent_password_resets_email_index` (`email`);
 
 --
--- テーブルのインデックス `agent_roles`
+-- テーブルのインデックス `AGENT_ROLES`
 --
-ALTER TABLE `agent_roles`
+ALTER TABLE `AGENT_ROLES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `agent_sources`
+-- テーブルのインデックス `AGENT_SOURCES`
 --
-ALTER TABLE `agent_sources`
+ALTER TABLE `AGENT_SOURCES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `agent_sources_email_unique` (`email`);
 
 --
--- テーブルのインデックス `attributes`
+-- テーブルのインデックス `ATTRIBUTES`
 --
-ALTER TABLE `attributes`
+ALTER TABLE `ATTRIBUTES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `attributes_code_unique` (`code`);
 
 --
--- テーブルのインデックス `attribute_families`
+-- テーブルのインデックス `ATTRIBUTE_FAMILIES`
 --
-ALTER TABLE `attribute_families`
+ALTER TABLE `ATTRIBUTE_FAMILIES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `attribute_groups`
+-- テーブルのインデックス `ATTRIBUTE_GROUPS`
 --
-ALTER TABLE `attribute_groups`
+ALTER TABLE `ATTRIBUTE_GROUPS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `attribute_groups_attribute_family_id_name_unique` (`attribute_family_id`,`name`);
 
 --
--- テーブルのインデックス `attribute_group_mappings`
+-- テーブルのインデックス `ATTRIBUTE_GROUP_MAPPINGS`
 --
-ALTER TABLE `attribute_group_mappings`
+ALTER TABLE `ATTRIBUTE_GROUP_MAPPINGS`
   ADD PRIMARY KEY (`attribute_id`,`attribute_group_id`),
   ADD KEY `attribute_group_mappings_attribute_group_id_foreign` (`attribute_group_id`);
 
 --
--- テーブルのインデックス `attribute_options`
+-- テーブルのインデックス `ATTRIBUTE_OPTIONS`
 --
-ALTER TABLE `attribute_options`
+ALTER TABLE `ATTRIBUTE_OPTIONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `attribute_options_attribute_id_foreign` (`attribute_id`);
 
 --
--- テーブルのインデックス `attribute_option_translations`
+-- テーブルのインデックス `ATTRIBUTE_OPTION_TRANSLATIONS`
 --
-ALTER TABLE `attribute_option_translations`
+ALTER TABLE `ATTRIBUTE_OPTION_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `attribute_option_translations_attribute_option_id_locale_unique` (`attribute_option_id`,`locale`);
 
 --
--- テーブルのインデックス `attribute_translations`
+-- テーブルのインデックス `ATTRIBUTE_TRANSLATIONS`
 --
-ALTER TABLE `attribute_translations`
+ALTER TABLE `ATTRIBUTE_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `attribute_translations_attribute_id_locale_unique` (`attribute_id`,`locale`);
 
 --
--- テーブルのインデックス `bookings`
+-- テーブルのインデックス `BOOKINGS`
 --
-ALTER TABLE `bookings`
+ALTER TABLE `BOOKINGS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `bookings_order_id_foreign` (`order_id`),
   ADD KEY `bookings_product_id_foreign` (`product_id`);
 
 --
--- テーブルのインデックス `booking_products`
+-- テーブルのインデックス `BOOKING_PRODUCTS`
 --
-ALTER TABLE `booking_products`
+ALTER TABLE `BOOKING_PRODUCTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `booking_products_product_id_foreign` (`product_id`);
 
 --
--- テーブルのインデックス `booking_product_appointment_slots`
+-- テーブルのインデックス `BOOKING_PRODUCT_APPOINTMENT_SLOTS`
 --
-ALTER TABLE `booking_product_appointment_slots`
+ALTER TABLE `BOOKING_PRODUCT_APPOINTMENT_SLOTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `booking_product_appointment_slots_booking_product_id_foreign` (`booking_product_id`);
 
 --
--- テーブルのインデックス `booking_product_default_slots`
+-- テーブルのインデックス `BOOKING_PRODUCT_DEFAULT_SLOTS`
 --
-ALTER TABLE `booking_product_default_slots`
+ALTER TABLE `BOOKING_PRODUCT_DEFAULT_SLOTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `booking_product_default_slots_booking_product_id_foreign` (`booking_product_id`);
 
 --
--- テーブルのインデックス `booking_product_event_tickets`
+-- テーブルのインデックス `BOOKING_PRODUCT_EVENT_TICKETS`
 --
-ALTER TABLE `booking_product_event_tickets`
+ALTER TABLE `BOOKING_PRODUCT_EVENT_TICKETS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `booking_product_event_tickets_booking_product_id_foreign` (`booking_product_id`);
 
 --
--- テーブルのインデックス `booking_product_event_ticket_translations`
+-- テーブルのインデックス `BOOKING_PRODUCT_EVENT_TICKET_TRANSLATIONS`
 --
-ALTER TABLE `booking_product_event_ticket_translations`
+ALTER TABLE `BOOKING_PRODUCT_EVENT_TICKET_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `booking_product_event_ticket_translations_locale_unique` (`booking_product_event_ticket_id`,`locale`);
 
 --
--- テーブルのインデックス `booking_product_rental_slots`
+-- テーブルのインデックス `BOOKING_PRODUCT_RENTAL_SLOTS`
 --
-ALTER TABLE `booking_product_rental_slots`
+ALTER TABLE `BOOKING_PRODUCT_RENTAL_SLOTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `booking_product_rental_slots_booking_product_id_foreign` (`booking_product_id`);
 
 --
--- テーブルのインデックス `booking_product_table_slots`
+-- テーブルのインデックス `BOOKING_PRODUCT_TABLE_SLOTS`
 --
-ALTER TABLE `booking_product_table_slots`
+ALTER TABLE `BOOKING_PRODUCT_TABLE_SLOTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `booking_product_table_slots_booking_product_id_foreign` (`booking_product_id`);
 
 --
--- テーブルのインデックス `cart`
+-- テーブルのインデックス `CART`
 --
-ALTER TABLE `cart`
+ALTER TABLE `CART`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cart_customer_id_foreign` (`customer_id`),
   ADD KEY `cart_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `cart_address`
+-- テーブルのインデックス `CART_ITEMS`
 --
-ALTER TABLE `cart_address`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cart_address_cart_id_foreign` (`cart_id`),
-  ADD KEY `cart_address_customer_id_foreign` (`customer_id`);
-
---
--- テーブルのインデックス `cart_items`
---
-ALTER TABLE `cart_items`
+ALTER TABLE `CART_ITEMS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cart_items_product_id_foreign` (`product_id`),
   ADD KEY `cart_items_cart_id_foreign` (`cart_id`),
@@ -6553,99 +6745,99 @@ ALTER TABLE `cart_items`
   ADD KEY `cart_items_parent_id_foreign` (`parent_id`);
 
 --
--- テーブルのインデックス `cart_item_inventories`
+-- テーブルのインデックス `CART_ITEM_INVENTORIES`
 --
-ALTER TABLE `cart_item_inventories`
+ALTER TABLE `CART_ITEM_INVENTORIES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `cart_payment`
+-- テーブルのインデックス `CART_PAYMENT`
 --
-ALTER TABLE `cart_payment`
+ALTER TABLE `CART_PAYMENT`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cart_payment_cart_id_foreign` (`cart_id`);
 
 --
--- テーブルのインデックス `cart_rules`
+-- テーブルのインデックス `CART_RULES`
 --
-ALTER TABLE `cart_rules`
+ALTER TABLE `CART_RULES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `cart_rule_channels`
+-- テーブルのインデックス `CART_RULE_CHANNELS`
 --
-ALTER TABLE `cart_rule_channels`
+ALTER TABLE `CART_RULE_CHANNELS`
   ADD PRIMARY KEY (`cart_rule_id`,`channel_id`),
   ADD KEY `cart_rule_channels_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `cart_rule_coupons`
+-- テーブルのインデックス `CART_RULE_COUPONS`
 --
-ALTER TABLE `cart_rule_coupons`
+ALTER TABLE `CART_RULE_COUPONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cart_rule_coupons_cart_rule_id_foreign` (`cart_rule_id`);
 
 --
--- テーブルのインデックス `cart_rule_coupon_usage`
+-- テーブルのインデックス `CART_RULE_COUPON_USAGE`
 --
-ALTER TABLE `cart_rule_coupon_usage`
+ALTER TABLE `CART_RULE_COUPON_USAGE`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cart_rule_coupon_usage_cart_rule_coupon_id_foreign` (`cart_rule_coupon_id`),
   ADD KEY `cart_rule_coupon_usage_customer_id_foreign` (`customer_id`);
 
 --
--- テーブルのインデックス `cart_rule_customers`
+-- テーブルのインデックス `CART_RULE_CUSTOMERS`
 --
-ALTER TABLE `cart_rule_customers`
+ALTER TABLE `CART_RULE_CUSTOMERS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cart_rule_customers_cart_rule_id_foreign` (`cart_rule_id`),
   ADD KEY `cart_rule_customers_customer_id_foreign` (`customer_id`);
 
 --
--- テーブルのインデックス `cart_rule_customer_groups`
+-- テーブルのインデックス `CART_RULE_CUSTOMER_GROUPS`
 --
-ALTER TABLE `cart_rule_customer_groups`
+ALTER TABLE `CART_RULE_CUSTOMER_GROUPS`
   ADD PRIMARY KEY (`cart_rule_id`,`customer_group_id`),
   ADD KEY `cart_rule_customer_groups_customer_group_id_foreign` (`customer_group_id`);
 
 --
--- テーブルのインデックス `cart_rule_translations`
+-- テーブルのインデックス `CART_RULE_TRANSLATIONS`
 --
-ALTER TABLE `cart_rule_translations`
+ALTER TABLE `CART_RULE_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cart_rule_translations_cart_rule_id_locale_unique` (`cart_rule_id`,`locale`);
 
 --
--- テーブルのインデックス `cart_shipping_rates`
+-- テーブルのインデックス `CART_SHIPPING_RATES`
 --
-ALTER TABLE `cart_shipping_rates`
+ALTER TABLE `CART_SHIPPING_RATES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cart_shipping_rates_cart_address_id_foreign` (`cart_address_id`);
 
 --
--- テーブルのインデックス `catalog_rules`
+-- テーブルのインデックス `CATALOG_RULES`
 --
-ALTER TABLE `catalog_rules`
+ALTER TABLE `CATALOG_RULES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `catalog_rule_channels`
+-- テーブルのインデックス `CATALOG_RULE_CHANNELS`
 --
-ALTER TABLE `catalog_rule_channels`
+ALTER TABLE `CATALOG_RULE_CHANNELS`
   ADD PRIMARY KEY (`catalog_rule_id`,`channel_id`),
   ADD KEY `catalog_rule_channels_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `catalog_rule_customer_groups`
+-- テーブルのインデックス `CATALOG_RULE_CUSTOMER_GROUPS`
 --
-ALTER TABLE `catalog_rule_customer_groups`
+ALTER TABLE `CATALOG_RULE_CUSTOMER_GROUPS`
   ADD PRIMARY KEY (`catalog_rule_id`,`customer_group_id`),
   ADD KEY `catalog_rule_customer_groups_customer_group_id_foreign` (`customer_group_id`);
 
 --
--- テーブルのインデックス `catalog_rule_products`
+-- テーブルのインデックス `CATALOG_RULE_PRODUCTS`
 --
-ALTER TABLE `catalog_rule_products`
+ALTER TABLE `CATALOG_RULE_PRODUCTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `catalog_rule_products_product_id_foreign` (`product_id`),
   ADD KEY `catalog_rule_products_customer_group_id_foreign` (`customer_group_id`),
@@ -6653,9 +6845,9 @@ ALTER TABLE `catalog_rule_products`
   ADD KEY `catalog_rule_products_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `catalog_rule_product_prices`
+-- テーブルのインデックス `CATALOG_RULE_PRODUCT_PRICES`
 --
-ALTER TABLE `catalog_rule_product_prices`
+ALTER TABLE `CATALOG_RULE_PRODUCT_PRICES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `catalog_rule_product_prices_product_id_foreign` (`product_id`),
   ADD KEY `catalog_rule_product_prices_customer_group_id_foreign` (`customer_group_id`),
@@ -6663,201 +6855,194 @@ ALTER TABLE `catalog_rule_product_prices`
   ADD KEY `catalog_rule_product_prices_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `categories`
+-- テーブルのインデックス `CATEGORIES`
 --
-ALTER TABLE `categories`
+ALTER TABLE `CATEGORIES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `categories__lft__rgt_parent_id_index` (`_lft`,`_rgt`,`parent_id`);
 
 --
--- テーブルのインデックス `category_filterable_attributes`
+-- テーブルのインデックス `CATEGORY_FILTERABLE_ATTRIBUTES`
 --
-ALTER TABLE `category_filterable_attributes`
+ALTER TABLE `CATEGORY_FILTERABLE_ATTRIBUTES`
   ADD KEY `category_filterable_attributes_category_id_foreign` (`category_id`),
   ADD KEY `category_filterable_attributes_attribute_id_foreign` (`attribute_id`);
 
 --
--- テーブルのインデックス `category_translations`
+-- テーブルのインデックス `CATEGORY_TRANSLATIONS`
 --
-ALTER TABLE `category_translations`
+ALTER TABLE `CATEGORY_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `category_translations_category_id_slug_locale_unique` (`category_id`,`slug`,`locale`),
   ADD KEY `category_translations_locale_id_foreign` (`locale_id`);
 
 --
--- テーブルのインデックス `channels`
+-- テーブルのインデックス `CHANNELS`
 --
-ALTER TABLE `channels`
+ALTER TABLE `CHANNELS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `channels_default_locale_id_foreign` (`default_locale_id`),
   ADD KEY `channels_base_currency_id_foreign` (`base_currency_id`),
   ADD KEY `channels_root_category_id_foreign` (`root_category_id`);
 
 --
--- テーブルのインデックス `channel_currencies`
+-- テーブルのインデックス `CHANNEL_CURRENCIES`
 --
-ALTER TABLE `channel_currencies`
+ALTER TABLE `CHANNEL_CURRENCIES`
   ADD PRIMARY KEY (`channel_id`,`currency_id`),
   ADD KEY `channel_currencies_currency_id_foreign` (`currency_id`);
 
 --
--- テーブルのインデックス `channel_inventory_sources`
+-- テーブルのインデックス `CHANNEL_INVENTORY_SOURCES`
 --
-ALTER TABLE `channel_inventory_sources`
+ALTER TABLE `CHANNEL_INVENTORY_SOURCES`
   ADD UNIQUE KEY `channel_inventory_sources_channel_id_inventory_source_id_unique` (`channel_id`,`inventory_source_id`),
   ADD KEY `channel_inventory_sources_inventory_source_id_foreign` (`inventory_source_id`);
 
 --
--- テーブルのインデックス `channel_locales`
+-- テーブルのインデックス `CHANNEL_LOCALES`
 --
-ALTER TABLE `channel_locales`
+ALTER TABLE `CHANNEL_LOCALES`
   ADD PRIMARY KEY (`channel_id`,`locale_id`),
   ADD KEY `channel_locales_locale_id_foreign` (`locale_id`);
 
 --
--- テーブルのインデックス `charges`
+-- テーブルのインデックス `CHARGES`
 --
-ALTER TABLE `charges`
+ALTER TABLE `CHARGES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `charges_plan_id_foreign` (`plan_id`);
 
 --
--- テーブルのインデックス `cms_pages`
+-- テーブルのインデックス `CMS_PAGES`
 --
-ALTER TABLE `cms_pages`
+ALTER TABLE `CMS_PAGES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `cms_page_channels`
+-- テーブルのインデックス `CMS_PAGE_CHANNELS`
 --
-ALTER TABLE `cms_page_channels`
+ALTER TABLE `CMS_PAGE_CHANNELS`
   ADD UNIQUE KEY `cms_page_channels_cms_page_id_channel_id_unique` (`cms_page_id`,`channel_id`),
   ADD KEY `cms_page_channels_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `cms_page_translations`
+-- テーブルのインデックス `CMS_PAGE_TRANSLATIONS`
 --
-ALTER TABLE `cms_page_translations`
+ALTER TABLE `CMS_PAGE_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cms_page_translations_cms_page_id_url_key_locale_unique` (`cms_page_id`,`url_key`,`locale`);
 
 --
--- テーブルのインデックス `core_config`
+-- テーブルのインデックス `CORE_CONFIG`
 --
-ALTER TABLE `core_config`
+ALTER TABLE `CORE_CONFIG`
   ADD PRIMARY KEY (`id`),
   ADD KEY `core_config_channel_id_foreign` (`channel_code`);
 
 --
--- テーブルのインデックス `countries`
+-- テーブルのインデックス `COUNTRIES`
 --
-ALTER TABLE `countries`
+ALTER TABLE `COUNTRIES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `country_states`
+-- テーブルのインデックス `COUNTRY_STATES`
 --
-ALTER TABLE `country_states`
+ALTER TABLE `COUNTRY_STATES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `country_states_country_id_foreign` (`country_id`);
 
 --
--- テーブルのインデックス `country_state_translations`
+-- テーブルのインデックス `COUNTRY_STATE_TRANSLATIONS`
 --
-ALTER TABLE `country_state_translations`
+ALTER TABLE `COUNTRY_STATE_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `country_state_translations_country_state_id_foreign` (`country_state_id`);
 
 --
--- テーブルのインデックス `country_translations`
+-- テーブルのインデックス `COUNTRY_TRANSLATIONS`
 --
-ALTER TABLE `country_translations`
+ALTER TABLE `COUNTRY_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `country_translations_country_id_foreign` (`country_id`);
 
 --
--- テーブルのインデックス `currencies`
+-- テーブルのインデックス `CURRENCIES`
 --
-ALTER TABLE `currencies`
+ALTER TABLE `CURRENCIES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `currency_exchange_rates`
+-- テーブルのインデックス `CURRENCY_EXCHANGE_RATES`
 --
-ALTER TABLE `currency_exchange_rates`
+ALTER TABLE `CURRENCY_EXCHANGE_RATES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `currency_exchange_rates_target_currency_unique` (`target_currency`);
 
 --
--- テーブルのインデックス `customers`
+-- テーブルのインデックス `CUSTOMERS`
 --
-ALTER TABLE `customers`
+ALTER TABLE `CUSTOMERS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `customers_email_unique` (`email`),
   ADD UNIQUE KEY `customers_api_token_unique` (`api_token`),
   ADD KEY `customers_customer_group_id_foreign` (`customer_group_id`);
 
 --
--- テーブルのインデックス `customer_addresses`
+-- テーブルのインデックス `CUSTOMER_DOCUMENTS`
 --
-ALTER TABLE `customer_addresses`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_addresses_customer_id_foreign` (`customer_id`);
-
---
--- テーブルのインデックス `customer_documents`
---
-ALTER TABLE `customer_documents`
+ALTER TABLE `CUSTOMER_DOCUMENTS`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `customer_groups`
+-- テーブルのインデックス `CUSTOMER_GROUPS`
 --
-ALTER TABLE `customer_groups`
+ALTER TABLE `CUSTOMER_GROUPS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `customer_groups_code_unique` (`code`);
 
 --
--- テーブルのインデックス `customer_password_resets`
+-- テーブルのインデックス `CUSTOMER_PASSWORD_RESETS`
 --
-ALTER TABLE `customer_password_resets`
+ALTER TABLE `CUSTOMER_PASSWORD_RESETS`
   ADD KEY `customer_password_resets_email_index` (`email`);
 
 --
--- テーブルのインデックス `downloadable_link_purchased`
+-- テーブルのインデックス `DOWNLOADABLE_LINK_PURCHASED`
 --
-ALTER TABLE `downloadable_link_purchased`
+ALTER TABLE `DOWNLOADABLE_LINK_PURCHASED`
   ADD PRIMARY KEY (`id`),
   ADD KEY `downloadable_link_purchased_customer_id_foreign` (`customer_id`),
   ADD KEY `downloadable_link_purchased_order_id_foreign` (`order_id`),
   ADD KEY `downloadable_link_purchased_order_item_id_foreign` (`order_item_id`);
 
 --
--- テーブルのインデックス `dropship_ali_express_attributes`
+-- テーブルのインデックス `DROPSHIP_ALI_EXPRESS_ATTRIBUTES`
 --
-ALTER TABLE `dropship_ali_express_attributes`
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ATTRIBUTES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `dropship_ali_express_attributes_attribute_id_foreign` (`attribute_id`);
 
 --
--- テーブルのインデックス `dropship_ali_express_attribute_options`
+-- テーブルのインデックス `DROPSHIP_ALI_EXPRESS_ATTRIBUTE_OPTIONS`
 --
-ALTER TABLE `dropship_ali_express_attribute_options`
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ATTRIBUTE_OPTIONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `ali_attribute_options_attribute_id_foreign` (`ali_express_attribute_id`),
   ADD KEY `ali_attribute_options_attribute_option_id_foreign` (`attribute_option_id`);
 
 --
--- テーブルのインデックス `dropship_ali_express_orders`
+-- テーブルのインデックス `DROPSHIP_ALI_EXPRESS_ORDERS`
 --
-ALTER TABLE `dropship_ali_express_orders`
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ORDERS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `dropship_ali_express_orders_order_id_foreign` (`order_id`);
 
 --
--- テーブルのインデックス `dropship_ali_express_order_items`
+-- テーブルのインデックス `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS`
 --
-ALTER TABLE `dropship_ali_express_order_items`
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `dropship_ali_express_order_items_ali_express_product_id_foreign` (`ali_express_product_id`),
   ADD KEY `dropship_ali_express_order_items_order_item_id_foreign` (`order_item_id`),
@@ -6865,102 +7050,94 @@ ALTER TABLE `dropship_ali_express_order_items`
   ADD KEY `dropship_ali_express_order_items_parent_id_foreign` (`parent_id`);
 
 --
--- テーブルのインデックス `dropship_ali_express_products`
+-- テーブルのインデックス `DROPSHIP_ALI_EXPRESS_PRODUCTS`
 --
-ALTER TABLE `dropship_ali_express_products`
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `dropship_ali_express_products_product_id_foreign` (`product_id`),
   ADD KEY `dropship_ali_express_products_parent_id_foreign` (`parent_id`);
 
 --
--- テーブルのインデックス `dropship_ali_express_product_images`
+-- テーブルのインデックス `DROPSHIP_ALI_EXPRESS_PRODUCT_IMAGES`
 --
-ALTER TABLE `dropship_ali_express_product_images`
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCT_IMAGES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `dropship_ali_express_product_images_product_image_id_foreign` (`product_image_id`);
 
 --
--- テーブルのインデックス `dropship_ali_express_product_reviews`
+-- テーブルのインデックス `DROPSHIP_ALI_EXPRESS_PRODUCT_REVIEWS`
 --
-ALTER TABLE `dropship_ali_express_product_reviews`
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCT_REVIEWS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `dropship_ali_express_product_reviews_product_review_id_foreign` (`product_review_id`);
 
 --
--- テーブルのインデックス `inventory_sources`
+-- テーブルのインデックス `INVENTORY_SOURCES`
 --
-ALTER TABLE `inventory_sources`
+ALTER TABLE `INVENTORY_SOURCES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `inventory_sources_code_unique` (`code`);
 
 --
--- テーブルのインデックス `invoices`
+-- テーブルのインデックス `INVOICES`
 --
-ALTER TABLE `invoices`
+ALTER TABLE `INVOICES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `invoices_order_id_foreign` (`order_id`),
   ADD KEY `invoices_order_address_id_foreign` (`order_address_id`);
 
 --
--- テーブルのインデックス `invoice_items`
+-- テーブルのインデックス `INVOICE_ITEMS`
 --
-ALTER TABLE `invoice_items`
+ALTER TABLE `INVOICE_ITEMS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `invoice_items_invoice_id_foreign` (`invoice_id`),
   ADD KEY `invoice_items_parent_id_foreign` (`parent_id`);
 
 --
--- テーブルのインデックス `locales`
+-- テーブルのインデックス `LOCALES`
 --
-ALTER TABLE `locales`
+ALTER TABLE `LOCALES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `locales_code_unique` (`code`);
 
 --
--- テーブルのインデックス `merchant_password_resets`
+-- テーブルのインデックス `MERCHANT_PASSWORD_RESETS`
 --
-ALTER TABLE `merchant_password_resets`
+ALTER TABLE `MERCHANT_PASSWORD_RESETS`
   ADD KEY `merchant_password_resets_email_index` (`email`);
 
 --
--- テーブルのインデックス `merchant_roles`
+-- テーブルのインデックス `MERCHANT_ROLES`
 --
-ALTER TABLE `merchant_roles`
+ALTER TABLE `MERCHANT_ROLES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `merchant_sources`
+-- テーブルのインデックス `MERCHANT_SOURCES`
 --
-ALTER TABLE `merchant_sources`
+ALTER TABLE `MERCHANT_SOURCES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `merchant_sources_email_unique` (`email`);
 
 --
--- テーブルのインデックス `migrations`
+-- テーブルのインデックス `MIGRATIONS`
 --
-ALTER TABLE `migrations`
+ALTER TABLE `MIGRATIONS`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `orders`
+-- テーブルのインデックス `ORDERS`
 --
-ALTER TABLE `orders`
+ALTER TABLE `ORDERS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `orders_customer_id_foreign` (`customer_id`),
   ADD KEY `orders_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `order_address`
+-- テーブルのインデックス `ORDER_BRANDS`
 --
-ALTER TABLE `order_address`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `order_address_order_id_foreign` (`order_id`),
-  ADD KEY `order_address_customer_id_foreign` (`customer_id`);
-
---
--- テーブルのインデックス `order_brands`
---
-ALTER TABLE `order_brands`
+ALTER TABLE `ORDER_BRANDS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `order_brands_order_id_foreign` (`order_id`),
   ADD KEY `order_brands_order_item_id_foreign` (`order_item_id`),
@@ -6968,328 +7145,334 @@ ALTER TABLE `order_brands`
   ADD KEY `order_brands_brand_foreign` (`brand`);
 
 --
--- テーブルのインデックス `order_items`
+-- テーブルのインデックス `ORDER_COMMENTS`
 --
-ALTER TABLE `order_items`
+ALTER TABLE `ORDER_COMMENTS`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_comments_order_id_foreign` (`order_id`);
+
+--
+-- テーブルのインデックス `ORDER_ITEMS`
+--
+ALTER TABLE `ORDER_ITEMS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `order_items_order_id_foreign` (`order_id`),
   ADD KEY `order_items_parent_id_foreign` (`parent_id`);
 
 --
--- テーブルのインデックス `order_payment`
+-- テーブルのインデックス `ORDER_PAYMENT`
 --
-ALTER TABLE `order_payment`
+ALTER TABLE `ORDER_PAYMENT`
   ADD PRIMARY KEY (`id`),
   ADD KEY `order_payment_order_id_foreign` (`order_id`);
 
 --
--- テーブルのインデックス `password_resets`
+-- テーブルのインデックス `PASSWORD_RESETS`
 --
-ALTER TABLE `password_resets`
+ALTER TABLE `PASSWORD_RESETS`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- テーブルのインデックス `plans`
+-- テーブルのインデックス `PLANS`
 --
-ALTER TABLE `plans`
+ALTER TABLE `PLANS`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `products`
+-- テーブルのインデックス `PRODUCTS`
 --
-ALTER TABLE `products`
+ALTER TABLE `PRODUCTS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `products_sku_unique` (`sku`),
   ADD KEY `products_attribute_family_id_foreign` (`attribute_family_id`),
   ADD KEY `products_parent_id_foreign` (`parent_id`);
 
 --
--- テーブルのインデックス `product_attribute_values`
+-- テーブルのインデックス `PRODUCT_ATTRIBUTE_VALUES`
 --
-ALTER TABLE `product_attribute_values`
+ALTER TABLE `PRODUCT_ATTRIBUTE_VALUES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `chanel_locale_attribute_value_index_unique` (`channel`,`locale`,`attribute_id`,`product_id`),
   ADD KEY `product_attribute_values_product_id_foreign` (`product_id`),
   ADD KEY `product_attribute_values_attribute_id_foreign` (`attribute_id`);
 
 --
--- テーブルのインデックス `product_bundle_options`
+-- テーブルのインデックス `PRODUCT_BUNDLE_OPTIONS`
 --
-ALTER TABLE `product_bundle_options`
+ALTER TABLE `PRODUCT_BUNDLE_OPTIONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_bundle_options_product_id_foreign` (`product_id`);
 
 --
--- テーブルのインデックス `product_bundle_option_products`
+-- テーブルのインデックス `PRODUCT_BUNDLE_OPTION_PRODUCTS`
 --
-ALTER TABLE `product_bundle_option_products`
+ALTER TABLE `PRODUCT_BUNDLE_OPTION_PRODUCTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_bundle_option_products_product_bundle_option_id_foreign` (`product_bundle_option_id`),
   ADD KEY `product_bundle_option_products_product_id_foreign` (`product_id`);
 
 --
--- テーブルのインデックス `product_bundle_option_translations`
+-- テーブルのインデックス `PRODUCT_BUNDLE_OPTION_TRANSLATIONS`
 --
-ALTER TABLE `product_bundle_option_translations`
+ALTER TABLE `PRODUCT_BUNDLE_OPTION_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `product_bundle_option_translations_option_id_locale_unique` (`product_bundle_option_id`,`locale`);
 
 --
--- テーブルのインデックス `product_categories`
+-- テーブルのインデックス `PRODUCT_CATEGORIES`
 --
-ALTER TABLE `product_categories`
+ALTER TABLE `PRODUCT_CATEGORIES`
   ADD KEY `product_categories_product_id_foreign` (`product_id`),
   ADD KEY `product_categories_category_id_foreign` (`category_id`);
 
 --
--- テーブルのインデックス `product_cross_sells`
+-- テーブルのインデックス `PRODUCT_CROSS_SELLS`
 --
-ALTER TABLE `product_cross_sells`
+ALTER TABLE `PRODUCT_CROSS_SELLS`
   ADD KEY `product_cross_sells_parent_id_foreign` (`parent_id`),
   ADD KEY `product_cross_sells_child_id_foreign` (`child_id`);
 
 --
--- テーブルのインデックス `product_downloadable_links`
+-- テーブルのインデックス `PRODUCT_DOWNLOADABLE_LINKS`
 --
-ALTER TABLE `product_downloadable_links`
+ALTER TABLE `PRODUCT_DOWNLOADABLE_LINKS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_downloadable_links_product_id_foreign` (`product_id`);
 
 --
--- テーブルのインデックス `product_downloadable_link_translations`
+-- テーブルのインデックス `PRODUCT_DOWNLOADABLE_LINK_TRANSLATIONS`
 --
-ALTER TABLE `product_downloadable_link_translations`
+ALTER TABLE `PRODUCT_DOWNLOADABLE_LINK_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `link_translations_link_id_foreign` (`product_downloadable_link_id`);
 
 --
--- テーブルのインデックス `product_downloadable_samples`
+-- テーブルのインデックス `PRODUCT_DOWNLOADABLE_SAMPLES`
 --
-ALTER TABLE `product_downloadable_samples`
+ALTER TABLE `PRODUCT_DOWNLOADABLE_SAMPLES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_downloadable_samples_product_id_foreign` (`product_id`);
 
 --
--- テーブルのインデックス `product_downloadable_sample_translations`
+-- テーブルのインデックス `PRODUCT_DOWNLOADABLE_SAMPLE_TRANSLATIONS`
 --
-ALTER TABLE `product_downloadable_sample_translations`
+ALTER TABLE `PRODUCT_DOWNLOADABLE_SAMPLE_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sample_translations_sample_id_foreign` (`product_downloadable_sample_id`);
 
 --
--- テーブルのインデックス `product_flat`
+-- テーブルのインデックス `PRODUCT_FLAT`
 --
-ALTER TABLE `product_flat`
+ALTER TABLE `PRODUCT_FLAT`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `product_flat_unique_index` (`product_id`,`channel`,`locale`),
   ADD KEY `product_flat_parent_id_foreign` (`parent_id`);
 
 --
--- テーブルのインデックス `product_grouped_products`
+-- テーブルのインデックス `PRODUCT_GROUPED_PRODUCTS`
 --
-ALTER TABLE `product_grouped_products`
+ALTER TABLE `PRODUCT_GROUPED_PRODUCTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_grouped_products_product_id_foreign` (`product_id`),
   ADD KEY `product_grouped_products_associated_product_id_foreign` (`associated_product_id`);
 
 --
--- テーブルのインデックス `product_images`
+-- テーブルのインデックス `PRODUCT_IMAGES`
 --
-ALTER TABLE `product_images`
+ALTER TABLE `PRODUCT_IMAGES`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_images_product_id_foreign` (`product_id`);
 
 --
--- テーブルのインデックス `product_inventories`
+-- テーブルのインデックス `PRODUCT_INVENTORIES`
 --
-ALTER TABLE `product_inventories`
+ALTER TABLE `PRODUCT_INVENTORIES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `product_source_vendor_index_unique` (`product_id`,`inventory_source_id`,`vendor_id`),
   ADD KEY `product_inventories_inventory_source_id_foreign` (`inventory_source_id`);
 
 --
--- テーブルのインデックス `product_ordered_inventories`
+-- テーブルのインデックス `PRODUCT_ORDERED_INVENTORIES`
 --
-ALTER TABLE `product_ordered_inventories`
+ALTER TABLE `PRODUCT_ORDERED_INVENTORIES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `product_ordered_inventories_product_id_channel_id_unique` (`product_id`,`channel_id`),
   ADD KEY `product_ordered_inventories_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `product_relations`
+-- テーブルのインデックス `PRODUCT_RELATIONS`
 --
-ALTER TABLE `product_relations`
+ALTER TABLE `PRODUCT_RELATIONS`
   ADD KEY `product_relations_parent_id_foreign` (`parent_id`),
   ADD KEY `product_relations_child_id_foreign` (`child_id`);
 
 --
--- テーブルのインデックス `product_reviews`
+-- テーブルのインデックス `PRODUCT_REVIEWS`
 --
-ALTER TABLE `product_reviews`
+ALTER TABLE `PRODUCT_REVIEWS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_reviews_product_id_foreign` (`product_id`),
   ADD KEY `product_reviews_customer_id_foreign` (`customer_id`);
 
 --
--- テーブルのインデックス `product_super_attributes`
+-- テーブルのインデックス `PRODUCT_SUPER_ATTRIBUTES`
 --
-ALTER TABLE `product_super_attributes`
+ALTER TABLE `PRODUCT_SUPER_ATTRIBUTES`
   ADD KEY `product_super_attributes_product_id_foreign` (`product_id`),
   ADD KEY `product_super_attributes_attribute_id_foreign` (`attribute_id`);
 
 --
--- テーブルのインデックス `product_up_sells`
+-- テーブルのインデックス `PRODUCT_UP_SELLS`
 --
-ALTER TABLE `product_up_sells`
+ALTER TABLE `PRODUCT_UP_SELLS`
   ADD KEY `product_up_sells_parent_id_foreign` (`parent_id`),
   ADD KEY `product_up_sells_child_id_foreign` (`child_id`);
 
 --
--- テーブルのインデックス `refunds`
+-- テーブルのインデックス `REFUNDS`
 --
-ALTER TABLE `refunds`
+ALTER TABLE `REFUNDS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `refunds_order_id_foreign` (`order_id`);
 
 --
--- テーブルのインデックス `refund_items`
+-- テーブルのインデックス `REFUND_ITEMS`
 --
-ALTER TABLE `refund_items`
+ALTER TABLE `REFUND_ITEMS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `refund_items_order_item_id_foreign` (`order_item_id`),
   ADD KEY `refund_items_refund_id_foreign` (`refund_id`),
   ADD KEY `refund_items_parent_id_foreign` (`parent_id`);
 
 --
--- テーブルのインデックス `roles`
+-- テーブルのインデックス `ROLES`
 --
-ALTER TABLE `roles`
+ALTER TABLE `ROLES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `shipments`
+-- テーブルのインデックス `SHIPMENTS`
 --
-ALTER TABLE `shipments`
+ALTER TABLE `SHIPMENTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `shipments_order_id_foreign` (`order_id`),
   ADD KEY `shipments_order_address_id_foreign` (`order_address_id`),
   ADD KEY `shipments_inventory_source_id_foreign` (`inventory_source_id`);
 
 --
--- テーブルのインデックス `shipment_items`
+-- テーブルのインデックス `SHIPMENT_ITEMS`
 --
-ALTER TABLE `shipment_items`
+ALTER TABLE `SHIPMENT_ITEMS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `shipment_items_shipment_id_foreign` (`shipment_id`);
 
 --
--- テーブルのインデックス `sliders`
+-- テーブルのインデックス `SLIDERS`
 --
-ALTER TABLE `sliders`
+ALTER TABLE `SLIDERS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sliders_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `subscribers_list`
+-- テーブルのインデックス `SUBSCRIBERS_LIST`
 --
-ALTER TABLE `subscribers_list`
+ALTER TABLE `SUBSCRIBERS_LIST`
   ADD PRIMARY KEY (`id`),
   ADD KEY `subscribers_list_channel_id_foreign` (`channel_id`);
 
 --
--- テーブルのインデックス `tax_categories`
+-- テーブルのインデックス `TAX_CATEGORIES`
 --
-ALTER TABLE `tax_categories`
+ALTER TABLE `TAX_CATEGORIES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `tax_categories_code_unique` (`code`),
-  ADD UNIQUE KEY `tax_categories_name_unique` (`name`),
-  ADD KEY `tax_categories_channel_id_foreign` (`channel_id`);
+  ADD UNIQUE KEY `tax_categories_name_unique` (`name`);
 
 --
--- テーブルのインデックス `tax_categories_tax_rates`
+-- テーブルのインデックス `TAX_CATEGORIES_TAX_RATES`
 --
-ALTER TABLE `tax_categories_tax_rates`
+ALTER TABLE `TAX_CATEGORIES_TAX_RATES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `tax_map_index_unique` (`tax_category_id`,`tax_rate_id`),
   ADD KEY `tax_categories_tax_rates_tax_rate_id_foreign` (`tax_rate_id`);
 
 --
--- テーブルのインデックス `tax_rates`
+-- テーブルのインデックス `TAX_RATES`
 --
-ALTER TABLE `tax_rates`
+ALTER TABLE `TAX_RATES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `tax_rates_identifier_unique` (`identifier`);
 
 --
--- テーブルのインデックス `users`
+-- テーブルのインデックス `USERS`
 --
-ALTER TABLE `users`
+ALTER TABLE `USERS`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
   ADD KEY `users_plan_id_foreign` (`plan_id`);
 
 --
--- テーブルのインデックス `velocity_category`
+-- テーブルのインデックス `VELOCITY_CATEGORY`
 --
-ALTER TABLE `velocity_category`
+ALTER TABLE `VELOCITY_CATEGORY`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `velocity_category_translations`
+-- テーブルのインデックス `VELOCITY_CATEGORY_TRANSLATIONS`
 --
-ALTER TABLE `velocity_category_translations`
+ALTER TABLE `VELOCITY_CATEGORY_TRANSLATIONS`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `velocity_contents`
+-- テーブルのインデックス `VELOCITY_CONTENTS`
 --
-ALTER TABLE `velocity_contents`
+ALTER TABLE `VELOCITY_CONTENTS`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `velocity_contents_translations`
+-- テーブルのインデックス `VELOCITY_CONTENTS_TRANSLATIONS`
 --
-ALTER TABLE `velocity_contents_translations`
+ALTER TABLE `VELOCITY_CONTENTS_TRANSLATIONS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `velocity_contents_translations_content_id_foreign` (`content_id`);
 
 --
--- テーブルのインデックス `velocity_customer_compare_products`
+-- テーブルのインデックス `VELOCITY_CUSTOMER_COMPARE_PRODUCTS`
 --
-ALTER TABLE `velocity_customer_compare_products`
+ALTER TABLE `VELOCITY_CUSTOMER_COMPARE_PRODUCTS`
   ADD PRIMARY KEY (`id`),
   ADD KEY `velocity_customer_compare_products_product_flat_id_foreign` (`product_flat_id`),
   ADD KEY `velocity_customer_compare_products_customer_id_foreign` (`customer_id`);
 
 --
--- テーブルのインデックス `velocity_meta_data`
+-- テーブルのインデックス `VELOCITY_META_DATA`
 --
-ALTER TABLE `velocity_meta_data`
+ALTER TABLE `VELOCITY_META_DATA`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `vendor_password_resets`
+-- テーブルのインデックス `VENDOR_PASSWORD_RESETS`
 --
-ALTER TABLE `vendor_password_resets`
+ALTER TABLE `VENDOR_PASSWORD_RESETS`
   ADD KEY `vendor_password_resets_email_index` (`email`);
 
 --
--- テーブルのインデックス `vendor_roles`
+-- テーブルのインデックス `VENDOR_ROLES`
 --
-ALTER TABLE `vendor_roles`
+ALTER TABLE `VENDOR_ROLES`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `vendor_sources`
+-- テーブルのインデックス `VENDOR_SOURCES`
 --
-ALTER TABLE `vendor_sources`
+ALTER TABLE `VENDOR_SOURCES`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `vendor_sources_email_unique` (`email`);
 
 --
--- テーブルのインデックス `wishlist`
+-- テーブルのインデックス `WISHLIST`
 --
-ALTER TABLE `wishlist`
+ALTER TABLE `WISHLIST`
   ADD PRIMARY KEY (`id`),
   ADD KEY `wishlist_channel_id_foreign` (`channel_id`),
   ADD KEY `wishlist_product_id_foreign` (`product_id`),
@@ -7300,627 +7483,621 @@ ALTER TABLE `wishlist`
 --
 
 --
--- テーブルのAUTO_INCREMENT `admins`
+-- テーブルのAUTO_INCREMENT `ADDRESSES`
 --
-ALTER TABLE `admins`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- テーブルのAUTO_INCREMENT `agent_roles`
---
-ALTER TABLE `agent_roles`
+ALTER TABLE `ADDRESSES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `agent_sources`
+-- テーブルのAUTO_INCREMENT `ADMINS`
 --
-ALTER TABLE `agent_sources`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理店ID';
-
---
--- テーブルのAUTO_INCREMENT `attributes`
---
-ALTER TABLE `attributes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
-
---
--- テーブルのAUTO_INCREMENT `attribute_families`
---
-ALTER TABLE `attribute_families`
+ALTER TABLE `ADMINS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- テーブルのAUTO_INCREMENT `attribute_groups`
+-- テーブルのAUTO_INCREMENT `AGENT_ROLES`
 --
-ALTER TABLE `attribute_groups`
+ALTER TABLE `AGENT_ROLES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- テーブルのAUTO_INCREMENT `AGENT_SOURCES`
+--
+ALTER TABLE `AGENT_SOURCES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理店ID', AUTO_INCREMENT=2;
+
+--
+-- テーブルのAUTO_INCREMENT `ATTRIBUTES`
+--
+ALTER TABLE `ATTRIBUTES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- テーブルのAUTO_INCREMENT `ATTRIBUTE_FAMILIES`
+--
+ALTER TABLE `ATTRIBUTE_FAMILIES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- テーブルのAUTO_INCREMENT `ATTRIBUTE_GROUPS`
+--
+ALTER TABLE `ATTRIBUTE_GROUPS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- テーブルのAUTO_INCREMENT `attribute_options`
+-- テーブルのAUTO_INCREMENT `ATTRIBUTE_OPTIONS`
 --
-ALTER TABLE `attribute_options`
+ALTER TABLE `ATTRIBUTE_OPTIONS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- テーブルのAUTO_INCREMENT `attribute_option_translations`
+-- テーブルのAUTO_INCREMENT `ATTRIBUTE_OPTION_TRANSLATIONS`
 --
-ALTER TABLE `attribute_option_translations`
+ALTER TABLE `ATTRIBUTE_OPTION_TRANSLATIONS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- テーブルのAUTO_INCREMENT `attribute_translations`
+-- テーブルのAUTO_INCREMENT `ATTRIBUTE_TRANSLATIONS`
 --
-ALTER TABLE `attribute_translations`
+ALTER TABLE `ATTRIBUTE_TRANSLATIONS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
--- テーブルのAUTO_INCREMENT `bookings`
+-- テーブルのAUTO_INCREMENT `BOOKINGS`
 --
-ALTER TABLE `bookings`
+ALTER TABLE `BOOKINGS`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `booking_products`
+-- テーブルのAUTO_INCREMENT `BOOKING_PRODUCTS`
 --
-ALTER TABLE `booking_products`
+ALTER TABLE `BOOKING_PRODUCTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `booking_product_appointment_slots`
+-- テーブルのAUTO_INCREMENT `BOOKING_PRODUCT_APPOINTMENT_SLOTS`
 --
-ALTER TABLE `booking_product_appointment_slots`
+ALTER TABLE `BOOKING_PRODUCT_APPOINTMENT_SLOTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `booking_product_default_slots`
+-- テーブルのAUTO_INCREMENT `BOOKING_PRODUCT_DEFAULT_SLOTS`
 --
-ALTER TABLE `booking_product_default_slots`
+ALTER TABLE `BOOKING_PRODUCT_DEFAULT_SLOTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `booking_product_event_tickets`
+-- テーブルのAUTO_INCREMENT `BOOKING_PRODUCT_EVENT_TICKETS`
 --
-ALTER TABLE `booking_product_event_tickets`
+ALTER TABLE `BOOKING_PRODUCT_EVENT_TICKETS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `booking_product_event_ticket_translations`
+-- テーブルのAUTO_INCREMENT `BOOKING_PRODUCT_EVENT_TICKET_TRANSLATIONS`
 --
-ALTER TABLE `booking_product_event_ticket_translations`
+ALTER TABLE `BOOKING_PRODUCT_EVENT_TICKET_TRANSLATIONS`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `booking_product_rental_slots`
+-- テーブルのAUTO_INCREMENT `BOOKING_PRODUCT_RENTAL_SLOTS`
 --
-ALTER TABLE `booking_product_rental_slots`
+ALTER TABLE `BOOKING_PRODUCT_RENTAL_SLOTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `booking_product_table_slots`
+-- テーブルのAUTO_INCREMENT `BOOKING_PRODUCT_TABLE_SLOTS`
 --
-ALTER TABLE `booking_product_table_slots`
+ALTER TABLE `BOOKING_PRODUCT_TABLE_SLOTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `cart`
+-- テーブルのAUTO_INCREMENT `CART`
 --
-ALTER TABLE `cart`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_address`
---
-ALTER TABLE `cart_address`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_items`
---
-ALTER TABLE `cart_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_item_inventories`
---
-ALTER TABLE `cart_item_inventories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_payment`
---
-ALTER TABLE `cart_payment`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_rules`
---
-ALTER TABLE `cart_rules`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_rule_coupons`
---
-ALTER TABLE `cart_rule_coupons`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_rule_coupon_usage`
---
-ALTER TABLE `cart_rule_coupon_usage`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_rule_customers`
---
-ALTER TABLE `cart_rule_customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_rule_translations`
---
-ALTER TABLE `cart_rule_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `cart_shipping_rates`
---
-ALTER TABLE `cart_shipping_rates`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `catalog_rules`
---
-ALTER TABLE `catalog_rules`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `catalog_rule_products`
---
-ALTER TABLE `catalog_rule_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `catalog_rule_product_prices`
---
-ALTER TABLE `catalog_rule_product_prices`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `categories`
---
-ALTER TABLE `categories`
+ALTER TABLE `CART`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- テーブルのAUTO_INCREMENT `category_translations`
+-- テーブルのAUTO_INCREMENT `CART_ITEMS`
 --
-ALTER TABLE `category_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- テーブルのAUTO_INCREMENT `channels`
---
-ALTER TABLE `channels`
+ALTER TABLE `CART_ITEMS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- テーブルのAUTO_INCREMENT `charges`
+-- テーブルのAUTO_INCREMENT `CART_ITEM_INVENTORIES`
 --
-ALTER TABLE `charges`
+ALTER TABLE `CART_ITEM_INVENTORIES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `cms_pages`
+-- テーブルのAUTO_INCREMENT `CART_PAYMENT`
 --
-ALTER TABLE `cms_pages`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- テーブルのAUTO_INCREMENT `cms_page_translations`
---
-ALTER TABLE `cms_page_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- テーブルのAUTO_INCREMENT `core_config`
---
-ALTER TABLE `core_config`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- テーブルのAUTO_INCREMENT `countries`
---
-ALTER TABLE `countries`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
-
---
--- テーブルのAUTO_INCREMENT `country_states`
---
-ALTER TABLE `country_states`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=569;
-
---
--- テーブルのAUTO_INCREMENT `country_state_translations`
---
-ALTER TABLE `country_state_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1705;
-
---
--- テーブルのAUTO_INCREMENT `country_translations`
---
-ALTER TABLE `country_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=766;
-
---
--- テーブルのAUTO_INCREMENT `currencies`
---
-ALTER TABLE `currencies`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- テーブルのAUTO_INCREMENT `currency_exchange_rates`
---
-ALTER TABLE `currency_exchange_rates`
+ALTER TABLE `CART_PAYMENT`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `customers`
+-- テーブルのAUTO_INCREMENT `CART_RULES`
 --
-ALTER TABLE `customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- テーブルのAUTO_INCREMENT `customer_addresses`
---
-ALTER TABLE `customer_addresses`
+ALTER TABLE `CART_RULES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `customer_documents`
+-- テーブルのAUTO_INCREMENT `CART_RULE_COUPONS`
 --
-ALTER TABLE `customer_documents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `CART_RULE_COUPONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `customer_groups`
+-- テーブルのAUTO_INCREMENT `CART_RULE_COUPON_USAGE`
 --
-ALTER TABLE `customer_groups`
+ALTER TABLE `CART_RULE_COUPON_USAGE`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `CART_RULE_CUSTOMERS`
+--
+ALTER TABLE `CART_RULE_CUSTOMERS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `CART_RULE_TRANSLATIONS`
+--
+ALTER TABLE `CART_RULE_TRANSLATIONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `CART_SHIPPING_RATES`
+--
+ALTER TABLE `CART_SHIPPING_RATES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `CATALOG_RULES`
+--
+ALTER TABLE `CATALOG_RULES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `CATALOG_RULE_PRODUCTS`
+--
+ALTER TABLE `CATALOG_RULE_PRODUCTS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `CATALOG_RULE_PRODUCT_PRICES`
+--
+ALTER TABLE `CATALOG_RULE_PRODUCT_PRICES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `CATEGORIES`
+--
+ALTER TABLE `CATEGORIES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- テーブルのAUTO_INCREMENT `CATEGORY_TRANSLATIONS`
+--
+ALTER TABLE `CATEGORY_TRANSLATIONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- テーブルのAUTO_INCREMENT `CHANNELS`
+--
+ALTER TABLE `CHANNELS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- テーブルのAUTO_INCREMENT `downloadable_link_purchased`
+-- テーブルのAUTO_INCREMENT `CHARGES`
 --
-ALTER TABLE `downloadable_link_purchased`
+ALTER TABLE `CHARGES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `dropship_ali_express_attributes`
+-- テーブルのAUTO_INCREMENT `CMS_PAGES`
 --
-ALTER TABLE `dropship_ali_express_attributes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `CMS_PAGES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- テーブルのAUTO_INCREMENT `dropship_ali_express_attribute_options`
+-- テーブルのAUTO_INCREMENT `CMS_PAGE_TRANSLATIONS`
 --
-ALTER TABLE `dropship_ali_express_attribute_options`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `CMS_PAGE_TRANSLATIONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- テーブルのAUTO_INCREMENT `dropship_ali_express_orders`
+-- テーブルのAUTO_INCREMENT `CORE_CONFIG`
 --
-ALTER TABLE `dropship_ali_express_orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `CORE_CONFIG`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- テーブルのAUTO_INCREMENT `dropship_ali_express_order_items`
+-- テーブルのAUTO_INCREMENT `COUNTRIES`
 --
-ALTER TABLE `dropship_ali_express_order_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `COUNTRIES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=256;
 
 --
--- テーブルのAUTO_INCREMENT `dropship_ali_express_products`
+-- テーブルのAUTO_INCREMENT `COUNTRY_STATES`
 --
-ALTER TABLE `dropship_ali_express_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `COUNTRY_STATES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=569;
 
 --
--- テーブルのAUTO_INCREMENT `dropship_ali_express_product_images`
+-- テーブルのAUTO_INCREMENT `COUNTRY_STATE_TRANSLATIONS`
 --
-ALTER TABLE `dropship_ali_express_product_images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `COUNTRY_STATE_TRANSLATIONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1705;
 
 --
--- テーブルのAUTO_INCREMENT `dropship_ali_express_product_reviews`
+-- テーブルのAUTO_INCREMENT `COUNTRY_TRANSLATIONS`
 --
-ALTER TABLE `dropship_ali_express_product_reviews`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `COUNTRY_TRANSLATIONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=766;
 
 --
--- テーブルのAUTO_INCREMENT `inventory_sources`
+-- テーブルのAUTO_INCREMENT `CURRENCIES`
 --
-ALTER TABLE `inventory_sources`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- テーブルのAUTO_INCREMENT `invoices`
---
-ALTER TABLE `invoices`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `invoice_items`
---
-ALTER TABLE `invoice_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `locales`
---
-ALTER TABLE `locales`
+ALTER TABLE `CURRENCIES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- テーブルのAUTO_INCREMENT `merchant_roles`
+-- テーブルのAUTO_INCREMENT `CURRENCY_EXCHANGE_RATES`
 --
-ALTER TABLE `merchant_roles`
+ALTER TABLE `CURRENCY_EXCHANGE_RATES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `merchant_sources`
+-- テーブルのAUTO_INCREMENT `CUSTOMERS`
 --
-ALTER TABLE `merchant_sources`
+ALTER TABLE `CUSTOMERS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- テーブルのAUTO_INCREMENT `CUSTOMER_DOCUMENTS`
+--
+ALTER TABLE `CUSTOMER_DOCUMENTS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- テーブルのAUTO_INCREMENT `CUSTOMER_GROUPS`
+--
+ALTER TABLE `CUSTOMER_GROUPS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- テーブルのAUTO_INCREMENT `DOWNLOADABLE_LINK_PURCHASED`
+--
+ALTER TABLE `DOWNLOADABLE_LINK_PURCHASED`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `DROPSHIP_ALI_EXPRESS_ATTRIBUTES`
+--
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ATTRIBUTES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `DROPSHIP_ALI_EXPRESS_ATTRIBUTE_OPTIONS`
+--
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ATTRIBUTE_OPTIONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `DROPSHIP_ALI_EXPRESS_ORDERS`
+--
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ORDERS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS`
+--
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `DROPSHIP_ALI_EXPRESS_PRODUCTS`
+--
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCTS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `DROPSHIP_ALI_EXPRESS_PRODUCT_IMAGES`
+--
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCT_IMAGES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `DROPSHIP_ALI_EXPRESS_PRODUCT_REVIEWS`
+--
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCT_REVIEWS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `INVENTORY_SOURCES`
+--
+ALTER TABLE `INVENTORY_SOURCES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- テーブルのAUTO_INCREMENT `INVOICES`
+--
+ALTER TABLE `INVOICES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `INVOICE_ITEMS`
+--
+ALTER TABLE `INVOICE_ITEMS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `LOCALES`
+--
+ALTER TABLE `LOCALES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- テーブルのAUTO_INCREMENT `MERCHANT_ROLES`
+--
+ALTER TABLE `MERCHANT_ROLES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `MERCHANT_SOURCES`
+--
+ALTER TABLE `MERCHANT_SOURCES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '製造者ID';
 
 --
--- テーブルのAUTO_INCREMENT `migrations`
+-- テーブルのAUTO_INCREMENT `MIGRATIONS`
 --
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=193;
+ALTER TABLE `MIGRATIONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
 
 --
--- テーブルのAUTO_INCREMENT `orders`
+-- テーブルのAUTO_INCREMENT `ORDERS`
 --
-ALTER TABLE `orders`
+ALTER TABLE `ORDERS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `order_address`
+-- テーブルのAUTO_INCREMENT `ORDER_BRANDS`
 --
-ALTER TABLE `order_address`
+ALTER TABLE `ORDER_BRANDS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `order_brands`
+-- テーブルのAUTO_INCREMENT `ORDER_COMMENTS`
 --
-ALTER TABLE `order_brands`
+ALTER TABLE `ORDER_COMMENTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `order_items`
+-- テーブルのAUTO_INCREMENT `ORDER_ITEMS`
 --
-ALTER TABLE `order_items`
+ALTER TABLE `ORDER_ITEMS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `order_payment`
+-- テーブルのAUTO_INCREMENT `ORDER_PAYMENT`
 --
-ALTER TABLE `order_payment`
+ALTER TABLE `ORDER_PAYMENT`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `plans`
+-- テーブルのAUTO_INCREMENT `PLANS`
 --
-ALTER TABLE `plans`
+ALTER TABLE `PLANS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `products`
+-- テーブルのAUTO_INCREMENT `PRODUCTS`
 --
-ALTER TABLE `products`
+ALTER TABLE `PRODUCTS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- テーブルのAUTO_INCREMENT `PRODUCT_ATTRIBUTE_VALUES`
+--
+ALTER TABLE `PRODUCT_ATTRIBUTE_VALUES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- テーブルのAUTO_INCREMENT `PRODUCT_BUNDLE_OPTIONS`
+--
+ALTER TABLE `PRODUCT_BUNDLE_OPTIONS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_attribute_values`
+-- テーブルのAUTO_INCREMENT `PRODUCT_BUNDLE_OPTION_PRODUCTS`
 --
-ALTER TABLE `product_attribute_values`
+ALTER TABLE `PRODUCT_BUNDLE_OPTION_PRODUCTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_bundle_options`
+-- テーブルのAUTO_INCREMENT `PRODUCT_BUNDLE_OPTION_TRANSLATIONS`
 --
-ALTER TABLE `product_bundle_options`
+ALTER TABLE `PRODUCT_BUNDLE_OPTION_TRANSLATIONS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_bundle_option_products`
+-- テーブルのAUTO_INCREMENT `PRODUCT_DOWNLOADABLE_LINKS`
 --
-ALTER TABLE `product_bundle_option_products`
+ALTER TABLE `PRODUCT_DOWNLOADABLE_LINKS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_bundle_option_translations`
+-- テーブルのAUTO_INCREMENT `PRODUCT_DOWNLOADABLE_LINK_TRANSLATIONS`
 --
-ALTER TABLE `product_bundle_option_translations`
+ALTER TABLE `PRODUCT_DOWNLOADABLE_LINK_TRANSLATIONS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_downloadable_links`
+-- テーブルのAUTO_INCREMENT `PRODUCT_DOWNLOADABLE_SAMPLES`
 --
-ALTER TABLE `product_downloadable_links`
+ALTER TABLE `PRODUCT_DOWNLOADABLE_SAMPLES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_downloadable_link_translations`
+-- テーブルのAUTO_INCREMENT `PRODUCT_DOWNLOADABLE_SAMPLE_TRANSLATIONS`
 --
-ALTER TABLE `product_downloadable_link_translations`
+ALTER TABLE `PRODUCT_DOWNLOADABLE_SAMPLE_TRANSLATIONS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_downloadable_samples`
+-- テーブルのAUTO_INCREMENT `PRODUCT_FLAT`
 --
-ALTER TABLE `product_downloadable_samples`
+ALTER TABLE `PRODUCT_FLAT`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- テーブルのAUTO_INCREMENT `PRODUCT_GROUPED_PRODUCTS`
+--
+ALTER TABLE `PRODUCT_GROUPED_PRODUCTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_downloadable_sample_translations`
+-- テーブルのAUTO_INCREMENT `PRODUCT_IMAGES`
 --
-ALTER TABLE `product_downloadable_sample_translations`
+ALTER TABLE `PRODUCT_IMAGES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_flat`
+-- テーブルのAUTO_INCREMENT `PRODUCT_INVENTORIES`
 --
-ALTER TABLE `product_flat`
+ALTER TABLE `PRODUCT_INVENTORIES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- テーブルのAUTO_INCREMENT `PRODUCT_ORDERED_INVENTORIES`
+--
+ALTER TABLE `PRODUCT_ORDERED_INVENTORIES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_grouped_products`
+-- テーブルのAUTO_INCREMENT `PRODUCT_REVIEWS`
 --
-ALTER TABLE `product_grouped_products`
+ALTER TABLE `PRODUCT_REVIEWS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_images`
+-- テーブルのAUTO_INCREMENT `REFUNDS`
 --
-ALTER TABLE `product_images`
+ALTER TABLE `REFUNDS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_inventories`
+-- テーブルのAUTO_INCREMENT `REFUND_ITEMS`
 --
-ALTER TABLE `product_inventories`
+ALTER TABLE `REFUND_ITEMS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `product_ordered_inventories`
+-- テーブルのAUTO_INCREMENT `ROLES`
 --
-ALTER TABLE `product_ordered_inventories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `product_reviews`
---
-ALTER TABLE `product_reviews`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `refunds`
---
-ALTER TABLE `refunds`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `refund_items`
---
-ALTER TABLE `refund_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `roles`
---
-ALTER TABLE `roles`
+ALTER TABLE `ROLES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- テーブルのAUTO_INCREMENT `shipments`
+-- テーブルのAUTO_INCREMENT `SHIPMENTS`
 --
-ALTER TABLE `shipments`
+ALTER TABLE `SHIPMENTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `shipment_items`
+-- テーブルのAUTO_INCREMENT `SHIPMENT_ITEMS`
 --
-ALTER TABLE `shipment_items`
+ALTER TABLE `SHIPMENT_ITEMS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `sliders`
+-- テーブルのAUTO_INCREMENT `SLIDERS`
 --
-ALTER TABLE `sliders`
+ALTER TABLE `SLIDERS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `subscribers_list`
+-- テーブルのAUTO_INCREMENT `SUBSCRIBERS_LIST`
 --
-ALTER TABLE `subscribers_list`
+ALTER TABLE `SUBSCRIBERS_LIST`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `tax_categories`
+-- テーブルのAUTO_INCREMENT `TAX_CATEGORIES`
 --
-ALTER TABLE `tax_categories`
+ALTER TABLE `TAX_CATEGORIES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `tax_categories_tax_rates`
+-- テーブルのAUTO_INCREMENT `TAX_CATEGORIES_TAX_RATES`
 --
-ALTER TABLE `tax_categories_tax_rates`
+ALTER TABLE `TAX_CATEGORIES_TAX_RATES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `tax_rates`
+-- テーブルのAUTO_INCREMENT `TAX_RATES`
 --
-ALTER TABLE `tax_rates`
+ALTER TABLE `TAX_RATES`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `users`
+-- テーブルのAUTO_INCREMENT `USERS`
 --
-ALTER TABLE `users`
+ALTER TABLE `USERS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `velocity_category`
+-- テーブルのAUTO_INCREMENT `VELOCITY_CATEGORY`
 --
-ALTER TABLE `velocity_category`
+ALTER TABLE `VELOCITY_CATEGORY`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `velocity_category_translations`
+-- テーブルのAUTO_INCREMENT `VELOCITY_CATEGORY_TRANSLATIONS`
 --
-ALTER TABLE `velocity_category_translations`
+ALTER TABLE `VELOCITY_CATEGORY_TRANSLATIONS`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `velocity_contents`
+-- テーブルのAUTO_INCREMENT `VELOCITY_CONTENTS`
 --
-ALTER TABLE `velocity_contents`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `velocity_contents_translations`
---
-ALTER TABLE `velocity_contents_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `velocity_customer_compare_products`
---
-ALTER TABLE `velocity_customer_compare_products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `velocity_meta_data`
---
-ALTER TABLE `velocity_meta_data`
+ALTER TABLE `VELOCITY_CONTENTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- テーブルのAUTO_INCREMENT `vendor_roles`
+-- テーブルのAUTO_INCREMENT `VELOCITY_CONTENTS_TRANSLATIONS`
 --
-ALTER TABLE `vendor_roles`
+ALTER TABLE `VELOCITY_CONTENTS_TRANSLATIONS`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- テーブルのAUTO_INCREMENT `VELOCITY_CUSTOMER_COMPARE_PRODUCTS`
+--
+ALTER TABLE `VELOCITY_CUSTOMER_COMPARE_PRODUCTS`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `vendor_sources`
+-- テーブルのAUTO_INCREMENT `VELOCITY_META_DATA`
 --
-ALTER TABLE `vendor_sources`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `VELOCITY_META_DATA`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- テーブルのAUTO_INCREMENT `wishlist`
+-- テーブルのAUTO_INCREMENT `VENDOR_ROLES`
 --
-ALTER TABLE `wishlist`
+ALTER TABLE `VENDOR_ROLES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- テーブルのAUTO_INCREMENT `VENDOR_SOURCES`
+--
+ALTER TABLE `VENDOR_SOURCES`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- テーブルのAUTO_INCREMENT `WISHLIST`
+--
+ALTER TABLE `WISHLIST`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -7928,606 +8105,594 @@ ALTER TABLE `wishlist`
 --
 
 --
--- テーブルの制約 `attribute_groups`
+-- テーブルの制約 `ADDRESSES`
 --
-ALTER TABLE `attribute_groups`
-  ADD CONSTRAINT `attribute_groups_attribute_family_id_foreign` FOREIGN KEY (`attribute_family_id`) REFERENCES `attribute_families` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ADDRESSES`
+  ADD CONSTRAINT `addresses_cart_id_foreign` FOREIGN KEY (`cart_id`) REFERENCES `CART` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `addresses_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `CUSTOMERS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `addresses_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `attribute_group_mappings`
+-- テーブルの制約 `ATTRIBUTE_GROUPS`
 --
-ALTER TABLE `attribute_group_mappings`
-  ADD CONSTRAINT `attribute_group_mappings_attribute_group_id_foreign` FOREIGN KEY (`attribute_group_id`) REFERENCES `attribute_groups` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `attribute_group_mappings_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ATTRIBUTE_GROUPS`
+  ADD CONSTRAINT `attribute_groups_attribute_family_id_foreign` FOREIGN KEY (`attribute_family_id`) REFERENCES `ATTRIBUTE_FAMILIES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `attribute_options`
+-- テーブルの制約 `ATTRIBUTE_GROUP_MAPPINGS`
 --
-ALTER TABLE `attribute_options`
-  ADD CONSTRAINT `attribute_options_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ATTRIBUTE_GROUP_MAPPINGS`
+  ADD CONSTRAINT `attribute_group_mappings_attribute_group_id_foreign` FOREIGN KEY (`attribute_group_id`) REFERENCES `ATTRIBUTE_GROUPS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `attribute_group_mappings_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `ATTRIBUTES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `attribute_option_translations`
+-- テーブルの制約 `ATTRIBUTE_OPTIONS`
 --
-ALTER TABLE `attribute_option_translations`
-  ADD CONSTRAINT `attribute_option_translations_attribute_option_id_foreign` FOREIGN KEY (`attribute_option_id`) REFERENCES `attribute_options` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ATTRIBUTE_OPTIONS`
+  ADD CONSTRAINT `attribute_options_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `ATTRIBUTES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `attribute_translations`
+-- テーブルの制約 `ATTRIBUTE_OPTION_TRANSLATIONS`
 --
-ALTER TABLE `attribute_translations`
-  ADD CONSTRAINT `attribute_translations_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ATTRIBUTE_OPTION_TRANSLATIONS`
+  ADD CONSTRAINT `attribute_option_translations_attribute_option_id_foreign` FOREIGN KEY (`attribute_option_id`) REFERENCES `ATTRIBUTE_OPTIONS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `bookings`
+-- テーブルの制約 `ATTRIBUTE_TRANSLATIONS`
 --
-ALTER TABLE `bookings`
-  ADD CONSTRAINT `bookings_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `bookings_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE SET NULL;
+ALTER TABLE `ATTRIBUTE_TRANSLATIONS`
+  ADD CONSTRAINT `attribute_translations_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `ATTRIBUTES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `booking_products`
+-- テーブルの制約 `BOOKINGS`
 --
-ALTER TABLE `booking_products`
-  ADD CONSTRAINT `booking_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `BOOKINGS`
+  ADD CONSTRAINT `bookings_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `bookings_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE SET NULL;
 
 --
--- テーブルの制約 `booking_product_appointment_slots`
+-- テーブルの制約 `BOOKING_PRODUCTS`
 --
-ALTER TABLE `booking_product_appointment_slots`
-  ADD CONSTRAINT `booking_product_appointment_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `BOOKING_PRODUCTS`
+  ADD CONSTRAINT `booking_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `booking_product_default_slots`
+-- テーブルの制約 `BOOKING_PRODUCT_APPOINTMENT_SLOTS`
 --
-ALTER TABLE `booking_product_default_slots`
-  ADD CONSTRAINT `booking_product_default_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `BOOKING_PRODUCT_APPOINTMENT_SLOTS`
+  ADD CONSTRAINT `booking_product_appointment_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `BOOKING_PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `booking_product_event_tickets`
+-- テーブルの制約 `BOOKING_PRODUCT_DEFAULT_SLOTS`
 --
-ALTER TABLE `booking_product_event_tickets`
-  ADD CONSTRAINT `booking_product_event_tickets_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `BOOKING_PRODUCT_DEFAULT_SLOTS`
+  ADD CONSTRAINT `booking_product_default_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `BOOKING_PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `booking_product_event_ticket_translations`
+-- テーブルの制約 `BOOKING_PRODUCT_EVENT_TICKETS`
 --
-ALTER TABLE `booking_product_event_ticket_translations`
-  ADD CONSTRAINT `booking_product_event_ticket_translations_locale_foreign` FOREIGN KEY (`booking_product_event_ticket_id`) REFERENCES `booking_product_event_tickets` (`id`) ON DELETE CASCADE;
+ALTER TABLE `BOOKING_PRODUCT_EVENT_TICKETS`
+  ADD CONSTRAINT `booking_product_event_tickets_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `BOOKING_PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `booking_product_rental_slots`
+-- テーブルの制約 `BOOKING_PRODUCT_EVENT_TICKET_TRANSLATIONS`
 --
-ALTER TABLE `booking_product_rental_slots`
-  ADD CONSTRAINT `booking_product_rental_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `BOOKING_PRODUCT_EVENT_TICKET_TRANSLATIONS`
+  ADD CONSTRAINT `booking_product_event_ticket_translations_locale_foreign` FOREIGN KEY (`booking_product_event_ticket_id`) REFERENCES `BOOKING_PRODUCT_EVENT_TICKETS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `booking_product_table_slots`
+-- テーブルの制約 `BOOKING_PRODUCT_RENTAL_SLOTS`
 --
-ALTER TABLE `booking_product_table_slots`
-  ADD CONSTRAINT `booking_product_table_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `booking_products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `BOOKING_PRODUCT_RENTAL_SLOTS`
+  ADD CONSTRAINT `booking_product_rental_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `BOOKING_PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart`
+-- テーブルの制約 `BOOKING_PRODUCT_TABLE_SLOTS`
 --
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
+ALTER TABLE `BOOKING_PRODUCT_TABLE_SLOTS`
+  ADD CONSTRAINT `booking_product_table_slots_booking_product_id_foreign` FOREIGN KEY (`booking_product_id`) REFERENCES `BOOKING_PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_address`
+-- テーブルの制約 `CART`
 --
-ALTER TABLE `cart_address`
-  ADD CONSTRAINT `cart_address_cart_id_foreign` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_address_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART`
+  ADD CONSTRAINT `cart_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `CUSTOMERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_items`
+-- テーブルの制約 `CART_ITEMS`
 --
-ALTER TABLE `cart_items`
-  ADD CONSTRAINT `cart_items_cart_id_foreign` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `cart_items` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_items_tax_category_id_foreign` FOREIGN KEY (`tax_category_id`) REFERENCES `tax_categories` (`id`);
+ALTER TABLE `CART_ITEMS`
+  ADD CONSTRAINT `cart_items_cart_id_foreign` FOREIGN KEY (`cart_id`) REFERENCES `CART` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `CART_ITEMS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_items_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_items_tax_category_id_foreign` FOREIGN KEY (`tax_category_id`) REFERENCES `TAX_CATEGORIES` (`id`);
 
 --
--- テーブルの制約 `cart_payment`
+-- テーブルの制約 `CART_PAYMENT`
 --
-ALTER TABLE `cart_payment`
-  ADD CONSTRAINT `cart_payment_cart_id_foreign` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART_PAYMENT`
+  ADD CONSTRAINT `cart_payment_cart_id_foreign` FOREIGN KEY (`cart_id`) REFERENCES `CART` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_rule_channels`
+-- テーブルの制約 `CART_RULE_CHANNELS`
 --
-ALTER TABLE `cart_rule_channels`
-  ADD CONSTRAINT `cart_rule_channels_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `cart_rules` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_rule_channels_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART_RULE_CHANNELS`
+  ADD CONSTRAINT `cart_rule_channels_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `CART_RULES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_rule_channels_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_rule_coupons`
+-- テーブルの制約 `CART_RULE_COUPONS`
 --
-ALTER TABLE `cart_rule_coupons`
-  ADD CONSTRAINT `cart_rule_coupons_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `cart_rules` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART_RULE_COUPONS`
+  ADD CONSTRAINT `cart_rule_coupons_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `CART_RULES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_rule_coupon_usage`
+-- テーブルの制約 `CART_RULE_COUPON_USAGE`
 --
-ALTER TABLE `cart_rule_coupon_usage`
-  ADD CONSTRAINT `cart_rule_coupon_usage_cart_rule_coupon_id_foreign` FOREIGN KEY (`cart_rule_coupon_id`) REFERENCES `cart_rule_coupons` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_rule_coupon_usage_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART_RULE_COUPON_USAGE`
+  ADD CONSTRAINT `cart_rule_coupon_usage_cart_rule_coupon_id_foreign` FOREIGN KEY (`cart_rule_coupon_id`) REFERENCES `CART_RULE_COUPONS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_rule_coupon_usage_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `CUSTOMERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_rule_customers`
+-- テーブルの制約 `CART_RULE_CUSTOMERS`
 --
-ALTER TABLE `cart_rule_customers`
-  ADD CONSTRAINT `cart_rule_customers_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `cart_rules` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_rule_customers_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART_RULE_CUSTOMERS`
+  ADD CONSTRAINT `cart_rule_customers_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `CART_RULES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_rule_customers_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `CUSTOMERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_rule_customer_groups`
+-- テーブルの制約 `CART_RULE_CUSTOMER_GROUPS`
 --
-ALTER TABLE `cart_rule_customer_groups`
-  ADD CONSTRAINT `cart_rule_customer_groups_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `cart_rules` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cart_rule_customer_groups_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_groups` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART_RULE_CUSTOMER_GROUPS`
+  ADD CONSTRAINT `cart_rule_customer_groups_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `CART_RULES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_rule_customer_groups_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `CUSTOMER_GROUPS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_rule_translations`
+-- テーブルの制約 `CART_RULE_TRANSLATIONS`
 --
-ALTER TABLE `cart_rule_translations`
-  ADD CONSTRAINT `cart_rule_translations_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `cart_rules` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART_RULE_TRANSLATIONS`
+  ADD CONSTRAINT `cart_rule_translations_cart_rule_id_foreign` FOREIGN KEY (`cart_rule_id`) REFERENCES `CART_RULES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cart_shipping_rates`
+-- テーブルの制約 `CART_SHIPPING_RATES`
 --
-ALTER TABLE `cart_shipping_rates`
-  ADD CONSTRAINT `cart_shipping_rates_cart_address_id_foreign` FOREIGN KEY (`cart_address_id`) REFERENCES `cart_address` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CART_SHIPPING_RATES`
+  ADD CONSTRAINT `cart_shipping_rates_cart_address_id_foreign` FOREIGN KEY (`cart_address_id`) REFERENCES `ADDRESSES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `catalog_rule_channels`
+-- テーブルの制約 `CATALOG_RULE_CHANNELS`
 --
-ALTER TABLE `catalog_rule_channels`
-  ADD CONSTRAINT `catalog_rule_channels_catalog_rule_id_foreign` FOREIGN KEY (`catalog_rule_id`) REFERENCES `catalog_rules` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `catalog_rule_channels_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CATALOG_RULE_CHANNELS`
+  ADD CONSTRAINT `catalog_rule_channels_catalog_rule_id_foreign` FOREIGN KEY (`catalog_rule_id`) REFERENCES `CATALOG_RULES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `catalog_rule_channels_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `catalog_rule_customer_groups`
+-- テーブルの制約 `CATALOG_RULE_CUSTOMER_GROUPS`
 --
-ALTER TABLE `catalog_rule_customer_groups`
-  ADD CONSTRAINT `catalog_rule_customer_groups_catalog_rule_id_foreign` FOREIGN KEY (`catalog_rule_id`) REFERENCES `catalog_rules` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `catalog_rule_customer_groups_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_groups` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CATALOG_RULE_CUSTOMER_GROUPS`
+  ADD CONSTRAINT `catalog_rule_customer_groups_catalog_rule_id_foreign` FOREIGN KEY (`catalog_rule_id`) REFERENCES `CATALOG_RULES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `catalog_rule_customer_groups_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `CUSTOMER_GROUPS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `catalog_rule_products`
+-- テーブルの制約 `CATALOG_RULE_PRODUCTS`
 --
-ALTER TABLE `catalog_rule_products`
-  ADD CONSTRAINT `catalog_rule_products_catalog_rule_id_foreign` FOREIGN KEY (`catalog_rule_id`) REFERENCES `catalog_rules` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `catalog_rule_products_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `catalog_rule_products_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_groups` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `catalog_rule_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CATALOG_RULE_PRODUCTS`
+  ADD CONSTRAINT `catalog_rule_products_catalog_rule_id_foreign` FOREIGN KEY (`catalog_rule_id`) REFERENCES `CATALOG_RULES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `catalog_rule_products_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `catalog_rule_products_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `CUSTOMER_GROUPS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `catalog_rule_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `catalog_rule_product_prices`
+-- テーブルの制約 `CATALOG_RULE_PRODUCT_PRICES`
 --
-ALTER TABLE `catalog_rule_product_prices`
-  ADD CONSTRAINT `catalog_rule_product_prices_catalog_rule_id_foreign` FOREIGN KEY (`catalog_rule_id`) REFERENCES `catalog_rules` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `catalog_rule_product_prices_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `catalog_rule_product_prices_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_groups` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `catalog_rule_product_prices_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CATALOG_RULE_PRODUCT_PRICES`
+  ADD CONSTRAINT `catalog_rule_product_prices_catalog_rule_id_foreign` FOREIGN KEY (`catalog_rule_id`) REFERENCES `CATALOG_RULES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `catalog_rule_product_prices_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `catalog_rule_product_prices_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `CUSTOMER_GROUPS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `catalog_rule_product_prices_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `category_filterable_attributes`
+-- テーブルの制約 `CATEGORY_FILTERABLE_ATTRIBUTES`
 --
-ALTER TABLE `category_filterable_attributes`
-  ADD CONSTRAINT `category_filterable_attributes_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `category_filterable_attributes_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CATEGORY_FILTERABLE_ATTRIBUTES`
+  ADD CONSTRAINT `category_filterable_attributes_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `ATTRIBUTES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `category_filterable_attributes_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `CATEGORIES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `category_translations`
+-- テーブルの制約 `CATEGORY_TRANSLATIONS`
 --
-ALTER TABLE `category_translations`
-  ADD CONSTRAINT `category_translations_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `category_translations_locale_id_foreign` FOREIGN KEY (`locale_id`) REFERENCES `locales` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CATEGORY_TRANSLATIONS`
+  ADD CONSTRAINT `category_translations_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `CATEGORIES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `category_translations_locale_id_foreign` FOREIGN KEY (`locale_id`) REFERENCES `LOCALES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `channels`
+-- テーブルの制約 `CHANNELS`
 --
-ALTER TABLE `channels`
-  ADD CONSTRAINT `channels_base_currency_id_foreign` FOREIGN KEY (`base_currency_id`) REFERENCES `currencies` (`id`),
-  ADD CONSTRAINT `channels_default_locale_id_foreign` FOREIGN KEY (`default_locale_id`) REFERENCES `locales` (`id`),
-  ADD CONSTRAINT `channels_root_category_id_foreign` FOREIGN KEY (`root_category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL;
+ALTER TABLE `CHANNELS`
+  ADD CONSTRAINT `channels_base_currency_id_foreign` FOREIGN KEY (`base_currency_id`) REFERENCES `CURRENCIES` (`id`),
+  ADD CONSTRAINT `channels_default_locale_id_foreign` FOREIGN KEY (`default_locale_id`) REFERENCES `LOCALES` (`id`),
+  ADD CONSTRAINT `channels_root_category_id_foreign` FOREIGN KEY (`root_category_id`) REFERENCES `CATEGORIES` (`id`) ON DELETE SET NULL;
 
 --
--- テーブルの制約 `channel_currencies`
+-- テーブルの制約 `CHANNEL_CURRENCIES`
 --
-ALTER TABLE `channel_currencies`
-  ADD CONSTRAINT `channel_currencies_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `channel_currencies_currency_id_foreign` FOREIGN KEY (`currency_id`) REFERENCES `currencies` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CHANNEL_CURRENCIES`
+  ADD CONSTRAINT `channel_currencies_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `channel_currencies_currency_id_foreign` FOREIGN KEY (`currency_id`) REFERENCES `CURRENCIES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `channel_inventory_sources`
+-- テーブルの制約 `CHANNEL_INVENTORY_SOURCES`
 --
-ALTER TABLE `channel_inventory_sources`
-  ADD CONSTRAINT `channel_inventory_sources_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `channel_inventory_sources_inventory_source_id_foreign` FOREIGN KEY (`inventory_source_id`) REFERENCES `inventory_sources` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CHANNEL_INVENTORY_SOURCES`
+  ADD CONSTRAINT `channel_inventory_sources_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `channel_inventory_sources_inventory_source_id_foreign` FOREIGN KEY (`inventory_source_id`) REFERENCES `INVENTORY_SOURCES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `channel_locales`
+-- テーブルの制約 `CHANNEL_LOCALES`
 --
-ALTER TABLE `channel_locales`
-  ADD CONSTRAINT `channel_locales_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `channel_locales_locale_id_foreign` FOREIGN KEY (`locale_id`) REFERENCES `locales` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CHANNEL_LOCALES`
+  ADD CONSTRAINT `channel_locales_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `channel_locales_locale_id_foreign` FOREIGN KEY (`locale_id`) REFERENCES `LOCALES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `charges`
+-- テーブルの制約 `CHARGES`
 --
-ALTER TABLE `charges`
-  ADD CONSTRAINT `charges_plan_id_foreign` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`);
+ALTER TABLE `CHARGES`
+  ADD CONSTRAINT `charges_plan_id_foreign` FOREIGN KEY (`plan_id`) REFERENCES `PLANS` (`id`);
 
 --
--- テーブルの制約 `cms_page_channels`
+-- テーブルの制約 `CMS_PAGE_CHANNELS`
 --
-ALTER TABLE `cms_page_channels`
-  ADD CONSTRAINT `cms_page_channels_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `cms_page_channels_cms_page_id_foreign` FOREIGN KEY (`cms_page_id`) REFERENCES `cms_pages` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CMS_PAGE_CHANNELS`
+  ADD CONSTRAINT `cms_page_channels_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cms_page_channels_cms_page_id_foreign` FOREIGN KEY (`cms_page_id`) REFERENCES `CMS_PAGES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `cms_page_translations`
+-- テーブルの制約 `CMS_PAGE_TRANSLATIONS`
 --
-ALTER TABLE `cms_page_translations`
-  ADD CONSTRAINT `cms_page_translations_cms_page_id_foreign` FOREIGN KEY (`cms_page_id`) REFERENCES `cms_pages` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CMS_PAGE_TRANSLATIONS`
+  ADD CONSTRAINT `cms_page_translations_cms_page_id_foreign` FOREIGN KEY (`cms_page_id`) REFERENCES `CMS_PAGES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `country_states`
+-- テーブルの制約 `COUNTRY_STATES`
 --
-ALTER TABLE `country_states`
-  ADD CONSTRAINT `country_states_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE;
+ALTER TABLE `COUNTRY_STATES`
+  ADD CONSTRAINT `country_states_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `COUNTRIES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `country_state_translations`
+-- テーブルの制約 `COUNTRY_STATE_TRANSLATIONS`
 --
-ALTER TABLE `country_state_translations`
-  ADD CONSTRAINT `country_state_translations_country_state_id_foreign` FOREIGN KEY (`country_state_id`) REFERENCES `country_states` (`id`) ON DELETE CASCADE;
+ALTER TABLE `COUNTRY_STATE_TRANSLATIONS`
+  ADD CONSTRAINT `country_state_translations_country_state_id_foreign` FOREIGN KEY (`country_state_id`) REFERENCES `COUNTRY_STATES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `country_translations`
+-- テーブルの制約 `COUNTRY_TRANSLATIONS`
 --
-ALTER TABLE `country_translations`
-  ADD CONSTRAINT `country_translations_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE CASCADE;
+ALTER TABLE `COUNTRY_TRANSLATIONS`
+  ADD CONSTRAINT `country_translations_country_id_foreign` FOREIGN KEY (`country_id`) REFERENCES `COUNTRIES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `currency_exchange_rates`
+-- テーブルの制約 `CURRENCY_EXCHANGE_RATES`
 --
-ALTER TABLE `currency_exchange_rates`
-  ADD CONSTRAINT `currency_exchange_rates_target_currency_foreign` FOREIGN KEY (`target_currency`) REFERENCES `currencies` (`id`) ON DELETE CASCADE;
+ALTER TABLE `CURRENCY_EXCHANGE_RATES`
+  ADD CONSTRAINT `currency_exchange_rates_target_currency_foreign` FOREIGN KEY (`target_currency`) REFERENCES `CURRENCIES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `customers`
+-- テーブルの制約 `CUSTOMERS`
 --
-ALTER TABLE `customers`
-  ADD CONSTRAINT `customers_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_groups` (`id`) ON DELETE SET NULL;
+ALTER TABLE `CUSTOMERS`
+  ADD CONSTRAINT `customers_customer_group_id_foreign` FOREIGN KEY (`customer_group_id`) REFERENCES `CUSTOMER_GROUPS` (`id`) ON DELETE SET NULL;
 
 --
--- テーブルの制約 `customer_addresses`
+-- テーブルの制約 `DOWNLOADABLE_LINK_PURCHASED`
 --
-ALTER TABLE `customer_addresses`
-  ADD CONSTRAINT `customer_addresses_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
+ALTER TABLE `DOWNLOADABLE_LINK_PURCHASED`
+  ADD CONSTRAINT `downloadable_link_purchased_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `CUSTOMERS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `downloadable_link_purchased_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `downloadable_link_purchased_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `ORDER_ITEMS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `downloadable_link_purchased`
+-- テーブルの制約 `DROPSHIP_ALI_EXPRESS_ATTRIBUTES`
 --
-ALTER TABLE `downloadable_link_purchased`
-  ADD CONSTRAINT `downloadable_link_purchased_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `downloadable_link_purchased_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `downloadable_link_purchased_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`) ON DELETE CASCADE;
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ATTRIBUTES`
+  ADD CONSTRAINT `dropship_ali_express_attributes_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `ATTRIBUTES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `dropship_ali_express_attributes`
+-- テーブルの制約 `DROPSHIP_ALI_EXPRESS_ATTRIBUTE_OPTIONS`
 --
-ALTER TABLE `dropship_ali_express_attributes`
-  ADD CONSTRAINT `dropship_ali_express_attributes_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE;
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ATTRIBUTE_OPTIONS`
+  ADD CONSTRAINT `ali_attribute_options_attribute_id_foreign` FOREIGN KEY (`ali_express_attribute_id`) REFERENCES `DROPSHIP_ALI_EXPRESS_ATTRIBUTES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ali_attribute_options_attribute_option_id_foreign` FOREIGN KEY (`attribute_option_id`) REFERENCES `ATTRIBUTE_OPTIONS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `dropship_ali_express_attribute_options`
+-- テーブルの制約 `DROPSHIP_ALI_EXPRESS_ORDERS`
 --
-ALTER TABLE `dropship_ali_express_attribute_options`
-  ADD CONSTRAINT `ali_attribute_options_attribute_id_foreign` FOREIGN KEY (`ali_express_attribute_id`) REFERENCES `dropship_ali_express_attributes` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `ali_attribute_options_attribute_option_id_foreign` FOREIGN KEY (`attribute_option_id`) REFERENCES `attribute_options` (`id`) ON DELETE CASCADE;
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ORDERS`
+  ADD CONSTRAINT `dropship_ali_express_orders_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `dropship_ali_express_orders`
+-- テーブルの制約 `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS`
 --
-ALTER TABLE `dropship_ali_express_orders`
-  ADD CONSTRAINT `dropship_ali_express_orders_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS`
+  ADD CONSTRAINT `dropship_ali_express_order_items_ali_express_order_id_foreign` FOREIGN KEY (`ali_express_order_id`) REFERENCES `DROPSHIP_ALI_EXPRESS_ORDERS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `dropship_ali_express_order_items_ali_express_product_id_foreign` FOREIGN KEY (`ali_express_product_id`) REFERENCES `DROPSHIP_ALI_EXPRESS_PRODUCTS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `dropship_ali_express_order_items_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `ORDER_ITEMS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `dropship_ali_express_order_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `DROPSHIP_ALI_EXPRESS_ORDER_ITEMS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `dropship_ali_express_order_items`
+-- テーブルの制約 `DROPSHIP_ALI_EXPRESS_PRODUCTS`
 --
-ALTER TABLE `dropship_ali_express_order_items`
-  ADD CONSTRAINT `dropship_ali_express_order_items_ali_express_order_id_foreign` FOREIGN KEY (`ali_express_order_id`) REFERENCES `dropship_ali_express_orders` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `dropship_ali_express_order_items_ali_express_product_id_foreign` FOREIGN KEY (`ali_express_product_id`) REFERENCES `dropship_ali_express_products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `dropship_ali_express_order_items_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `dropship_ali_express_order_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `dropship_ali_express_order_items` (`id`) ON DELETE CASCADE;
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCTS`
+  ADD CONSTRAINT `dropship_ali_express_products_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `DROPSHIP_ALI_EXPRESS_PRODUCTS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `dropship_ali_express_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `dropship_ali_express_products`
+-- テーブルの制約 `DROPSHIP_ALI_EXPRESS_PRODUCT_IMAGES`
 --
-ALTER TABLE `dropship_ali_express_products`
-  ADD CONSTRAINT `dropship_ali_express_products_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `dropship_ali_express_products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `dropship_ali_express_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCT_IMAGES`
+  ADD CONSTRAINT `dropship_ali_express_product_images_product_image_id_foreign` FOREIGN KEY (`product_image_id`) REFERENCES `PRODUCT_IMAGES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `dropship_ali_express_product_images`
+-- テーブルの制約 `DROPSHIP_ALI_EXPRESS_PRODUCT_REVIEWS`
 --
-ALTER TABLE `dropship_ali_express_product_images`
-  ADD CONSTRAINT `dropship_ali_express_product_images_product_image_id_foreign` FOREIGN KEY (`product_image_id`) REFERENCES `product_images` (`id`) ON DELETE CASCADE;
+ALTER TABLE `DROPSHIP_ALI_EXPRESS_PRODUCT_REVIEWS`
+  ADD CONSTRAINT `dropship_ali_express_product_reviews_product_review_id_foreign` FOREIGN KEY (`product_review_id`) REFERENCES `PRODUCT_REVIEWS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `dropship_ali_express_product_reviews`
+-- テーブルの制約 `INVOICES`
 --
-ALTER TABLE `dropship_ali_express_product_reviews`
-  ADD CONSTRAINT `dropship_ali_express_product_reviews_product_review_id_foreign` FOREIGN KEY (`product_review_id`) REFERENCES `product_reviews` (`id`) ON DELETE CASCADE;
+ALTER TABLE `INVOICES`
+  ADD CONSTRAINT `invoices_order_address_id_foreign` FOREIGN KEY (`order_address_id`) REFERENCES `ADDRESSES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `invoices_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `invoices`
+-- テーブルの制約 `INVOICE_ITEMS`
 --
-ALTER TABLE `invoices`
-  ADD CONSTRAINT `invoices_order_address_id_foreign` FOREIGN KEY (`order_address_id`) REFERENCES `order_address` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `invoices_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
+ALTER TABLE `INVOICE_ITEMS`
+  ADD CONSTRAINT `invoice_items_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `INVOICES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `invoice_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `INVOICE_ITEMS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `invoice_items`
+-- テーブルの制約 `ORDERS`
 --
-ALTER TABLE `invoice_items`
-  ADD CONSTRAINT `invoice_items_invoice_id_foreign` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `invoice_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `invoice_items` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ORDERS`
+  ADD CONSTRAINT `orders_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `orders_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `CUSTOMERS` (`id`) ON DELETE SET NULL;
 
 --
--- テーブルの制約 `orders`
+-- テーブルの制約 `ORDER_BRANDS`
 --
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `orders_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE SET NULL;
+ALTER TABLE `ORDER_BRANDS`
+  ADD CONSTRAINT `order_brands_brand_foreign` FOREIGN KEY (`brand`) REFERENCES `ATTRIBUTE_OPTIONS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_brands_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_brands_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `ORDER_ITEMS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_brands_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `order_address`
+-- テーブルの制約 `ORDER_COMMENTS`
 --
-ALTER TABLE `order_address`
-  ADD CONSTRAINT `order_address_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `order_address_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ORDER_COMMENTS`
+  ADD CONSTRAINT `order_comments_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `order_brands`
+-- テーブルの制約 `ORDER_ITEMS`
 --
-ALTER TABLE `order_brands`
-  ADD CONSTRAINT `order_brands_brand_foreign` FOREIGN KEY (`brand`) REFERENCES `attribute_options` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_brands_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_brands_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_brands_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ORDER_ITEMS`
+  ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `order_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `ORDER_ITEMS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `order_items`
+-- テーブルの制約 `ORDER_PAYMENT`
 --
-ALTER TABLE `order_items`
-  ADD CONSTRAINT `order_items_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `order_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `order_items` (`id`) ON DELETE CASCADE;
+ALTER TABLE `ORDER_PAYMENT`
+  ADD CONSTRAINT `order_payment_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `order_payment`
+-- テーブルの制約 `PRODUCTS`
 --
-ALTER TABLE `order_payment`
-  ADD CONSTRAINT `order_payment_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCTS`
+  ADD CONSTRAINT `products_attribute_family_id_foreign` FOREIGN KEY (`attribute_family_id`) REFERENCES `ATTRIBUTE_FAMILIES` (`id`),
+  ADD CONSTRAINT `products_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `products`
+-- テーブルの制約 `PRODUCT_ATTRIBUTE_VALUES`
 --
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_attribute_family_id_foreign` FOREIGN KEY (`attribute_family_id`) REFERENCES `attribute_families` (`id`),
-  ADD CONSTRAINT `products_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_ATTRIBUTE_VALUES`
+  ADD CONSTRAINT `product_attribute_values_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `ATTRIBUTES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_attribute_values_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_attribute_values`
+-- テーブルの制約 `PRODUCT_BUNDLE_OPTIONS`
 --
-ALTER TABLE `product_attribute_values`
-  ADD CONSTRAINT `product_attribute_values_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_attribute_values_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_BUNDLE_OPTIONS`
+  ADD CONSTRAINT `product_bundle_options_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_bundle_options`
+-- テーブルの制約 `PRODUCT_BUNDLE_OPTION_PRODUCTS`
 --
-ALTER TABLE `product_bundle_options`
-  ADD CONSTRAINT `product_bundle_options_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_BUNDLE_OPTION_PRODUCTS`
+  ADD CONSTRAINT `product_bundle_option_products_product_bundle_option_id_foreign` FOREIGN KEY (`product_bundle_option_id`) REFERENCES `PRODUCT_BUNDLE_OPTIONS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_bundle_option_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_bundle_option_products`
+-- テーブルの制約 `PRODUCT_BUNDLE_OPTION_TRANSLATIONS`
 --
-ALTER TABLE `product_bundle_option_products`
-  ADD CONSTRAINT `product_bundle_option_products_product_bundle_option_id_foreign` FOREIGN KEY (`product_bundle_option_id`) REFERENCES `product_bundle_options` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_bundle_option_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_BUNDLE_OPTION_TRANSLATIONS`
+  ADD CONSTRAINT `product_bundle_option_translations_option_id_foreign` FOREIGN KEY (`product_bundle_option_id`) REFERENCES `PRODUCT_BUNDLE_OPTIONS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_bundle_option_translations`
+-- テーブルの制約 `PRODUCT_CATEGORIES`
 --
-ALTER TABLE `product_bundle_option_translations`
-  ADD CONSTRAINT `product_bundle_option_translations_option_id_foreign` FOREIGN KEY (`product_bundle_option_id`) REFERENCES `product_bundle_options` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_CATEGORIES`
+  ADD CONSTRAINT `product_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `CATEGORIES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_categories_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_categories`
+-- テーブルの制約 `PRODUCT_CROSS_SELLS`
 --
-ALTER TABLE `product_categories`
-  ADD CONSTRAINT `product_categories_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_categories_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_CROSS_SELLS`
+  ADD CONSTRAINT `product_cross_sells_child_id_foreign` FOREIGN KEY (`child_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_cross_sells_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_cross_sells`
+-- テーブルの制約 `PRODUCT_DOWNLOADABLE_LINKS`
 --
-ALTER TABLE `product_cross_sells`
-  ADD CONSTRAINT `product_cross_sells_child_id_foreign` FOREIGN KEY (`child_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_cross_sells_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_DOWNLOADABLE_LINKS`
+  ADD CONSTRAINT `product_downloadable_links_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_downloadable_links`
+-- テーブルの制約 `PRODUCT_DOWNLOADABLE_LINK_TRANSLATIONS`
 --
-ALTER TABLE `product_downloadable_links`
-  ADD CONSTRAINT `product_downloadable_links_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_DOWNLOADABLE_LINK_TRANSLATIONS`
+  ADD CONSTRAINT `link_translations_link_id_foreign` FOREIGN KEY (`product_downloadable_link_id`) REFERENCES `PRODUCT_DOWNLOADABLE_LINKS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_downloadable_link_translations`
+-- テーブルの制約 `PRODUCT_DOWNLOADABLE_SAMPLES`
 --
-ALTER TABLE `product_downloadable_link_translations`
-  ADD CONSTRAINT `link_translations_link_id_foreign` FOREIGN KEY (`product_downloadable_link_id`) REFERENCES `product_downloadable_links` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_DOWNLOADABLE_SAMPLES`
+  ADD CONSTRAINT `product_downloadable_samples_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_downloadable_samples`
+-- テーブルの制約 `PRODUCT_DOWNLOADABLE_SAMPLE_TRANSLATIONS`
 --
-ALTER TABLE `product_downloadable_samples`
-  ADD CONSTRAINT `product_downloadable_samples_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_DOWNLOADABLE_SAMPLE_TRANSLATIONS`
+  ADD CONSTRAINT `sample_translations_sample_id_foreign` FOREIGN KEY (`product_downloadable_sample_id`) REFERENCES `PRODUCT_DOWNLOADABLE_SAMPLES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_downloadable_sample_translations`
+-- テーブルの制約 `PRODUCT_FLAT`
 --
-ALTER TABLE `product_downloadable_sample_translations`
-  ADD CONSTRAINT `sample_translations_sample_id_foreign` FOREIGN KEY (`product_downloadable_sample_id`) REFERENCES `product_downloadable_samples` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_FLAT`
+  ADD CONSTRAINT `product_flat_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `PRODUCT_FLAT` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_flat_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_flat`
+-- テーブルの制約 `PRODUCT_GROUPED_PRODUCTS`
 --
-ALTER TABLE `product_flat`
-  ADD CONSTRAINT `product_flat_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `product_flat` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_flat_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_GROUPED_PRODUCTS`
+  ADD CONSTRAINT `product_grouped_products_associated_product_id_foreign` FOREIGN KEY (`associated_product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_grouped_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_grouped_products`
+-- テーブルの制約 `PRODUCT_IMAGES`
 --
-ALTER TABLE `product_grouped_products`
-  ADD CONSTRAINT `product_grouped_products_associated_product_id_foreign` FOREIGN KEY (`associated_product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_grouped_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_IMAGES`
+  ADD CONSTRAINT `product_images_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_images`
+-- テーブルの制約 `PRODUCT_INVENTORIES`
 --
-ALTER TABLE `product_images`
-  ADD CONSTRAINT `product_images_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_INVENTORIES`
+  ADD CONSTRAINT `product_inventories_inventory_source_id_foreign` FOREIGN KEY (`inventory_source_id`) REFERENCES `INVENTORY_SOURCES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_inventories_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_inventories`
+-- テーブルの制約 `PRODUCT_ORDERED_INVENTORIES`
 --
-ALTER TABLE `product_inventories`
-  ADD CONSTRAINT `product_inventories_inventory_source_id_foreign` FOREIGN KEY (`inventory_source_id`) REFERENCES `inventory_sources` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_inventories_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_ORDERED_INVENTORIES`
+  ADD CONSTRAINT `product_ordered_inventories_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_ordered_inventories_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_ordered_inventories`
+-- テーブルの制約 `PRODUCT_RELATIONS`
 --
-ALTER TABLE `product_ordered_inventories`
-  ADD CONSTRAINT `product_ordered_inventories_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_ordered_inventories_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_RELATIONS`
+  ADD CONSTRAINT `product_relations_child_id_foreign` FOREIGN KEY (`child_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_relations_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_relations`
+-- テーブルの制約 `PRODUCT_REVIEWS`
 --
-ALTER TABLE `product_relations`
-  ADD CONSTRAINT `product_relations_child_id_foreign` FOREIGN KEY (`child_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_relations_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_REVIEWS`
+  ADD CONSTRAINT `product_reviews_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_reviews`
+-- テーブルの制約 `PRODUCT_SUPER_ATTRIBUTES`
 --
-ALTER TABLE `product_reviews`
-  ADD CONSTRAINT `product_reviews_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_SUPER_ATTRIBUTES`
+  ADD CONSTRAINT `product_super_attributes_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `ATTRIBUTES` (`id`),
+  ADD CONSTRAINT `product_super_attributes_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_super_attributes`
+-- テーブルの制約 `PRODUCT_UP_SELLS`
 --
-ALTER TABLE `product_super_attributes`
-  ADD CONSTRAINT `product_super_attributes_attribute_id_foreign` FOREIGN KEY (`attribute_id`) REFERENCES `attributes` (`id`),
-  ADD CONSTRAINT `product_super_attributes_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `PRODUCT_UP_SELLS`
+  ADD CONSTRAINT `product_up_sells_child_id_foreign` FOREIGN KEY (`child_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_up_sells_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `product_up_sells`
+-- テーブルの制約 `REFUNDS`
 --
-ALTER TABLE `product_up_sells`
-  ADD CONSTRAINT `product_up_sells_child_id_foreign` FOREIGN KEY (`child_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_up_sells_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `REFUNDS`
+  ADD CONSTRAINT `refunds_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `refunds`
+-- テーブルの制約 `REFUND_ITEMS`
 --
-ALTER TABLE `refunds`
-  ADD CONSTRAINT `refunds_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
+ALTER TABLE `REFUND_ITEMS`
+  ADD CONSTRAINT `refund_items_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `ORDER_ITEMS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `refund_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `REFUND_ITEMS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `refund_items_refund_id_foreign` FOREIGN KEY (`refund_id`) REFERENCES `REFUNDS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `refund_items`
+-- テーブルの制約 `SHIPMENTS`
 --
-ALTER TABLE `refund_items`
-  ADD CONSTRAINT `refund_items_order_item_id_foreign` FOREIGN KEY (`order_item_id`) REFERENCES `order_items` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `refund_items_parent_id_foreign` FOREIGN KEY (`parent_id`) REFERENCES `refund_items` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `refund_items_refund_id_foreign` FOREIGN KEY (`refund_id`) REFERENCES `refunds` (`id`) ON DELETE CASCADE;
+ALTER TABLE `SHIPMENTS`
+  ADD CONSTRAINT `shipments_inventory_source_id_foreign` FOREIGN KEY (`inventory_source_id`) REFERENCES `INVENTORY_SOURCES` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `shipments_order_address_id_foreign` FOREIGN KEY (`order_address_id`) REFERENCES `ADDRESSES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `shipments_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `ORDERS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `shipments`
+-- テーブルの制約 `SHIPMENT_ITEMS`
 --
-ALTER TABLE `shipments`
-  ADD CONSTRAINT `shipments_inventory_source_id_foreign` FOREIGN KEY (`inventory_source_id`) REFERENCES `inventory_sources` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `shipments_order_address_id_foreign` FOREIGN KEY (`order_address_id`) REFERENCES `order_address` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `shipments_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
+ALTER TABLE `SHIPMENT_ITEMS`
+  ADD CONSTRAINT `shipment_items_shipment_id_foreign` FOREIGN KEY (`shipment_id`) REFERENCES `SHIPMENTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `shipment_items`
+-- テーブルの制約 `SLIDERS`
 --
-ALTER TABLE `shipment_items`
-  ADD CONSTRAINT `shipment_items_shipment_id_foreign` FOREIGN KEY (`shipment_id`) REFERENCES `shipments` (`id`) ON DELETE CASCADE;
+ALTER TABLE `SLIDERS`
+  ADD CONSTRAINT `sliders_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `sliders`
+-- テーブルの制約 `SUBSCRIBERS_LIST`
 --
-ALTER TABLE `sliders`
-  ADD CONSTRAINT `sliders_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE;
+ALTER TABLE `SUBSCRIBERS_LIST`
+  ADD CONSTRAINT `subscribers_list_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `subscribers_list`
+-- テーブルの制約 `TAX_CATEGORIES_TAX_RATES`
 --
-ALTER TABLE `subscribers_list`
-  ADD CONSTRAINT `subscribers_list_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE;
+ALTER TABLE `TAX_CATEGORIES_TAX_RATES`
+  ADD CONSTRAINT `tax_categories_tax_rates_tax_category_id_foreign` FOREIGN KEY (`tax_category_id`) REFERENCES `TAX_CATEGORIES` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tax_categories_tax_rates_tax_rate_id_foreign` FOREIGN KEY (`tax_rate_id`) REFERENCES `TAX_RATES` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `tax_categories`
+-- テーブルの制約 `USERS`
 --
-ALTER TABLE `tax_categories`
-  ADD CONSTRAINT `tax_categories_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE;
+ALTER TABLE `USERS`
+  ADD CONSTRAINT `users_plan_id_foreign` FOREIGN KEY (`plan_id`) REFERENCES `PLANS` (`id`);
 
 --
--- テーブルの制約 `tax_categories_tax_rates`
+-- テーブルの制約 `VELOCITY_CONTENTS_TRANSLATIONS`
 --
-ALTER TABLE `tax_categories_tax_rates`
-  ADD CONSTRAINT `tax_categories_tax_rates_tax_category_id_foreign` FOREIGN KEY (`tax_category_id`) REFERENCES `tax_categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `tax_categories_tax_rates_tax_rate_id_foreign` FOREIGN KEY (`tax_rate_id`) REFERENCES `tax_rates` (`id`) ON DELETE CASCADE;
+ALTER TABLE `VELOCITY_CONTENTS_TRANSLATIONS`
+  ADD CONSTRAINT `velocity_contents_translations_content_id_foreign` FOREIGN KEY (`content_id`) REFERENCES `VELOCITY_CONTENTS` (`id`) ON DELETE CASCADE;
 
 --
--- テーブルの制約 `users`
+-- テーブルの制約 `VELOCITY_CUSTOMER_COMPARE_PRODUCTS`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_plan_id_foreign` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`);
+ALTER TABLE `VELOCITY_CUSTOMER_COMPARE_PRODUCTS`
+  ADD CONSTRAINT `velocity_customer_compare_products_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `CUSTOMERS` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `velocity_customer_compare_products_product_flat_id_foreign` FOREIGN KEY (`product_flat_id`) REFERENCES `PRODUCT_FLAT` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- テーブルの制約 `velocity_contents_translations`
+-- テーブルの制約 `WISHLIST`
 --
-ALTER TABLE `velocity_contents_translations`
-  ADD CONSTRAINT `velocity_contents_translations_content_id_foreign` FOREIGN KEY (`content_id`) REFERENCES `velocity_contents` (`id`) ON DELETE CASCADE;
-
---
--- テーブルの制約 `velocity_customer_compare_products`
---
-ALTER TABLE `velocity_customer_compare_products`
-  ADD CONSTRAINT `velocity_customer_compare_products_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `velocity_customer_compare_products_product_flat_id_foreign` FOREIGN KEY (`product_flat_id`) REFERENCES `product_flat` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- テーブルの制約 `wishlist`
---
-ALTER TABLE `wishlist`
-  ADD CONSTRAINT `wishlist_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `channels` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `wishlist_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `wishlist_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `WISHLIST`
+  ADD CONSTRAINT `wishlist_channel_id_foreign` FOREIGN KEY (`channel_id`) REFERENCES `CHANNELS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `wishlist_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `CUSTOMERS` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `wishlist_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `PRODUCTS` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
