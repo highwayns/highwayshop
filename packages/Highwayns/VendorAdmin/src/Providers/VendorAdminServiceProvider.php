@@ -3,9 +3,6 @@
 namespace Highwayns\VendorAdmin\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Highwayns\VendorAdmin\Providers\EventServiceProvider;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Highwayns\VendorAdmin\Exceptions\Handler;
 use Webkul\Core\Tree;
 
 /**
@@ -39,10 +36,6 @@ class VendorAdminServiceProvider extends ServiceProvider
 
         $this->app->register(EventServiceProvider::class);
 
-        $this->app->bind(
-            ExceptionHandler::class,
-            Handler::class
-        );
     }
 
     /**

@@ -71,7 +71,8 @@ return [
         'no-results' => 'Nessun risultato trovato',
         'page-title' => config('app.name') . ' - Cerca',
         'found-results' => 'Risultati trovati',
-        'found-result' => 'Risultato trovato'
+        'found-result' => 'Risultato trovato',
+        'analysed-keywords' => 'Analysed Keywords'
     ],
 
     'reviews' => [
@@ -395,6 +396,7 @@ return [
         'new' => 'Nuovo',
         'empty' => 'Nessun prodotto disponibile in questa categoria',
         'add-to-cart' => 'Aggiungi al Carrello',
+        'book-now' => 'Prenota ora',
         'buy-now' => 'Compra ora',
         'whoops' => 'Whoops!',
         'quantity' => 'Quantità',
@@ -476,6 +478,7 @@ return [
             'shipping' => 'Spedizione',
             'payment' => 'Pagamento',
             'complete' => 'Completo',
+            'review' => 'Revisione',
             'billing-address' => 'Indirizzo Fatturazione',
             'sign-in' => 'Login',
             'company-name' => 'Azienda',

@@ -71,7 +71,8 @@ return [
         'no-results' => 'Nenhum resultado encontrado',
         'page-title' => 'Buscar',
         'found-results' => 'Resultados da pesquisa encontrados',
-        'found-result' => 'Resultado da pesquisa encontrado'
+        'found-result' => 'Resultado da pesquisa encontrado',
+        'analysed-keywords' => 'Analysed Keywords'
     ],
 
     'reviews' => [
@@ -388,6 +389,7 @@ return [
         'new' => 'Novo',
         'empty' => 'Nenhum produto disponível nesta categoria',
         'add-to-cart' => 'Adicionar ao Carrinho',
+        'book-now' => 'Agende agora',
         'buy-now' => 'Comprar Agora',
         'whoops' => 'Oppss!',
         'quantity' => 'Quantidade',
@@ -466,6 +468,7 @@ return [
             'shipping' => 'Entrega',
             'payment' => 'Pagamento',
             'complete' => 'Completo',
+            'review' => 'Reveja',
             'billing-address' => 'Endereço de Cobrança',
             'sign-in' => 'Entrar',
             'first-name' => 'Nome',

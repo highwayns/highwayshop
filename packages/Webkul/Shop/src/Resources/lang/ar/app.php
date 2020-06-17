@@ -71,7 +71,8 @@ return [
         'no-results' => 'لا توجد نتائج',
         'page-title' => 'بحث',
         'found-results' => 'تم العثور على نتائج البحث',
-        'found-result' => 'تم العثور على نتيجة البحث'
+        'found-result' => 'تم العثور على نتيجة البحث',
+        'analysed-keywords' => 'Analysed Keywords'
     ],
 
     'reviews' => [
@@ -396,6 +397,7 @@ return [
         'new' => 'جديد',
         'empty' => 'لا توجد منتجات متاحة في هذه الفئة',
         'add-to-cart' => 'أضف إلى العربة',
+        'book-now' => 'احجز الآن',
         'buy-now' => 'اشتر الآن',
         'whoops' => 'خطأ!',
         'quantity' => 'الكمية',
@@ -477,6 +479,7 @@ return [
             'shipping' => 'الشحن',
             'payment' => 'الدفع',
             'complete' => 'اكتمل',
+            'review' => 'مراجعة',
             'billing-address' => 'عنوان الفواتير',
             'sign-in' => 'تسجيل الدخول',
             'first-name' => 'الاسم الأول',
