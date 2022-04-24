@@ -13,5 +13,8 @@ return [
     ],
     'reviews' => [
         'empty' => 'レビューしました商品なし'
+    ],
+    'forget_password' => [
+        'reset_link_sent' => 'パスワードリセットメールを送信しました.'
     ]
 ];

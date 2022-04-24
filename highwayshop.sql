@@ -21,12 +21,15 @@ SET time_zone = "+00:00";
 --
 -- データベース: `highwayshop`
 --
+CREATE DATABASE IF NOT EXISTS `highwayshop` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `highwayshop`;
 
 DELIMITER $$
 --
 -- 関数
 --
-CREATE DEFINER=`bagisto`@`localhost` FUNCTION `get_url_path_of_category` (`categoryId` INT, `localeCode` VARCHAR(255)) RETURNS VARCHAR(255) CHARSET utf8mb4 BEGIN
+DROP FUNCTION IF EXISTS `get_url_path_of_category`$$
+CREATE DEFINER=`highwayshop`@`localhost` FUNCTION `get_url_path_of_category` (`categoryId` INT, `localeCode` VARCHAR(255)) RETURNS VARCHAR(255) CHARSET utf8mb4 BEGIN
 
                 DECLARE urlPath VARCHAR(255);
 
@@ -73,6 +76,7 @@ DELIMITER ;
 -- テーブルの構造 `addresses`
 --
 
+DROP TABLE IF EXISTS `addresses`;
 CREATE TABLE `addresses` (
   `id` int(10) UNSIGNED NOT NULL,
   `address_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -104,6 +108,7 @@ CREATE TABLE `addresses` (
 -- テーブルの構造 `admins`
 --
 
+DROP TABLE IF EXISTS `admins`;
 CREATE TABLE `admins` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -122,7 +127,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `api_token`, `status`, `role_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Example', 'admin@example.com', '$2y$10$wnxzR1siUGXM37gCCYQkhej98lyC/FD1rhOC/MWRptvIAtvSQN03u', 'mhAoipBM3dAEndHinFkBC0Rg6X16ZWRlA3vklRmzlQ0SfNczObLGKZF9hI46kqliNXmzgagDelEiiw84', 1, 1, NULL, '2020-07-17 04:01:34', '2020-07-17 04:01:34');
+(1, 'Example', 'tei952@hotmail.com', '$2y$10$HWOjqzkBvcEUTvzqkYqfUOOuQrWN6pF4B16x6XociryxW8FHk/F9O', '', 1, 1, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30');
 
 -- --------------------------------------------------------
 
@@ -130,6 +135,7 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `api_token`, `status`, 
 -- テーブルの構造 `admin_password_resets`
 --
 
+DROP TABLE IF EXISTS `admin_password_resets`;
 CREATE TABLE `admin_password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -139,68 +145,10 @@ CREATE TABLE `admin_password_resets` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `agent_password_resets`
---
-
-CREATE TABLE `agent_password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `agent_roles`
---
-
-CREATE TABLE `agent_roles` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `permission_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `permissions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`permissions`)),
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `agent_sources`
---
-
-CREATE TABLE `agent_sources` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT '代理店ID',
-  `vendor_id` int(11) NOT NULL COMMENT 'ベンダーID',
-  `agency_group_id` int(11) NOT NULL COMMENT '代理店グループID',
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '代理店名',
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `postal_code` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '郵便番号',
-  `pref` int(11) NOT NULL COMMENT '都道府県',
-  `city` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '市町村',
-  `address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '番地',
-  `building_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '建物名',
-  `tel` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電話番号',
-  `fax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'FAX番号',
-  `agency_denki_shop_code` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'SmartCIS代理店ID',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '作成日時',
-  `created_user_id` int(11) NOT NULL COMMENT '作成ユーザーID',
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新日時',
-  `updated_user_id` int(11) NOT NULL COMMENT '更新ユーザーID',
-  `del_flg` tinyint(1) NOT NULL DEFAULT 0,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
 -- テーブルの構造 `attributes`
 --
 
+DROP TABLE IF EXISTS `attributes`;
 CREATE TABLE `attributes` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -228,32 +176,32 @@ CREATE TABLE `attributes` (
 --
 
 INSERT INTO `attributes` (`id`, `code`, `admin_name`, `type`, `validation`, `position`, `is_required`, `is_unique`, `value_per_locale`, `value_per_channel`, `is_filterable`, `is_configurable`, `is_user_defined`, `is_visible_on_front`, `created_at`, `updated_at`, `swatch_type`, `use_in_flat`, `is_comparable`) VALUES
-(1, 'sku', 'SKU', 'text', NULL, 1, 1, 1, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(2, 'name', 'Name', 'text', NULL, 2, 1, 0, 1, 1, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 1),
-(3, 'url_key', 'URL Key', 'text', NULL, 3, 1, 1, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(4, 'tax_category_id', 'Tax Category', 'select', NULL, 4, 0, 0, 0, 1, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(5, 'new', 'New', 'boolean', NULL, 5, 0, 0, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(6, 'featured', 'Featured', 'boolean', NULL, 6, 0, 0, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(7, 'visible_individually', 'Visible Individually', 'boolean', NULL, 7, 1, 0, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(8, 'status', 'Status', 'boolean', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(9, 'short_description', 'Short Description', 'textarea', NULL, 9, 1, 0, 1, 1, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(10, 'description', 'Description', 'textarea', NULL, 10, 1, 0, 1, 1, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 1),
-(11, 'price', 'Price', 'price', 'decimal', 11, 1, 0, 0, 0, 1, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 1),
-(12, 'cost', 'Cost', 'price', 'decimal', 12, 0, 0, 0, 1, 0, 0, 1, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(13, 'special_price', 'Special Price', 'price', 'decimal', 13, 0, 0, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(14, 'special_price_from', 'Special Price From', 'date', NULL, 14, 0, 0, 0, 1, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(15, 'special_price_to', 'Special Price To', 'date', NULL, 15, 0, 0, 0, 1, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(16, 'meta_title', 'Meta Title', 'textarea', NULL, 16, 0, 0, 1, 1, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(17, 'meta_keywords', 'Meta Keywords', 'textarea', NULL, 17, 0, 0, 1, 1, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(18, 'meta_description', 'Meta Description', 'textarea', NULL, 18, 0, 0, 1, 1, 0, 0, 1, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(19, 'width', 'Width', 'text', 'decimal', 19, 0, 0, 0, 0, 0, 0, 1, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(20, 'height', 'Height', 'text', 'decimal', 20, 0, 0, 0, 0, 0, 0, 1, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(21, 'depth', 'Depth', 'text', 'decimal', 21, 0, 0, 0, 0, 0, 0, 1, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(22, 'weight', 'Weight', 'text', 'decimal', 22, 1, 0, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(23, 'color', 'Color', 'select', NULL, 23, 0, 0, 0, 0, 1, 1, 1, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(24, 'size', 'Size', 'select', NULL, 24, 0, 0, 0, 0, 1, 1, 1, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(25, 'brand', 'Brand', 'select', NULL, 25, 0, 0, 0, 0, 1, 0, 0, 1, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0),
-(26, 'guest_checkout', 'Guest Checkout', 'boolean', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, '2020-07-17 04:01:33', '2020-07-17 04:01:33', NULL, 1, 0);
+(1, 'sku', 'SKU', 'text', NULL, 1, 1, 1, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(2, 'name', 'Name', 'text', NULL, 2, 1, 0, 1, 1, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 1),
+(3, 'url_key', 'URL Key', 'text', NULL, 3, 1, 1, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(4, 'tax_category_id', 'Tax Category', 'select', NULL, 4, 0, 0, 0, 1, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(5, 'new', 'New', 'boolean', NULL, 5, 0, 0, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(6, 'featured', 'Featured', 'boolean', NULL, 6, 0, 0, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(7, 'visible_individually', 'Visible Individually', 'boolean', NULL, 7, 1, 0, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(8, 'status', 'Status', 'boolean', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(9, 'short_description', 'Short Description', 'textarea', NULL, 9, 1, 0, 1, 1, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(10, 'description', 'Description', 'textarea', NULL, 10, 1, 0, 1, 1, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 1),
+(11, 'price', 'Price', 'price', 'decimal', 11, 1, 0, 0, 0, 1, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 1),
+(12, 'cost', 'Cost', 'price', 'decimal', 12, 0, 0, 0, 1, 0, 0, 1, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(13, 'special_price', 'Special Price', 'price', 'decimal', 13, 0, 0, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(14, 'special_price_from', 'Special Price From', 'date', NULL, 14, 0, 0, 0, 1, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(15, 'special_price_to', 'Special Price To', 'date', NULL, 15, 0, 0, 0, 1, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(16, 'meta_title', 'Meta Title', 'textarea', NULL, 16, 0, 0, 1, 1, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(17, 'meta_keywords', 'Meta Keywords', 'textarea', NULL, 17, 0, 0, 1, 1, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(18, 'meta_description', 'Meta Description', 'textarea', NULL, 18, 0, 0, 1, 1, 0, 0, 1, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(19, 'width', 'Width', 'text', 'decimal', 19, 0, 0, 0, 0, 0, 0, 1, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(20, 'height', 'Height', 'text', 'decimal', 20, 0, 0, 0, 0, 0, 0, 1, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(21, 'depth', 'Depth', 'text', 'decimal', 21, 0, 0, 0, 0, 0, 0, 1, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(22, 'weight', 'Weight', 'text', 'decimal', 22, 1, 0, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(23, 'color', 'Color', 'select', NULL, 23, 0, 0, 0, 0, 1, 1, 1, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(24, 'size', 'Size', 'select', NULL, 24, 0, 0, 0, 0, 1, 1, 1, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(25, 'brand', 'Brand', 'select', NULL, 25, 0, 0, 0, 0, 1, 0, 0, 1, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0),
+(26, 'guest_checkout', 'Guest Checkout', 'boolean', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, '2020-07-06 08:44:30', '2020-07-06 08:44:30', NULL, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -261,6 +209,7 @@ INSERT INTO `attributes` (`id`, `code`, `admin_name`, `type`, `validation`, `pos
 -- テーブルの構造 `attribute_families`
 --
 
+DROP TABLE IF EXISTS `attribute_families`;
 CREATE TABLE `attribute_families` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -282,6 +231,7 @@ INSERT INTO `attribute_families` (`id`, `code`, `name`, `status`, `is_user_defin
 -- テーブルの構造 `attribute_groups`
 --
 
+DROP TABLE IF EXISTS `attribute_groups`;
 CREATE TABLE `attribute_groups` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -307,6 +257,7 @@ INSERT INTO `attribute_groups` (`id`, `name`, `position`, `is_user_defined`, `at
 -- テーブルの構造 `attribute_group_mappings`
 --
 
+DROP TABLE IF EXISTS `attribute_group_mappings`;
 CREATE TABLE `attribute_group_mappings` (
   `attribute_id` int(10) UNSIGNED NOT NULL,
   `attribute_group_id` int(10) UNSIGNED NOT NULL,
@@ -351,6 +302,7 @@ INSERT INTO `attribute_group_mappings` (`attribute_id`, `attribute_group_id`, `p
 -- テーブルの構造 `attribute_options`
 --
 
+DROP TABLE IF EXISTS `attribute_options`;
 CREATE TABLE `attribute_options` (
   `id` int(10) UNSIGNED NOT NULL,
   `admin_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -380,6 +332,7 @@ INSERT INTO `attribute_options` (`id`, `admin_name`, `sort_order`, `attribute_id
 -- テーブルの構造 `attribute_option_translations`
 --
 
+DROP TABLE IF EXISTS `attribute_option_translations`;
 CREATE TABLE `attribute_option_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -408,6 +361,7 @@ INSERT INTO `attribute_option_translations` (`id`, `locale`, `label`, `attribute
 -- テーブルの構造 `attribute_translations`
 --
 
+DROP TABLE IF EXISTS `attribute_translations`;
 CREATE TABLE `attribute_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -453,6 +407,7 @@ INSERT INTO `attribute_translations` (`id`, `locale`, `name`, `attribute_id`) VA
 -- テーブルの構造 `bookings`
 --
 
+DROP TABLE IF EXISTS `bookings`;
 CREATE TABLE `bookings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `qty` int(11) DEFAULT 0,
@@ -470,6 +425,7 @@ CREATE TABLE `bookings` (
 -- テーブルの構造 `booking_products`
 --
 
+DROP TABLE IF EXISTS `booking_products`;
 CREATE TABLE `booking_products` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -490,6 +446,7 @@ CREATE TABLE `booking_products` (
 -- テーブルの構造 `booking_product_appointment_slots`
 --
 
+DROP TABLE IF EXISTS `booking_product_appointment_slots`;
 CREATE TABLE `booking_product_appointment_slots` (
   `id` int(10) UNSIGNED NOT NULL,
   `duration` int(11) DEFAULT NULL,
@@ -505,6 +462,7 @@ CREATE TABLE `booking_product_appointment_slots` (
 -- テーブルの構造 `booking_product_default_slots`
 --
 
+DROP TABLE IF EXISTS `booking_product_default_slots`;
 CREATE TABLE `booking_product_default_slots` (
   `id` int(10) UNSIGNED NOT NULL,
   `booking_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -520,6 +478,7 @@ CREATE TABLE `booking_product_default_slots` (
 -- テーブルの構造 `booking_product_event_tickets`
 --
 
+DROP TABLE IF EXISTS `booking_product_event_tickets`;
 CREATE TABLE `booking_product_event_tickets` (
   `id` int(10) UNSIGNED NOT NULL,
   `price` decimal(12,4) DEFAULT 0.0000,
@@ -536,6 +495,7 @@ CREATE TABLE `booking_product_event_tickets` (
 -- テーブルの構造 `booking_product_event_ticket_translations`
 --
 
+DROP TABLE IF EXISTS `booking_product_event_ticket_translations`;
 CREATE TABLE `booking_product_event_ticket_translations` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -550,6 +510,7 @@ CREATE TABLE `booking_product_event_ticket_translations` (
 -- テーブルの構造 `booking_product_rental_slots`
 --
 
+DROP TABLE IF EXISTS `booking_product_rental_slots`;
 CREATE TABLE `booking_product_rental_slots` (
   `id` int(10) UNSIGNED NOT NULL,
   `renting_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -566,6 +527,7 @@ CREATE TABLE `booking_product_rental_slots` (
 -- テーブルの構造 `booking_product_table_slots`
 --
 
+DROP TABLE IF EXISTS `booking_product_table_slots`;
 CREATE TABLE `booking_product_table_slots` (
   `id` int(10) UNSIGNED NOT NULL,
   `price_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -584,6 +546,7 @@ CREATE TABLE `booking_product_table_slots` (
 -- テーブルの構造 `cart`
 --
 
+DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `id` int(10) UNSIGNED NOT NULL,
   `customer_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -624,6 +587,7 @@ CREATE TABLE `cart` (
 -- テーブルの構造 `cart_items`
 --
 
+DROP TABLE IF EXISTS `cart_items`;
 CREATE TABLE `cart_items` (
   `id` int(10) UNSIGNED NOT NULL,
   `quantity` int(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -661,6 +625,7 @@ CREATE TABLE `cart_items` (
 -- テーブルの構造 `cart_item_inventories`
 --
 
+DROP TABLE IF EXISTS `cart_item_inventories`;
 CREATE TABLE `cart_item_inventories` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -676,6 +641,7 @@ CREATE TABLE `cart_item_inventories` (
 -- テーブルの構造 `cart_payment`
 --
 
+DROP TABLE IF EXISTS `cart_payment`;
 CREATE TABLE `cart_payment` (
   `id` int(10) UNSIGNED NOT NULL,
   `method` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -691,6 +657,7 @@ CREATE TABLE `cart_payment` (
 -- テーブルの構造 `cart_rules`
 --
 
+DROP TABLE IF EXISTS `cart_rules`;
 CREATE TABLE `cart_rules` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -724,6 +691,7 @@ CREATE TABLE `cart_rules` (
 -- テーブルの構造 `cart_rule_channels`
 --
 
+DROP TABLE IF EXISTS `cart_rule_channels`;
 CREATE TABLE `cart_rule_channels` (
   `cart_rule_id` int(10) UNSIGNED NOT NULL,
   `channel_id` int(10) UNSIGNED NOT NULL
@@ -735,6 +703,7 @@ CREATE TABLE `cart_rule_channels` (
 -- テーブルの構造 `cart_rule_coupons`
 --
 
+DROP TABLE IF EXISTS `cart_rule_coupons`;
 CREATE TABLE `cart_rule_coupons` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -755,6 +724,7 @@ CREATE TABLE `cart_rule_coupons` (
 -- テーブルの構造 `cart_rule_coupon_usage`
 --
 
+DROP TABLE IF EXISTS `cart_rule_coupon_usage`;
 CREATE TABLE `cart_rule_coupon_usage` (
   `id` int(10) UNSIGNED NOT NULL,
   `times_used` int(11) NOT NULL DEFAULT 0,
@@ -768,6 +738,7 @@ CREATE TABLE `cart_rule_coupon_usage` (
 -- テーブルの構造 `cart_rule_customers`
 --
 
+DROP TABLE IF EXISTS `cart_rule_customers`;
 CREATE TABLE `cart_rule_customers` (
   `id` int(10) UNSIGNED NOT NULL,
   `times_used` bigint(20) UNSIGNED NOT NULL DEFAULT 0,
@@ -781,6 +752,7 @@ CREATE TABLE `cart_rule_customers` (
 -- テーブルの構造 `cart_rule_customer_groups`
 --
 
+DROP TABLE IF EXISTS `cart_rule_customer_groups`;
 CREATE TABLE `cart_rule_customer_groups` (
   `cart_rule_id` int(10) UNSIGNED NOT NULL,
   `customer_group_id` int(10) UNSIGNED NOT NULL
@@ -792,6 +764,7 @@ CREATE TABLE `cart_rule_customer_groups` (
 -- テーブルの構造 `cart_rule_translations`
 --
 
+DROP TABLE IF EXISTS `cart_rule_translations`;
 CREATE TABLE `cart_rule_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -805,6 +778,7 @@ CREATE TABLE `cart_rule_translations` (
 -- テーブルの構造 `cart_shipping_rates`
 --
 
+DROP TABLE IF EXISTS `cart_shipping_rates`;
 CREATE TABLE `cart_shipping_rates` (
   `id` int(10) UNSIGNED NOT NULL,
   `carrier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -827,6 +801,7 @@ CREATE TABLE `cart_shipping_rates` (
 -- テーブルの構造 `catalog_rules`
 --
 
+DROP TABLE IF EXISTS `catalog_rules`;
 CREATE TABLE `catalog_rules` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -850,6 +825,7 @@ CREATE TABLE `catalog_rules` (
 -- テーブルの構造 `catalog_rule_channels`
 --
 
+DROP TABLE IF EXISTS `catalog_rule_channels`;
 CREATE TABLE `catalog_rule_channels` (
   `catalog_rule_id` int(10) UNSIGNED NOT NULL,
   `channel_id` int(10) UNSIGNED NOT NULL
@@ -861,6 +837,7 @@ CREATE TABLE `catalog_rule_channels` (
 -- テーブルの構造 `catalog_rule_customer_groups`
 --
 
+DROP TABLE IF EXISTS `catalog_rule_customer_groups`;
 CREATE TABLE `catalog_rule_customer_groups` (
   `catalog_rule_id` int(10) UNSIGNED NOT NULL,
   `customer_group_id` int(10) UNSIGNED NOT NULL
@@ -872,6 +849,7 @@ CREATE TABLE `catalog_rule_customer_groups` (
 -- テーブルの構造 `catalog_rule_products`
 --
 
+DROP TABLE IF EXISTS `catalog_rule_products`;
 CREATE TABLE `catalog_rule_products` (
   `id` int(10) UNSIGNED NOT NULL,
   `starts_from` datetime DEFAULT NULL,
@@ -892,6 +870,7 @@ CREATE TABLE `catalog_rule_products` (
 -- テーブルの構造 `catalog_rule_product_prices`
 --
 
+DROP TABLE IF EXISTS `catalog_rule_product_prices`;
 CREATE TABLE `catalog_rule_product_prices` (
   `id` int(10) UNSIGNED NOT NULL,
   `price` decimal(12,4) NOT NULL DEFAULT 0.0000,
@@ -910,6 +889,7 @@ CREATE TABLE `catalog_rule_product_prices` (
 -- テーブルの構造 `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `position` int(11) NOT NULL DEFAULT 0,
@@ -921,19 +901,25 @@ CREATE TABLE `categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `display_mode` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'products_and_description',
-  `category_icon_path` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `category_icon_path` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category_product_in_pwa` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- テーブルのデータのダンプ `categories`
 --
 
-INSERT INTO `categories` (`id`, `position`, `image`, `status`, `_lft`, `_rgt`, `parent_id`, `created_at`, `updated_at`, `display_mode`, `category_icon_path`) VALUES
-(1, 1, NULL, 1, 1, 14, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33', 'products_and_description', NULL);
+INSERT INTO `categories` (`id`, `position`, `image`, `status`, `_lft`, `_rgt`, `parent_id`, `created_at`, `updated_at`, `display_mode`, `category_icon_path`, `category_product_in_pwa`) VALUES
+(1, 1, NULL, 1, 1, 18, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30', 'products_and_description', NULL, 0),
+(2, 2, NULL, 1, 19, 22, NULL, '2020-07-27 11:04:54', '2020-07-27 11:04:54', 'products_and_description', NULL, 0),
+(3, 3, NULL, 1, 14, 17, 1, '2020-08-14 06:30:28', '2020-08-14 06:31:31', 'products_and_description', NULL, 0),
+(4, 4, NULL, 1, 20, 21, 2, '2020-08-14 06:33:03', '2020-08-14 06:33:03', 'products_and_description', NULL, 0),
+(5, 5, NULL, 1, 15, 16, 3, '2020-08-14 06:33:43', '2020-08-14 06:33:43', 'products_and_description', NULL, 0);
 
 --
 -- トリガ `categories`
 --
+DROP TRIGGER IF EXISTS `trig_categories_insert`;
 DELIMITER $$
 CREATE TRIGGER `trig_categories_insert` AFTER INSERT ON `categories` FOR EACH ROW BEGIN
                             DECLARE urlPath VARCHAR(255);
@@ -979,6 +965,7 @@ CREATE TRIGGER `trig_categories_insert` AFTER INSERT ON `categories` FOR EACH RO
             END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `trig_categories_update`;
 DELIMITER $$
 CREATE TRIGGER `trig_categories_update` AFTER UPDATE ON `categories` FOR EACH ROW BEGIN
                             DECLARE urlPath VARCHAR(255);
@@ -1031,10 +1018,37 @@ DELIMITER ;
 -- テーブルの構造 `category_filterable_attributes`
 --
 
+DROP TABLE IF EXISTS `category_filterable_attributes`;
 CREATE TABLE `category_filterable_attributes` (
   `category_id` int(10) UNSIGNED NOT NULL,
   `attribute_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- テーブルのデータのダンプ `category_filterable_attributes`
+--
+
+INSERT INTO `category_filterable_attributes` (`category_id`, `attribute_id`) VALUES
+(1, 11),
+(1, 23),
+(1, 24),
+(1, 25),
+(2, 11),
+(2, 23),
+(2, 24),
+(2, 25),
+(3, 11),
+(3, 23),
+(3, 24),
+(3, 25),
+(4, 11),
+(4, 23),
+(4, 24),
+(4, 25),
+(5, 11),
+(5, 23),
+(5, 24),
+(5, 25);
 
 -- --------------------------------------------------------
 
@@ -1042,6 +1056,7 @@ CREATE TABLE `category_filterable_attributes` (
 -- テーブルの構造 `category_translations`
 --
 
+DROP TABLE IF EXISTS `category_translations`;
 CREATE TABLE `category_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1061,11 +1076,33 @@ CREATE TABLE `category_translations` (
 --
 
 INSERT INTO `category_translations` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keywords`, `category_id`, `locale`, `locale_id`, `url_path`) VALUES
-(1, 'Root', 'root', 'Root', '', '', '', 1, 'en', NULL, '');
+(1, 'Root', 'root', '<p>Root</p>', '', '', '', 1, 'en', NULL, ''),
+(2, '消毒用品', 'it-goodfor-cov-19', '<p>消毒用品：新コロナ対応製品</p>', '', '', '', 1, 'ja', NULL, ''),
+(3, 'Tシャツ', 'tshirts', '<p>人気Tシャツ</p>', '', '', '', 2, 'en', 1, ''),
+(4, 'Tシャツ', 'tshirts', '<p>人気Tシャツ</p>', '', '', '', 2, 'fr', 2, ''),
+(5, 'Tシャツ', 'tshirts', '<p>人気Tシャツ</p>', '', '', '', 2, 'nl', 3, ''),
+(6, 'Tシャツ', 'tshirts', '<p>人気Tシャツ</p>', '', '', '', 2, 'tr', 4, ''),
+(7, 'Tシャツ', 'tshirts', '<p>人気Tシャツ</p>', '', '', '', 2, 'ja', 5, ''),
+(8, 'マスク', 'mask', '<p>マスクマスク</p>', '', '', '', 3, 'en', 1, 'mask'),
+(9, 'マスク', 'mask', '<p>マスクマスク</p>', '', '', '', 3, 'fr', 2, 'mask'),
+(10, 'マスク', 'mask', '<p>マスクマスク</p>', '', '', '', 3, 'nl', 3, 'mask'),
+(11, 'マスク', 'mask', '<p>マスクマスク</p>', '', '', '', 3, 'tr', 4, 'mask'),
+(12, 'マスク', 'mask', '<p>マスクマスク</p>', '', '', '', 3, 'ja', 5, 'mask'),
+(13, '薬', 'drug', '<p>漢方薬</p>', '', '', '', 4, 'en', 1, 'drug'),
+(14, '薬', 'drug', '<p>漢方薬</p>', '', '', '', 4, 'fr', 2, 'drug'),
+(15, '薬', 'drug', '<p>漢方薬</p>', '', '', '', 4, 'nl', 3, 'drug'),
+(16, '薬', 'drug', '<p>漢方薬</p>', '', '', '', 4, 'tr', 4, 'drug'),
+(17, '薬', 'drug', '<p>漢方薬</p>', '', '', '', 4, 'ja', 5, 'drug'),
+(18, 'HCLO', 'hclo', '<p>HCLO</p>', '', '', '', 5, 'en', 1, 'mask/hclo'),
+(19, 'HCLO', 'hclo', '<p>HCLO</p>', '', '', '', 5, 'fr', 2, 'mask/hclo'),
+(20, 'HCLO', 'hclo', '<p>HCLO</p>', '', '', '', 5, 'nl', 3, 'mask/hclo'),
+(21, 'HCLO', 'hclo', '<p>HCLO</p>', '', '', '', 5, 'tr', 4, 'mask/hclo'),
+(22, 'HCLO', 'hclo', '<p>HCLO</p>', '', '', '', 5, 'ja', 5, 'mask/hclo');
 
 --
 -- トリガ `category_translations`
 --
+DROP TRIGGER IF EXISTS `trig_category_translations_insert`;
 DELIMITER $$
 CREATE TRIGGER `trig_category_translations_insert` BEFORE INSERT ON `category_translations` FOR EACH ROW BEGIN
                             DECLARE parentUrlPath varchar(255);
@@ -1109,6 +1146,7 @@ CREATE TRIGGER `trig_category_translations_insert` BEFORE INSERT ON `category_tr
             END
 $$
 DELIMITER ;
+DROP TRIGGER IF EXISTS `trig_category_translations_update`;
 DELIMITER $$
 CREATE TRIGGER `trig_category_translations_update` BEFORE UPDATE ON `category_translations` FOR EACH ROW BEGIN
                             DECLARE parentUrlPath varchar(255);
@@ -1159,6 +1197,7 @@ DELIMITER ;
 -- テーブルの構造 `channels`
 --
 
+DROP TABLE IF EXISTS `channels`;
 CREATE TABLE `channels` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1184,7 +1223,7 @@ CREATE TABLE `channels` (
 --
 
 INSERT INTO `channels` (`id`, `code`, `name`, `description`, `timezone`, `theme`, `hostname`, `logo`, `favicon`, `home_page_content`, `footer_content`, `default_locale_id`, `base_currency_id`, `created_at`, `updated_at`, `root_category_id`, `home_seo`) VALUES
-(1, 'default', 'Default', NULL, NULL, 'velocity', NULL, NULL, NULL, '<p>@include(\"shop::home.slider\") @include(\"shop::home.featured-products\") @include(\"shop::home.new-products\")</p><div class=\"banner-container\"><div class=\"left-banner\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581f9494b8a1.png\" /></div><div class=\"right-banner\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fb045cf02.png\" /> <img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fc352d803.png\" /></div></div>', '<div class=\"list-container\"><span class=\"list-heading\">Quick Links</span><ul class=\"list-group\"><li><a href=\"@php echo route(\'shop.cms.page\', \'about-us\') @endphp\">About Us</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'return-policy\') @endphp\">Return Policy</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'refund-policy\') @endphp\">Refund Policy</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'terms-conditions\') @endphp\">Terms and conditions</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'terms-of-use\') @endphp\">Terms of Use</a></li><li><a href=\"@php echo route(\'shop.cms.page\', \'contact-us\') @endphp\">Contact Us</a></li></ul></div><div class=\"list-container\"><span class=\"list-heading\">Connect With Us</span><ul class=\"list-group\"><li><a href=\"#\"><span class=\"icon icon-facebook\"></span>Facebook </a></li><li><a href=\"#\"><span class=\"icon icon-twitter\"></span> Twitter </a></li><li><a href=\"#\"><span class=\"icon icon-instagram\"></span> Instagram </a></li><li><a href=\"#\"> <span class=\"icon icon-google-plus\"></span>Google+ </a></li><li><a href=\"#\"> <span class=\"icon icon-linkedin\"></span>LinkedIn </a></li></ul></div>', 1, 1, NULL, NULL, 1, '{\"meta_title\": \"Demo store\", \"meta_keywords\": \"Demo store meta keyword\", \"meta_description\": \"Demo store meta description\"}');
+(1, 'default', 'Default', '', NULL, 'velocity', '', NULL, NULL, '<p>@include(\"shop::home.slider\") @include(\"shop::home.featured-products\") @include(\"shop::home.new-products\")</p>\r\n<div class=\"banner-container\">\r\n<div class=\"left-banner\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581f9494b8a1.png\" /></div>\r\n<div class=\"right-banner\"><img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fb045cf02.png\" /> <img src=\"https://s3-ap-southeast-1.amazonaws.com/cdn.uvdesk.com/website/1/201902045c581fc352d803.png\" /></div>\r\n</div>', '<div class=\"list-container\"><span class=\"list-heading\">Quick Links</span>\r\n<ul class=\"list-group\">\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'about-us\') @endphp\">About Us</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'return-policy\') @endphp\">Return Policy</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'refund-policy\') @endphp\">Refund Policy</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'terms-conditions\') @endphp\">Terms and conditions</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'terms-of-use\') @endphp\">Terms of Use</a></li>\r\n<li><a href=\"@php echo route(\'shop.cms.page\', \'contact-us\') @endphp\">Contact Us</a></li>\r\n</ul>\r\n</div>\r\n<div class=\"list-container\"><span class=\"list-heading\">Connect With Us</span>\r\n<ul class=\"list-group\">\r\n<li><a href=\"#\"><span class=\"icon icon-facebook\"></span>Facebook </a></li>\r\n<li><a href=\"#\"><span class=\"icon icon-twitter\"></span> Twitter </a></li>\r\n<li><a href=\"#\"><span class=\"icon icon-instagram\"></span> Instagram </a></li>\r\n<li><a href=\"#\"> <span class=\"icon icon-google-plus\"></span>Google+ </a></li>\r\n<li><a href=\"#\"> <span class=\"icon icon-linkedin\"></span>LinkedIn </a></li>\r\n</ul>\r\n</div>', 5, 3, NULL, '2020-07-27 11:06:53', 1, '{\"meta_title\":\"Highwayshop\",\"meta_description\":\"Highwayshop\",\"meta_keywords\":\"Highwayshop\"}');
 
 -- --------------------------------------------------------
 
@@ -1192,6 +1231,7 @@ INSERT INTO `channels` (`id`, `code`, `name`, `description`, `timezone`, `theme`
 -- テーブルの構造 `channel_currencies`
 --
 
+DROP TABLE IF EXISTS `channel_currencies`;
 CREATE TABLE `channel_currencies` (
   `channel_id` int(10) UNSIGNED NOT NULL,
   `currency_id` int(10) UNSIGNED NOT NULL
@@ -1202,7 +1242,7 @@ CREATE TABLE `channel_currencies` (
 --
 
 INSERT INTO `channel_currencies` (`channel_id`, `currency_id`) VALUES
-(1, 1);
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -1210,6 +1250,7 @@ INSERT INTO `channel_currencies` (`channel_id`, `currency_id`) VALUES
 -- テーブルの構造 `channel_inventory_sources`
 --
 
+DROP TABLE IF EXISTS `channel_inventory_sources`;
 CREATE TABLE `channel_inventory_sources` (
   `channel_id` int(10) UNSIGNED NOT NULL,
   `inventory_source_id` int(10) UNSIGNED NOT NULL
@@ -1228,6 +1269,7 @@ INSERT INTO `channel_inventory_sources` (`channel_id`, `inventory_source_id`) VA
 -- テーブルの構造 `channel_locales`
 --
 
+DROP TABLE IF EXISTS `channel_locales`;
 CREATE TABLE `channel_locales` (
   `channel_id` int(10) UNSIGNED NOT NULL,
   `locale_id` int(10) UNSIGNED NOT NULL
@@ -1238,7 +1280,7 @@ CREATE TABLE `channel_locales` (
 --
 
 INSERT INTO `channel_locales` (`channel_id`, `locale_id`) VALUES
-(1, 1);
+(1, 5);
 
 -- --------------------------------------------------------
 
@@ -1246,6 +1288,7 @@ INSERT INTO `channel_locales` (`channel_id`, `locale_id`) VALUES
 -- テーブルの構造 `cms_pages`
 --
 
+DROP TABLE IF EXISTS `cms_pages`;
 CREATE TABLE `cms_pages` (
   `id` int(10) UNSIGNED NOT NULL,
   `layout` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1258,12 +1301,12 @@ CREATE TABLE `cms_pages` (
 --
 
 INSERT INTO `cms_pages` (`id`, `layout`, `created_at`, `updated_at`) VALUES
-(1, NULL, '2020-07-17 04:01:34', '2020-07-17 04:01:34'),
-(2, NULL, '2020-07-17 04:01:34', '2020-07-17 04:01:34'),
-(3, NULL, '2020-07-17 04:01:34', '2020-07-17 04:01:34'),
-(4, NULL, '2020-07-17 04:01:34', '2020-07-17 04:01:34'),
-(5, NULL, '2020-07-17 04:01:34', '2020-07-17 04:01:34'),
-(6, NULL, '2020-07-17 04:01:34', '2020-07-17 04:01:34');
+(1, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(2, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(3, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(4, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(5, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(6, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30');
 
 -- --------------------------------------------------------
 
@@ -1271,6 +1314,7 @@ INSERT INTO `cms_pages` (`id`, `layout`, `created_at`, `updated_at`) VALUES
 -- テーブルの構造 `cms_page_channels`
 --
 
+DROP TABLE IF EXISTS `cms_page_channels`;
 CREATE TABLE `cms_page_channels` (
   `cms_page_id` int(10) UNSIGNED NOT NULL,
   `channel_id` int(10) UNSIGNED NOT NULL
@@ -1282,11 +1326,12 @@ CREATE TABLE `cms_page_channels` (
 -- テーブルの構造 `cms_page_translations`
 --
 
+DROP TABLE IF EXISTS `cms_page_translations`;
 CREATE TABLE `cms_page_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `page_title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url_key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `html_content` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `html_content` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_keywords` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1299,12 +1344,12 @@ CREATE TABLE `cms_page_translations` (
 --
 
 INSERT INTO `cms_page_translations` (`id`, `page_title`, `url_key`, `html_content`, `meta_title`, `meta_description`, `meta_keywords`, `locale`, `cms_page_id`) VALUES
-(7, 'About Us', 'about-us', '<div class=\"static-container\"><div class=\"mb-5\">About us page content</div></div>', 'about us', '', 'aboutus', 'en', 1),
-(8, 'Return Policy', 'return-policy', '<div class=\"static-container\"><div class=\"mb-5\">Return policy page content</div></div>', 'return policy', '', 'return, policy', 'en', 2),
-(9, 'Refund Policy', 'refund-policy', '<div class=\"static-container\"><div class=\"mb-5\">Refund policy page content</div></div>', 'Refund policy', '', 'refund, policy', 'en', 3),
-(10, 'Terms & Conditions', 'terms-conditions', '<div class=\"static-container\"><div class=\"mb-5\">Terms & conditions page content</div></div>', 'Terms & Conditions', '', 'term, conditions', 'en', 4),
-(11, 'Terms of use', 'terms-of-use', '<div class=\"static-container\"><div class=\"mb-5\">Terms of use page content</div></div>', 'Terms of use', '', 'term, use', 'en', 5),
-(12, 'Contact Us', 'contact-us', '<div class=\"static-container\"><div class=\"mb-5\">Contact us page content</div></div>', 'Contact Us', '', 'contact, us', 'en', 6);
+(1, 'About Us', 'about-us', '<div class=\"static-container\"><div class=\"mb-5\">About us page content</div></div>', 'about us', '', 'aboutus', 'en', 1),
+(2, 'Return Policy', 'return-policy', '<div class=\"static-container\"><div class=\"mb-5\">Return policy page content</div></div>', 'return policy', '', 'return, policy', 'en', 2),
+(3, 'Refund Policy', 'refund-policy', '<div class=\"static-container\"><div class=\"mb-5\">Refund policy page content</div></div>', 'Refund policy', '', 'refund, policy', 'en', 3),
+(4, 'Terms & Conditions', 'terms-conditions', '<div class=\"static-container\"><div class=\"mb-5\">Terms & conditions page content</div></div>', 'Terms & Conditions', '', 'term, conditions', 'en', 4),
+(5, 'Terms of use', 'terms-of-use', '<div class=\"static-container\"><div class=\"mb-5\">Terms of use page content</div></div>', 'Terms of use', '', 'term, use', 'en', 5),
+(6, 'Contact Us', 'contact-us', '<div class=\"static-container\"><div class=\"mb-5\">Contact us page content</div></div>', 'Contact Us', '', 'contact, us', 'en', 6);
 
 -- --------------------------------------------------------
 
@@ -1312,6 +1357,7 @@ INSERT INTO `cms_page_translations` (`id`, `page_title`, `url_key`, `html_conten
 -- テーブルの構造 `core_config`
 --
 
+DROP TABLE IF EXISTS `core_config`;
 CREATE TABLE `core_config` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1327,17 +1373,37 @@ CREATE TABLE `core_config` (
 --
 
 INSERT INTO `core_config` (`id`, `code`, `value`, `channel_code`, `locale_code`, `created_at`, `updated_at`) VALUES
-(1, 'catalog.products.guest-checkout.allow-guest-checkout', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(2, 'emails.general.notifications.emails.general.notifications.verification', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(3, 'emails.general.notifications.emails.general.notifications.registration', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(4, 'emails.general.notifications.emails.general.notifications.customer', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(5, 'emails.general.notifications.emails.general.notifications.new-order', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(6, 'emails.general.notifications.emails.general.notifications.new-admin', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(7, 'emails.general.notifications.emails.general.notifications.new-invoice', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(8, 'emails.general.notifications.emails.general.notifications.new-refund', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(9, 'emails.general.notifications.emails.general.notifications.new-shipment', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(10, 'emails.general.notifications.emails.general.notifications.new-inventory-source', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33'),
-(11, 'emails.general.notifications.emails.general.notifications.cancel-order', '1', NULL, NULL, '2020-07-17 04:01:33', '2020-07-17 04:01:33');
+(1, 'catalog.products.guest-checkout.allow-guest-checkout', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(2, 'emails.general.notifications.emails.general.notifications.verification', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(3, 'emails.general.notifications.emails.general.notifications.registration', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(4, 'emails.general.notifications.emails.general.notifications.customer', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(5, 'emails.general.notifications.emails.general.notifications.new-order', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(6, 'emails.general.notifications.emails.general.notifications.new-admin', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(7, 'emails.general.notifications.emails.general.notifications.new-invoice', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(8, 'emails.general.notifications.emails.general.notifications.new-refund', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(9, 'emails.general.notifications.emails.general.notifications.new-shipment', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(10, 'emails.general.notifications.emails.general.notifications.new-inventory-source', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(11, 'emails.general.notifications.emails.general.notifications.cancel-order', '1', NULL, NULL, '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(12, 'general.content.shop.compare_option', '1', 'default', 'en', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(13, 'general.content.shop.compare_option', '1', 'default', 'ar', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(14, 'general.content.shop.compare_option', '1', 'default', 'de', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(15, 'general.content.shop.compare_option', '1', 'default', 'es', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(16, 'general.content.shop.compare_option', '1', 'default', 'fa', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(17, 'general.content.shop.compare_option', '1', 'default', 'it', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(18, 'general.content.shop.compare_option', '1', 'default', 'ja', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(19, 'general.content.shop.compare_option', '1', 'default', 'nl', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(20, 'general.content.shop.compare_option', '1', 'default', 'pl', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(21, 'general.content.shop.compare_option', '1', 'default', 'pt_BR', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(22, 'general.content.shop.compare_option', '1', 'default', 'tr', '2020-07-06 08:44:30', '2020-07-06 08:44:30'),
+(23, 'general.general.locale_options.weight_unit', 'lbs', 'default', NULL, '2020-07-27 11:09:53', '2020-07-27 11:09:53'),
+(24, 'general.general.email_settings.sender_name', 'tei952@hotmail.com', 'default', NULL, '2020-07-27 11:09:53', '2020-07-27 11:09:53'),
+(25, 'general.general.email_settings.shop_email_from', 'tei952@hotmail.com', 'default', NULL, '2020-07-27 11:09:53', '2020-07-27 11:09:53'),
+(26, 'general.general.email_settings.admin_name', 'tei952', 'default', NULL, '2020-07-27 11:09:53', '2020-07-27 11:09:53'),
+(27, 'general.general.email_settings.admin_email', 'tei952@hotmail.com', 'default', NULL, '2020-07-27 11:09:53', '2020-07-27 11:09:53'),
+(28, 'general.content.footer.footer_content', '', 'default', 'ja', '2020-07-27 11:10:43', '2020-07-27 11:10:43'),
+(29, 'general.content.footer.footer_toggle', '0', 'default', 'ja', '2020-07-27 11:10:43', '2020-07-27 11:10:43'),
+(30, 'general.design.admin_logo.logo_image', 'configuration/wVEl5yncudI7HolvCA8aAQail2rJsYHRoyLveosb.png', 'default', NULL, '2020-07-27 11:11:38', '2020-07-27 11:11:38'),
+(31, 'general.design.admin_logo.favicon', 'configuration/42i7gpk0M3iZ9VsXxjjDQ06ar4Oq5sdR0VEjpLcS.png', 'default', NULL, '2020-07-27 11:11:38', '2020-07-27 11:11:38');
 
 -- --------------------------------------------------------
 
@@ -1345,6 +1411,7 @@ INSERT INTO `core_config` (`id`, `code`, `value`, `channel_code`, `locale_code`,
 -- テーブルの構造 `countries`
 --
 
+DROP TABLE IF EXISTS `countries`;
 CREATE TABLE `countries` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -1618,6 +1685,7 @@ INSERT INTO `countries` (`id`, `code`, `name`) VALUES
 -- テーブルの構造 `country_states`
 --
 
+DROP TABLE IF EXISTS `country_states`;
 CREATE TABLE `country_states` (
   `id` int(10) UNSIGNED NOT NULL,
   `country_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -2206,6 +2274,7 @@ INSERT INTO `country_states` (`id`, `country_code`, `code`, `default_name`, `cou
 -- テーブルの構造 `country_state_translations`
 --
 
+DROP TABLE IF EXISTS `country_state_translations`;
 CREATE TABLE `country_state_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2218,1711 +2287,1711 @@ CREATE TABLE `country_state_translations` (
 --
 
 INSERT INTO `country_state_translations` (`id`, `locale`, `default_name`, `country_state_id`) VALUES
-(1705, 'ar', 'ألاباما', 1),
-(1706, 'ar', 'ألاسكا', 2),
-(1707, 'ar', 'ساموا الأمريكية', 3),
-(1708, 'ar', 'أريزونا', 4),
-(1709, 'ar', 'أركنساس', 5),
-(1710, 'ar', 'القوات المسلحة أفريقيا', 6),
-(1711, 'ar', 'القوات المسلحة الأمريكية', 7),
-(1712, 'ar', 'القوات المسلحة الكندية', 8),
-(1713, 'ar', 'القوات المسلحة أوروبا', 9),
-(1714, 'ar', 'القوات المسلحة الشرق الأوسط', 10),
-(1715, 'ar', 'القوات المسلحة في المحيط الهادئ', 11),
-(1716, 'ar', 'كاليفورنيا', 12),
-(1717, 'ar', 'كولورادو', 13),
-(1718, 'ar', 'كونيتيكت', 14),
-(1719, 'ar', 'ديلاوير', 15),
-(1720, 'ar', 'مقاطعة كولومبيا', 16),
-(1721, 'ar', 'ولايات ميكرونيزيا الموحدة', 17),
-(1722, 'ar', 'فلوريدا', 18),
-(1723, 'ar', 'جورجيا', 19),
-(1724, 'ar', 'غوام', 20),
-(1725, 'ar', 'هاواي', 21),
-(1726, 'ar', 'ايداهو', 22),
-(1727, 'ar', 'إلينوي', 23),
-(1728, 'ar', 'إنديانا', 24),
-(1729, 'ar', 'أيوا', 25),
-(1730, 'ar', 'كانساس', 26),
-(1731, 'ar', 'كنتاكي', 27),
-(1732, 'ar', 'لويزيانا', 28),
-(1733, 'ar', 'مين', 29),
-(1734, 'ar', 'جزر مارشال', 30),
-(1735, 'ar', 'ماريلاند', 31),
-(1736, 'ar', 'ماساتشوستس', 32),
-(1737, 'ar', 'ميشيغان', 33),
-(1738, 'ar', 'مينيسوتا', 34),
-(1739, 'ar', 'ميسيسيبي', 35),
-(1740, 'ar', 'ميسوري', 36),
-(1741, 'ar', 'مونتانا', 37),
-(1742, 'ar', 'نبراسكا', 38),
-(1743, 'ar', 'نيفادا', 39),
-(1744, 'ar', 'نيو هامبشاير', 40),
-(1745, 'ar', 'نيو جيرسي', 41),
-(1746, 'ar', 'المكسيك جديدة', 42),
-(1747, 'ar', 'نيويورك', 43),
-(1748, 'ar', 'شمال كارولينا', 44),
-(1749, 'ar', 'شمال داكوتا', 45),
-(1750, 'ar', 'جزر مريانا الشمالية', 46),
-(1751, 'ar', 'أوهايو', 47),
-(1752, 'ar', 'أوكلاهوما', 48),
-(1753, 'ar', 'ولاية أوريغون', 49),
-(1754, 'ar', 'بالاو', 50),
-(1755, 'ar', 'بنسلفانيا', 51),
-(1756, 'ar', 'بورتوريكو', 52),
-(1757, 'ar', 'جزيرة رود', 53),
-(1758, 'ar', 'كارولينا الجنوبية', 54),
-(1759, 'ar', 'جنوب داكوتا', 55),
-(1760, 'ar', 'تينيسي', 56),
-(1761, 'ar', 'تكساس', 57),
-(1762, 'ar', 'يوتا', 58),
-(1763, 'ar', 'فيرمونت', 59),
-(1764, 'ar', 'جزر فيرجن', 60),
-(1765, 'ar', 'فرجينيا', 61),
-(1766, 'ar', 'واشنطن', 62),
-(1767, 'ar', 'فرجينيا الغربية', 63),
-(1768, 'ar', 'ولاية ويسكونسن', 64),
-(1769, 'ar', 'وايومنغ', 65),
-(1770, 'ar', 'ألبرتا', 66),
-(1771, 'ar', 'كولومبيا البريطانية', 67),
-(1772, 'ar', 'مانيتوبا', 68),
-(1773, 'ar', 'نيوفاوندلاند ولابرادور', 69),
-(1774, 'ar', 'برونزيك جديد', 70),
-(1775, 'ar', 'مقاطعة نفوفا سكوشيا', 71),
-(1776, 'ar', 'الاقاليم الشمالية الغربية', 72),
-(1777, 'ar', 'نونافوت', 73),
-(1778, 'ar', 'أونتاريو', 74),
-(1779, 'ar', 'جزيرة الأمير ادوارد', 75),
-(1780, 'ar', 'كيبيك', 76),
-(1781, 'ar', 'ساسكاتشوان', 77),
-(1782, 'ar', 'إقليم يوكون', 78),
-(1783, 'ar', 'Niedersachsen', 79),
-(1784, 'ar', 'بادن فورتمبيرغ', 80),
-(1785, 'ar', 'بايرن ميونيخ', 81),
-(1786, 'ar', 'برلين', 82),
-(1787, 'ar', 'براندنبورغ', 83),
-(1788, 'ar', 'بريمن', 84),
-(1789, 'ar', 'هامبورغ', 85),
-(1790, 'ar', 'هيسن', 86),
-(1791, 'ar', 'مكلنبورغ-فوربومرن', 87),
-(1792, 'ar', 'نوردراين فيستفالن', 88),
-(1793, 'ar', 'راينلاند-بفالز', 89),
-(1794, 'ar', 'سارلاند', 90),
-(1795, 'ar', 'ساكسن', 91),
-(1796, 'ar', 'سكسونيا أنهالت', 92),
-(1797, 'ar', 'شليسفيغ هولشتاين', 93),
-(1798, 'ar', 'تورنغن', 94),
-(1799, 'ar', 'فيينا', 95),
-(1800, 'ar', 'النمسا السفلى', 96),
-(1801, 'ar', 'النمسا العليا', 97),
-(1802, 'ar', 'سالزبورغ', 98),
-(1803, 'ar', 'Каринтия', 99),
-(1804, 'ar', 'STEIERMARK', 100),
-(1805, 'ar', 'تيرول', 101),
-(1806, 'ar', 'بورغنلاند', 102),
-(1807, 'ar', 'فورارلبرغ', 103),
-(1808, 'ar', 'أرجاو', 104),
-(1809, 'ar', 'Appenzell Innerrhoden', 105),
-(1810, 'ar', 'أبنزل أوسيرهودن', 106),
-(1811, 'ar', 'برن', 107),
-(1812, 'ar', 'كانتون ريف بازل', 108),
-(1813, 'ar', 'بازل شتات', 109),
-(1814, 'ar', 'فرايبورغ', 110),
-(1815, 'ar', 'Genf', 111),
-(1816, 'ar', 'جلاروس', 112),
-(1817, 'ar', 'غراوبوندن', 113),
-(1818, 'ar', 'العصر الجوارسي أو الجوري', 114),
-(1819, 'ar', 'لوزيرن', 115),
-(1820, 'ar', 'في Neuenburg', 116),
-(1821, 'ar', 'نيدوالدن', 117),
-(1822, 'ar', 'أوبوالدن', 118),
-(1823, 'ar', 'سانت غالن', 119),
-(1824, 'ar', 'شافهاوزن', 120),
-(1825, 'ar', 'سولوتورن', 121),
-(1826, 'ar', 'شفيتس', 122),
-(1827, 'ar', 'ثورجو', 123),
-(1828, 'ar', 'تيتشينو', 124),
-(1829, 'ar', 'أوري', 125),
-(1830, 'ar', 'وادت', 126),
-(1831, 'ar', 'اليس', 127),
-(1832, 'ar', 'زوغ', 128),
-(1833, 'ar', 'زيورخ', 129),
-(1834, 'ar', 'Corunha', 130),
-(1835, 'ar', 'ألافا', 131),
-(1836, 'ar', 'الباسيتي', 132),
-(1837, 'ar', 'اليكانتي', 133),
-(1838, 'ar', 'الميريا', 134),
-(1839, 'ar', 'أستورياس', 135),
-(1840, 'ar', 'أفيلا', 136),
-(1841, 'ar', 'بطليوس', 137),
-(1842, 'ar', 'البليار', 138),
-(1843, 'ar', 'برشلونة', 139),
-(1844, 'ar', 'برغش', 140),
-(1845, 'ar', 'كاسيريس', 141),
-(1846, 'ar', 'كاديز', 142),
-(1847, 'ar', 'كانتابريا', 143),
-(1848, 'ar', 'كاستيلون', 144),
-(1849, 'ar', 'سبتة', 145),
-(1850, 'ar', 'سيوداد ريال', 146),
-(1851, 'ar', 'قرطبة', 147),
-(1852, 'ar', 'كوينكا', 148),
-(1853, 'ar', 'جيرونا', 149),
-(1854, 'ar', 'غرناطة', 150),
-(1855, 'ar', 'غوادالاخارا', 151),
-(1856, 'ar', 'بجويبوزكوا', 152),
-(1857, 'ar', 'هويلفا', 153),
-(1858, 'ar', 'هويسكا', 154),
-(1859, 'ar', 'خاين', 155),
-(1860, 'ar', 'لاريوخا', 156),
-(1861, 'ar', 'لاس بالماس', 157),
-(1862, 'ar', 'ليون', 158),
-(1863, 'ar', 'يدا', 159),
-(1864, 'ar', 'لوغو', 160),
-(1865, 'ar', 'مدريد', 161),
-(1866, 'ar', 'ملقة', 162),
-(1867, 'ar', 'مليلية', 163),
-(1868, 'ar', 'مورسيا', 164),
-(1869, 'ar', 'نافارا', 165),
-(1870, 'ar', 'أورينس', 166),
-(1871, 'ar', 'بلنسية', 167),
-(1872, 'ar', 'بونتيفيدرا', 168),
-(1873, 'ar', 'سالامانكا', 169),
-(1874, 'ar', 'سانتا كروز دي تينيريفي', 170),
-(1875, 'ar', 'سيغوفيا', 171),
-(1876, 'ar', 'اشبيلية', 172),
-(1877, 'ar', 'سوريا', 173),
-(1878, 'ar', 'تاراغونا', 174),
-(1879, 'ar', 'تيرويل', 175),
-(1880, 'ar', 'توليدو', 176),
-(1881, 'ar', 'فالنسيا', 177),
-(1882, 'ar', 'بلد الوليد', 178),
-(1883, 'ar', 'فيزكايا', 179),
-(1884, 'ar', 'زامورا', 180),
-(1885, 'ar', 'سرقسطة', 181),
-(1886, 'ar', 'عين', 182),
-(1887, 'ar', 'أيسن', 183),
-(1888, 'ar', 'اليي', 184),
-(1889, 'ar', 'ألب البروفنس العليا', 185),
-(1890, 'ar', 'أوتس ألب', 186),
-(1891, 'ar', 'ألب ماريتيم', 187),
-(1892, 'ar', 'ARDECHE', 188),
-(1893, 'ar', 'Ardennes', 189),
-(1894, 'ar', 'آردن', 190),
-(1895, 'ar', 'أوب', 191),
-(1896, 'ar', 'اود', 192),
-(1897, 'ar', 'أفيرون', 193),
-(1898, 'ar', 'بوكاس دو رون', 194),
-(1899, 'ar', 'كالفادوس', 195),
-(1900, 'ar', 'كانتال', 196),
-(1901, 'ar', 'شارانت', 197),
-(1902, 'ar', 'سيين إت مارن', 198),
-(1903, 'ar', 'شير', 199),
-(1904, 'ar', 'كوريز', 200),
-(1905, 'ar', 'سود كورس-دو-', 201),
-(1906, 'ar', 'هوت كورس', 202),
-(1907, 'ar', 'كوستا دوركوريز', 203),
-(1908, 'ar', 'كوتس دورمور', 204),
-(1909, 'ar', 'كروز', 205),
-(1910, 'ar', 'دوردوني', 206),
-(1911, 'ar', 'دوبس', 207),
-(1912, 'ar', 'DrômeFinistère', 208),
-(1913, 'ar', 'أور', 209),
-(1914, 'ar', 'أور ولوار', 210),
-(1915, 'ar', 'فينيستير', 211),
-(1916, 'ar', 'جارد', 212),
-(1917, 'ar', 'هوت غارون', 213),
-(1918, 'ar', 'الخيام', 214),
-(1919, 'ar', 'جيروند', 215),
-(1920, 'ar', 'هيرولت', 216),
-(1921, 'ar', 'إيل وفيلان', 217),
-(1922, 'ar', 'إندر', 218),
-(1923, 'ar', 'أندر ولوار', 219),
-(1924, 'ar', 'إيسر', 220),
-(1925, 'ar', 'العصر الجوارسي أو الجوري', 221),
-(1926, 'ar', 'اندز', 222),
-(1927, 'ar', 'لوار وشير', 223),
-(1928, 'ar', 'لوار', 224),
-(1929, 'ar', 'هوت-لوار', 225),
-(1930, 'ar', 'وار أتلانتيك', 226),
-(1931, 'ar', 'لورا', 227),
-(1932, 'ar', 'كثيرا', 228),
-(1933, 'ar', 'الكثير غارون', 229),
-(1934, 'ar', 'لوزر', 230),
-(1935, 'ar', 'مين-إي-لوار', 231),
-(1936, 'ar', 'المانش', 232),
-(1937, 'ar', 'مارن', 233),
-(1938, 'ar', 'هوت مارن', 234),
-(1939, 'ar', 'مايين', 235),
-(1940, 'ar', 'مورت وموزيل', 236),
-(1941, 'ar', 'ميوز', 237),
-(1942, 'ar', 'موربيهان', 238),
-(1943, 'ar', 'موسيل', 239),
-(1944, 'ar', 'نيفر', 240),
-(1945, 'ar', 'نورد', 241),
-(1946, 'ar', 'إيل دو فرانس', 242),
-(1947, 'ar', 'أورن', 243),
-(1948, 'ar', 'با-دو-كاليه', 244),
-(1949, 'ar', 'بوي دي دوم', 245),
-(1950, 'ar', 'البرانيس ​​الأطلسية', 246),
-(1951, 'ar', 'أوتس-بيرينيهs', 247),
-(1952, 'ar', 'بيرينيه-أورينتال', 248),
-(1953, 'ar', 'بس رين', 249),
-(1954, 'ar', 'أوت رين', 250),
-(1955, 'ar', 'رون [3]', 251),
-(1956, 'ar', 'هوت-سون', 252),
-(1957, 'ar', 'سون ولوار', 253),
-(1958, 'ar', 'سارت', 254),
-(1959, 'ar', 'سافوا', 255),
-(1960, 'ar', 'هاوت سافوي', 256),
-(1961, 'ar', 'باريس', 257),
-(1962, 'ar', 'سين البحرية', 258),
-(1963, 'ar', 'سيين إت مارن', 259),
-(1964, 'ar', 'إيفلين', 260),
-(1965, 'ar', 'دوكس سفرس', 261),
-(1966, 'ar', 'السوم', 262),
-(1967, 'ar', 'تارن', 263),
-(1968, 'ar', 'تارن وغارون', 264),
-(1969, 'ar', 'فار', 265),
-(1970, 'ar', 'فوكلوز', 266),
-(1971, 'ar', 'تارن', 267),
-(1972, 'ar', 'فيين', 268),
-(1973, 'ar', 'هوت فيين', 269),
-(1974, 'ar', 'الفوج', 270),
-(1975, 'ar', 'يون', 271),
-(1976, 'ar', 'تيريتوير-دي-بلفور', 272),
-(1977, 'ar', 'إيسون', 273),
-(1978, 'ar', 'هوت دو سين', 274),
-(1979, 'ar', 'سين سان دوني', 275),
-(1980, 'ar', 'فال دو مارن', 276),
-(1981, 'ar', 'فال دواز', 277),
-(1982, 'ar', 'ألبا', 278),
-(1983, 'ar', 'اراد', 279),
-(1984, 'ar', 'ARGES', 280),
-(1985, 'ar', 'باكاو', 281),
-(1986, 'ar', 'بيهور', 282),
-(1987, 'ar', 'بيستريتا ناسود', 283),
-(1988, 'ar', 'بوتوساني', 284),
-(1989, 'ar', 'براشوف', 285),
-(1990, 'ar', 'برايلا', 286),
-(1991, 'ar', 'بوخارست', 287),
-(1992, 'ar', 'بوزاو', 288),
-(1993, 'ar', 'كاراس سيفيرين', 289),
-(1994, 'ar', 'كالاراسي', 290),
-(1995, 'ar', 'كلوج', 291),
-(1996, 'ar', 'كونستانتا', 292),
-(1997, 'ar', 'كوفاسنا', 293),
-(1998, 'ar', 'دامبوفيتا', 294),
-(1999, 'ar', 'دولج', 295),
-(2000, 'ar', 'جالاتي', 296),
-(2001, 'ar', 'Giurgiu', 297),
-(2002, 'ar', 'غيورغيو', 298),
-(2003, 'ar', 'هارغيتا', 299),
-(2004, 'ar', 'هونيدوارا', 300),
-(2005, 'ar', 'ايالوميتا', 301),
-(2006, 'ar', 'ياشي', 302),
-(2007, 'ar', 'إيلفوف', 303),
-(2008, 'ar', 'مارامريس', 304),
-(2009, 'ar', 'MEHEDINTI', 305),
-(2010, 'ar', 'موريس', 306),
-(2011, 'ar', 'نيامتس', 307),
-(2012, 'ar', 'أولت', 308),
-(2013, 'ar', 'براهوفا', 309),
-(2014, 'ar', 'ساتو ماري', 310),
-(2015, 'ar', 'سالاج', 311),
-(2016, 'ar', 'سيبيو', 312),
-(2017, 'ar', 'سوسيفا', 313),
-(2018, 'ar', 'تيليورمان', 314),
-(2019, 'ar', 'تيم هو', 315),
-(2020, 'ar', 'تولسيا', 316),
-(2021, 'ar', 'فاسلوي', 317),
-(2022, 'ar', 'فالسيا', 318),
-(2023, 'ar', 'فرانتشا', 319),
-(2024, 'ar', 'Lappi', 320),
-(2025, 'ar', 'Pohjois-Pohjanmaa', 321),
-(2026, 'ar', 'كاينو', 322),
-(2027, 'ar', 'Pohjois-كارجالا', 323),
-(2028, 'ar', 'Pohjois-سافو', 324),
-(2029, 'ar', 'Etelä-سافو', 325),
-(2030, 'ar', 'Etelä-Pohjanmaa', 326),
-(2031, 'ar', 'Pohjanmaa', 327),
-(2032, 'ar', 'بيركنما', 328),
-(2033, 'ar', 'ساتا كونتا', 329),
-(2034, 'ar', 'كسكي-Pohjanmaa', 330),
-(2035, 'ar', 'كسكي-سومي', 331),
-(2036, 'ar', 'Varsinais-سومي', 332),
-(2037, 'ar', 'Etelä-كارجالا', 333),
-(2038, 'ar', 'Päijät-Häme', 334),
-(2039, 'ar', 'كانتا-HAME', 335),
-(2040, 'ar', 'أوسيما', 336),
-(2041, 'ar', 'أوسيما', 337),
-(2042, 'ar', 'كومنلاكسو', 338),
-(2043, 'ar', 'Ahvenanmaa', 339),
-(2044, 'ar', 'Harjumaa', 340),
-(2045, 'ar', 'هيوما', 341),
-(2046, 'ar', 'المؤسسة الدولية للتنمية فيروما', 342),
-(2047, 'ar', 'جوغفما', 343),
-(2048, 'ar', 'يارفا', 344),
-(2049, 'ar', 'انيما', 345),
-(2050, 'ar', 'اني فيريوما', 346),
-(2051, 'ar', 'بولفاما', 347),
-(2052, 'ar', 'بارنوما', 348),
-(2053, 'ar', 'Raplamaa', 349),
-(2054, 'ar', 'Saaremaa', 350),
-(2055, 'ar', 'Tartumaa', 351),
-(2056, 'ar', 'Valgamaa', 352),
-(2057, 'ar', 'Viljandimaa', 353),
-(2058, 'ar', 'روايات Salacgr novvas', 354),
-(2059, 'ar', 'داوجافبيلس', 355),
-(2060, 'ar', 'يلغافا', 356),
-(2061, 'ar', 'يكاب', 357),
-(2062, 'ar', 'يورمال', 358),
-(2063, 'ar', 'يابايا', 359),
-(2064, 'ar', 'ليباج أبريس', 360),
-(2065, 'ar', 'ريزكن', 361),
-(2066, 'ar', 'ريغا', 362),
-(2067, 'ar', 'مقاطعة ريغا', 363),
-(2068, 'ar', 'فالميرا', 364),
-(2069, 'ar', 'فنتسبيلز', 365),
-(2070, 'ar', 'روايات Aglonas', 366),
-(2071, 'ar', 'Aizkraukles novads', 367),
-(2072, 'ar', 'Aizkraukles novads', 368),
-(2073, 'ar', 'Aknīstes novads', 369),
-(2074, 'ar', 'Alojas novads', 370),
-(2075, 'ar', 'روايات Alsungas', 371),
-(2076, 'ar', 'ألكسنس أبريز', 372),
-(2077, 'ar', 'روايات أماتاس', 373),
-(2078, 'ar', 'قرود الروايات', 374),
-(2079, 'ar', 'روايات أوسيس', 375),
-(2080, 'ar', 'بابيت الروايات', 376),
-(2081, 'ar', 'Baldones الروايات', 377),
-(2082, 'ar', 'بالتينافاس الروايات', 378),
-(2083, 'ar', 'روايات بالفو', 379),
-(2084, 'ar', 'Bauskas الروايات', 380),
-(2085, 'ar', 'Beverīnas novads', 381),
-(2086, 'ar', 'Novads Brocēnu', 382),
-(2087, 'ar', 'Novads Burtnieku', 383),
-(2088, 'ar', 'Carnikavas novads', 384),
-(2089, 'ar', 'Cesvaines novads', 385),
-(2090, 'ar', 'Ciblas novads', 386),
-(2091, 'ar', 'تسو أبريس', 387),
-(2092, 'ar', 'Dagdas novads', 388),
-(2093, 'ar', 'Daugavpils novads', 389),
-(2094, 'ar', 'روايات دوبيليس', 390),
-(2095, 'ar', 'ديربيس الروايات', 391),
-(2096, 'ar', 'ديربيس الروايات', 392),
-(2097, 'ar', 'يشرك الروايات', 393),
-(2098, 'ar', 'Garkalnes novads', 394),
-(2099, 'ar', 'Grobiņas novads', 395),
-(2100, 'ar', 'غولبينيس الروايات', 396),
-(2101, 'ar', 'إيكافاس روايات', 397),
-(2102, 'ar', 'Ikškiles novads', 398),
-(2103, 'ar', 'Ilūkstes novads', 399),
-(2104, 'ar', 'روايات Inčukalna', 400),
-(2105, 'ar', 'Jaunjelgavas novads', 401),
-(2106, 'ar', 'Jaunpiebalgas novads', 402),
-(2107, 'ar', 'روايات Jaunpiebalgas', 403),
-(2108, 'ar', 'Jelgavas novads', 404),
-(2109, 'ar', 'جيكابيلس أبريز', 405),
-(2110, 'ar', 'روايات كاندافاس', 406),
-(2111, 'ar', 'Kokneses الروايات', 407),
-(2112, 'ar', 'Krimuldas novads', 408),
-(2113, 'ar', 'Krustpils الروايات', 409),
-(2114, 'ar', 'Krāslavas Apriņķis', 410),
-(2115, 'ar', 'كولدوغاس أبريز', 411),
-(2116, 'ar', 'Kārsavas novads', 412),
-(2117, 'ar', 'روايات ييلفاريس', 413),
-(2118, 'ar', 'ليمباو أبريز', 414),
-(2119, 'ar', 'روايات لباناس', 415),
-(2120, 'ar', 'روايات لودزاس', 416),
-(2121, 'ar', 'مقاطعة ليجاتني', 417),
-(2122, 'ar', 'مقاطعة ليفاني', 418),
-(2123, 'ar', 'مادونا روايات', 419),
-(2124, 'ar', 'Mazsalacas novads', 420),
-(2125, 'ar', 'روايات مالبلز', 421),
-(2126, 'ar', 'Mārupes novads', 422),
-(2127, 'ar', 'نوفاو نوكشنو', 423),
-(2128, 'ar', 'روايات نيريتاس', 424),
-(2129, 'ar', 'روايات نيكاس', 425),
-(2130, 'ar', 'أغنام الروايات', 426),
-(2131, 'ar', 'أولينيس الروايات', 427),
-(2132, 'ar', 'روايات Ozolnieku', 428),
-(2133, 'ar', 'بريسيو أبرييس', 429),
-(2134, 'ar', 'Priekules الروايات', 430),
-(2135, 'ar', 'كوندادو دي بريكوي', 431),
-(2136, 'ar', 'Pärgaujas novads', 432),
-(2137, 'ar', 'روايات بافيلوستاس', 433),
-(2138, 'ar', 'بلافيناس مقاطعة', 434),
-(2139, 'ar', 'روناس روايات', 435),
-(2140, 'ar', 'Riebiņu novads', 436),
-(2141, 'ar', 'روجاس روايات', 437),
-(2142, 'ar', 'Novads روباو', 438),
-(2143, 'ar', 'روكافاس روايات', 439),
-(2144, 'ar', 'روغاجو روايات', 440),
-(2145, 'ar', 'رندلس الروايات', 441),
-(2146, 'ar', 'Radzeknes novads', 442),
-(2147, 'ar', 'Rūjienas novads', 443),
-(2148, 'ar', 'بلدية سالاسغريفا', 444),
-(2149, 'ar', 'روايات سالاس', 445),
-(2150, 'ar', 'Salaspils novads', 446),
-(2151, 'ar', 'روايات سالدوس', 447),
-(2152, 'ar', 'Novuls Saulkrastu', 448),
-(2153, 'ar', 'سيغولداس روايات', 449),
-(2154, 'ar', 'Skrundas novads', 450),
-(2155, 'ar', 'مقاطعة Skrīveri', 451),
-(2156, 'ar', 'يبتسم الروايات', 452),
-(2157, 'ar', 'روايات Stopiņu', 453),
-(2158, 'ar', 'روايات Stren novu', 454),
-(2159, 'ar', 'سجاس روايات', 455),
-(2160, 'ar', 'روايات تالسو', 456),
-(2161, 'ar', 'توكوما الروايات', 457),
-(2162, 'ar', 'Tērvetes novads', 458),
-(2163, 'ar', 'Vaiņodes novads', 459),
-(2164, 'ar', 'فالكاس الروايات', 460),
-(2165, 'ar', 'فالميراس الروايات', 461),
-(2166, 'ar', 'مقاطعة فاكلاني', 462),
-(2167, 'ar', 'Vecpiebalgas novads', 463),
-(2168, 'ar', 'روايات Vecumnieku', 464),
-(2169, 'ar', 'فنتسبيلس الروايات', 465),
-(2170, 'ar', 'Viesītes Novads', 466),
-(2171, 'ar', 'Viļakas novads', 467),
-(2172, 'ar', 'روايات فيناو', 468),
-(2173, 'ar', 'Vārkavas novads', 469),
-(2174, 'ar', 'روايات زيلوبس', 470),
-(2175, 'ar', 'مقاطعة أدازي', 471),
-(2176, 'ar', 'مقاطعة Erglu', 472),
-(2177, 'ar', 'مقاطعة كيغمس', 473),
-(2178, 'ar', 'مقاطعة كيكافا', 474),
-(2179, 'ar', 'Alytaus Apskritis', 475),
-(2180, 'ar', 'كاونو ابكريتيس', 476),
-(2181, 'ar', 'Klaipėdos apskritis', 477),
-(2182, 'ar', 'Marijampol\'s apskritis', 478),
-(2183, 'ar', 'Panevėžio apskritis', 479),
-(2184, 'ar', 'uliaulių apskritis', 480),
-(2185, 'ar', 'Taurag\'s apskritis', 481),
-(2186, 'ar', 'Telšių apskritis', 482),
-(2187, 'ar', 'Utenos apskritis', 483),
-(2188, 'ar', 'فيلنياوس ابكريتيس', 484),
-(2189, 'ar', 'فدان', 485),
-(2190, 'ar', 'ألاغواس', 486),
-(2191, 'ar', 'أمابا', 487),
-(2192, 'ar', 'أمازوناس', 488),
-(2193, 'ar', 'باهيا', 489),
-(2194, 'ar', 'سيارا', 490),
-(2195, 'ar', 'إسبيريتو سانتو', 491),
-(2196, 'ar', 'غوياس', 492),
-(2197, 'ar', 'مارانهاو', 493),
-(2198, 'ar', 'ماتو جروسو', 494),
-(2199, 'ar', 'ماتو جروسو دو سول', 495),
-(2200, 'ar', 'ميناس جريس', 496),
-(2201, 'ar', 'بارا', 497),
-(2202, 'ar', 'بارايبا', 498),
-(2203, 'ar', 'بارانا', 499),
-(2204, 'ar', 'بيرنامبوكو', 500),
-(2205, 'ar', 'بياوي', 501),
-(2206, 'ar', 'ريو دي جانيرو', 502),
-(2207, 'ar', 'ريو غراندي دو نورتي', 503),
-(2208, 'ar', 'ريو غراندي دو سول', 504),
-(2209, 'ar', 'روندونيا', 505),
-(2210, 'ar', 'رورايما', 506),
-(2211, 'ar', 'سانتا كاتارينا', 507),
-(2212, 'ar', 'ساو باولو', 508),
-(2213, 'ar', 'سيرغيبي', 509),
-(2214, 'ar', 'توكانتينز', 510),
-(2215, 'ar', 'وفي مقاطعة الاتحادية', 511),
-(2216, 'ar', 'Zagrebačka زوبانيا', 512),
-(2217, 'ar', 'Krapinsko-zagorska زوبانيا', 513),
-(2218, 'ar', 'Sisačko-moslavačka زوبانيا', 514),
-(2219, 'ar', 'كارلوفيتش شوبانيا', 515),
-(2220, 'ar', 'فارادينسكا زوبانيجا', 516),
-(2221, 'ar', 'Koprivničko-križevačka زوبانيجا', 517),
-(2222, 'ar', 'بيلوفارسكو-بيلوجورسكا', 518),
-(2223, 'ar', 'بريمورسكو غورانسكا سوبانيا', 519),
-(2224, 'ar', 'ليكو سينيسكا زوبانيا', 520),
-(2225, 'ar', 'Virovitičko-podravska زوبانيا', 521),
-(2226, 'ar', 'Požeško-slavonska županija', 522),
-(2227, 'ar', 'Brodsko-posavska županija', 523),
-(2228, 'ar', 'زادارسكا زوبانيجا', 524),
-(2229, 'ar', 'Osječko-baranjska županija', 525),
-(2230, 'ar', 'شيبنسكو-كنينسكا سوبانيا', 526),
-(2231, 'ar', 'Virovitičko-podravska زوبانيا', 527),
-(2232, 'ar', 'Splitsko-dalmatinska زوبانيا', 528),
-(2233, 'ar', 'Istarska زوبانيا', 529),
-(2234, 'ar', 'Dubrovačko-neretvanska زوبانيا', 530),
-(2235, 'ar', 'Međimurska زوبانيا', 531),
-(2236, 'ar', 'غراد زغرب', 532),
-(2237, 'ar', 'جزر أندامان ونيكوبار', 533),
-(2238, 'ar', 'ولاية اندرا براديش', 534),
-(2239, 'ar', 'اروناتشال براديش', 535),
-(2240, 'ar', 'أسام', 536),
-(2241, 'ar', 'بيهار', 537),
-(2242, 'ar', 'شانديغار', 538),
-(2243, 'ar', 'تشهاتيسجاره', 539),
-(2244, 'ar', 'دادرا ونجار هافيلي', 540),
-(2245, 'ar', 'دامان وديو', 541),
-(2246, 'ar', 'دلهي', 542),
-(2247, 'ar', 'غوا', 543),
-(2248, 'ar', 'غوجارات', 544),
-(2249, 'ar', 'هاريانا', 545),
-(2250, 'ar', 'هيماشال براديش', 546),
-(2251, 'ar', 'جامو وكشمير', 547),
-(2252, 'ar', 'جهارخاند', 548),
-(2253, 'ar', 'كارناتاكا', 549),
-(2254, 'ar', 'ولاية كيرالا', 550),
-(2255, 'ar', 'اكشادويب', 551),
-(2256, 'ar', 'ماديا براديش', 552),
-(2257, 'ar', 'ماهاراشترا', 553),
-(2258, 'ar', 'مانيبور', 554),
-(2259, 'ar', 'ميغالايا', 555),
-(2260, 'ar', 'ميزورام', 556),
-(2261, 'ar', 'ناجالاند', 557),
-(2262, 'ar', 'أوديشا', 558),
-(2263, 'ar', 'بودوتشيري', 559),
-(2264, 'ar', 'البنجاب', 560),
-(2265, 'ar', 'راجستان', 561),
-(2266, 'ar', 'سيكيم', 562),
-(2267, 'ar', 'تاميل نادو', 563),
-(2268, 'ar', 'تيلانجانا', 564),
-(2269, 'ar', 'تريبورا', 565),
-(2270, 'ar', 'ولاية اوتار براديش', 566),
-(2271, 'ar', 'أوتارانتشال', 567),
-(2272, 'ar', 'البنغال الغربية', 568),
-(2273, 'fa', 'آلاباما', 1),
-(2274, 'fa', 'آلاسکا', 2),
-(2275, 'fa', 'ساموآ آمریکایی', 3),
-(2276, 'fa', 'آریزونا', 4),
-(2277, 'fa', 'آرکانزاس', 5),
-(2278, 'fa', 'نیروهای مسلح آفریقا', 6),
-(2279, 'fa', 'Armed Forces America', 7),
-(2280, 'fa', 'نیروهای مسلح کانادا', 8),
-(2281, 'fa', 'نیروهای مسلح اروپا', 9),
-(2282, 'fa', 'نیروهای مسلح خاورمیانه', 10),
-(2283, 'fa', 'نیروهای مسلح اقیانوس آرام', 11),
-(2284, 'fa', 'کالیفرنیا', 12),
-(2285, 'fa', 'کلرادو', 13),
-(2286, 'fa', 'کانکتیکات', 14),
-(2287, 'fa', 'دلاور', 15),
-(2288, 'fa', 'منطقه کلمبیا', 16),
-(2289, 'fa', 'ایالات فدرال میکرونزی', 17),
-(2290, 'fa', 'فلوریدا', 18),
-(2291, 'fa', 'جورجیا', 19),
-(2292, 'fa', 'گوام', 20),
-(2293, 'fa', 'هاوایی', 21),
-(2294, 'fa', 'آیداهو', 22),
-(2295, 'fa', 'ایلینویز', 23),
-(2296, 'fa', 'ایندیانا', 24),
-(2297, 'fa', 'آیووا', 25),
-(2298, 'fa', 'کانزاس', 26),
-(2299, 'fa', 'کنتاکی', 27),
-(2300, 'fa', 'لوئیزیانا', 28),
-(2301, 'fa', 'ماین', 29),
-(2302, 'fa', 'مای', 30),
-(2303, 'fa', 'مریلند', 31),
-(2304, 'fa', ' ', 32),
-(2305, 'fa', 'میشیگان', 33),
-(2306, 'fa', 'مینه سوتا', 34),
-(2307, 'fa', 'می سی سی پی', 35),
-(2308, 'fa', 'میسوری', 36),
-(2309, 'fa', 'مونتانا', 37),
-(2310, 'fa', 'نبراسکا', 38),
-(2311, 'fa', 'نواد', 39),
-(2312, 'fa', 'نیوهمپشایر', 40),
-(2313, 'fa', 'نیوجرسی', 41),
-(2314, 'fa', 'نیومکزیکو', 42),
-(2315, 'fa', 'نیویورک', 43),
-(2316, 'fa', 'کارولینای شمالی', 44),
-(2317, 'fa', 'داکوتای شمالی', 45),
-(2318, 'fa', 'جزایر ماریانای شمالی', 46),
-(2319, 'fa', 'اوهایو', 47),
-(2320, 'fa', 'اوکلاهما', 48),
-(2321, 'fa', 'اورگان', 49),
-(2322, 'fa', 'پالائو', 50),
-(2323, 'fa', 'پنسیلوانیا', 51),
-(2324, 'fa', 'پورتوریکو', 52),
-(2325, 'fa', 'رود آیلند', 53),
-(2326, 'fa', 'کارولینای جنوبی', 54),
-(2327, 'fa', 'داکوتای جنوبی', 55),
-(2328, 'fa', 'تنسی', 56),
-(2329, 'fa', 'تگزاس', 57),
-(2330, 'fa', 'یوتا', 58),
-(2331, 'fa', 'ورمونت', 59),
-(2332, 'fa', 'جزایر ویرجین', 60),
-(2333, 'fa', 'ویرجینیا', 61),
-(2334, 'fa', 'واشنگتن', 62),
-(2335, 'fa', 'ویرجینیای غربی', 63),
-(2336, 'fa', 'ویسکانسین', 64),
-(2337, 'fa', 'وایومینگ', 65),
-(2338, 'fa', 'آلبرتا', 66),
-(2339, 'fa', 'بریتیش کلمبیا', 67),
-(2340, 'fa', 'مانیتوبا', 68),
-(2341, 'fa', 'نیوفاندلند و لابرادور', 69),
-(2342, 'fa', 'نیوبرانزویک', 70),
-(2343, 'fa', 'نوا اسکوشیا', 71),
-(2344, 'fa', 'سرزمینهای شمال غربی', 72),
-(2345, 'fa', 'نوناووت', 73),
-(2346, 'fa', 'انتاریو', 74),
-(2347, 'fa', 'جزیره پرنس ادوارد', 75),
-(2348, 'fa', 'کبک', 76),
-(2349, 'fa', 'ساسکاتچوان', 77),
-(2350, 'fa', 'قلمرو یوکان', 78),
-(2351, 'fa', 'نیدرزاکسن', 79),
-(2352, 'fa', 'بادن-وورتمبرگ', 80),
-(2353, 'fa', 'بایرن', 81),
-(2354, 'fa', 'برلین', 82),
-(2355, 'fa', 'براندنبورگ', 83),
-(2356, 'fa', 'برمن', 84),
-(2357, 'fa', 'هامبور', 85),
-(2358, 'fa', 'هسن', 86),
-(2359, 'fa', 'مکلنبورگ-وورپومرن', 87),
-(2360, 'fa', 'نوردراین-وستفالن', 88),
-(2361, 'fa', 'راینلاند-پلاتینات', 89),
-(2362, 'fa', 'سارلند', 90),
-(2363, 'fa', 'ساچسن', 91),
-(2364, 'fa', 'ساچسن-آنهالت', 92),
-(2365, 'fa', 'شلسویگ-هولشتاین', 93),
-(2366, 'fa', 'تورینگی', 94),
-(2367, 'fa', 'وین', 95),
-(2368, 'fa', 'اتریش پایین', 96),
-(2369, 'fa', 'اتریش فوقانی', 97),
-(2370, 'fa', 'سالزبورگ', 98),
-(2371, 'fa', 'کارنتا', 99),
-(2372, 'fa', 'Steiermar', 100),
-(2373, 'fa', 'تیرول', 101),
-(2374, 'fa', 'بورگنلن', 102),
-(2375, 'fa', 'Vorarlber', 103),
-(2376, 'fa', 'آرگ', 104),
-(2377, 'fa', '', 105),
-(2378, 'fa', 'اپنزلسرهودن', 106),
-(2379, 'fa', 'بر', 107),
-(2380, 'fa', 'بازل-لندشفت', 108),
-(2381, 'fa', 'بازل استاد', 109),
-(2382, 'fa', 'فرایبورگ', 110),
-(2383, 'fa', 'گنف', 111),
-(2384, 'fa', 'گلاروس', 112),
-(2385, 'fa', 'Graubünde', 113),
-(2386, 'fa', 'ژورا', 114),
-(2387, 'fa', 'لوزرن', 115),
-(2388, 'fa', 'نوینبور', 116),
-(2389, 'fa', 'نیدالد', 117),
-(2390, 'fa', 'اوبولدن', 118),
-(2391, 'fa', 'سنت گالن', 119),
-(2392, 'fa', 'شافهاوز', 120),
-(2393, 'fa', 'سولوتور', 121),
-(2394, 'fa', 'شووی', 122),
-(2395, 'fa', 'تورگاو', 123),
-(2396, 'fa', 'تسسی', 124),
-(2397, 'fa', 'اوری', 125),
-(2398, 'fa', 'وادت', 126),
-(2399, 'fa', 'والی', 127),
-(2400, 'fa', 'ز', 128),
-(2401, 'fa', 'زوریخ', 129),
-(2402, 'fa', 'کورونا', 130),
-(2403, 'fa', 'آلاوا', 131),
-(2404, 'fa', 'آلبوم', 132),
-(2405, 'fa', 'آلیکانت', 133),
-(2406, 'fa', 'آلمریا', 134),
-(2407, 'fa', 'آستوریا', 135),
-(2408, 'fa', 'آویلا', 136),
-(2409, 'fa', 'باداژوز', 137),
-(2410, 'fa', 'ضرب و شتم', 138),
-(2411, 'fa', 'بارسلون', 139),
-(2412, 'fa', 'بورگو', 140),
-(2413, 'fa', 'کاسر', 141),
-(2414, 'fa', 'کادی', 142),
-(2415, 'fa', 'کانتابریا', 143),
-(2416, 'fa', 'کاستلون', 144),
-(2417, 'fa', 'سوت', 145),
-(2418, 'fa', 'سیوداد واقعی', 146),
-(2419, 'fa', 'کوردوب', 147),
-(2420, 'fa', 'Cuenc', 148),
-(2421, 'fa', 'جیرون', 149),
-(2422, 'fa', 'گراناد', 150),
-(2423, 'fa', 'گوادالاجار', 151),
-(2424, 'fa', 'Guipuzcoa', 152),
-(2425, 'fa', 'هولوا', 153),
-(2426, 'fa', 'هوسک', 154),
-(2427, 'fa', 'جی', 155),
-(2428, 'fa', 'لا ریوجا', 156),
-(2429, 'fa', 'لاس پالماس', 157),
-(2430, 'fa', 'لئو', 158),
-(2431, 'fa', 'Lleid', 159),
-(2432, 'fa', 'لوگ', 160),
-(2433, 'fa', 'مادری', 161),
-(2434, 'fa', 'مالاگ', 162),
-(2435, 'fa', 'ملیلی', 163),
-(2436, 'fa', 'مورسیا', 164),
-(2437, 'fa', 'ناوار', 165),
-(2438, 'fa', 'اورنس', 166),
-(2439, 'fa', 'پالنسی', 167),
-(2440, 'fa', 'پونتوودر', 168),
-(2441, 'fa', 'سالامانک', 169),
-(2442, 'fa', 'سانتا کروز د تنریفه', 170),
-(2443, 'fa', 'سوگویا', 171),
-(2444, 'fa', 'سوی', 172),
-(2445, 'fa', 'سوریا', 173),
-(2446, 'fa', 'تاراگونا', 174),
-(2447, 'fa', 'ترئو', 175),
-(2448, 'fa', 'تولدو', 176),
-(2449, 'fa', 'والنسیا', 177),
-(2450, 'fa', 'والادولی', 178),
-(2451, 'fa', 'ویزکایا', 179),
-(2452, 'fa', 'زامور', 180),
-(2453, 'fa', 'ساراگوز', 181),
-(2454, 'fa', 'عی', 182),
-(2455, 'fa', 'آیز', 183),
-(2456, 'fa', 'آلی', 184),
-(2457, 'fa', 'آلپ-دو-هاوت-پرووانس', 185),
-(2458, 'fa', 'هاوتس آلپ', 186),
-(2459, 'fa', 'Alpes-Maritime', 187),
-(2460, 'fa', 'اردچه', 188),
-(2461, 'fa', 'آرد', 189),
-(2462, 'fa', 'محاصر', 190),
-(2463, 'fa', 'آبه', 191),
-(2464, 'fa', 'Aud', 192),
-(2465, 'fa', 'آویرون', 193),
-(2466, 'fa', 'BOCAS DO Rhône', 194),
-(2467, 'fa', 'نوعی عرق', 195),
-(2468, 'fa', 'کانتینال', 196),
-(2469, 'fa', 'چارنت', 197),
-(2470, 'fa', 'چارنت-دریایی', 198),
-(2471, 'fa', 'چ', 199),
-(2472, 'fa', 'کور', 200),
-(2473, 'fa', 'کرس دو ساد', 201),
-(2474, 'fa', 'هاوت کورس', 202),
-(2475, 'fa', 'کوستا دورکرز', 203),
-(2476, 'fa', 'تخت دارمور', 204),
-(2477, 'fa', 'درهم', 205),
-(2478, 'fa', 'دوردگن', 206),
-(2479, 'fa', 'دوب', 207),
-(2480, 'fa', 'تعریف اول', 208),
-(2481, 'fa', 'یور', 209),
-(2482, 'fa', 'Eure-et-Loi', 210),
-(2483, 'fa', 'فمینیست', 211),
-(2484, 'fa', 'باغ', 212),
-(2485, 'fa', 'اوت-گارون', 213),
-(2486, 'fa', 'گر', 214),
-(2487, 'fa', 'جیروند', 215),
-(2488, 'fa', 'هیر', 216),
-(2489, 'fa', 'هشدار داده می شود', 217),
-(2490, 'fa', 'ایندور', 218),
-(2491, 'fa', 'Indre-et-Loir', 219),
-(2492, 'fa', 'ایزر', 220),
-(2493, 'fa', 'یور', 221),
-(2494, 'fa', 'لندز', 222),
-(2495, 'fa', 'Loir-et-Che', 223),
-(2496, 'fa', 'وام گرفتن', 224),
-(2497, 'fa', 'Haute-Loir', 225),
-(2498, 'fa', 'Loire-Atlantiqu', 226),
-(2499, 'fa', 'لیرت', 227),
-(2500, 'fa', 'لوط', 228),
-(2501, 'fa', 'لوت و گارون', 229),
-(2502, 'fa', 'لوزر', 230),
-(2503, 'fa', 'ماین et-Loire', 231),
-(2504, 'fa', 'مانچ', 232),
-(2505, 'fa', 'مارن', 233),
-(2506, 'fa', 'هاوت-مارن', 234),
-(2507, 'fa', 'مایین', 235),
-(2508, 'fa', 'مورته-et-Moselle', 236),
-(2509, 'fa', 'مسخره کردن', 237),
-(2510, 'fa', 'موربیان', 238),
-(2511, 'fa', 'موزل', 239),
-(2512, 'fa', 'Nièvr', 240),
-(2513, 'fa', 'نورد', 241),
-(2514, 'fa', 'اوی', 242),
-(2515, 'fa', 'ارن', 243),
-(2516, 'fa', 'پاس-کاله', 244),
-(2517, 'fa', 'Puy-de-Dôm', 245),
-(2518, 'fa', 'Pyrénées-Atlantiques', 246),
-(2519, 'fa', 'Hautes-Pyrénée', 247),
-(2520, 'fa', 'Pyrénées-Orientales', 248),
-(2521, 'fa', 'بس راین', 249),
-(2522, 'fa', 'هاوت-رین', 250),
-(2523, 'fa', 'رو', 251),
-(2524, 'fa', 'Haute-Saône', 252),
-(2525, 'fa', 'Saône-et-Loire', 253),
-(2526, 'fa', 'سارته', 254),
-(2527, 'fa', 'ساووی', 255),
-(2528, 'fa', 'هاو-ساووی', 256),
-(2529, 'fa', 'پاری', 257),
-(2530, 'fa', 'Seine-Maritime', 258),
-(2531, 'fa', 'Seine-et-Marn', 259),
-(2532, 'fa', 'ایولینز', 260),
-(2533, 'fa', 'Deux-Sèvres', 261),
-(2534, 'fa', 'سمی', 262),
-(2535, 'fa', 'ضعف', 263),
-(2536, 'fa', 'Tarn-et-Garonne', 264),
-(2537, 'fa', 'وار', 265),
-(2538, 'fa', 'ووکلوز', 266),
-(2539, 'fa', 'وندیه', 267),
-(2540, 'fa', 'وین', 268),
-(2541, 'fa', 'هاوت-وین', 269),
-(2542, 'fa', 'رأی دادن', 270),
-(2543, 'fa', 'یون', 271),
-(2544, 'fa', 'سرزمین-دو-بلفورت', 272),
-(2545, 'fa', 'اسون', 273),
-(2546, 'fa', 'هاوتز دی سی', 274),
-(2547, 'fa', 'Seine-Saint-Deni', 275),
-(2548, 'fa', 'والد مارن', 276),
-(2549, 'fa', 'Val-d\'Ois', 277),
-(2550, 'fa', 'آلبا', 278),
-(2551, 'fa', 'آرا', 279),
-(2552, 'fa', 'Argeș', 280),
-(2553, 'fa', 'باکو', 281),
-(2554, 'fa', 'بیهور', 282),
-(2555, 'fa', 'بیستریا-نسوود', 283),
-(2556, 'fa', 'بوتانی', 284),
-(2557, 'fa', 'برازوف', 285),
-(2558, 'fa', 'Brăila', 286),
-(2559, 'fa', 'București', 287),
-(2560, 'fa', 'بوز', 288),
-(2561, 'fa', 'کارا- Severin', 289),
-(2562, 'fa', 'کالیراسی', 290),
-(2563, 'fa', 'كلوژ', 291),
-(2564, 'fa', 'کنستانس', 292),
-(2565, 'fa', 'کواسنا', 293),
-(2566, 'fa', 'Dâmbovița', 294),
-(2567, 'fa', 'دال', 295),
-(2568, 'fa', 'گالشی', 296),
-(2569, 'fa', 'جورجیو', 297),
-(2570, 'fa', 'گور', 298),
-(2571, 'fa', 'هارگیتا', 299),
-(2572, 'fa', 'هوندهار', 300),
-(2573, 'fa', 'ایالومیشا', 301),
-(2574, 'fa', 'Iași', 302),
-(2575, 'fa', 'Ilfo', 303),
-(2576, 'fa', 'Maramureș', 304),
-(2577, 'fa', 'Mehedinți', 305),
-(2578, 'fa', 'Mureș', 306),
-(2579, 'fa', 'Neamț', 307),
-(2580, 'fa', 'اولت', 308),
-(2581, 'fa', 'پرهوا', 309),
-(2582, 'fa', 'ستو ماره', 310),
-(2583, 'fa', 'سلاج', 311),
-(2584, 'fa', 'سیبیو', 312),
-(2585, 'fa', 'سوساو', 313),
-(2586, 'fa', 'تلورمان', 314),
-(2587, 'fa', 'تیمیچ', 315),
-(2588, 'fa', 'تولسا', 316),
-(2589, 'fa', 'واسلوئی', 317),
-(2590, 'fa', 'Vâlcea', 318),
-(2591, 'fa', 'ورانسا', 319),
-(2592, 'fa', 'لاپی', 320),
-(2593, 'fa', 'Pohjois-Pohjanmaa', 321),
-(2594, 'fa', 'کائینو', 322),
-(2595, 'fa', 'Pohjois-Karjala', 323),
-(2596, 'fa', 'Pohjois-Savo', 324),
-(2597, 'fa', 'اتل-ساوو', 325),
-(2598, 'fa', 'کسکی-پوهانما', 326),
-(2599, 'fa', 'Pohjanmaa', 327),
-(2600, 'fa', 'پیرکانما', 328),
-(2601, 'fa', 'ساتاکونتا', 329),
-(2602, 'fa', 'کسکی-پوهانما', 330),
-(2603, 'fa', 'کسکی-سوومی', 331),
-(2604, 'fa', 'Varsinais-Suomi', 332),
-(2605, 'fa', 'اتلی کرجالا', 333),
-(2606, 'fa', 'Päijät-HAM', 334),
-(2607, 'fa', 'کانتا-هوم', 335),
-(2608, 'fa', 'یوسیما', 336),
-(2609, 'fa', 'اوسیم', 337),
-(2610, 'fa', 'کیمنلاکو', 338),
-(2611, 'fa', 'آونوانما', 339),
-(2612, 'fa', 'هارژوم', 340),
-(2613, 'fa', 'سلا', 341),
-(2614, 'fa', 'آیدا-ویروما', 342),
-(2615, 'fa', 'Jõgevamaa', 343),
-(2616, 'fa', 'جوروماا', 344),
-(2617, 'fa', 'لونما', 345),
-(2618, 'fa', 'لون-ویروما', 346),
-(2619, 'fa', 'پالوماا', 347),
-(2620, 'fa', 'پورنوما', 348),
-(2621, 'fa', 'Raplama', 349),
-(2622, 'fa', 'ساارما', 350),
-(2623, 'fa', 'تارتوما', 351),
-(2624, 'fa', 'والگام', 352),
-(2625, 'fa', 'ویلجاندیم', 353),
-(2626, 'fa', 'Võrumaa', 354),
-(2627, 'fa', 'داگاوپیل', 355),
-(2628, 'fa', 'جلگاو', 356),
-(2629, 'fa', 'جکابیل', 357),
-(2630, 'fa', 'جرمل', 358),
-(2631, 'fa', 'لیپجا', 359),
-(2632, 'fa', 'شهرستان لیپاج', 360),
-(2633, 'fa', 'روژن', 361),
-(2634, 'fa', 'راگ', 362),
-(2635, 'fa', 'شهرستان ریگ', 363),
-(2636, 'fa', 'والمییرا', 364),
-(2637, 'fa', 'Ventspils', 365),
-(2638, 'fa', 'آگلوناس نوادا', 366),
-(2639, 'fa', 'تازه کاران آیزکرایکلس', 367),
-(2640, 'fa', 'تازه واردان', 368),
-(2641, 'fa', 'شهرستا', 369),
-(2642, 'fa', 'نوازندگان آلوجاس', 370),
-(2643, 'fa', 'تازه های آلسونگاس', 371),
-(2644, 'fa', 'شهرستان آلوکس', 372),
-(2645, 'fa', 'تازه کاران آماتاس', 373),
-(2646, 'fa', 'میمون های تازه', 374),
-(2647, 'fa', 'نوادا را آویز می کند', 375),
-(2648, 'fa', 'شهرستان بابی', 376),
-(2649, 'fa', 'Baldones novad', 377),
-(2650, 'fa', 'نوین های بالتیناوا', 378),
-(2651, 'fa', 'Balvu novad', 379),
-(2652, 'fa', 'نوازندگان باسکاس', 380),
-(2653, 'fa', 'شهرستان بورین', 381),
-(2654, 'fa', 'شهرستان بروچن', 382),
-(2655, 'fa', 'بوردنیکو نوآوران', 383),
-(2656, 'fa', 'تازه کارنیکاوا', 384),
-(2657, 'fa', 'نوازان سزوینس', 385),
-(2658, 'fa', 'نوادگان Cibla', 386),
-(2659, 'fa', 'شهرستان Cesis', 387),
-(2660, 'fa', 'تازه های داگدا', 388),
-(2661, 'fa', 'داوگاوپیلز نوادا', 389),
-(2662, 'fa', 'دابل نوادی', 390),
-(2663, 'fa', 'تازه کارهای دنداگاس', 391),
-(2664, 'fa', 'نوباد دوربس', 392),
-(2665, 'fa', 'مشغول تازه کارها است', 393),
-(2666, 'fa', 'گرکالنس نواد', 394),
-(2667, 'fa', 'یا شهرستان گروبی', 395),
-(2668, 'fa', 'تازه های گلبنس', 396),
-(2669, 'fa', 'Iecavas novads', 397),
-(2670, 'fa', 'شهرستان ایسکل', 398),
-(2671, 'fa', 'ایالت ایلکست', 399),
-(2672, 'fa', 'کنددو د اینچوکالن', 400),
-(2673, 'fa', 'نوجواد Jaunjelgavas', 401),
-(2674, 'fa', 'تازه های Jaunpiebalgas', 402),
-(2675, 'fa', 'شهرستان جونپیلس', 403),
-(2676, 'fa', 'شهرستان جگلو', 404),
-(2677, 'fa', 'شهرستان جکابیل', 405),
-(2678, 'fa', 'شهرستان کنداوا', 406),
-(2679, 'fa', 'شهرستان کوکنز', 407),
-(2680, 'fa', 'شهرستان کریمولد', 408),
-(2681, 'fa', 'شهرستان کرستپیل', 409),
-(2682, 'fa', 'شهرستان کراسلاو', 410),
-(2683, 'fa', 'کاندادو د کلدیگا', 411),
-(2684, 'fa', 'کاندادو د کارساوا', 412),
-(2685, 'fa', 'شهرستان لیولوارد', 413),
-(2686, 'fa', 'شهرستان لیمباشی', 414),
-(2687, 'fa', 'ای ولسوالی لوبون', 415),
-(2688, 'fa', 'شهرستان لودزا', 416),
-(2689, 'fa', 'شهرستان لیگات', 417),
-(2690, 'fa', 'شهرستان لیوانی', 418),
-(2691, 'fa', 'شهرستان مادونا', 419),
-(2692, 'fa', 'شهرستان مازسال', 420),
-(2693, 'fa', 'شهرستان مالپیلس', 421),
-(2694, 'fa', 'شهرستان Mārupe', 422),
-(2695, 'fa', 'ا کنددو د نوکشنی', 423),
-(2696, 'fa', 'کاملاً یک شهرستان', 424),
-(2697, 'fa', 'شهرستان نیکا', 425),
-(2698, 'fa', 'شهرستان اوگر', 426),
-(2699, 'fa', 'شهرستان اولین', 427),
-(2700, 'fa', 'شهرستان اوزولنیکی', 428),
-(2701, 'fa', 'شهرستان پرلیلی', 429),
-(2702, 'fa', 'شهرستان Priekule', 430),
-(2703, 'fa', 'Condado de Priekuļi', 431),
-(2704, 'fa', 'شهرستان در حال حرکت', 432),
-(2705, 'fa', 'شهرستان پاویلوستا', 433),
-(2706, 'fa', 'شهرستان Plavinas', 4),
-(2707, 'fa', 'شهرستان راونا', 435),
-(2708, 'fa', 'شهرستان ریبیشی', 436),
-(2709, 'fa', 'شهرستان روجا', 437),
-(2710, 'fa', 'شهرستان روپازی', 438),
-(2711, 'fa', 'شهرستان روساوا', 439),
-(2712, 'fa', 'شهرستان روگی', 440),
-(2713, 'fa', 'شهرستان راندل', 441),
-(2714, 'fa', 'شهرستان ریزکن', 442),
-(2715, 'fa', 'شهرستان روژینا', 443),
-(2716, 'fa', 'شهرداری Salacgriva', 444),
-(2717, 'fa', 'منطقه جزیره', 445),
-(2718, 'fa', 'شهرستان Salaspils', 446),
-(2719, 'fa', 'شهرستان سالدوس', 447),
-(2720, 'fa', 'شهرستان ساولکرستی', 448),
-(2721, 'fa', 'شهرستان سیگولدا', 449),
-(2722, 'fa', 'شهرستان Skrunda', 450),
-(2723, 'fa', 'شهرستان Skrīveri', 451),
-(2724, 'fa', 'شهرستان Smiltene', 452),
-(2725, 'fa', 'شهرستان ایستینی', 453),
-(2726, 'fa', 'شهرستان استرنشی', 454),
-(2727, 'fa', 'منطقه کاشت', 455),
-(2728, 'fa', 'شهرستان تالسی', 456),
-(2729, 'fa', 'توکومس', 457),
-(2730, 'fa', 'شهرستان تورت', 458),
-(2731, 'fa', 'یا شهرستان وایودود', 459),
-(2732, 'fa', 'شهرستان والکا', 460),
-(2733, 'fa', 'شهرستان Valmiera', 461),
-(2734, 'fa', 'شهرستان وارکانی', 462),
-(2735, 'fa', 'شهرستان Vecpiebalga', 463),
-(2736, 'fa', 'شهرستان وکومنیکی', 464),
-(2737, 'fa', 'شهرستان ونتسپیل', 465),
-(2738, 'fa', 'کنددو د بازدید', 466),
-(2739, 'fa', 'شهرستان ویلاکا', 467),
-(2740, 'fa', 'شهرستان ویلانی', 468),
-(2741, 'fa', 'شهرستان واركاوا', 469),
-(2742, 'fa', 'شهرستان زیلوپ', 470),
-(2743, 'fa', 'شهرستان آدازی', 471),
-(2744, 'fa', 'شهرستان ارگلو', 472),
-(2745, 'fa', 'شهرستان کگومس', 473),
-(2746, 'fa', 'شهرستان ککاوا', 474),
-(2747, 'fa', 'شهرستان Alytus', 475),
-(2748, 'fa', 'شهرستان Kaunas', 476),
-(2749, 'fa', 'شهرستان کلایپدا', 477),
-(2750, 'fa', 'شهرستان ماریجامپولی', 478),
-(2751, 'fa', 'شهرستان پانویسیز', 479),
-(2752, 'fa', 'شهرستان سیاولیا', 480),
-(2753, 'fa', 'شهرستان تاجیج', 481),
-(2754, 'fa', 'شهرستان تلشیا', 482),
-(2755, 'fa', 'شهرستان اوتنا', 483),
-(2756, 'fa', 'شهرستان ویلنیوس', 484),
-(2757, 'fa', 'جریب', 485),
-(2758, 'fa', 'حالت', 486),
-(2759, 'fa', 'آمپá', 487),
-(2760, 'fa', 'آمازون', 488),
-(2761, 'fa', 'باهی', 489),
-(2762, 'fa', 'سارا', 490),
-(2763, 'fa', 'روح القدس', 491),
-(2764, 'fa', 'برو', 492),
-(2765, 'fa', 'مارانهائ', 493),
-(2766, 'fa', 'ماتو گروسو', 494),
-(2767, 'fa', 'Mato Grosso do Sul', 495),
-(2768, 'fa', 'ایالت میناس گرایس', 496),
-(2769, 'fa', 'پار', 497),
-(2770, 'fa', 'حالت', 498),
-(2771, 'fa', 'پارانا', 499),
-(2772, 'fa', 'حال', 500),
-(2773, 'fa', 'پیازو', 501),
-(2774, 'fa', 'ریو دوژانیرو', 502),
-(2775, 'fa', 'ریو گراند دو نورته', 503),
-(2776, 'fa', 'ریو گراند دو سول', 504),
-(2777, 'fa', 'Rondôni', 505),
-(2778, 'fa', 'Roraim', 506),
-(2779, 'fa', 'سانتا کاتارینا', 507),
-(2780, 'fa', 'پ', 508),
-(2781, 'fa', 'Sergip', 509),
-(2782, 'fa', 'توکانتین', 510),
-(2783, 'fa', 'منطقه فدرال', 511),
-(2784, 'fa', 'شهرستان زاگرب', 512),
-(2785, 'fa', 'Condado de Krapina-Zagorj', 513),
-(2786, 'fa', 'شهرستان سیساک-موسلاوینا', 514),
-(2787, 'fa', 'شهرستان کارلوواک', 515),
-(2788, 'fa', 'شهرداری واراžدین', 516),
-(2789, 'fa', 'Condo de Koprivnica-Križevci', 517),
-(2790, 'fa', 'محل سکونت د بیلوار-بلوگورا', 518),
-(2791, 'fa', 'Condado de Primorje-Gorski kotar', 519),
-(2792, 'fa', 'شهرستان لیکا-سنج', 520),
-(2793, 'fa', 'Condado de Virovitica-Podravina', 521),
-(2794, 'fa', 'شهرستان پوژگا-اسلاونیا', 522),
-(2795, 'fa', 'Condado de Brod-Posavina', 523),
-(2796, 'fa', 'شهرستان زجر', 524),
-(2797, 'fa', 'Condado de Osijek-Baranja', 525),
-(2798, 'fa', 'Condo de Sibenik-Knin', 526),
-(2799, 'fa', 'Condado de Vukovar-Srijem', 527),
-(2800, 'fa', 'شهرستان اسپلیت-Dalmatia', 528),
-(2801, 'fa', 'شهرستان ایستیا', 529),
-(2802, 'fa', 'Condado de Dubrovnik-Neretva', 530),
-(2803, 'fa', 'شهرستان Međimurje', 531),
-(2804, 'fa', 'شهر زاگرب', 532),
-(2805, 'fa', 'جزایر آندامان و نیکوبار', 533),
-(2806, 'fa', 'آندرا پرادش', 534),
-(2807, 'fa', 'آروناچال پرادش', 535),
-(2808, 'fa', 'آسام', 536),
-(2809, 'fa', 'Biha', 537),
-(2810, 'fa', 'چاندیگار', 538),
-(2811, 'fa', 'چاتیسگار', 539),
-(2812, 'fa', 'دادرا و نگار هاولی', 540),
-(2813, 'fa', 'دامان و دیو', 541),
-(2814, 'fa', 'دهلی', 542),
-(2815, 'fa', 'گوا', 543),
-(2816, 'fa', 'گجرات', 544),
-(2817, 'fa', 'هاریانا', 545),
-(2818, 'fa', 'هیماچال پرادش', 546),
-(2819, 'fa', 'جامو و کشمیر', 547),
-(2820, 'fa', 'جهخند', 548),
-(2821, 'fa', 'کارناتاکا', 549),
-(2822, 'fa', 'کرال', 550),
-(2823, 'fa', 'لاکشادوپ', 551),
-(2824, 'fa', 'مادیا پرادش', 552),
-(2825, 'fa', 'ماهاراشترا', 553),
-(2826, 'fa', 'مانی پور', 554),
-(2827, 'fa', 'مگالایا', 555),
-(2828, 'fa', 'مزورام', 556),
-(2829, 'fa', 'ناگلند', 557),
-(2830, 'fa', 'ادیشا', 558),
-(2831, 'fa', 'میناکاری', 559),
-(2832, 'fa', 'پنجا', 560),
-(2833, 'fa', 'راجستان', 561),
-(2834, 'fa', 'سیکیم', 562),
-(2835, 'fa', 'تامیل نادو', 563),
-(2836, 'fa', 'تلنگانا', 564),
-(2837, 'fa', 'تریپورا', 565),
-(2838, 'fa', 'اوتار پرادش', 566),
-(2839, 'fa', 'اوتاراکند', 567),
-(2840, 'fa', 'بنگال غرب', 568),
-(2841, 'pt_BR', 'Alabama', 1),
-(2842, 'pt_BR', 'Alaska', 2),
-(2843, 'pt_BR', 'Samoa Americana', 3),
-(2844, 'pt_BR', 'Arizona', 4),
-(2845, 'pt_BR', 'Arkansas', 5),
-(2846, 'pt_BR', 'Forças Armadas da África', 6),
-(2847, 'pt_BR', 'Forças Armadas das Américas', 7),
-(2848, 'pt_BR', 'Forças Armadas do Canadá', 8),
-(2849, 'pt_BR', 'Forças Armadas da Europa', 9),
-(2850, 'pt_BR', 'Forças Armadas do Oriente Médio', 10),
-(2851, 'pt_BR', 'Forças Armadas do Pacífico', 11),
-(2852, 'pt_BR', 'California', 12),
-(2853, 'pt_BR', 'Colorado', 13),
-(2854, 'pt_BR', 'Connecticut', 14),
-(2855, 'pt_BR', 'Delaware', 15),
-(2856, 'pt_BR', 'Distrito de Columbia', 16),
-(2857, 'pt_BR', 'Estados Federados da Micronésia', 17),
-(2858, 'pt_BR', 'Florida', 18),
-(2859, 'pt_BR', 'Geórgia', 19),
-(2860, 'pt_BR', 'Guam', 20),
-(2861, 'pt_BR', 'Havaí', 21),
-(2862, 'pt_BR', 'Idaho', 22),
-(2863, 'pt_BR', 'Illinois', 23),
-(2864, 'pt_BR', 'Indiana', 24),
-(2865, 'pt_BR', 'Iowa', 25),
-(2866, 'pt_BR', 'Kansas', 26),
-(2867, 'pt_BR', 'Kentucky', 27),
-(2868, 'pt_BR', 'Louisiana', 28),
-(2869, 'pt_BR', 'Maine', 29),
-(2870, 'pt_BR', 'Ilhas Marshall', 30),
-(2871, 'pt_BR', 'Maryland', 31),
-(2872, 'pt_BR', 'Massachusetts', 32),
-(2873, 'pt_BR', 'Michigan', 33),
-(2874, 'pt_BR', 'Minnesota', 34),
-(2875, 'pt_BR', 'Mississippi', 35),
-(2876, 'pt_BR', 'Missouri', 36),
-(2877, 'pt_BR', 'Montana', 37),
-(2878, 'pt_BR', 'Nebraska', 38),
-(2879, 'pt_BR', 'Nevada', 39),
-(2880, 'pt_BR', 'New Hampshire', 40),
-(2881, 'pt_BR', 'Nova Jersey', 41),
-(2882, 'pt_BR', 'Novo México', 42),
-(2883, 'pt_BR', 'Nova York', 43),
-(2884, 'pt_BR', 'Carolina do Norte', 44),
-(2885, 'pt_BR', 'Dakota do Norte', 45),
-(2886, 'pt_BR', 'Ilhas Marianas do Norte', 46),
-(2887, 'pt_BR', 'Ohio', 47),
-(2888, 'pt_BR', 'Oklahoma', 48),
-(2889, 'pt_BR', 'Oregon', 4),
-(2890, 'pt_BR', 'Palau', 50),
-(2891, 'pt_BR', 'Pensilvânia', 51),
-(2892, 'pt_BR', 'Porto Rico', 52),
-(2893, 'pt_BR', 'Rhode Island', 53),
-(2894, 'pt_BR', 'Carolina do Sul', 54),
-(2895, 'pt_BR', 'Dakota do Sul', 55),
-(2896, 'pt_BR', 'Tennessee', 56),
-(2897, 'pt_BR', 'Texas', 57),
-(2898, 'pt_BR', 'Utah', 58),
-(2899, 'pt_BR', 'Vermont', 59),
-(2900, 'pt_BR', 'Ilhas Virgens', 60),
-(2901, 'pt_BR', 'Virginia', 61),
-(2902, 'pt_BR', 'Washington', 62),
-(2903, 'pt_BR', 'West Virginia', 63),
-(2904, 'pt_BR', 'Wisconsin', 64),
-(2905, 'pt_BR', 'Wyoming', 65),
-(2906, 'pt_BR', 'Alberta', 66),
-(2907, 'pt_BR', 'Colúmbia Britânica', 67),
-(2908, 'pt_BR', 'Manitoba', 68),
-(2909, 'pt_BR', 'Terra Nova e Labrador', 69),
-(2910, 'pt_BR', 'New Brunswick', 70),
-(2911, 'pt_BR', 'Nova Escócia', 7),
-(2912, 'pt_BR', 'Territórios do Noroeste', 72),
-(2913, 'pt_BR', 'Nunavut', 73),
-(2914, 'pt_BR', 'Ontario', 74),
-(2915, 'pt_BR', 'Ilha do Príncipe Eduardo', 75),
-(2916, 'pt_BR', 'Quebec', 76),
-(2917, 'pt_BR', 'Saskatchewan', 77),
-(2918, 'pt_BR', 'Território yukon', 78),
-(2919, 'pt_BR', 'Niedersachsen', 79),
-(2920, 'pt_BR', 'Baden-Wurttemberg', 80),
-(2921, 'pt_BR', 'Bayern', 81),
-(2922, 'pt_BR', 'Berlim', 82),
-(2923, 'pt_BR', 'Brandenburg', 83),
-(2924, 'pt_BR', 'Bremen', 84),
-(2925, 'pt_BR', 'Hamburgo', 85),
-(2926, 'pt_BR', 'Hessen', 86),
-(2927, 'pt_BR', 'Mecklenburg-Vorpommern', 87),
-(2928, 'pt_BR', 'Nordrhein-Westfalen', 88),
-(2929, 'pt_BR', 'Renânia-Palatinado', 8),
-(2930, 'pt_BR', 'Sarre', 90),
-(2931, 'pt_BR', 'Sachsen', 91),
-(2932, 'pt_BR', 'Sachsen-Anhalt', 92),
-(2933, 'pt_BR', 'Schleswig-Holstein', 93),
-(2934, 'pt_BR', 'Turíngia', 94),
-(2935, 'pt_BR', 'Viena', 95),
-(2936, 'pt_BR', 'Baixa Áustria', 96),
-(2937, 'pt_BR', 'Oberösterreich', 97),
-(2938, 'pt_BR', 'Salzburg', 98),
-(2939, 'pt_BR', 'Caríntia', 99),
-(2940, 'pt_BR', 'Steiermark', 100),
-(2941, 'pt_BR', 'Tirol', 101),
-(2942, 'pt_BR', 'Burgenland', 102),
-(2943, 'pt_BR', 'Vorarlberg', 103),
-(2944, 'pt_BR', 'Aargau', 104),
-(2945, 'pt_BR', 'Appenzell Innerrhoden', 105),
-(2946, 'pt_BR', 'Appenzell Ausserrhoden', 106),
-(2947, 'pt_BR', 'Bern', 107),
-(2948, 'pt_BR', 'Basel-Landschaft', 108),
-(2949, 'pt_BR', 'Basel-Stadt', 109),
-(2950, 'pt_BR', 'Freiburg', 110),
-(2951, 'pt_BR', 'Genf', 111),
-(2952, 'pt_BR', 'Glarus', 112),
-(2953, 'pt_BR', 'Grisons', 113),
-(2954, 'pt_BR', 'Jura', 114),
-(2955, 'pt_BR', 'Luzern', 115),
-(2956, 'pt_BR', 'Neuenburg', 116),
-(2957, 'pt_BR', 'Nidwalden', 117),
-(2958, 'pt_BR', 'Obwalden', 118),
-(2959, 'pt_BR', 'St. Gallen', 119),
-(2960, 'pt_BR', 'Schaffhausen', 120),
-(2961, 'pt_BR', 'Solothurn', 121),
-(2962, 'pt_BR', 'Schwyz', 122),
-(2963, 'pt_BR', 'Thurgau', 123),
-(2964, 'pt_BR', 'Tessin', 124),
-(2965, 'pt_BR', 'Uri', 125),
-(2966, 'pt_BR', 'Waadt', 126),
-(2967, 'pt_BR', 'Wallis', 127),
-(2968, 'pt_BR', 'Zug', 128),
-(2969, 'pt_BR', 'Zurique', 129),
-(2970, 'pt_BR', 'Corunha', 130),
-(2971, 'pt_BR', 'Álava', 131),
-(2972, 'pt_BR', 'Albacete', 132),
-(2973, 'pt_BR', 'Alicante', 133),
-(2974, 'pt_BR', 'Almeria', 134),
-(2975, 'pt_BR', 'Astúrias', 135),
-(2976, 'pt_BR', 'Avila', 136),
-(2977, 'pt_BR', 'Badajoz', 137),
-(2978, 'pt_BR', 'Baleares', 138),
-(2979, 'pt_BR', 'Barcelona', 139),
-(2980, 'pt_BR', 'Burgos', 140),
-(2981, 'pt_BR', 'Caceres', 141),
-(2982, 'pt_BR', 'Cadiz', 142),
-(2983, 'pt_BR', 'Cantábria', 143),
-(2984, 'pt_BR', 'Castellon', 144),
-(2985, 'pt_BR', 'Ceuta', 145),
-(2986, 'pt_BR', 'Ciudad Real', 146),
-(2987, 'pt_BR', 'Cordoba', 147),
-(2988, 'pt_BR', 'Cuenca', 148),
-(2989, 'pt_BR', 'Girona', 149),
-(2990, 'pt_BR', 'Granada', 150),
-(2991, 'pt_BR', 'Guadalajara', 151),
-(2992, 'pt_BR', 'Guipuzcoa', 152),
-(2993, 'pt_BR', 'Huelva', 153),
-(2994, 'pt_BR', 'Huesca', 154),
-(2995, 'pt_BR', 'Jaen', 155),
-(2996, 'pt_BR', 'La Rioja', 156),
-(2997, 'pt_BR', 'Las Palmas', 157),
-(2998, 'pt_BR', 'Leon', 158),
-(2999, 'pt_BR', 'Lleida', 159),
-(3000, 'pt_BR', 'Lugo', 160),
-(3001, 'pt_BR', 'Madri', 161),
-(3002, 'pt_BR', 'Málaga', 162),
-(3003, 'pt_BR', 'Melilla', 163),
-(3004, 'pt_BR', 'Murcia', 164),
-(3005, 'pt_BR', 'Navarra', 165),
-(3006, 'pt_BR', 'Ourense', 166),
-(3007, 'pt_BR', 'Palencia', 167),
-(3008, 'pt_BR', 'Pontevedra', 168),
-(3009, 'pt_BR', 'Salamanca', 169),
-(3010, 'pt_BR', 'Santa Cruz de Tenerife', 170),
-(3011, 'pt_BR', 'Segovia', 171),
-(3012, 'pt_BR', 'Sevilla', 172),
-(3013, 'pt_BR', 'Soria', 173),
-(3014, 'pt_BR', 'Tarragona', 174),
-(3015, 'pt_BR', 'Teruel', 175),
-(3016, 'pt_BR', 'Toledo', 176),
-(3017, 'pt_BR', 'Valencia', 177),
-(3018, 'pt_BR', 'Valladolid', 178),
-(3019, 'pt_BR', 'Vizcaya', 179),
-(3020, 'pt_BR', 'Zamora', 180),
-(3021, 'pt_BR', 'Zaragoza', 181),
-(3022, 'pt_BR', 'Ain', 182),
-(3023, 'pt_BR', 'Aisne', 183),
-(3024, 'pt_BR', 'Allier', 184),
-(3025, 'pt_BR', 'Alpes da Alta Provença', 185),
-(3026, 'pt_BR', 'Altos Alpes', 186),
-(3027, 'pt_BR', 'Alpes-Maritimes', 187),
-(3028, 'pt_BR', 'Ardèche', 188),
-(3029, 'pt_BR', 'Ardennes', 189),
-(3030, 'pt_BR', 'Ariege', 190),
-(3031, 'pt_BR', 'Aube', 191),
-(3032, 'pt_BR', 'Aude', 192),
-(3033, 'pt_BR', 'Aveyron', 193),
-(3034, 'pt_BR', 'BOCAS DO Rhône', 194),
-(3035, 'pt_BR', 'Calvados', 195),
-(3036, 'pt_BR', 'Cantal', 196),
-(3037, 'pt_BR', 'Charente', 197),
-(3038, 'pt_BR', 'Charente-Maritime', 198),
-(3039, 'pt_BR', 'Cher', 199),
-(3040, 'pt_BR', 'Corrèze', 200),
-(3041, 'pt_BR', 'Corse-du-Sud', 201),
-(3042, 'pt_BR', 'Alta Córsega', 202),
-(3043, 'pt_BR', 'Costa d\'OrCorrèze', 203),
-(3044, 'pt_BR', 'Cotes d\'Armor', 204),
-(3045, 'pt_BR', 'Creuse', 205),
-(3046, 'pt_BR', 'Dordogne', 206),
-(3047, 'pt_BR', 'Doubs', 207),
-(3048, 'pt_BR', 'DrômeFinistère', 208),
-(3049, 'pt_BR', 'Eure', 209),
-(3050, 'pt_BR', 'Eure-et-Loir', 210),
-(3051, 'pt_BR', 'Finistère', 211),
-(3052, 'pt_BR', 'Gard', 212),
-(3053, 'pt_BR', 'Haute-Garonne', 213),
-(3054, 'pt_BR', 'Gers', 214),
-(3055, 'pt_BR', 'Gironde', 215),
-(3056, 'pt_BR', 'Hérault', 216),
-(3057, 'pt_BR', 'Ille-et-Vilaine', 217),
-(3058, 'pt_BR', 'Indre', 218),
-(3059, 'pt_BR', 'Indre-et-Loire', 219),
-(3060, 'pt_BR', 'Isère', 220),
-(3061, 'pt_BR', 'Jura', 221),
-(3062, 'pt_BR', 'Landes', 222),
-(3063, 'pt_BR', 'Loir-et-Cher', 223),
-(3064, 'pt_BR', 'Loire', 224),
-(3065, 'pt_BR', 'Haute-Loire', 22),
-(3066, 'pt_BR', 'Loire-Atlantique', 226),
-(3067, 'pt_BR', 'Loiret', 227),
-(3068, 'pt_BR', 'Lot', 228),
-(3069, 'pt_BR', 'Lot e Garona', 229),
-(3070, 'pt_BR', 'Lozère', 230),
-(3071, 'pt_BR', 'Maine-et-Loire', 231),
-(3072, 'pt_BR', 'Manche', 232),
-(3073, 'pt_BR', 'Marne', 233),
-(3074, 'pt_BR', 'Haute-Marne', 234),
-(3075, 'pt_BR', 'Mayenne', 235),
-(3076, 'pt_BR', 'Meurthe-et-Moselle', 236),
-(3077, 'pt_BR', 'Meuse', 237),
-(3078, 'pt_BR', 'Morbihan', 238),
-(3079, 'pt_BR', 'Moselle', 239),
-(3080, 'pt_BR', 'Nièvre', 240),
-(3081, 'pt_BR', 'Nord', 241),
-(3082, 'pt_BR', 'Oise', 242),
-(3083, 'pt_BR', 'Orne', 243),
-(3084, 'pt_BR', 'Pas-de-Calais', 244),
-(3085, 'pt_BR', 'Puy-de-Dôme', 24),
-(3086, 'pt_BR', 'Pirineus Atlânticos', 246),
-(3087, 'pt_BR', 'Hautes-Pyrénées', 247),
-(3088, 'pt_BR', 'Pirineus Orientais', 248),
-(3089, 'pt_BR', 'Bas-Rhin', 249),
-(3090, 'pt_BR', 'Alto Reno', 250),
-(3091, 'pt_BR', 'Rhône', 251),
-(3092, 'pt_BR', 'Haute-Saône', 252),
-(3093, 'pt_BR', 'Saône-et-Loire', 253),
-(3094, 'pt_BR', 'Sarthe', 25),
-(3095, 'pt_BR', 'Savoie', 255),
-(3096, 'pt_BR', 'Alta Sabóia', 256),
-(3097, 'pt_BR', 'Paris', 257),
-(3098, 'pt_BR', 'Seine-Maritime', 258),
-(3099, 'pt_BR', 'Seine-et-Marne', 259),
-(3100, 'pt_BR', 'Yvelines', 260),
-(3101, 'pt_BR', 'Deux-Sèvres', 261),
-(3102, 'pt_BR', 'Somme', 262),
-(3103, 'pt_BR', 'Tarn', 263),
-(3104, 'pt_BR', 'Tarn-et-Garonne', 264),
-(3105, 'pt_BR', 'Var', 265),
-(3106, 'pt_BR', 'Vaucluse', 266),
-(3107, 'pt_BR', 'Compradora', 267),
-(3108, 'pt_BR', 'Vienne', 268),
-(3109, 'pt_BR', 'Haute-Vienne', 269),
-(3110, 'pt_BR', 'Vosges', 270),
-(3111, 'pt_BR', 'Yonne', 271),
-(3112, 'pt_BR', 'Território de Belfort', 272),
-(3113, 'pt_BR', 'Essonne', 273),
-(3114, 'pt_BR', 'Altos do Sena', 274),
-(3115, 'pt_BR', 'Seine-Saint-Denis', 275),
-(3116, 'pt_BR', 'Val-de-Marne', 276),
-(3117, 'pt_BR', 'Val-d\'Oise', 277),
-(3118, 'pt_BR', 'Alba', 278),
-(3119, 'pt_BR', 'Arad', 279),
-(3120, 'pt_BR', 'Arges', 280),
-(3121, 'pt_BR', 'Bacau', 281),
-(3122, 'pt_BR', 'Bihor', 282),
-(3123, 'pt_BR', 'Bistrita-Nasaud', 283),
-(3124, 'pt_BR', 'Botosani', 284),
-(3125, 'pt_BR', 'Brașov', 285),
-(3126, 'pt_BR', 'Braila', 286),
-(3127, 'pt_BR', 'Bucareste', 287),
-(3128, 'pt_BR', 'Buzau', 288),
-(3129, 'pt_BR', 'Caras-Severin', 289),
-(3130, 'pt_BR', 'Călărași', 290),
-(3131, 'pt_BR', 'Cluj', 291),
-(3132, 'pt_BR', 'Constanta', 292),
-(3133, 'pt_BR', 'Covasna', 29),
-(3134, 'pt_BR', 'Dambovita', 294),
-(3135, 'pt_BR', 'Dolj', 295),
-(3136, 'pt_BR', 'Galati', 296),
-(3137, 'pt_BR', 'Giurgiu', 297),
-(3138, 'pt_BR', 'Gorj', 298),
-(3139, 'pt_BR', 'Harghita', 299),
-(3140, 'pt_BR', 'Hunedoara', 300),
-(3141, 'pt_BR', 'Ialomita', 301),
-(3142, 'pt_BR', 'Iasi', 302),
-(3143, 'pt_BR', 'Ilfov', 303),
-(3144, 'pt_BR', 'Maramures', 304),
-(3145, 'pt_BR', 'Maramures', 305),
-(3146, 'pt_BR', 'Mures', 306),
-(3147, 'pt_BR', 'alemão', 307),
-(3148, 'pt_BR', 'Olt', 308),
-(3149, 'pt_BR', 'Prahova', 309),
-(3150, 'pt_BR', 'Satu-Mare', 310),
-(3151, 'pt_BR', 'Salaj', 311),
-(3152, 'pt_BR', 'Sibiu', 312),
-(3153, 'pt_BR', 'Suceava', 313),
-(3154, 'pt_BR', 'Teleorman', 314),
-(3155, 'pt_BR', 'Timis', 315),
-(3156, 'pt_BR', 'Tulcea', 316),
-(3157, 'pt_BR', 'Vaslui', 317),
-(3158, 'pt_BR', 'dale', 318),
-(3159, 'pt_BR', 'Vrancea', 319),
-(3160, 'pt_BR', 'Lappi', 320),
-(3161, 'pt_BR', 'Pohjois-Pohjanmaa', 321),
-(3162, 'pt_BR', 'Kainuu', 322),
-(3163, 'pt_BR', 'Pohjois-Karjala', 323),
-(3164, 'pt_BR', 'Pohjois-Savo', 324),
-(3165, 'pt_BR', 'Sul Savo', 325),
-(3166, 'pt_BR', 'Ostrobothnia do sul', 326),
-(3167, 'pt_BR', 'Pohjanmaa', 327),
-(3168, 'pt_BR', 'Pirkanmaa', 328),
-(3169, 'pt_BR', 'Satakunta', 329),
-(3170, 'pt_BR', 'Keski-Pohjanmaa', 330),
-(3171, 'pt_BR', 'Keski-Suomi', 331),
-(3172, 'pt_BR', 'Varsinais-Suomi', 332),
-(3173, 'pt_BR', 'Carélia do Sul', 333),
-(3174, 'pt_BR', 'Päijät-Häme', 334),
-(3175, 'pt_BR', 'Kanta-Häme', 335),
-(3176, 'pt_BR', 'Uusimaa', 336),
-(3177, 'pt_BR', 'Uusimaa', 337),
-(3178, 'pt_BR', 'Kymenlaakso', 338),
-(3179, 'pt_BR', 'Ahvenanmaa', 339),
-(3180, 'pt_BR', 'Harjumaa', 340),
-(3181, 'pt_BR', 'Hiiumaa', 341),
-(3182, 'pt_BR', 'Ida-Virumaa', 342),
-(3183, 'pt_BR', 'Condado de Jõgeva', 343),
-(3184, 'pt_BR', 'Condado de Järva', 344),
-(3185, 'pt_BR', 'Läänemaa', 345),
-(3186, 'pt_BR', 'Condado de Lääne-Viru', 346),
-(3187, 'pt_BR', 'Condado de Põlva', 347),
-(3188, 'pt_BR', 'Condado de Pärnu', 348),
-(3189, 'pt_BR', 'Raplamaa', 349),
-(3190, 'pt_BR', 'Saaremaa', 350),
-(3191, 'pt_BR', 'Tartumaa', 351),
-(3192, 'pt_BR', 'Valgamaa', 352),
-(3193, 'pt_BR', 'Viljandimaa', 353),
-(3194, 'pt_BR', 'Võrumaa', 354),
-(3195, 'pt_BR', 'Daugavpils', 355),
-(3196, 'pt_BR', 'Jelgava', 356),
-(3197, 'pt_BR', 'Jekabpils', 357),
-(3198, 'pt_BR', 'Jurmala', 358),
-(3199, 'pt_BR', 'Liepaja', 359),
-(3200, 'pt_BR', 'Liepaja County', 360),
-(3201, 'pt_BR', 'Rezekne', 361),
-(3202, 'pt_BR', 'Riga', 362),
-(3203, 'pt_BR', 'Condado de Riga', 363),
-(3204, 'pt_BR', 'Valmiera', 364),
-(3205, 'pt_BR', 'Ventspils', 365),
-(3206, 'pt_BR', 'Aglonas novads', 366),
-(3207, 'pt_BR', 'Aizkraukles novads', 367),
-(3208, 'pt_BR', 'Aizputes novads', 368),
-(3209, 'pt_BR', 'Condado de Akniste', 369),
-(3210, 'pt_BR', 'Alojas novads', 370),
-(3211, 'pt_BR', 'Alsungas novads', 371),
-(3212, 'pt_BR', 'Aluksne County', 372),
-(3213, 'pt_BR', 'Amatas novads', 373),
-(3214, 'pt_BR', 'Macacos novads', 374),
-(3215, 'pt_BR', 'Auces novads', 375),
-(3216, 'pt_BR', 'Babītes novads', 376),
-(3217, 'pt_BR', 'Baldones novads', 377),
-(3218, 'pt_BR', 'Baltinavas novads', 378),
-(3219, 'pt_BR', 'Balvu novads', 379),
-(3220, 'pt_BR', 'Bauskas novads', 380),
-(3221, 'pt_BR', 'Condado de Beverina', 381),
-(3222, 'pt_BR', 'Condado de Broceni', 382),
-(3223, 'pt_BR', 'Burtnieku novads', 383),
-(3224, 'pt_BR', 'Carnikavas novads', 384),
-(3225, 'pt_BR', 'Cesvaines novads', 385),
-(3226, 'pt_BR', 'Ciblas novads', 386),
-(3227, 'pt_BR', 'Cesis county', 387),
-(3228, 'pt_BR', 'Dagdas novads', 388),
-(3229, 'pt_BR', 'Daugavpils novads', 389),
-(3230, 'pt_BR', 'Dobeles novads', 390),
-(3231, 'pt_BR', 'Dundagas novads', 391),
-(3232, 'pt_BR', 'Durbes novads', 392),
-(3233, 'pt_BR', 'Engad novads', 393),
-(3234, 'pt_BR', 'Garkalnes novads', 394),
-(3235, 'pt_BR', 'O condado de Grobiņa', 395),
-(3236, 'pt_BR', 'Gulbenes novads', 396),
-(3237, 'pt_BR', 'Iecavas novads', 397),
-(3238, 'pt_BR', 'Ikskile county', 398),
-(3239, 'pt_BR', 'Ilūkste county', 399),
-(3240, 'pt_BR', 'Condado de Inčukalns', 400),
-(3241, 'pt_BR', 'Jaunjelgavas novads', 401),
-(3242, 'pt_BR', 'Jaunpiebalgas novads', 402),
-(3243, 'pt_BR', 'Jaunpils novads', 403),
-(3244, 'pt_BR', 'Jelgavas novads', 404),
-(3245, 'pt_BR', 'Jekabpils county', 405),
-(3246, 'pt_BR', 'Kandavas novads', 406),
-(3247, 'pt_BR', 'Kokneses novads', 407),
-(3248, 'pt_BR', 'Krimuldas novads', 408),
-(3249, 'pt_BR', 'Krustpils novads', 409),
-(3250, 'pt_BR', 'Condado de Kraslava', 410),
-(3251, 'pt_BR', 'Condado de Kuldīga', 411),
-(3252, 'pt_BR', 'Condado de Kārsava', 412),
-(3253, 'pt_BR', 'Condado de Lielvarde', 413),
-(3254, 'pt_BR', 'Condado de Limbaži', 414),
-(3255, 'pt_BR', 'O distrito de Lubāna', 415),
-(3256, 'pt_BR', 'Ludzas novads', 416),
-(3257, 'pt_BR', 'Ligatne county', 417),
-(3258, 'pt_BR', 'Livani county', 418),
-(3259, 'pt_BR', 'Madonas novads', 419),
-(3260, 'pt_BR', 'Mazsalacas novads', 420),
-(3261, 'pt_BR', 'Mālpils county', 421),
-(3262, 'pt_BR', 'Mārupe county', 422),
-(3263, 'pt_BR', 'O condado de Naukšēni', 423),
-(3264, 'pt_BR', 'Neretas novads', 424),
-(3265, 'pt_BR', 'Nīca county', 425),
-(3266, 'pt_BR', 'Ogres novads', 426),
-(3267, 'pt_BR', 'Olaines novads', 427),
-(3268, 'pt_BR', 'Ozolnieku novads', 428),
-(3269, 'pt_BR', 'Preiļi county', 429),
-(3270, 'pt_BR', 'Priekules novads', 430),
-(3271, 'pt_BR', 'Condado de Priekuļi', 431),
-(3272, 'pt_BR', 'Moving county', 432),
-(3273, 'pt_BR', 'Condado de Pavilosta', 433),
-(3274, 'pt_BR', 'Condado de Plavinas', 434);
+(1, 'ar', 'ألاباما', 1),
+(2, 'ar', 'ألاسكا', 2),
+(3, 'ar', 'ساموا الأمريكية', 3),
+(4, 'ar', 'أريزونا', 4),
+(5, 'ar', 'أركنساس', 5),
+(6, 'ar', 'القوات المسلحة أفريقيا', 6),
+(7, 'ar', 'القوات المسلحة الأمريكية', 7),
+(8, 'ar', 'القوات المسلحة الكندية', 8),
+(9, 'ar', 'القوات المسلحة أوروبا', 9),
+(10, 'ar', 'القوات المسلحة الشرق الأوسط', 10),
+(11, 'ar', 'القوات المسلحة في المحيط الهادئ', 11),
+(12, 'ar', 'كاليفورنيا', 12),
+(13, 'ar', 'كولورادو', 13),
+(14, 'ar', 'كونيتيكت', 14),
+(15, 'ar', 'ديلاوير', 15),
+(16, 'ar', 'مقاطعة كولومبيا', 16),
+(17, 'ar', 'ولايات ميكرونيزيا الموحدة', 17),
+(18, 'ar', 'فلوريدا', 18),
+(19, 'ar', 'جورجيا', 19),
+(20, 'ar', 'غوام', 20),
+(21, 'ar', 'هاواي', 21),
+(22, 'ar', 'ايداهو', 22),
+(23, 'ar', 'إلينوي', 23),
+(24, 'ar', 'إنديانا', 24),
+(25, 'ar', 'أيوا', 25),
+(26, 'ar', 'كانساس', 26),
+(27, 'ar', 'كنتاكي', 27),
+(28, 'ar', 'لويزيانا', 28),
+(29, 'ar', 'مين', 29),
+(30, 'ar', 'جزر مارشال', 30),
+(31, 'ar', 'ماريلاند', 31),
+(32, 'ar', 'ماساتشوستس', 32),
+(33, 'ar', 'ميشيغان', 33),
+(34, 'ar', 'مينيسوتا', 34),
+(35, 'ar', 'ميسيسيبي', 35),
+(36, 'ar', 'ميسوري', 36),
+(37, 'ar', 'مونتانا', 37),
+(38, 'ar', 'نبراسكا', 38),
+(39, 'ar', 'نيفادا', 39),
+(40, 'ar', 'نيو هامبشاير', 40),
+(41, 'ar', 'نيو جيرسي', 41),
+(42, 'ar', 'المكسيك جديدة', 42),
+(43, 'ar', 'نيويورك', 43),
+(44, 'ar', 'شمال كارولينا', 44),
+(45, 'ar', 'شمال داكوتا', 45),
+(46, 'ar', 'جزر مريانا الشمالية', 46),
+(47, 'ar', 'أوهايو', 47),
+(48, 'ar', 'أوكلاهوما', 48),
+(49, 'ar', 'ولاية أوريغون', 49),
+(50, 'ar', 'بالاو', 50),
+(51, 'ar', 'بنسلفانيا', 51),
+(52, 'ar', 'بورتوريكو', 52),
+(53, 'ar', 'جزيرة رود', 53),
+(54, 'ar', 'كارولينا الجنوبية', 54),
+(55, 'ar', 'جنوب داكوتا', 55),
+(56, 'ar', 'تينيسي', 56),
+(57, 'ar', 'تكساس', 57),
+(58, 'ar', 'يوتا', 58),
+(59, 'ar', 'فيرمونت', 59),
+(60, 'ar', 'جزر فيرجن', 60),
+(61, 'ar', 'فرجينيا', 61),
+(62, 'ar', 'واشنطن', 62),
+(63, 'ar', 'فرجينيا الغربية', 63),
+(64, 'ar', 'ولاية ويسكونسن', 64),
+(65, 'ar', 'وايومنغ', 65),
+(66, 'ar', 'ألبرتا', 66),
+(67, 'ar', 'كولومبيا البريطانية', 67),
+(68, 'ar', 'مانيتوبا', 68),
+(69, 'ar', 'نيوفاوندلاند ولابرادور', 69),
+(70, 'ar', 'برونزيك جديد', 70),
+(71, 'ar', 'مقاطعة نفوفا سكوشيا', 71),
+(72, 'ar', 'الاقاليم الشمالية الغربية', 72),
+(73, 'ar', 'نونافوت', 73),
+(74, 'ar', 'أونتاريو', 74),
+(75, 'ar', 'جزيرة الأمير ادوارد', 75),
+(76, 'ar', 'كيبيك', 76),
+(77, 'ar', 'ساسكاتشوان', 77),
+(78, 'ar', 'إقليم يوكون', 78),
+(79, 'ar', 'Niedersachsen', 79),
+(80, 'ar', 'بادن فورتمبيرغ', 80),
+(81, 'ar', 'بايرن ميونيخ', 81),
+(82, 'ar', 'برلين', 82),
+(83, 'ar', 'براندنبورغ', 83),
+(84, 'ar', 'بريمن', 84),
+(85, 'ar', 'هامبورغ', 85),
+(86, 'ar', 'هيسن', 86),
+(87, 'ar', 'مكلنبورغ-فوربومرن', 87),
+(88, 'ar', 'نوردراين فيستفالن', 88),
+(89, 'ar', 'راينلاند-بفالز', 89),
+(90, 'ar', 'سارلاند', 90),
+(91, 'ar', 'ساكسن', 91),
+(92, 'ar', 'سكسونيا أنهالت', 92),
+(93, 'ar', 'شليسفيغ هولشتاين', 93),
+(94, 'ar', 'تورنغن', 94),
+(95, 'ar', 'فيينا', 95),
+(96, 'ar', 'النمسا السفلى', 96),
+(97, 'ar', 'النمسا العليا', 97),
+(98, 'ar', 'سالزبورغ', 98),
+(99, 'ar', 'Каринтия', 99),
+(100, 'ar', 'STEIERMARK', 100),
+(101, 'ar', 'تيرول', 101),
+(102, 'ar', 'بورغنلاند', 102),
+(103, 'ar', 'فورارلبرغ', 103),
+(104, 'ar', 'أرجاو', 104),
+(105, 'ar', 'Appenzell Innerrhoden', 105),
+(106, 'ar', 'أبنزل أوسيرهودن', 106),
+(107, 'ar', 'برن', 107),
+(108, 'ar', 'كانتون ريف بازل', 108),
+(109, 'ar', 'بازل شتات', 109),
+(110, 'ar', 'فرايبورغ', 110),
+(111, 'ar', 'Genf', 111),
+(112, 'ar', 'جلاروس', 112),
+(113, 'ar', 'غراوبوندن', 113),
+(114, 'ar', 'العصر الجوارسي أو الجوري', 114),
+(115, 'ar', 'لوزيرن', 115),
+(116, 'ar', 'في Neuenburg', 116),
+(117, 'ar', 'نيدوالدن', 117),
+(118, 'ar', 'أوبوالدن', 118),
+(119, 'ar', 'سانت غالن', 119),
+(120, 'ar', 'شافهاوزن', 120),
+(121, 'ar', 'سولوتورن', 121),
+(122, 'ar', 'شفيتس', 122),
+(123, 'ar', 'ثورجو', 123),
+(124, 'ar', 'تيتشينو', 124),
+(125, 'ar', 'أوري', 125),
+(126, 'ar', 'وادت', 126),
+(127, 'ar', 'اليس', 127),
+(128, 'ar', 'زوغ', 128),
+(129, 'ar', 'زيورخ', 129),
+(130, 'ar', 'Corunha', 130),
+(131, 'ar', 'ألافا', 131),
+(132, 'ar', 'الباسيتي', 132),
+(133, 'ar', 'اليكانتي', 133),
+(134, 'ar', 'الميريا', 134),
+(135, 'ar', 'أستورياس', 135),
+(136, 'ar', 'أفيلا', 136),
+(137, 'ar', 'بطليوس', 137),
+(138, 'ar', 'البليار', 138),
+(139, 'ar', 'برشلونة', 139),
+(140, 'ar', 'برغش', 140),
+(141, 'ar', 'كاسيريس', 141),
+(142, 'ar', 'كاديز', 142),
+(143, 'ar', 'كانتابريا', 143),
+(144, 'ar', 'كاستيلون', 144),
+(145, 'ar', 'سبتة', 145),
+(146, 'ar', 'سيوداد ريال', 146),
+(147, 'ar', 'قرطبة', 147),
+(148, 'ar', 'كوينكا', 148),
+(149, 'ar', 'جيرونا', 149),
+(150, 'ar', 'غرناطة', 150),
+(151, 'ar', 'غوادالاخارا', 151),
+(152, 'ar', 'بجويبوزكوا', 152),
+(153, 'ar', 'هويلفا', 153),
+(154, 'ar', 'هويسكا', 154),
+(155, 'ar', 'خاين', 155),
+(156, 'ar', 'لاريوخا', 156),
+(157, 'ar', 'لاس بالماس', 157),
+(158, 'ar', 'ليون', 158),
+(159, 'ar', 'يدا', 159),
+(160, 'ar', 'لوغو', 160),
+(161, 'ar', 'مدريد', 161),
+(162, 'ar', 'ملقة', 162),
+(163, 'ar', 'مليلية', 163),
+(164, 'ar', 'مورسيا', 164),
+(165, 'ar', 'نافارا', 165),
+(166, 'ar', 'أورينس', 166),
+(167, 'ar', 'بلنسية', 167),
+(168, 'ar', 'بونتيفيدرا', 168),
+(169, 'ar', 'سالامانكا', 169),
+(170, 'ar', 'سانتا كروز دي تينيريفي', 170),
+(171, 'ar', 'سيغوفيا', 171),
+(172, 'ar', 'اشبيلية', 172),
+(173, 'ar', 'سوريا', 173),
+(174, 'ar', 'تاراغونا', 174),
+(175, 'ar', 'تيرويل', 175),
+(176, 'ar', 'توليدو', 176),
+(177, 'ar', 'فالنسيا', 177),
+(178, 'ar', 'بلد الوليد', 178),
+(179, 'ar', 'فيزكايا', 179),
+(180, 'ar', 'زامورا', 180),
+(181, 'ar', 'سرقسطة', 181),
+(182, 'ar', 'عين', 182),
+(183, 'ar', 'أيسن', 183),
+(184, 'ar', 'اليي', 184),
+(185, 'ar', 'ألب البروفنس العليا', 185),
+(186, 'ar', 'أوتس ألب', 186),
+(187, 'ar', 'ألب ماريتيم', 187),
+(188, 'ar', 'ARDECHE', 188),
+(189, 'ar', 'Ardennes', 189),
+(190, 'ar', 'آردن', 190),
+(191, 'ar', 'أوب', 191),
+(192, 'ar', 'اود', 192),
+(193, 'ar', 'أفيرون', 193),
+(194, 'ar', 'بوكاس دو رون', 194),
+(195, 'ar', 'كالفادوس', 195),
+(196, 'ar', 'كانتال', 196),
+(197, 'ar', 'شارانت', 197),
+(198, 'ar', 'سيين إت مارن', 198),
+(199, 'ar', 'شير', 199),
+(200, 'ar', 'كوريز', 200),
+(201, 'ar', 'سود كورس-دو-', 201),
+(202, 'ar', 'هوت كورس', 202),
+(203, 'ar', 'كوستا دوركوريز', 203),
+(204, 'ar', 'كوتس دورمور', 204),
+(205, 'ar', 'كروز', 205),
+(206, 'ar', 'دوردوني', 206),
+(207, 'ar', 'دوبس', 207),
+(208, 'ar', 'DrômeFinistère', 208),
+(209, 'ar', 'أور', 209),
+(210, 'ar', 'أور ولوار', 210),
+(211, 'ar', 'فينيستير', 211),
+(212, 'ar', 'جارد', 212),
+(213, 'ar', 'هوت غارون', 213),
+(214, 'ar', 'الخيام', 214),
+(215, 'ar', 'جيروند', 215),
+(216, 'ar', 'هيرولت', 216),
+(217, 'ar', 'إيل وفيلان', 217),
+(218, 'ar', 'إندر', 218),
+(219, 'ar', 'أندر ولوار', 219),
+(220, 'ar', 'إيسر', 220),
+(221, 'ar', 'العصر الجوارسي أو الجوري', 221),
+(222, 'ar', 'اندز', 222),
+(223, 'ar', 'لوار وشير', 223),
+(224, 'ar', 'لوار', 224),
+(225, 'ar', 'هوت-لوار', 225),
+(226, 'ar', 'وار أتلانتيك', 226),
+(227, 'ar', 'لورا', 227),
+(228, 'ar', 'كثيرا', 228),
+(229, 'ar', 'الكثير غارون', 229),
+(230, 'ar', 'لوزر', 230),
+(231, 'ar', 'مين-إي-لوار', 231),
+(232, 'ar', 'المانش', 232),
+(233, 'ar', 'مارن', 233),
+(234, 'ar', 'هوت مارن', 234),
+(235, 'ar', 'مايين', 235),
+(236, 'ar', 'مورت وموزيل', 236),
+(237, 'ar', 'ميوز', 237),
+(238, 'ar', 'موربيهان', 238),
+(239, 'ar', 'موسيل', 239),
+(240, 'ar', 'نيفر', 240),
+(241, 'ar', 'نورد', 241),
+(242, 'ar', 'إيل دو فرانس', 242),
+(243, 'ar', 'أورن', 243),
+(244, 'ar', 'با-دو-كاليه', 244),
+(245, 'ar', 'بوي دي دوم', 245),
+(246, 'ar', 'البرانيس ​​الأطلسية', 246),
+(247, 'ar', 'أوتس-بيرينيهs', 247),
+(248, 'ar', 'بيرينيه-أورينتال', 248),
+(249, 'ar', 'بس رين', 249),
+(250, 'ar', 'أوت رين', 250),
+(251, 'ar', 'رون [3]', 251),
+(252, 'ar', 'هوت-سون', 252),
+(253, 'ar', 'سون ولوار', 253),
+(254, 'ar', 'سارت', 254),
+(255, 'ar', 'سافوا', 255),
+(256, 'ar', 'هاوت سافوي', 256),
+(257, 'ar', 'باريس', 257),
+(258, 'ar', 'سين البحرية', 258),
+(259, 'ar', 'سيين إت مارن', 259),
+(260, 'ar', 'إيفلين', 260),
+(261, 'ar', 'دوكس سفرس', 261),
+(262, 'ar', 'السوم', 262),
+(263, 'ar', 'تارن', 263),
+(264, 'ar', 'تارن وغارون', 264),
+(265, 'ar', 'فار', 265),
+(266, 'ar', 'فوكلوز', 266),
+(267, 'ar', 'تارن', 267),
+(268, 'ar', 'فيين', 268),
+(269, 'ar', 'هوت فيين', 269),
+(270, 'ar', 'الفوج', 270),
+(271, 'ar', 'يون', 271),
+(272, 'ar', 'تيريتوير-دي-بلفور', 272),
+(273, 'ar', 'إيسون', 273),
+(274, 'ar', 'هوت دو سين', 274),
+(275, 'ar', 'سين سان دوني', 275),
+(276, 'ar', 'فال دو مارن', 276),
+(277, 'ar', 'فال دواز', 277),
+(278, 'ar', 'ألبا', 278),
+(279, 'ar', 'اراد', 279),
+(280, 'ar', 'ARGES', 280),
+(281, 'ar', 'باكاو', 281),
+(282, 'ar', 'بيهور', 282),
+(283, 'ar', 'بيستريتا ناسود', 283),
+(284, 'ar', 'بوتوساني', 284),
+(285, 'ar', 'براشوف', 285),
+(286, 'ar', 'برايلا', 286),
+(287, 'ar', 'بوخارست', 287),
+(288, 'ar', 'بوزاو', 288),
+(289, 'ar', 'كاراس سيفيرين', 289),
+(290, 'ar', 'كالاراسي', 290),
+(291, 'ar', 'كلوج', 291),
+(292, 'ar', 'كونستانتا', 292),
+(293, 'ar', 'كوفاسنا', 293),
+(294, 'ar', 'دامبوفيتا', 294),
+(295, 'ar', 'دولج', 295),
+(296, 'ar', 'جالاتي', 296),
+(297, 'ar', 'Giurgiu', 297),
+(298, 'ar', 'غيورغيو', 298),
+(299, 'ar', 'هارغيتا', 299),
+(300, 'ar', 'هونيدوارا', 300),
+(301, 'ar', 'ايالوميتا', 301),
+(302, 'ar', 'ياشي', 302),
+(303, 'ar', 'إيلفوف', 303),
+(304, 'ar', 'مارامريس', 304),
+(305, 'ar', 'MEHEDINTI', 305),
+(306, 'ar', 'موريس', 306),
+(307, 'ar', 'نيامتس', 307),
+(308, 'ar', 'أولت', 308),
+(309, 'ar', 'براهوفا', 309),
+(310, 'ar', 'ساتو ماري', 310),
+(311, 'ar', 'سالاج', 311),
+(312, 'ar', 'سيبيو', 312),
+(313, 'ar', 'سوسيفا', 313),
+(314, 'ar', 'تيليورمان', 314),
+(315, 'ar', 'تيم هو', 315),
+(316, 'ar', 'تولسيا', 316),
+(317, 'ar', 'فاسلوي', 317),
+(318, 'ar', 'فالسيا', 318),
+(319, 'ar', 'فرانتشا', 319),
+(320, 'ar', 'Lappi', 320),
+(321, 'ar', 'Pohjois-Pohjanmaa', 321),
+(322, 'ar', 'كاينو', 322),
+(323, 'ar', 'Pohjois-كارجالا', 323),
+(324, 'ar', 'Pohjois-سافو', 324),
+(325, 'ar', 'Etelä-سافو', 325),
+(326, 'ar', 'Etelä-Pohjanmaa', 326),
+(327, 'ar', 'Pohjanmaa', 327),
+(328, 'ar', 'بيركنما', 328),
+(329, 'ar', 'ساتا كونتا', 329),
+(330, 'ar', 'كسكي-Pohjanmaa', 330),
+(331, 'ar', 'كسكي-سومي', 331),
+(332, 'ar', 'Varsinais-سومي', 332),
+(333, 'ar', 'Etelä-كارجالا', 333),
+(334, 'ar', 'Päijät-Häme', 334),
+(335, 'ar', 'كانتا-HAME', 335),
+(336, 'ar', 'أوسيما', 336),
+(337, 'ar', 'أوسيما', 337),
+(338, 'ar', 'كومنلاكسو', 338),
+(339, 'ar', 'Ahvenanmaa', 339),
+(340, 'ar', 'Harjumaa', 340),
+(341, 'ar', 'هيوما', 341),
+(342, 'ar', 'المؤسسة الدولية للتنمية فيروما', 342),
+(343, 'ar', 'جوغفما', 343),
+(344, 'ar', 'يارفا', 344),
+(345, 'ar', 'انيما', 345),
+(346, 'ar', 'اني فيريوما', 346),
+(347, 'ar', 'بولفاما', 347),
+(348, 'ar', 'بارنوما', 348),
+(349, 'ar', 'Raplamaa', 349),
+(350, 'ar', 'Saaremaa', 350),
+(351, 'ar', 'Tartumaa', 351),
+(352, 'ar', 'Valgamaa', 352),
+(353, 'ar', 'Viljandimaa', 353),
+(354, 'ar', 'روايات Salacgr novvas', 354),
+(355, 'ar', 'داوجافبيلس', 355),
+(356, 'ar', 'يلغافا', 356),
+(357, 'ar', 'يكاب', 357),
+(358, 'ar', 'يورمال', 358),
+(359, 'ar', 'يابايا', 359),
+(360, 'ar', 'ليباج أبريس', 360),
+(361, 'ar', 'ريزكن', 361),
+(362, 'ar', 'ريغا', 362),
+(363, 'ar', 'مقاطعة ريغا', 363),
+(364, 'ar', 'فالميرا', 364),
+(365, 'ar', 'فنتسبيلز', 365),
+(366, 'ar', 'روايات Aglonas', 366),
+(367, 'ar', 'Aizkraukles novads', 367),
+(368, 'ar', 'Aizkraukles novads', 368),
+(369, 'ar', 'Aknīstes novads', 369),
+(370, 'ar', 'Alojas novads', 370),
+(371, 'ar', 'روايات Alsungas', 371),
+(372, 'ar', 'ألكسنس أبريز', 372),
+(373, 'ar', 'روايات أماتاس', 373),
+(374, 'ar', 'قرود الروايات', 374),
+(375, 'ar', 'روايات أوسيس', 375),
+(376, 'ar', 'بابيت الروايات', 376),
+(377, 'ar', 'Baldones الروايات', 377),
+(378, 'ar', 'بالتينافاس الروايات', 378),
+(379, 'ar', 'روايات بالفو', 379),
+(380, 'ar', 'Bauskas الروايات', 380),
+(381, 'ar', 'Beverīnas novads', 381),
+(382, 'ar', 'Novads Brocēnu', 382),
+(383, 'ar', 'Novads Burtnieku', 383),
+(384, 'ar', 'Carnikavas novads', 384),
+(385, 'ar', 'Cesvaines novads', 385),
+(386, 'ar', 'Ciblas novads', 386),
+(387, 'ar', 'تسو أبريس', 387),
+(388, 'ar', 'Dagdas novads', 388),
+(389, 'ar', 'Daugavpils novads', 389),
+(390, 'ar', 'روايات دوبيليس', 390),
+(391, 'ar', 'ديربيس الروايات', 391),
+(392, 'ar', 'ديربيس الروايات', 392),
+(393, 'ar', 'يشرك الروايات', 393),
+(394, 'ar', 'Garkalnes novads', 394),
+(395, 'ar', 'Grobiņas novads', 395),
+(396, 'ar', 'غولبينيس الروايات', 396),
+(397, 'ar', 'إيكافاس روايات', 397),
+(398, 'ar', 'Ikškiles novads', 398),
+(399, 'ar', 'Ilūkstes novads', 399),
+(400, 'ar', 'روايات Inčukalna', 400),
+(401, 'ar', 'Jaunjelgavas novads', 401),
+(402, 'ar', 'Jaunpiebalgas novads', 402),
+(403, 'ar', 'روايات Jaunpiebalgas', 403),
+(404, 'ar', 'Jelgavas novads', 404),
+(405, 'ar', 'جيكابيلس أبريز', 405),
+(406, 'ar', 'روايات كاندافاس', 406),
+(407, 'ar', 'Kokneses الروايات', 407),
+(408, 'ar', 'Krimuldas novads', 408),
+(409, 'ar', 'Krustpils الروايات', 409),
+(410, 'ar', 'Krāslavas Apriņķis', 410),
+(411, 'ar', 'كولدوغاس أبريز', 411),
+(412, 'ar', 'Kārsavas novads', 412),
+(413, 'ar', 'روايات ييلفاريس', 413),
+(414, 'ar', 'ليمباو أبريز', 414),
+(415, 'ar', 'روايات لباناس', 415),
+(416, 'ar', 'روايات لودزاس', 416),
+(417, 'ar', 'مقاطعة ليجاتني', 417),
+(418, 'ar', 'مقاطعة ليفاني', 418),
+(419, 'ar', 'مادونا روايات', 419),
+(420, 'ar', 'Mazsalacas novads', 420),
+(421, 'ar', 'روايات مالبلز', 421),
+(422, 'ar', 'Mārupes novads', 422),
+(423, 'ar', 'نوفاو نوكشنو', 423),
+(424, 'ar', 'روايات نيريتاس', 424),
+(425, 'ar', 'روايات نيكاس', 425),
+(426, 'ar', 'أغنام الروايات', 426),
+(427, 'ar', 'أولينيس الروايات', 427),
+(428, 'ar', 'روايات Ozolnieku', 428),
+(429, 'ar', 'بريسيو أبرييس', 429),
+(430, 'ar', 'Priekules الروايات', 430),
+(431, 'ar', 'كوندادو دي بريكوي', 431),
+(432, 'ar', 'Pärgaujas novads', 432),
+(433, 'ar', 'روايات بافيلوستاس', 433),
+(434, 'ar', 'بلافيناس مقاطعة', 434),
+(435, 'ar', 'روناس روايات', 435),
+(436, 'ar', 'Riebiņu novads', 436),
+(437, 'ar', 'روجاس روايات', 437),
+(438, 'ar', 'Novads روباو', 438),
+(439, 'ar', 'روكافاس روايات', 439),
+(440, 'ar', 'روغاجو روايات', 440),
+(441, 'ar', 'رندلس الروايات', 441),
+(442, 'ar', 'Radzeknes novads', 442),
+(443, 'ar', 'Rūjienas novads', 443),
+(444, 'ar', 'بلدية سالاسغريفا', 444),
+(445, 'ar', 'روايات سالاس', 445),
+(446, 'ar', 'Salaspils novads', 446),
+(447, 'ar', 'روايات سالدوس', 447),
+(448, 'ar', 'Novuls Saulkrastu', 448),
+(449, 'ar', 'سيغولداس روايات', 449),
+(450, 'ar', 'Skrundas novads', 450),
+(451, 'ar', 'مقاطعة Skrīveri', 451),
+(452, 'ar', 'يبتسم الروايات', 452),
+(453, 'ar', 'روايات Stopiņu', 453),
+(454, 'ar', 'روايات Stren novu', 454),
+(455, 'ar', 'سجاس روايات', 455),
+(456, 'ar', 'روايات تالسو', 456),
+(457, 'ar', 'توكوما الروايات', 457),
+(458, 'ar', 'Tērvetes novads', 458),
+(459, 'ar', 'Vaiņodes novads', 459),
+(460, 'ar', 'فالكاس الروايات', 460),
+(461, 'ar', 'فالميراس الروايات', 461),
+(462, 'ar', 'مقاطعة فاكلاني', 462),
+(463, 'ar', 'Vecpiebalgas novads', 463),
+(464, 'ar', 'روايات Vecumnieku', 464),
+(465, 'ar', 'فنتسبيلس الروايات', 465),
+(466, 'ar', 'Viesītes Novads', 466),
+(467, 'ar', 'Viļakas novads', 467),
+(468, 'ar', 'روايات فيناو', 468),
+(469, 'ar', 'Vārkavas novads', 469),
+(470, 'ar', 'روايات زيلوبس', 470),
+(471, 'ar', 'مقاطعة أدازي', 471),
+(472, 'ar', 'مقاطعة Erglu', 472),
+(473, 'ar', 'مقاطعة كيغمس', 473),
+(474, 'ar', 'مقاطعة كيكافا', 474),
+(475, 'ar', 'Alytaus Apskritis', 475),
+(476, 'ar', 'كاونو ابكريتيس', 476),
+(477, 'ar', 'Klaipėdos apskritis', 477),
+(478, 'ar', 'Marijampol\'s apskritis', 478),
+(479, 'ar', 'Panevėžio apskritis', 479),
+(480, 'ar', 'uliaulių apskritis', 480),
+(481, 'ar', 'Taurag\'s apskritis', 481),
+(482, 'ar', 'Telšių apskritis', 482),
+(483, 'ar', 'Utenos apskritis', 483),
+(484, 'ar', 'فيلنياوس ابكريتيس', 484),
+(485, 'ar', 'فدان', 485),
+(486, 'ar', 'ألاغواس', 486),
+(487, 'ar', 'أمابا', 487),
+(488, 'ar', 'أمازوناس', 488),
+(489, 'ar', 'باهيا', 489),
+(490, 'ar', 'سيارا', 490),
+(491, 'ar', 'إسبيريتو سانتو', 491),
+(492, 'ar', 'غوياس', 492),
+(493, 'ar', 'مارانهاو', 493),
+(494, 'ar', 'ماتو جروسو', 494),
+(495, 'ar', 'ماتو جروسو دو سول', 495),
+(496, 'ar', 'ميناس جريس', 496),
+(497, 'ar', 'بارا', 497),
+(498, 'ar', 'بارايبا', 498),
+(499, 'ar', 'بارانا', 499),
+(500, 'ar', 'بيرنامبوكو', 500),
+(501, 'ar', 'بياوي', 501),
+(502, 'ar', 'ريو دي جانيرو', 502),
+(503, 'ar', 'ريو غراندي دو نورتي', 503),
+(504, 'ar', 'ريو غراندي دو سول', 504),
+(505, 'ar', 'روندونيا', 505),
+(506, 'ar', 'رورايما', 506),
+(507, 'ar', 'سانتا كاتارينا', 507),
+(508, 'ar', 'ساو باولو', 508),
+(509, 'ar', 'سيرغيبي', 509),
+(510, 'ar', 'توكانتينز', 510),
+(511, 'ar', 'وفي مقاطعة الاتحادية', 511),
+(512, 'ar', 'Zagrebačka زوبانيا', 512),
+(513, 'ar', 'Krapinsko-zagorska زوبانيا', 513),
+(514, 'ar', 'Sisačko-moslavačka زوبانيا', 514),
+(515, 'ar', 'كارلوفيتش شوبانيا', 515),
+(516, 'ar', 'فارادينسكا زوبانيجا', 516),
+(517, 'ar', 'Koprivničko-križevačka زوبانيجا', 517),
+(518, 'ar', 'بيلوفارسكو-بيلوجورسكا', 518),
+(519, 'ar', 'بريمورسكو غورانسكا سوبانيا', 519),
+(520, 'ar', 'ليكو سينيسكا زوبانيا', 520),
+(521, 'ar', 'Virovitičko-podravska زوبانيا', 521),
+(522, 'ar', 'Požeško-slavonska županija', 522),
+(523, 'ar', 'Brodsko-posavska županija', 523),
+(524, 'ar', 'زادارسكا زوبانيجا', 524),
+(525, 'ar', 'Osječko-baranjska županija', 525),
+(526, 'ar', 'شيبنسكو-كنينسكا سوبانيا', 526),
+(527, 'ar', 'Virovitičko-podravska زوبانيا', 527),
+(528, 'ar', 'Splitsko-dalmatinska زوبانيا', 528),
+(529, 'ar', 'Istarska زوبانيا', 529),
+(530, 'ar', 'Dubrovačko-neretvanska زوبانيا', 530),
+(531, 'ar', 'Međimurska زوبانيا', 531),
+(532, 'ar', 'غراد زغرب', 532),
+(533, 'ar', 'جزر أندامان ونيكوبار', 533),
+(534, 'ar', 'ولاية اندرا براديش', 534),
+(535, 'ar', 'اروناتشال براديش', 535),
+(536, 'ar', 'أسام', 536),
+(537, 'ar', 'بيهار', 537),
+(538, 'ar', 'شانديغار', 538),
+(539, 'ar', 'تشهاتيسجاره', 539),
+(540, 'ar', 'دادرا ونجار هافيلي', 540),
+(541, 'ar', 'دامان وديو', 541),
+(542, 'ar', 'دلهي', 542),
+(543, 'ar', 'غوا', 543),
+(544, 'ar', 'غوجارات', 544),
+(545, 'ar', 'هاريانا', 545),
+(546, 'ar', 'هيماشال براديش', 546),
+(547, 'ar', 'جامو وكشمير', 547),
+(548, 'ar', 'جهارخاند', 548),
+(549, 'ar', 'كارناتاكا', 549),
+(550, 'ar', 'ولاية كيرالا', 550),
+(551, 'ar', 'اكشادويب', 551),
+(552, 'ar', 'ماديا براديش', 552),
+(553, 'ar', 'ماهاراشترا', 553),
+(554, 'ar', 'مانيبور', 554),
+(555, 'ar', 'ميغالايا', 555),
+(556, 'ar', 'ميزورام', 556),
+(557, 'ar', 'ناجالاند', 557),
+(558, 'ar', 'أوديشا', 558),
+(559, 'ar', 'بودوتشيري', 559),
+(560, 'ar', 'البنجاب', 560),
+(561, 'ar', 'راجستان', 561),
+(562, 'ar', 'سيكيم', 562),
+(563, 'ar', 'تاميل نادو', 563),
+(564, 'ar', 'تيلانجانا', 564),
+(565, 'ar', 'تريبورا', 565),
+(566, 'ar', 'ولاية اوتار براديش', 566),
+(567, 'ar', 'أوتارانتشال', 567),
+(568, 'ar', 'البنغال الغربية', 568),
+(569, 'fa', 'آلاباما', 1),
+(570, 'fa', 'آلاسکا', 2),
+(571, 'fa', 'ساموآ آمریکایی', 3),
+(572, 'fa', 'آریزونا', 4),
+(573, 'fa', 'آرکانزاس', 5),
+(574, 'fa', 'نیروهای مسلح آفریقا', 6),
+(575, 'fa', 'Armed Forces America', 7),
+(576, 'fa', 'نیروهای مسلح کانادا', 8),
+(577, 'fa', 'نیروهای مسلح اروپا', 9),
+(578, 'fa', 'نیروهای مسلح خاورمیانه', 10),
+(579, 'fa', 'نیروهای مسلح اقیانوس آرام', 11),
+(580, 'fa', 'کالیفرنیا', 12),
+(581, 'fa', 'کلرادو', 13),
+(582, 'fa', 'کانکتیکات', 14),
+(583, 'fa', 'دلاور', 15),
+(584, 'fa', 'منطقه کلمبیا', 16),
+(585, 'fa', 'ایالات فدرال میکرونزی', 17),
+(586, 'fa', 'فلوریدا', 18),
+(587, 'fa', 'جورجیا', 19),
+(588, 'fa', 'گوام', 20),
+(589, 'fa', 'هاوایی', 21),
+(590, 'fa', 'آیداهو', 22),
+(591, 'fa', 'ایلینویز', 23),
+(592, 'fa', 'ایندیانا', 24),
+(593, 'fa', 'آیووا', 25),
+(594, 'fa', 'کانزاس', 26),
+(595, 'fa', 'کنتاکی', 27),
+(596, 'fa', 'لوئیزیانا', 28),
+(597, 'fa', 'ماین', 29),
+(598, 'fa', 'مای', 30),
+(599, 'fa', 'مریلند', 31),
+(600, 'fa', ' ', 32),
+(601, 'fa', 'میشیگان', 33),
+(602, 'fa', 'مینه سوتا', 34),
+(603, 'fa', 'می سی سی پی', 35),
+(604, 'fa', 'میسوری', 36),
+(605, 'fa', 'مونتانا', 37),
+(606, 'fa', 'نبراسکا', 38),
+(607, 'fa', 'نواد', 39),
+(608, 'fa', 'نیوهمپشایر', 40),
+(609, 'fa', 'نیوجرسی', 41),
+(610, 'fa', 'نیومکزیکو', 42),
+(611, 'fa', 'نیویورک', 43),
+(612, 'fa', 'کارولینای شمالی', 44),
+(613, 'fa', 'داکوتای شمالی', 45),
+(614, 'fa', 'جزایر ماریانای شمالی', 46),
+(615, 'fa', 'اوهایو', 47),
+(616, 'fa', 'اوکلاهما', 48),
+(617, 'fa', 'اورگان', 49),
+(618, 'fa', 'پالائو', 50),
+(619, 'fa', 'پنسیلوانیا', 51),
+(620, 'fa', 'پورتوریکو', 52),
+(621, 'fa', 'رود آیلند', 53),
+(622, 'fa', 'کارولینای جنوبی', 54),
+(623, 'fa', 'داکوتای جنوبی', 55),
+(624, 'fa', 'تنسی', 56),
+(625, 'fa', 'تگزاس', 57),
+(626, 'fa', 'یوتا', 58),
+(627, 'fa', 'ورمونت', 59),
+(628, 'fa', 'جزایر ویرجین', 60),
+(629, 'fa', 'ویرجینیا', 61),
+(630, 'fa', 'واشنگتن', 62),
+(631, 'fa', 'ویرجینیای غربی', 63),
+(632, 'fa', 'ویسکانسین', 64),
+(633, 'fa', 'وایومینگ', 65),
+(634, 'fa', 'آلبرتا', 66),
+(635, 'fa', 'بریتیش کلمبیا', 67),
+(636, 'fa', 'مانیتوبا', 68),
+(637, 'fa', 'نیوفاندلند و لابرادور', 69),
+(638, 'fa', 'نیوبرانزویک', 70),
+(639, 'fa', 'نوا اسکوشیا', 71),
+(640, 'fa', 'سرزمینهای شمال غربی', 72),
+(641, 'fa', 'نوناووت', 73),
+(642, 'fa', 'انتاریو', 74),
+(643, 'fa', 'جزیره پرنس ادوارد', 75),
+(644, 'fa', 'کبک', 76),
+(645, 'fa', 'ساسکاتچوان', 77),
+(646, 'fa', 'قلمرو یوکان', 78),
+(647, 'fa', 'نیدرزاکسن', 79),
+(648, 'fa', 'بادن-وورتمبرگ', 80),
+(649, 'fa', 'بایرن', 81),
+(650, 'fa', 'برلین', 82),
+(651, 'fa', 'براندنبورگ', 83),
+(652, 'fa', 'برمن', 84),
+(653, 'fa', 'هامبور', 85),
+(654, 'fa', 'هسن', 86),
+(655, 'fa', 'مکلنبورگ-وورپومرن', 87),
+(656, 'fa', 'نوردراین-وستفالن', 88),
+(657, 'fa', 'راینلاند-پلاتینات', 89),
+(658, 'fa', 'سارلند', 90),
+(659, 'fa', 'ساچسن', 91),
+(660, 'fa', 'ساچسن-آنهالت', 92),
+(661, 'fa', 'شلسویگ-هولشتاین', 93),
+(662, 'fa', 'تورینگی', 94),
+(663, 'fa', 'وین', 95),
+(664, 'fa', 'اتریش پایین', 96),
+(665, 'fa', 'اتریش فوقانی', 97),
+(666, 'fa', 'سالزبورگ', 98),
+(667, 'fa', 'کارنتا', 99),
+(668, 'fa', 'Steiermar', 100),
+(669, 'fa', 'تیرول', 101),
+(670, 'fa', 'بورگنلن', 102),
+(671, 'fa', 'Vorarlber', 103),
+(672, 'fa', 'آرگ', 104),
+(673, 'fa', '', 105),
+(674, 'fa', 'اپنزلسرهودن', 106),
+(675, 'fa', 'بر', 107),
+(676, 'fa', 'بازل-لندشفت', 108),
+(677, 'fa', 'بازل استاد', 109),
+(678, 'fa', 'فرایبورگ', 110),
+(679, 'fa', 'گنف', 111),
+(680, 'fa', 'گلاروس', 112),
+(681, 'fa', 'Graubünde', 113),
+(682, 'fa', 'ژورا', 114),
+(683, 'fa', 'لوزرن', 115),
+(684, 'fa', 'نوینبور', 116),
+(685, 'fa', 'نیدالد', 117),
+(686, 'fa', 'اوبولدن', 118),
+(687, 'fa', 'سنت گالن', 119),
+(688, 'fa', 'شافهاوز', 120),
+(689, 'fa', 'سولوتور', 121),
+(690, 'fa', 'شووی', 122),
+(691, 'fa', 'تورگاو', 123),
+(692, 'fa', 'تسسی', 124),
+(693, 'fa', 'اوری', 125),
+(694, 'fa', 'وادت', 126),
+(695, 'fa', 'والی', 127),
+(696, 'fa', 'ز', 128),
+(697, 'fa', 'زوریخ', 129),
+(698, 'fa', 'کورونا', 130),
+(699, 'fa', 'آلاوا', 131),
+(700, 'fa', 'آلبوم', 132),
+(701, 'fa', 'آلیکانت', 133),
+(702, 'fa', 'آلمریا', 134),
+(703, 'fa', 'آستوریا', 135),
+(704, 'fa', 'آویلا', 136),
+(705, 'fa', 'باداژوز', 137),
+(706, 'fa', 'ضرب و شتم', 138),
+(707, 'fa', 'بارسلون', 139),
+(708, 'fa', 'بورگو', 140),
+(709, 'fa', 'کاسر', 141),
+(710, 'fa', 'کادی', 142),
+(711, 'fa', 'کانتابریا', 143),
+(712, 'fa', 'کاستلون', 144),
+(713, 'fa', 'سوت', 145),
+(714, 'fa', 'سیوداد واقعی', 146),
+(715, 'fa', 'کوردوب', 147),
+(716, 'fa', 'Cuenc', 148),
+(717, 'fa', 'جیرون', 149),
+(718, 'fa', 'گراناد', 150),
+(719, 'fa', 'گوادالاجار', 151),
+(720, 'fa', 'Guipuzcoa', 152),
+(721, 'fa', 'هولوا', 153),
+(722, 'fa', 'هوسک', 154),
+(723, 'fa', 'جی', 155),
+(724, 'fa', 'لا ریوجا', 156),
+(725, 'fa', 'لاس پالماس', 157),
+(726, 'fa', 'لئو', 158),
+(727, 'fa', 'Lleid', 159),
+(728, 'fa', 'لوگ', 160),
+(729, 'fa', 'مادری', 161),
+(730, 'fa', 'مالاگ', 162),
+(731, 'fa', 'ملیلی', 163),
+(732, 'fa', 'مورسیا', 164),
+(733, 'fa', 'ناوار', 165),
+(734, 'fa', 'اورنس', 166),
+(735, 'fa', 'پالنسی', 167),
+(736, 'fa', 'پونتوودر', 168),
+(737, 'fa', 'سالامانک', 169),
+(738, 'fa', 'سانتا کروز د تنریفه', 170),
+(739, 'fa', 'سوگویا', 171),
+(740, 'fa', 'سوی', 172),
+(741, 'fa', 'سوریا', 173),
+(742, 'fa', 'تاراگونا', 174),
+(743, 'fa', 'ترئو', 175),
+(744, 'fa', 'تولدو', 176),
+(745, 'fa', 'والنسیا', 177),
+(746, 'fa', 'والادولی', 178),
+(747, 'fa', 'ویزکایا', 179),
+(748, 'fa', 'زامور', 180),
+(749, 'fa', 'ساراگوز', 181),
+(750, 'fa', 'عی', 182),
+(751, 'fa', 'آیز', 183),
+(752, 'fa', 'آلی', 184),
+(753, 'fa', 'آلپ-دو-هاوت-پرووانس', 185),
+(754, 'fa', 'هاوتس آلپ', 186),
+(755, 'fa', 'Alpes-Maritime', 187),
+(756, 'fa', 'اردچه', 188),
+(757, 'fa', 'آرد', 189),
+(758, 'fa', 'محاصر', 190),
+(759, 'fa', 'آبه', 191),
+(760, 'fa', 'Aud', 192),
+(761, 'fa', 'آویرون', 193),
+(762, 'fa', 'BOCAS DO Rhône', 194),
+(763, 'fa', 'نوعی عرق', 195),
+(764, 'fa', 'کانتینال', 196),
+(765, 'fa', 'چارنت', 197),
+(766, 'fa', 'چارنت-دریایی', 198),
+(767, 'fa', 'چ', 199),
+(768, 'fa', 'کور', 200),
+(769, 'fa', 'کرس دو ساد', 201),
+(770, 'fa', 'هاوت کورس', 202),
+(771, 'fa', 'کوستا دورکرز', 203),
+(772, 'fa', 'تخت دارمور', 204),
+(773, 'fa', 'درهم', 205),
+(774, 'fa', 'دوردگن', 206),
+(775, 'fa', 'دوب', 207),
+(776, 'fa', 'تعریف اول', 208),
+(777, 'fa', 'یور', 209),
+(778, 'fa', 'Eure-et-Loi', 210),
+(779, 'fa', 'فمینیست', 211),
+(780, 'fa', 'باغ', 212),
+(781, 'fa', 'اوت-گارون', 213),
+(782, 'fa', 'گر', 214),
+(783, 'fa', 'جیروند', 215),
+(784, 'fa', 'هیر', 216),
+(785, 'fa', 'هشدار داده می شود', 217),
+(786, 'fa', 'ایندور', 218),
+(787, 'fa', 'Indre-et-Loir', 219),
+(788, 'fa', 'ایزر', 220),
+(789, 'fa', 'یور', 221),
+(790, 'fa', 'لندز', 222),
+(791, 'fa', 'Loir-et-Che', 223),
+(792, 'fa', 'وام گرفتن', 224),
+(793, 'fa', 'Haute-Loir', 225),
+(794, 'fa', 'Loire-Atlantiqu', 226),
+(795, 'fa', 'لیرت', 227),
+(796, 'fa', 'لوط', 228),
+(797, 'fa', 'لوت و گارون', 229),
+(798, 'fa', 'لوزر', 230),
+(799, 'fa', 'ماین et-Loire', 231),
+(800, 'fa', 'مانچ', 232),
+(801, 'fa', 'مارن', 233),
+(802, 'fa', 'هاوت-مارن', 234),
+(803, 'fa', 'مایین', 235),
+(804, 'fa', 'مورته-et-Moselle', 236),
+(805, 'fa', 'مسخره کردن', 237),
+(806, 'fa', 'موربیان', 238),
+(807, 'fa', 'موزل', 239),
+(808, 'fa', 'Nièvr', 240),
+(809, 'fa', 'نورد', 241),
+(810, 'fa', 'اوی', 242),
+(811, 'fa', 'ارن', 243),
+(812, 'fa', 'پاس-کاله', 244),
+(813, 'fa', 'Puy-de-Dôm', 245),
+(814, 'fa', 'Pyrénées-Atlantiques', 246),
+(815, 'fa', 'Hautes-Pyrénée', 247),
+(816, 'fa', 'Pyrénées-Orientales', 248),
+(817, 'fa', 'بس راین', 249),
+(818, 'fa', 'هاوت-رین', 250),
+(819, 'fa', 'رو', 251),
+(820, 'fa', 'Haute-Saône', 252),
+(821, 'fa', 'Saône-et-Loire', 253),
+(822, 'fa', 'سارته', 254),
+(823, 'fa', 'ساووی', 255),
+(824, 'fa', 'هاو-ساووی', 256),
+(825, 'fa', 'پاری', 257),
+(826, 'fa', 'Seine-Maritime', 258),
+(827, 'fa', 'Seine-et-Marn', 259),
+(828, 'fa', 'ایولینز', 260),
+(829, 'fa', 'Deux-Sèvres', 261),
+(830, 'fa', 'سمی', 262),
+(831, 'fa', 'ضعف', 263),
+(832, 'fa', 'Tarn-et-Garonne', 264),
+(833, 'fa', 'وار', 265),
+(834, 'fa', 'ووکلوز', 266),
+(835, 'fa', 'وندیه', 267),
+(836, 'fa', 'وین', 268),
+(837, 'fa', 'هاوت-وین', 269),
+(838, 'fa', 'رأی دادن', 270),
+(839, 'fa', 'یون', 271),
+(840, 'fa', 'سرزمین-دو-بلفورت', 272),
+(841, 'fa', 'اسون', 273),
+(842, 'fa', 'هاوتز دی سی', 274),
+(843, 'fa', 'Seine-Saint-Deni', 275),
+(844, 'fa', 'والد مارن', 276),
+(845, 'fa', 'Val-d\'Ois', 277),
+(846, 'fa', 'آلبا', 278),
+(847, 'fa', 'آرا', 279),
+(848, 'fa', 'Argeș', 280),
+(849, 'fa', 'باکو', 281),
+(850, 'fa', 'بیهور', 282),
+(851, 'fa', 'بیستریا-نسوود', 283),
+(852, 'fa', 'بوتانی', 284),
+(853, 'fa', 'برازوف', 285),
+(854, 'fa', 'Brăila', 286),
+(855, 'fa', 'București', 287),
+(856, 'fa', 'بوز', 288),
+(857, 'fa', 'کارا- Severin', 289),
+(858, 'fa', 'کالیراسی', 290),
+(859, 'fa', 'كلوژ', 291),
+(860, 'fa', 'کنستانس', 292),
+(861, 'fa', 'کواسنا', 293),
+(862, 'fa', 'Dâmbovița', 294),
+(863, 'fa', 'دال', 295),
+(864, 'fa', 'گالشی', 296),
+(865, 'fa', 'جورجیو', 297),
+(866, 'fa', 'گور', 298),
+(867, 'fa', 'هارگیتا', 299),
+(868, 'fa', 'هوندهار', 300),
+(869, 'fa', 'ایالومیشا', 301),
+(870, 'fa', 'Iași', 302),
+(871, 'fa', 'Ilfo', 303),
+(872, 'fa', 'Maramureș', 304),
+(873, 'fa', 'Mehedinți', 305),
+(874, 'fa', 'Mureș', 306),
+(875, 'fa', 'Neamț', 307),
+(876, 'fa', 'اولت', 308),
+(877, 'fa', 'پرهوا', 309),
+(878, 'fa', 'ستو ماره', 310),
+(879, 'fa', 'سلاج', 311),
+(880, 'fa', 'سیبیو', 312),
+(881, 'fa', 'سوساو', 313),
+(882, 'fa', 'تلورمان', 314),
+(883, 'fa', 'تیمیچ', 315),
+(884, 'fa', 'تولسا', 316),
+(885, 'fa', 'واسلوئی', 317),
+(886, 'fa', 'Vâlcea', 318),
+(887, 'fa', 'ورانسا', 319),
+(888, 'fa', 'لاپی', 320),
+(889, 'fa', 'Pohjois-Pohjanmaa', 321),
+(890, 'fa', 'کائینو', 322),
+(891, 'fa', 'Pohjois-Karjala', 323),
+(892, 'fa', 'Pohjois-Savo', 324),
+(893, 'fa', 'اتل-ساوو', 325),
+(894, 'fa', 'کسکی-پوهانما', 326),
+(895, 'fa', 'Pohjanmaa', 327),
+(896, 'fa', 'پیرکانما', 328),
+(897, 'fa', 'ساتاکونتا', 329),
+(898, 'fa', 'کسکی-پوهانما', 330),
+(899, 'fa', 'کسکی-سوومی', 331),
+(900, 'fa', 'Varsinais-Suomi', 332),
+(901, 'fa', 'اتلی کرجالا', 333),
+(902, 'fa', 'Päijät-HAM', 334),
+(903, 'fa', 'کانتا-هوم', 335),
+(904, 'fa', 'یوسیما', 336),
+(905, 'fa', 'اوسیم', 337),
+(906, 'fa', 'کیمنلاکو', 338),
+(907, 'fa', 'آونوانما', 339),
+(908, 'fa', 'هارژوم', 340),
+(909, 'fa', 'سلا', 341),
+(910, 'fa', 'آیدا-ویروما', 342),
+(911, 'fa', 'Jõgevamaa', 343),
+(912, 'fa', 'جوروماا', 344),
+(913, 'fa', 'لونما', 345),
+(914, 'fa', 'لون-ویروما', 346),
+(915, 'fa', 'پالوماا', 347),
+(916, 'fa', 'پورنوما', 348),
+(917, 'fa', 'Raplama', 349),
+(918, 'fa', 'ساارما', 350),
+(919, 'fa', 'تارتوما', 351),
+(920, 'fa', 'والگام', 352),
+(921, 'fa', 'ویلجاندیم', 353),
+(922, 'fa', 'Võrumaa', 354),
+(923, 'fa', 'داگاوپیل', 355),
+(924, 'fa', 'جلگاو', 356),
+(925, 'fa', 'جکابیل', 357),
+(926, 'fa', 'جرمل', 358),
+(927, 'fa', 'لیپجا', 359),
+(928, 'fa', 'شهرستان لیپاج', 360),
+(929, 'fa', 'روژن', 361),
+(930, 'fa', 'راگ', 362),
+(931, 'fa', 'شهرستان ریگ', 363),
+(932, 'fa', 'والمییرا', 364),
+(933, 'fa', 'Ventspils', 365),
+(934, 'fa', 'آگلوناس نوادا', 366),
+(935, 'fa', 'تازه کاران آیزکرایکلس', 367),
+(936, 'fa', 'تازه واردان', 368),
+(937, 'fa', 'شهرستا', 369),
+(938, 'fa', 'نوازندگان آلوجاس', 370),
+(939, 'fa', 'تازه های آلسونگاس', 371),
+(940, 'fa', 'شهرستان آلوکس', 372),
+(941, 'fa', 'تازه کاران آماتاس', 373),
+(942, 'fa', 'میمون های تازه', 374),
+(943, 'fa', 'نوادا را آویز می کند', 375),
+(944, 'fa', 'شهرستان بابی', 376),
+(945, 'fa', 'Baldones novad', 377),
+(946, 'fa', 'نوین های بالتیناوا', 378),
+(947, 'fa', 'Balvu novad', 379),
+(948, 'fa', 'نوازندگان باسکاس', 380),
+(949, 'fa', 'شهرستان بورین', 381),
+(950, 'fa', 'شهرستان بروچن', 382),
+(951, 'fa', 'بوردنیکو نوآوران', 383),
+(952, 'fa', 'تازه کارنیکاوا', 384),
+(953, 'fa', 'نوازان سزوینس', 385),
+(954, 'fa', 'نوادگان Cibla', 386),
+(955, 'fa', 'شهرستان Cesis', 387),
+(956, 'fa', 'تازه های داگدا', 388),
+(957, 'fa', 'داوگاوپیلز نوادا', 389),
+(958, 'fa', 'دابل نوادی', 390),
+(959, 'fa', 'تازه کارهای دنداگاس', 391),
+(960, 'fa', 'نوباد دوربس', 392),
+(961, 'fa', 'مشغول تازه کارها است', 393),
+(962, 'fa', 'گرکالنس نواد', 394),
+(963, 'fa', 'یا شهرستان گروبی', 395),
+(964, 'fa', 'تازه های گلبنس', 396),
+(965, 'fa', 'Iecavas novads', 397),
+(966, 'fa', 'شهرستان ایسکل', 398),
+(967, 'fa', 'ایالت ایلکست', 399),
+(968, 'fa', 'کنددو د اینچوکالن', 400),
+(969, 'fa', 'نوجواد Jaunjelgavas', 401),
+(970, 'fa', 'تازه های Jaunpiebalgas', 402),
+(971, 'fa', 'شهرستان جونپیلس', 403),
+(972, 'fa', 'شهرستان جگلو', 404),
+(973, 'fa', 'شهرستان جکابیل', 405),
+(974, 'fa', 'شهرستان کنداوا', 406),
+(975, 'fa', 'شهرستان کوکنز', 407),
+(976, 'fa', 'شهرستان کریمولد', 408),
+(977, 'fa', 'شهرستان کرستپیل', 409),
+(978, 'fa', 'شهرستان کراسلاو', 410),
+(979, 'fa', 'کاندادو د کلدیگا', 411),
+(980, 'fa', 'کاندادو د کارساوا', 412),
+(981, 'fa', 'شهرستان لیولوارد', 413),
+(982, 'fa', 'شهرستان لیمباشی', 414),
+(983, 'fa', 'ای ولسوالی لوبون', 415),
+(984, 'fa', 'شهرستان لودزا', 416),
+(985, 'fa', 'شهرستان لیگات', 417),
+(986, 'fa', 'شهرستان لیوانی', 418),
+(987, 'fa', 'شهرستان مادونا', 419),
+(988, 'fa', 'شهرستان مازسال', 420),
+(989, 'fa', 'شهرستان مالپیلس', 421),
+(990, 'fa', 'شهرستان Mārupe', 422),
+(991, 'fa', 'ا کنددو د نوکشنی', 423),
+(992, 'fa', 'کاملاً یک شهرستان', 424),
+(993, 'fa', 'شهرستان نیکا', 425),
+(994, 'fa', 'شهرستان اوگر', 426),
+(995, 'fa', 'شهرستان اولین', 427),
+(996, 'fa', 'شهرستان اوزولنیکی', 428),
+(997, 'fa', 'شهرستان پرلیلی', 429),
+(998, 'fa', 'شهرستان Priekule', 430),
+(999, 'fa', 'Condado de Priekuļi', 431),
+(1000, 'fa', 'شهرستان در حال حرکت', 432),
+(1001, 'fa', 'شهرستان پاویلوستا', 433),
+(1002, 'fa', 'شهرستان Plavinas', 4),
+(1003, 'fa', 'شهرستان راونا', 435),
+(1004, 'fa', 'شهرستان ریبیشی', 436),
+(1005, 'fa', 'شهرستان روجا', 437),
+(1006, 'fa', 'شهرستان روپازی', 438),
+(1007, 'fa', 'شهرستان روساوا', 439),
+(1008, 'fa', 'شهرستان روگی', 440),
+(1009, 'fa', 'شهرستان راندل', 441),
+(1010, 'fa', 'شهرستان ریزکن', 442),
+(1011, 'fa', 'شهرستان روژینا', 443),
+(1012, 'fa', 'شهرداری Salacgriva', 444),
+(1013, 'fa', 'منطقه جزیره', 445),
+(1014, 'fa', 'شهرستان Salaspils', 446),
+(1015, 'fa', 'شهرستان سالدوس', 447),
+(1016, 'fa', 'شهرستان ساولکرستی', 448),
+(1017, 'fa', 'شهرستان سیگولدا', 449),
+(1018, 'fa', 'شهرستان Skrunda', 450),
+(1019, 'fa', 'شهرستان Skrīveri', 451),
+(1020, 'fa', 'شهرستان Smiltene', 452),
+(1021, 'fa', 'شهرستان ایستینی', 453),
+(1022, 'fa', 'شهرستان استرنشی', 454),
+(1023, 'fa', 'منطقه کاشت', 455),
+(1024, 'fa', 'شهرستان تالسی', 456),
+(1025, 'fa', 'توکومس', 457),
+(1026, 'fa', 'شهرستان تورت', 458),
+(1027, 'fa', 'یا شهرستان وایودود', 459),
+(1028, 'fa', 'شهرستان والکا', 460),
+(1029, 'fa', 'شهرستان Valmiera', 461),
+(1030, 'fa', 'شهرستان وارکانی', 462),
+(1031, 'fa', 'شهرستان Vecpiebalga', 463),
+(1032, 'fa', 'شهرستان وکومنیکی', 464),
+(1033, 'fa', 'شهرستان ونتسپیل', 465),
+(1034, 'fa', 'کنددو د بازدید', 466),
+(1035, 'fa', 'شهرستان ویلاکا', 467),
+(1036, 'fa', 'شهرستان ویلانی', 468),
+(1037, 'fa', 'شهرستان واركاوا', 469),
+(1038, 'fa', 'شهرستان زیلوپ', 470),
+(1039, 'fa', 'شهرستان آدازی', 471),
+(1040, 'fa', 'شهرستان ارگلو', 472),
+(1041, 'fa', 'شهرستان کگومس', 473),
+(1042, 'fa', 'شهرستان ککاوا', 474),
+(1043, 'fa', 'شهرستان Alytus', 475),
+(1044, 'fa', 'شهرستان Kaunas', 476),
+(1045, 'fa', 'شهرستان کلایپدا', 477),
+(1046, 'fa', 'شهرستان ماریجامپولی', 478),
+(1047, 'fa', 'شهرستان پانویسیز', 479),
+(1048, 'fa', 'شهرستان سیاولیا', 480),
+(1049, 'fa', 'شهرستان تاجیج', 481),
+(1050, 'fa', 'شهرستان تلشیا', 482),
+(1051, 'fa', 'شهرستان اوتنا', 483),
+(1052, 'fa', 'شهرستان ویلنیوس', 484),
+(1053, 'fa', 'جریب', 485),
+(1054, 'fa', 'حالت', 486),
+(1055, 'fa', 'آمپá', 487),
+(1056, 'fa', 'آمازون', 488),
+(1057, 'fa', 'باهی', 489),
+(1058, 'fa', 'سارا', 490),
+(1059, 'fa', 'روح القدس', 491),
+(1060, 'fa', 'برو', 492),
+(1061, 'fa', 'مارانهائ', 493),
+(1062, 'fa', 'ماتو گروسو', 494),
+(1063, 'fa', 'Mato Grosso do Sul', 495),
+(1064, 'fa', 'ایالت میناس گرایس', 496),
+(1065, 'fa', 'پار', 497),
+(1066, 'fa', 'حالت', 498),
+(1067, 'fa', 'پارانا', 499),
+(1068, 'fa', 'حال', 500),
+(1069, 'fa', 'پیازو', 501),
+(1070, 'fa', 'ریو دوژانیرو', 502),
+(1071, 'fa', 'ریو گراند دو نورته', 503),
+(1072, 'fa', 'ریو گراند دو سول', 504),
+(1073, 'fa', 'Rondôni', 505),
+(1074, 'fa', 'Roraim', 506),
+(1075, 'fa', 'سانتا کاتارینا', 507),
+(1076, 'fa', 'پ', 508),
+(1077, 'fa', 'Sergip', 509),
+(1078, 'fa', 'توکانتین', 510),
+(1079, 'fa', 'منطقه فدرال', 511),
+(1080, 'fa', 'شهرستان زاگرب', 512),
+(1081, 'fa', 'Condado de Krapina-Zagorj', 513),
+(1082, 'fa', 'شهرستان سیساک-موسلاوینا', 514),
+(1083, 'fa', 'شهرستان کارلوواک', 515),
+(1084, 'fa', 'شهرداری واراžدین', 516),
+(1085, 'fa', 'Condo de Koprivnica-Križevci', 517),
+(1086, 'fa', 'محل سکونت د بیلوار-بلوگورا', 518),
+(1087, 'fa', 'Condado de Primorje-Gorski kotar', 519),
+(1088, 'fa', 'شهرستان لیکا-سنج', 520),
+(1089, 'fa', 'Condado de Virovitica-Podravina', 521),
+(1090, 'fa', 'شهرستان پوژگا-اسلاونیا', 522),
+(1091, 'fa', 'Condado de Brod-Posavina', 523),
+(1092, 'fa', 'شهرستان زجر', 524),
+(1093, 'fa', 'Condado de Osijek-Baranja', 525),
+(1094, 'fa', 'Condo de Sibenik-Knin', 526),
+(1095, 'fa', 'Condado de Vukovar-Srijem', 527),
+(1096, 'fa', 'شهرستان اسپلیت-Dalmatia', 528),
+(1097, 'fa', 'شهرستان ایستیا', 529),
+(1098, 'fa', 'Condado de Dubrovnik-Neretva', 530),
+(1099, 'fa', 'شهرستان Međimurje', 531),
+(1100, 'fa', 'شهر زاگرب', 532),
+(1101, 'fa', 'جزایر آندامان و نیکوبار', 533),
+(1102, 'fa', 'آندرا پرادش', 534),
+(1103, 'fa', 'آروناچال پرادش', 535),
+(1104, 'fa', 'آسام', 536),
+(1105, 'fa', 'Biha', 537),
+(1106, 'fa', 'چاندیگار', 538),
+(1107, 'fa', 'چاتیسگار', 539),
+(1108, 'fa', 'دادرا و نگار هاولی', 540),
+(1109, 'fa', 'دامان و دیو', 541),
+(1110, 'fa', 'دهلی', 542),
+(1111, 'fa', 'گوا', 543),
+(1112, 'fa', 'گجرات', 544),
+(1113, 'fa', 'هاریانا', 545),
+(1114, 'fa', 'هیماچال پرادش', 546),
+(1115, 'fa', 'جامو و کشمیر', 547),
+(1116, 'fa', 'جهخند', 548),
+(1117, 'fa', 'کارناتاکا', 549),
+(1118, 'fa', 'کرال', 550),
+(1119, 'fa', 'لاکشادوپ', 551),
+(1120, 'fa', 'مادیا پرادش', 552),
+(1121, 'fa', 'ماهاراشترا', 553),
+(1122, 'fa', 'مانی پور', 554),
+(1123, 'fa', 'مگالایا', 555),
+(1124, 'fa', 'مزورام', 556),
+(1125, 'fa', 'ناگلند', 557),
+(1126, 'fa', 'ادیشا', 558),
+(1127, 'fa', 'میناکاری', 559),
+(1128, 'fa', 'پنجا', 560),
+(1129, 'fa', 'راجستان', 561),
+(1130, 'fa', 'سیکیم', 562),
+(1131, 'fa', 'تامیل نادو', 563),
+(1132, 'fa', 'تلنگانا', 564),
+(1133, 'fa', 'تریپورا', 565),
+(1134, 'fa', 'اوتار پرادش', 566),
+(1135, 'fa', 'اوتاراکند', 567),
+(1136, 'fa', 'بنگال غرب', 568),
+(1137, 'pt_BR', 'Alabama', 1),
+(1138, 'pt_BR', 'Alaska', 2),
+(1139, 'pt_BR', 'Samoa Americana', 3),
+(1140, 'pt_BR', 'Arizona', 4),
+(1141, 'pt_BR', 'Arkansas', 5),
+(1142, 'pt_BR', 'Forças Armadas da África', 6),
+(1143, 'pt_BR', 'Forças Armadas das Américas', 7),
+(1144, 'pt_BR', 'Forças Armadas do Canadá', 8),
+(1145, 'pt_BR', 'Forças Armadas da Europa', 9),
+(1146, 'pt_BR', 'Forças Armadas do Oriente Médio', 10),
+(1147, 'pt_BR', 'Forças Armadas do Pacífico', 11),
+(1148, 'pt_BR', 'California', 12),
+(1149, 'pt_BR', 'Colorado', 13),
+(1150, 'pt_BR', 'Connecticut', 14),
+(1151, 'pt_BR', 'Delaware', 15),
+(1152, 'pt_BR', 'Distrito de Columbia', 16),
+(1153, 'pt_BR', 'Estados Federados da Micronésia', 17),
+(1154, 'pt_BR', 'Florida', 18),
+(1155, 'pt_BR', 'Geórgia', 19),
+(1156, 'pt_BR', 'Guam', 20),
+(1157, 'pt_BR', 'Havaí', 21),
+(1158, 'pt_BR', 'Idaho', 22),
+(1159, 'pt_BR', 'Illinois', 23),
+(1160, 'pt_BR', 'Indiana', 24),
+(1161, 'pt_BR', 'Iowa', 25),
+(1162, 'pt_BR', 'Kansas', 26),
+(1163, 'pt_BR', 'Kentucky', 27),
+(1164, 'pt_BR', 'Louisiana', 28),
+(1165, 'pt_BR', 'Maine', 29),
+(1166, 'pt_BR', 'Ilhas Marshall', 30),
+(1167, 'pt_BR', 'Maryland', 31),
+(1168, 'pt_BR', 'Massachusetts', 32),
+(1169, 'pt_BR', 'Michigan', 33),
+(1170, 'pt_BR', 'Minnesota', 34),
+(1171, 'pt_BR', 'Mississippi', 35),
+(1172, 'pt_BR', 'Missouri', 36),
+(1173, 'pt_BR', 'Montana', 37),
+(1174, 'pt_BR', 'Nebraska', 38),
+(1175, 'pt_BR', 'Nevada', 39),
+(1176, 'pt_BR', 'New Hampshire', 40),
+(1177, 'pt_BR', 'Nova Jersey', 41),
+(1178, 'pt_BR', 'Novo México', 42),
+(1179, 'pt_BR', 'Nova York', 43),
+(1180, 'pt_BR', 'Carolina do Norte', 44),
+(1181, 'pt_BR', 'Dakota do Norte', 45),
+(1182, 'pt_BR', 'Ilhas Marianas do Norte', 46),
+(1183, 'pt_BR', 'Ohio', 47),
+(1184, 'pt_BR', 'Oklahoma', 48),
+(1185, 'pt_BR', 'Oregon', 4),
+(1186, 'pt_BR', 'Palau', 50),
+(1187, 'pt_BR', 'Pensilvânia', 51),
+(1188, 'pt_BR', 'Porto Rico', 52),
+(1189, 'pt_BR', 'Rhode Island', 53),
+(1190, 'pt_BR', 'Carolina do Sul', 54),
+(1191, 'pt_BR', 'Dakota do Sul', 55),
+(1192, 'pt_BR', 'Tennessee', 56),
+(1193, 'pt_BR', 'Texas', 57),
+(1194, 'pt_BR', 'Utah', 58),
+(1195, 'pt_BR', 'Vermont', 59),
+(1196, 'pt_BR', 'Ilhas Virgens', 60),
+(1197, 'pt_BR', 'Virginia', 61),
+(1198, 'pt_BR', 'Washington', 62),
+(1199, 'pt_BR', 'West Virginia', 63),
+(1200, 'pt_BR', 'Wisconsin', 64),
+(1201, 'pt_BR', 'Wyoming', 65),
+(1202, 'pt_BR', 'Alberta', 66),
+(1203, 'pt_BR', 'Colúmbia Britânica', 67),
+(1204, 'pt_BR', 'Manitoba', 68),
+(1205, 'pt_BR', 'Terra Nova e Labrador', 69),
+(1206, 'pt_BR', 'New Brunswick', 70),
+(1207, 'pt_BR', 'Nova Escócia', 7),
+(1208, 'pt_BR', 'Territórios do Noroeste', 72),
+(1209, 'pt_BR', 'Nunavut', 73),
+(1210, 'pt_BR', 'Ontario', 74),
+(1211, 'pt_BR', 'Ilha do Príncipe Eduardo', 75),
+(1212, 'pt_BR', 'Quebec', 76),
+(1213, 'pt_BR', 'Saskatchewan', 77),
+(1214, 'pt_BR', 'Território yukon', 78),
+(1215, 'pt_BR', 'Niedersachsen', 79),
+(1216, 'pt_BR', 'Baden-Wurttemberg', 80),
+(1217, 'pt_BR', 'Bayern', 81),
+(1218, 'pt_BR', 'Berlim', 82),
+(1219, 'pt_BR', 'Brandenburg', 83),
+(1220, 'pt_BR', 'Bremen', 84),
+(1221, 'pt_BR', 'Hamburgo', 85),
+(1222, 'pt_BR', 'Hessen', 86),
+(1223, 'pt_BR', 'Mecklenburg-Vorpommern', 87),
+(1224, 'pt_BR', 'Nordrhein-Westfalen', 88),
+(1225, 'pt_BR', 'Renânia-Palatinado', 8),
+(1226, 'pt_BR', 'Sarre', 90),
+(1227, 'pt_BR', 'Sachsen', 91),
+(1228, 'pt_BR', 'Sachsen-Anhalt', 92),
+(1229, 'pt_BR', 'Schleswig-Holstein', 93),
+(1230, 'pt_BR', 'Turíngia', 94),
+(1231, 'pt_BR', 'Viena', 95),
+(1232, 'pt_BR', 'Baixa Áustria', 96),
+(1233, 'pt_BR', 'Oberösterreich', 97),
+(1234, 'pt_BR', 'Salzburg', 98),
+(1235, 'pt_BR', 'Caríntia', 99),
+(1236, 'pt_BR', 'Steiermark', 100),
+(1237, 'pt_BR', 'Tirol', 101),
+(1238, 'pt_BR', 'Burgenland', 102),
+(1239, 'pt_BR', 'Vorarlberg', 103),
+(1240, 'pt_BR', 'Aargau', 104),
+(1241, 'pt_BR', 'Appenzell Innerrhoden', 105),
+(1242, 'pt_BR', 'Appenzell Ausserrhoden', 106),
+(1243, 'pt_BR', 'Bern', 107),
+(1244, 'pt_BR', 'Basel-Landschaft', 108),
+(1245, 'pt_BR', 'Basel-Stadt', 109),
+(1246, 'pt_BR', 'Freiburg', 110),
+(1247, 'pt_BR', 'Genf', 111),
+(1248, 'pt_BR', 'Glarus', 112),
+(1249, 'pt_BR', 'Grisons', 113),
+(1250, 'pt_BR', 'Jura', 114),
+(1251, 'pt_BR', 'Luzern', 115),
+(1252, 'pt_BR', 'Neuenburg', 116),
+(1253, 'pt_BR', 'Nidwalden', 117),
+(1254, 'pt_BR', 'Obwalden', 118),
+(1255, 'pt_BR', 'St. Gallen', 119),
+(1256, 'pt_BR', 'Schaffhausen', 120),
+(1257, 'pt_BR', 'Solothurn', 121),
+(1258, 'pt_BR', 'Schwyz', 122),
+(1259, 'pt_BR', 'Thurgau', 123),
+(1260, 'pt_BR', 'Tessin', 124),
+(1261, 'pt_BR', 'Uri', 125),
+(1262, 'pt_BR', 'Waadt', 126),
+(1263, 'pt_BR', 'Wallis', 127),
+(1264, 'pt_BR', 'Zug', 128),
+(1265, 'pt_BR', 'Zurique', 129),
+(1266, 'pt_BR', 'Corunha', 130),
+(1267, 'pt_BR', 'Álava', 131),
+(1268, 'pt_BR', 'Albacete', 132),
+(1269, 'pt_BR', 'Alicante', 133),
+(1270, 'pt_BR', 'Almeria', 134),
+(1271, 'pt_BR', 'Astúrias', 135),
+(1272, 'pt_BR', 'Avila', 136),
+(1273, 'pt_BR', 'Badajoz', 137),
+(1274, 'pt_BR', 'Baleares', 138),
+(1275, 'pt_BR', 'Barcelona', 139),
+(1276, 'pt_BR', 'Burgos', 140),
+(1277, 'pt_BR', 'Caceres', 141),
+(1278, 'pt_BR', 'Cadiz', 142),
+(1279, 'pt_BR', 'Cantábria', 143),
+(1280, 'pt_BR', 'Castellon', 144),
+(1281, 'pt_BR', 'Ceuta', 145),
+(1282, 'pt_BR', 'Ciudad Real', 146),
+(1283, 'pt_BR', 'Cordoba', 147),
+(1284, 'pt_BR', 'Cuenca', 148),
+(1285, 'pt_BR', 'Girona', 149),
+(1286, 'pt_BR', 'Granada', 150),
+(1287, 'pt_BR', 'Guadalajara', 151),
+(1288, 'pt_BR', 'Guipuzcoa', 152),
+(1289, 'pt_BR', 'Huelva', 153),
+(1290, 'pt_BR', 'Huesca', 154),
+(1291, 'pt_BR', 'Jaen', 155),
+(1292, 'pt_BR', 'La Rioja', 156),
+(1293, 'pt_BR', 'Las Palmas', 157),
+(1294, 'pt_BR', 'Leon', 158),
+(1295, 'pt_BR', 'Lleida', 159),
+(1296, 'pt_BR', 'Lugo', 160),
+(1297, 'pt_BR', 'Madri', 161),
+(1298, 'pt_BR', 'Málaga', 162),
+(1299, 'pt_BR', 'Melilla', 163),
+(1300, 'pt_BR', 'Murcia', 164),
+(1301, 'pt_BR', 'Navarra', 165),
+(1302, 'pt_BR', 'Ourense', 166),
+(1303, 'pt_BR', 'Palencia', 167),
+(1304, 'pt_BR', 'Pontevedra', 168),
+(1305, 'pt_BR', 'Salamanca', 169),
+(1306, 'pt_BR', 'Santa Cruz de Tenerife', 170),
+(1307, 'pt_BR', 'Segovia', 171),
+(1308, 'pt_BR', 'Sevilla', 172),
+(1309, 'pt_BR', 'Soria', 173),
+(1310, 'pt_BR', 'Tarragona', 174),
+(1311, 'pt_BR', 'Teruel', 175),
+(1312, 'pt_BR', 'Toledo', 176),
+(1313, 'pt_BR', 'Valencia', 177),
+(1314, 'pt_BR', 'Valladolid', 178),
+(1315, 'pt_BR', 'Vizcaya', 179),
+(1316, 'pt_BR', 'Zamora', 180),
+(1317, 'pt_BR', 'Zaragoza', 181),
+(1318, 'pt_BR', 'Ain', 182),
+(1319, 'pt_BR', 'Aisne', 183),
+(1320, 'pt_BR', 'Allier', 184),
+(1321, 'pt_BR', 'Alpes da Alta Provença', 185),
+(1322, 'pt_BR', 'Altos Alpes', 186),
+(1323, 'pt_BR', 'Alpes-Maritimes', 187),
+(1324, 'pt_BR', 'Ardèche', 188),
+(1325, 'pt_BR', 'Ardennes', 189),
+(1326, 'pt_BR', 'Ariege', 190),
+(1327, 'pt_BR', 'Aube', 191),
+(1328, 'pt_BR', 'Aude', 192),
+(1329, 'pt_BR', 'Aveyron', 193),
+(1330, 'pt_BR', 'BOCAS DO Rhône', 194),
+(1331, 'pt_BR', 'Calvados', 195),
+(1332, 'pt_BR', 'Cantal', 196),
+(1333, 'pt_BR', 'Charente', 197),
+(1334, 'pt_BR', 'Charente-Maritime', 198),
+(1335, 'pt_BR', 'Cher', 199),
+(1336, 'pt_BR', 'Corrèze', 200),
+(1337, 'pt_BR', 'Corse-du-Sud', 201),
+(1338, 'pt_BR', 'Alta Córsega', 202),
+(1339, 'pt_BR', 'Costa d\'OrCorrèze', 203),
+(1340, 'pt_BR', 'Cotes d\'Armor', 204),
+(1341, 'pt_BR', 'Creuse', 205),
+(1342, 'pt_BR', 'Dordogne', 206),
+(1343, 'pt_BR', 'Doubs', 207),
+(1344, 'pt_BR', 'DrômeFinistère', 208),
+(1345, 'pt_BR', 'Eure', 209),
+(1346, 'pt_BR', 'Eure-et-Loir', 210),
+(1347, 'pt_BR', 'Finistère', 211),
+(1348, 'pt_BR', 'Gard', 212),
+(1349, 'pt_BR', 'Haute-Garonne', 213),
+(1350, 'pt_BR', 'Gers', 214),
+(1351, 'pt_BR', 'Gironde', 215),
+(1352, 'pt_BR', 'Hérault', 216),
+(1353, 'pt_BR', 'Ille-et-Vilaine', 217),
+(1354, 'pt_BR', 'Indre', 218),
+(1355, 'pt_BR', 'Indre-et-Loire', 219),
+(1356, 'pt_BR', 'Isère', 220),
+(1357, 'pt_BR', 'Jura', 221),
+(1358, 'pt_BR', 'Landes', 222),
+(1359, 'pt_BR', 'Loir-et-Cher', 223),
+(1360, 'pt_BR', 'Loire', 224),
+(1361, 'pt_BR', 'Haute-Loire', 22),
+(1362, 'pt_BR', 'Loire-Atlantique', 226),
+(1363, 'pt_BR', 'Loiret', 227),
+(1364, 'pt_BR', 'Lot', 228),
+(1365, 'pt_BR', 'Lot e Garona', 229),
+(1366, 'pt_BR', 'Lozère', 230),
+(1367, 'pt_BR', 'Maine-et-Loire', 231),
+(1368, 'pt_BR', 'Manche', 232),
+(1369, 'pt_BR', 'Marne', 233),
+(1370, 'pt_BR', 'Haute-Marne', 234),
+(1371, 'pt_BR', 'Mayenne', 235),
+(1372, 'pt_BR', 'Meurthe-et-Moselle', 236),
+(1373, 'pt_BR', 'Meuse', 237),
+(1374, 'pt_BR', 'Morbihan', 238),
+(1375, 'pt_BR', 'Moselle', 239),
+(1376, 'pt_BR', 'Nièvre', 240),
+(1377, 'pt_BR', 'Nord', 241),
+(1378, 'pt_BR', 'Oise', 242),
+(1379, 'pt_BR', 'Orne', 243),
+(1380, 'pt_BR', 'Pas-de-Calais', 244),
+(1381, 'pt_BR', 'Puy-de-Dôme', 24),
+(1382, 'pt_BR', 'Pirineus Atlânticos', 246),
+(1383, 'pt_BR', 'Hautes-Pyrénées', 247),
+(1384, 'pt_BR', 'Pirineus Orientais', 248),
+(1385, 'pt_BR', 'Bas-Rhin', 249),
+(1386, 'pt_BR', 'Alto Reno', 250),
+(1387, 'pt_BR', 'Rhône', 251),
+(1388, 'pt_BR', 'Haute-Saône', 252),
+(1389, 'pt_BR', 'Saône-et-Loire', 253),
+(1390, 'pt_BR', 'Sarthe', 25),
+(1391, 'pt_BR', 'Savoie', 255),
+(1392, 'pt_BR', 'Alta Sabóia', 256),
+(1393, 'pt_BR', 'Paris', 257),
+(1394, 'pt_BR', 'Seine-Maritime', 258),
+(1395, 'pt_BR', 'Seine-et-Marne', 259),
+(1396, 'pt_BR', 'Yvelines', 260),
+(1397, 'pt_BR', 'Deux-Sèvres', 261),
+(1398, 'pt_BR', 'Somme', 262),
+(1399, 'pt_BR', 'Tarn', 263),
+(1400, 'pt_BR', 'Tarn-et-Garonne', 264),
+(1401, 'pt_BR', 'Var', 265),
+(1402, 'pt_BR', 'Vaucluse', 266),
+(1403, 'pt_BR', 'Compradora', 267),
+(1404, 'pt_BR', 'Vienne', 268),
+(1405, 'pt_BR', 'Haute-Vienne', 269),
+(1406, 'pt_BR', 'Vosges', 270),
+(1407, 'pt_BR', 'Yonne', 271),
+(1408, 'pt_BR', 'Território de Belfort', 272),
+(1409, 'pt_BR', 'Essonne', 273),
+(1410, 'pt_BR', 'Altos do Sena', 274),
+(1411, 'pt_BR', 'Seine-Saint-Denis', 275),
+(1412, 'pt_BR', 'Val-de-Marne', 276),
+(1413, 'pt_BR', 'Val-d\'Oise', 277),
+(1414, 'pt_BR', 'Alba', 278),
+(1415, 'pt_BR', 'Arad', 279),
+(1416, 'pt_BR', 'Arges', 280),
+(1417, 'pt_BR', 'Bacau', 281),
+(1418, 'pt_BR', 'Bihor', 282),
+(1419, 'pt_BR', 'Bistrita-Nasaud', 283),
+(1420, 'pt_BR', 'Botosani', 284),
+(1421, 'pt_BR', 'Brașov', 285),
+(1422, 'pt_BR', 'Braila', 286),
+(1423, 'pt_BR', 'Bucareste', 287),
+(1424, 'pt_BR', 'Buzau', 288),
+(1425, 'pt_BR', 'Caras-Severin', 289),
+(1426, 'pt_BR', 'Călărași', 290),
+(1427, 'pt_BR', 'Cluj', 291),
+(1428, 'pt_BR', 'Constanta', 292),
+(1429, 'pt_BR', 'Covasna', 29),
+(1430, 'pt_BR', 'Dambovita', 294),
+(1431, 'pt_BR', 'Dolj', 295),
+(1432, 'pt_BR', 'Galati', 296),
+(1433, 'pt_BR', 'Giurgiu', 297),
+(1434, 'pt_BR', 'Gorj', 298),
+(1435, 'pt_BR', 'Harghita', 299),
+(1436, 'pt_BR', 'Hunedoara', 300),
+(1437, 'pt_BR', 'Ialomita', 301),
+(1438, 'pt_BR', 'Iasi', 302),
+(1439, 'pt_BR', 'Ilfov', 303),
+(1440, 'pt_BR', 'Maramures', 304),
+(1441, 'pt_BR', 'Maramures', 305),
+(1442, 'pt_BR', 'Mures', 306),
+(1443, 'pt_BR', 'alemão', 307),
+(1444, 'pt_BR', 'Olt', 308),
+(1445, 'pt_BR', 'Prahova', 309),
+(1446, 'pt_BR', 'Satu-Mare', 310),
+(1447, 'pt_BR', 'Salaj', 311),
+(1448, 'pt_BR', 'Sibiu', 312),
+(1449, 'pt_BR', 'Suceava', 313),
+(1450, 'pt_BR', 'Teleorman', 314),
+(1451, 'pt_BR', 'Timis', 315),
+(1452, 'pt_BR', 'Tulcea', 316),
+(1453, 'pt_BR', 'Vaslui', 317),
+(1454, 'pt_BR', 'dale', 318),
+(1455, 'pt_BR', 'Vrancea', 319),
+(1456, 'pt_BR', 'Lappi', 320),
+(1457, 'pt_BR', 'Pohjois-Pohjanmaa', 321),
+(1458, 'pt_BR', 'Kainuu', 322),
+(1459, 'pt_BR', 'Pohjois-Karjala', 323),
+(1460, 'pt_BR', 'Pohjois-Savo', 324),
+(1461, 'pt_BR', 'Sul Savo', 325),
+(1462, 'pt_BR', 'Ostrobothnia do sul', 326),
+(1463, 'pt_BR', 'Pohjanmaa', 327),
+(1464, 'pt_BR', 'Pirkanmaa', 328),
+(1465, 'pt_BR', 'Satakunta', 329),
+(1466, 'pt_BR', 'Keski-Pohjanmaa', 330),
+(1467, 'pt_BR', 'Keski-Suomi', 331),
+(1468, 'pt_BR', 'Varsinais-Suomi', 332),
+(1469, 'pt_BR', 'Carélia do Sul', 333),
+(1470, 'pt_BR', 'Päijät-Häme', 334),
+(1471, 'pt_BR', 'Kanta-Häme', 335),
+(1472, 'pt_BR', 'Uusimaa', 336),
+(1473, 'pt_BR', 'Uusimaa', 337),
+(1474, 'pt_BR', 'Kymenlaakso', 338),
+(1475, 'pt_BR', 'Ahvenanmaa', 339),
+(1476, 'pt_BR', 'Harjumaa', 340),
+(1477, 'pt_BR', 'Hiiumaa', 341),
+(1478, 'pt_BR', 'Ida-Virumaa', 342),
+(1479, 'pt_BR', 'Condado de Jõgeva', 343),
+(1480, 'pt_BR', 'Condado de Järva', 344),
+(1481, 'pt_BR', 'Läänemaa', 345),
+(1482, 'pt_BR', 'Condado de Lääne-Viru', 346),
+(1483, 'pt_BR', 'Condado de Põlva', 347),
+(1484, 'pt_BR', 'Condado de Pärnu', 348),
+(1485, 'pt_BR', 'Raplamaa', 349),
+(1486, 'pt_BR', 'Saaremaa', 350),
+(1487, 'pt_BR', 'Tartumaa', 351),
+(1488, 'pt_BR', 'Valgamaa', 352),
+(1489, 'pt_BR', 'Viljandimaa', 353),
+(1490, 'pt_BR', 'Võrumaa', 354),
+(1491, 'pt_BR', 'Daugavpils', 355),
+(1492, 'pt_BR', 'Jelgava', 356),
+(1493, 'pt_BR', 'Jekabpils', 357),
+(1494, 'pt_BR', 'Jurmala', 358),
+(1495, 'pt_BR', 'Liepaja', 359),
+(1496, 'pt_BR', 'Liepaja County', 360),
+(1497, 'pt_BR', 'Rezekne', 361),
+(1498, 'pt_BR', 'Riga', 362),
+(1499, 'pt_BR', 'Condado de Riga', 363),
+(1500, 'pt_BR', 'Valmiera', 364),
+(1501, 'pt_BR', 'Ventspils', 365),
+(1502, 'pt_BR', 'Aglonas novads', 366),
+(1503, 'pt_BR', 'Aizkraukles novads', 367),
+(1504, 'pt_BR', 'Aizputes novads', 368),
+(1505, 'pt_BR', 'Condado de Akniste', 369),
+(1506, 'pt_BR', 'Alojas novads', 370),
+(1507, 'pt_BR', 'Alsungas novads', 371),
+(1508, 'pt_BR', 'Aluksne County', 372),
+(1509, 'pt_BR', 'Amatas novads', 373),
+(1510, 'pt_BR', 'Macacos novads', 374),
+(1511, 'pt_BR', 'Auces novads', 375),
+(1512, 'pt_BR', 'Babītes novads', 376),
+(1513, 'pt_BR', 'Baldones novads', 377),
+(1514, 'pt_BR', 'Baltinavas novads', 378),
+(1515, 'pt_BR', 'Balvu novads', 379),
+(1516, 'pt_BR', 'Bauskas novads', 380),
+(1517, 'pt_BR', 'Condado de Beverina', 381),
+(1518, 'pt_BR', 'Condado de Broceni', 382),
+(1519, 'pt_BR', 'Burtnieku novads', 383),
+(1520, 'pt_BR', 'Carnikavas novads', 384),
+(1521, 'pt_BR', 'Cesvaines novads', 385),
+(1522, 'pt_BR', 'Ciblas novads', 386),
+(1523, 'pt_BR', 'Cesis county', 387),
+(1524, 'pt_BR', 'Dagdas novads', 388),
+(1525, 'pt_BR', 'Daugavpils novads', 389),
+(1526, 'pt_BR', 'Dobeles novads', 390),
+(1527, 'pt_BR', 'Dundagas novads', 391),
+(1528, 'pt_BR', 'Durbes novads', 392),
+(1529, 'pt_BR', 'Engad novads', 393),
+(1530, 'pt_BR', 'Garkalnes novads', 394),
+(1531, 'pt_BR', 'O condado de Grobiņa', 395),
+(1532, 'pt_BR', 'Gulbenes novads', 396),
+(1533, 'pt_BR', 'Iecavas novads', 397),
+(1534, 'pt_BR', 'Ikskile county', 398),
+(1535, 'pt_BR', 'Ilūkste county', 399),
+(1536, 'pt_BR', 'Condado de Inčukalns', 400),
+(1537, 'pt_BR', 'Jaunjelgavas novads', 401),
+(1538, 'pt_BR', 'Jaunpiebalgas novads', 402),
+(1539, 'pt_BR', 'Jaunpils novads', 403),
+(1540, 'pt_BR', 'Jelgavas novads', 404),
+(1541, 'pt_BR', 'Jekabpils county', 405),
+(1542, 'pt_BR', 'Kandavas novads', 406),
+(1543, 'pt_BR', 'Kokneses novads', 407),
+(1544, 'pt_BR', 'Krimuldas novads', 408),
+(1545, 'pt_BR', 'Krustpils novads', 409),
+(1546, 'pt_BR', 'Condado de Kraslava', 410),
+(1547, 'pt_BR', 'Condado de Kuldīga', 411),
+(1548, 'pt_BR', 'Condado de Kārsava', 412),
+(1549, 'pt_BR', 'Condado de Lielvarde', 413),
+(1550, 'pt_BR', 'Condado de Limbaži', 414),
+(1551, 'pt_BR', 'O distrito de Lubāna', 415),
+(1552, 'pt_BR', 'Ludzas novads', 416),
+(1553, 'pt_BR', 'Ligatne county', 417),
+(1554, 'pt_BR', 'Livani county', 418),
+(1555, 'pt_BR', 'Madonas novads', 419),
+(1556, 'pt_BR', 'Mazsalacas novads', 420),
+(1557, 'pt_BR', 'Mālpils county', 421),
+(1558, 'pt_BR', 'Mārupe county', 422),
+(1559, 'pt_BR', 'O condado de Naukšēni', 423),
+(1560, 'pt_BR', 'Neretas novads', 424),
+(1561, 'pt_BR', 'Nīca county', 425),
+(1562, 'pt_BR', 'Ogres novads', 426),
+(1563, 'pt_BR', 'Olaines novads', 427),
+(1564, 'pt_BR', 'Ozolnieku novads', 428),
+(1565, 'pt_BR', 'Preiļi county', 429),
+(1566, 'pt_BR', 'Priekules novads', 430),
+(1567, 'pt_BR', 'Condado de Priekuļi', 431),
+(1568, 'pt_BR', 'Moving county', 432),
+(1569, 'pt_BR', 'Condado de Pavilosta', 433),
+(1570, 'pt_BR', 'Condado de Plavinas', 434),
+(1571, 'pt_BR', 'Raunas novads', 435),
+(1572, 'pt_BR', 'Condado de Riebiņi', 436),
+(1573, 'pt_BR', 'Rojas novads', 437),
+(1574, 'pt_BR', 'Ropazi county', 438),
+(1575, 'pt_BR', 'Rucavas novads', 439),
+(1576, 'pt_BR', 'Rugāji county', 440),
+(1577, 'pt_BR', 'Rundāle county', 441),
+(1578, 'pt_BR', 'Rezekne county', 442),
+(1579, 'pt_BR', 'Rūjiena county', 443),
+(1580, 'pt_BR', 'O município de Salacgriva', 444),
+(1581, 'pt_BR', 'Salas novads', 445),
+(1582, 'pt_BR', 'Salaspils novads', 446),
+(1583, 'pt_BR', 'Saldus novads', 447),
+(1584, 'pt_BR', 'Saulkrastu novads', 448),
+(1585, 'pt_BR', 'Siguldas novads', 449),
+(1586, 'pt_BR', 'Skrundas novads', 450),
+(1587, 'pt_BR', 'Skrīveri county', 451),
+(1588, 'pt_BR', 'Smiltenes novads', 452),
+(1589, 'pt_BR', 'Condado de Stopini', 453),
+(1590, 'pt_BR', 'Condado de Strenči', 454),
+(1591, 'pt_BR', 'Região de semeadura', 455),
+(1592, 'pt_BR', 'Talsu novads', 456),
+(1593, 'pt_BR', 'Tukuma novads', 457),
+(1594, 'pt_BR', 'Condado de Tērvete', 458),
+(1595, 'pt_BR', 'O condado de Vaiņode', 459),
+(1596, 'pt_BR', 'Valkas novads', 460),
+(1597, 'pt_BR', 'Valmieras novads', 461),
+(1598, 'pt_BR', 'Varaklani county', 462);
 INSERT INTO `country_state_translations` (`id`, `locale`, `default_name`, `country_state_id`) VALUES
-(3275, 'pt_BR', 'Raunas novads', 435),
-(3276, 'pt_BR', 'Condado de Riebiņi', 436),
-(3277, 'pt_BR', 'Rojas novads', 437),
-(3278, 'pt_BR', 'Ropazi county', 438),
-(3279, 'pt_BR', 'Rucavas novads', 439),
-(3280, 'pt_BR', 'Rugāji county', 440),
-(3281, 'pt_BR', 'Rundāle county', 441),
-(3282, 'pt_BR', 'Rezekne county', 442),
-(3283, 'pt_BR', 'Rūjiena county', 443),
-(3284, 'pt_BR', 'O município de Salacgriva', 444),
-(3285, 'pt_BR', 'Salas novads', 445),
-(3286, 'pt_BR', 'Salaspils novads', 446),
-(3287, 'pt_BR', 'Saldus novads', 447),
-(3288, 'pt_BR', 'Saulkrastu novads', 448),
-(3289, 'pt_BR', 'Siguldas novads', 449),
-(3290, 'pt_BR', 'Skrundas novads', 450),
-(3291, 'pt_BR', 'Skrīveri county', 451),
-(3292, 'pt_BR', 'Smiltenes novads', 452),
-(3293, 'pt_BR', 'Condado de Stopini', 453),
-(3294, 'pt_BR', 'Condado de Strenči', 454),
-(3295, 'pt_BR', 'Região de semeadura', 455),
-(3296, 'pt_BR', 'Talsu novads', 456),
-(3297, 'pt_BR', 'Tukuma novads', 457),
-(3298, 'pt_BR', 'Condado de Tērvete', 458),
-(3299, 'pt_BR', 'O condado de Vaiņode', 459),
-(3300, 'pt_BR', 'Valkas novads', 460),
-(3301, 'pt_BR', 'Valmieras novads', 461),
-(3302, 'pt_BR', 'Varaklani county', 462),
-(3303, 'pt_BR', 'Vecpiebalgas novads', 463),
-(3304, 'pt_BR', 'Vecumnieku novads', 464),
-(3305, 'pt_BR', 'Ventspils novads', 465),
-(3306, 'pt_BR', 'Condado de Viesite', 466),
-(3307, 'pt_BR', 'Condado de Vilaka', 467),
-(3308, 'pt_BR', 'Vilani county', 468),
-(3309, 'pt_BR', 'Condado de Varkava', 469),
-(3310, 'pt_BR', 'Zilupes novads', 470),
-(3311, 'pt_BR', 'Adazi county', 471),
-(3312, 'pt_BR', 'Erglu county', 472),
-(3313, 'pt_BR', 'Kegums county', 473),
-(3314, 'pt_BR', 'Kekava county', 474),
-(3315, 'pt_BR', 'Alytaus Apskritis', 475),
-(3316, 'pt_BR', 'Kauno Apskritis', 476),
-(3317, 'pt_BR', 'Condado de Klaipeda', 477),
-(3318, 'pt_BR', 'Marijampolė county', 478),
-(3319, 'pt_BR', 'Panevezys county', 479),
-(3320, 'pt_BR', 'Siauliai county', 480),
-(3321, 'pt_BR', 'Taurage county', 481),
-(3322, 'pt_BR', 'Telšiai county', 482),
-(3323, 'pt_BR', 'Utenos Apskritis', 483),
-(3324, 'pt_BR', 'Vilniaus Apskritis', 484),
-(3325, 'pt_BR', 'Acre', 485),
-(3326, 'pt_BR', 'Alagoas', 486),
-(3327, 'pt_BR', 'Amapá', 487),
-(3328, 'pt_BR', 'Amazonas', 488),
-(3329, 'pt_BR', 'Bahia', 489),
-(3330, 'pt_BR', 'Ceará', 490),
-(3331, 'pt_BR', 'Espírito Santo', 491),
-(3332, 'pt_BR', 'Goiás', 492),
-(3333, 'pt_BR', 'Maranhão', 493),
-(3334, 'pt_BR', 'Mato Grosso', 494),
-(3335, 'pt_BR', 'Mato Grosso do Sul', 495),
-(3336, 'pt_BR', 'Minas Gerais', 496),
-(3337, 'pt_BR', 'Pará', 497),
-(3338, 'pt_BR', 'Paraíba', 498),
-(3339, 'pt_BR', 'Paraná', 499),
-(3340, 'pt_BR', 'Pernambuco', 500),
-(3341, 'pt_BR', 'Piauí', 501),
-(3342, 'pt_BR', 'Rio de Janeiro', 502),
-(3343, 'pt_BR', 'Rio Grande do Norte', 503),
-(3344, 'pt_BR', 'Rio Grande do Sul', 504),
-(3345, 'pt_BR', 'Rondônia', 505),
-(3346, 'pt_BR', 'Roraima', 506),
-(3347, 'pt_BR', 'Santa Catarina', 507),
-(3348, 'pt_BR', 'São Paulo', 508),
-(3349, 'pt_BR', 'Sergipe', 509),
-(3350, 'pt_BR', 'Tocantins', 510),
-(3351, 'pt_BR', 'Distrito Federal', 511),
-(3352, 'pt_BR', 'Condado de Zagreb', 512),
-(3353, 'pt_BR', 'Condado de Krapina-Zagorje', 513),
-(3354, 'pt_BR', 'Condado de Sisak-Moslavina', 514),
-(3355, 'pt_BR', 'Condado de Karlovac', 515),
-(3356, 'pt_BR', 'Concelho de Varaždin', 516),
-(3357, 'pt_BR', 'Condado de Koprivnica-Križevci', 517),
-(3358, 'pt_BR', 'Condado de Bjelovar-Bilogora', 518),
-(3359, 'pt_BR', 'Condado de Primorje-Gorski kotar', 519),
-(3360, 'pt_BR', 'Condado de Lika-Senj', 520),
-(3361, 'pt_BR', 'Condado de Virovitica-Podravina', 521),
-(3362, 'pt_BR', 'Condado de Požega-Slavonia', 522),
-(3363, 'pt_BR', 'Condado de Brod-Posavina', 523),
-(3364, 'pt_BR', 'Condado de Zadar', 524),
-(3365, 'pt_BR', 'Condado de Osijek-Baranja', 525),
-(3366, 'pt_BR', 'Condado de Šibenik-Knin', 526),
-(3367, 'pt_BR', 'Condado de Vukovar-Srijem', 527),
-(3368, 'pt_BR', 'Condado de Split-Dalmácia', 528),
-(3369, 'pt_BR', 'Condado de Ístria', 529),
-(3370, 'pt_BR', 'Condado de Dubrovnik-Neretva', 530),
-(3371, 'pt_BR', 'Međimurska županija', 531),
-(3372, 'pt_BR', 'Grad Zagreb', 532),
-(3373, 'pt_BR', 'Ilhas Andaman e Nicobar', 533),
-(3374, 'pt_BR', 'Andhra Pradesh', 534),
-(3375, 'pt_BR', 'Arunachal Pradesh', 535),
-(3376, 'pt_BR', 'Assam', 536),
-(3377, 'pt_BR', 'Bihar', 537),
-(3378, 'pt_BR', 'Chandigarh', 538),
-(3379, 'pt_BR', 'Chhattisgarh', 539),
-(3380, 'pt_BR', 'Dadra e Nagar Haveli', 540),
-(3381, 'pt_BR', 'Daman e Diu', 541),
-(3382, 'pt_BR', 'Delhi', 542),
-(3383, 'pt_BR', 'Goa', 543),
-(3384, 'pt_BR', 'Gujarat', 544),
-(3385, 'pt_BR', 'Haryana', 545),
-(3386, 'pt_BR', 'Himachal Pradesh', 546),
-(3387, 'pt_BR', 'Jammu e Caxemira', 547),
-(3388, 'pt_BR', 'Jharkhand', 548),
-(3389, 'pt_BR', 'Karnataka', 549),
-(3390, 'pt_BR', 'Kerala', 550),
-(3391, 'pt_BR', 'Lakshadweep', 551),
-(3392, 'pt_BR', 'Madhya Pradesh', 552),
-(3393, 'pt_BR', 'Maharashtra', 553),
-(3394, 'pt_BR', 'Manipur', 554),
-(3395, 'pt_BR', 'Meghalaya', 555),
-(3396, 'pt_BR', 'Mizoram', 556),
-(3397, 'pt_BR', 'Nagaland', 557),
-(3398, 'pt_BR', 'Odisha', 558),
-(3399, 'pt_BR', 'Puducherry', 559),
-(3400, 'pt_BR', 'Punjab', 560),
-(3401, 'pt_BR', 'Rajasthan', 561),
-(3402, 'pt_BR', 'Sikkim', 562),
-(3403, 'pt_BR', 'Tamil Nadu', 563),
-(3404, 'pt_BR', 'Telangana', 564),
-(3405, 'pt_BR', 'Tripura', 565),
-(3406, 'pt_BR', 'Uttar Pradesh', 566),
-(3407, 'pt_BR', 'Uttarakhand', 567),
-(3408, 'pt_BR', 'Bengala Ocidental', 568);
+(1599, 'pt_BR', 'Vecpiebalgas novads', 463),
+(1600, 'pt_BR', 'Vecumnieku novads', 464),
+(1601, 'pt_BR', 'Ventspils novads', 465),
+(1602, 'pt_BR', 'Condado de Viesite', 466),
+(1603, 'pt_BR', 'Condado de Vilaka', 467),
+(1604, 'pt_BR', 'Vilani county', 468),
+(1605, 'pt_BR', 'Condado de Varkava', 469),
+(1606, 'pt_BR', 'Zilupes novads', 470),
+(1607, 'pt_BR', 'Adazi county', 471),
+(1608, 'pt_BR', 'Erglu county', 472),
+(1609, 'pt_BR', 'Kegums county', 473),
+(1610, 'pt_BR', 'Kekava county', 474),
+(1611, 'pt_BR', 'Alytaus Apskritis', 475),
+(1612, 'pt_BR', 'Kauno Apskritis', 476),
+(1613, 'pt_BR', 'Condado de Klaipeda', 477),
+(1614, 'pt_BR', 'Marijampolė county', 478),
+(1615, 'pt_BR', 'Panevezys county', 479),
+(1616, 'pt_BR', 'Siauliai county', 480),
+(1617, 'pt_BR', 'Taurage county', 481),
+(1618, 'pt_BR', 'Telšiai county', 482),
+(1619, 'pt_BR', 'Utenos Apskritis', 483),
+(1620, 'pt_BR', 'Vilniaus Apskritis', 484),
+(1621, 'pt_BR', 'Acre', 485),
+(1622, 'pt_BR', 'Alagoas', 486),
+(1623, 'pt_BR', 'Amapá', 487),
+(1624, 'pt_BR', 'Amazonas', 488),
+(1625, 'pt_BR', 'Bahia', 489),
+(1626, 'pt_BR', 'Ceará', 490),
+(1627, 'pt_BR', 'Espírito Santo', 491),
+(1628, 'pt_BR', 'Goiás', 492),
+(1629, 'pt_BR', 'Maranhão', 493),
+(1630, 'pt_BR', 'Mato Grosso', 494),
+(1631, 'pt_BR', 'Mato Grosso do Sul', 495),
+(1632, 'pt_BR', 'Minas Gerais', 496),
+(1633, 'pt_BR', 'Pará', 497),
+(1634, 'pt_BR', 'Paraíba', 498),
+(1635, 'pt_BR', 'Paraná', 499),
+(1636, 'pt_BR', 'Pernambuco', 500),
+(1637, 'pt_BR', 'Piauí', 501),
+(1638, 'pt_BR', 'Rio de Janeiro', 502),
+(1639, 'pt_BR', 'Rio Grande do Norte', 503),
+(1640, 'pt_BR', 'Rio Grande do Sul', 504),
+(1641, 'pt_BR', 'Rondônia', 505),
+(1642, 'pt_BR', 'Roraima', 506),
+(1643, 'pt_BR', 'Santa Catarina', 507),
+(1644, 'pt_BR', 'São Paulo', 508),
+(1645, 'pt_BR', 'Sergipe', 509),
+(1646, 'pt_BR', 'Tocantins', 510),
+(1647, 'pt_BR', 'Distrito Federal', 511),
+(1648, 'pt_BR', 'Condado de Zagreb', 512),
+(1649, 'pt_BR', 'Condado de Krapina-Zagorje', 513),
+(1650, 'pt_BR', 'Condado de Sisak-Moslavina', 514),
+(1651, 'pt_BR', 'Condado de Karlovac', 515),
+(1652, 'pt_BR', 'Concelho de Varaždin', 516),
+(1653, 'pt_BR', 'Condado de Koprivnica-Križevci', 517),
+(1654, 'pt_BR', 'Condado de Bjelovar-Bilogora', 518),
+(1655, 'pt_BR', 'Condado de Primorje-Gorski kotar', 519),
+(1656, 'pt_BR', 'Condado de Lika-Senj', 520),
+(1657, 'pt_BR', 'Condado de Virovitica-Podravina', 521),
+(1658, 'pt_BR', 'Condado de Požega-Slavonia', 522),
+(1659, 'pt_BR', 'Condado de Brod-Posavina', 523),
+(1660, 'pt_BR', 'Condado de Zadar', 524),
+(1661, 'pt_BR', 'Condado de Osijek-Baranja', 525),
+(1662, 'pt_BR', 'Condado de Šibenik-Knin', 526),
+(1663, 'pt_BR', 'Condado de Vukovar-Srijem', 527),
+(1664, 'pt_BR', 'Condado de Split-Dalmácia', 528),
+(1665, 'pt_BR', 'Condado de Ístria', 529),
+(1666, 'pt_BR', 'Condado de Dubrovnik-Neretva', 530),
+(1667, 'pt_BR', 'Međimurska županija', 531),
+(1668, 'pt_BR', 'Grad Zagreb', 532),
+(1669, 'pt_BR', 'Ilhas Andaman e Nicobar', 533),
+(1670, 'pt_BR', 'Andhra Pradesh', 534),
+(1671, 'pt_BR', 'Arunachal Pradesh', 535),
+(1672, 'pt_BR', 'Assam', 536),
+(1673, 'pt_BR', 'Bihar', 537),
+(1674, 'pt_BR', 'Chandigarh', 538),
+(1675, 'pt_BR', 'Chhattisgarh', 539),
+(1676, 'pt_BR', 'Dadra e Nagar Haveli', 540),
+(1677, 'pt_BR', 'Daman e Diu', 541),
+(1678, 'pt_BR', 'Delhi', 542),
+(1679, 'pt_BR', 'Goa', 543),
+(1680, 'pt_BR', 'Gujarat', 544),
+(1681, 'pt_BR', 'Haryana', 545),
+(1682, 'pt_BR', 'Himachal Pradesh', 546),
+(1683, 'pt_BR', 'Jammu e Caxemira', 547),
+(1684, 'pt_BR', 'Jharkhand', 548),
+(1685, 'pt_BR', 'Karnataka', 549),
+(1686, 'pt_BR', 'Kerala', 550),
+(1687, 'pt_BR', 'Lakshadweep', 551),
+(1688, 'pt_BR', 'Madhya Pradesh', 552),
+(1689, 'pt_BR', 'Maharashtra', 553),
+(1690, 'pt_BR', 'Manipur', 554),
+(1691, 'pt_BR', 'Meghalaya', 555),
+(1692, 'pt_BR', 'Mizoram', 556),
+(1693, 'pt_BR', 'Nagaland', 557),
+(1694, 'pt_BR', 'Odisha', 558),
+(1695, 'pt_BR', 'Puducherry', 559),
+(1696, 'pt_BR', 'Punjab', 560),
+(1697, 'pt_BR', 'Rajasthan', 561),
+(1698, 'pt_BR', 'Sikkim', 562),
+(1699, 'pt_BR', 'Tamil Nadu', 563),
+(1700, 'pt_BR', 'Telangana', 564),
+(1701, 'pt_BR', 'Tripura', 565),
+(1702, 'pt_BR', 'Uttar Pradesh', 566),
+(1703, 'pt_BR', 'Uttarakhand', 567),
+(1704, 'pt_BR', 'Bengala Ocidental', 568);
 
 -- --------------------------------------------------------
 
@@ -3930,6 +3999,7 @@ INSERT INTO `country_state_translations` (`id`, `locale`, `default_name`, `count
 -- テーブルの構造 `country_translations`
 --
 
+DROP TABLE IF EXISTS `country_translations`;
 CREATE TABLE `country_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -3942,771 +4012,771 @@ CREATE TABLE `country_translations` (
 --
 
 INSERT INTO `country_translations` (`id`, `locale`, `name`, `country_id`) VALUES
-(766, 'ar', 'أفغانستان', 1),
-(767, 'ar', 'جزر آلاند', 2),
-(768, 'ar', 'ألبانيا', 3),
-(769, 'ar', 'الجزائر', 4),
-(770, 'ar', 'ساموا الأمريكية', 5),
-(771, 'ar', 'أندورا', 6),
-(772, 'ar', 'أنغولا', 7),
-(773, 'ar', 'أنغيلا', 8),
-(774, 'ar', 'القارة القطبية الجنوبية', 9),
-(775, 'ar', 'أنتيغوا وبربودا', 10),
-(776, 'ar', 'الأرجنتين', 11),
-(777, 'ar', 'أرمينيا', 12),
-(778, 'ar', 'أروبا', 13),
-(779, 'ar', 'جزيرة الصعود', 14),
-(780, 'ar', 'أستراليا', 15),
-(781, 'ar', 'النمسا', 16),
-(782, 'ar', 'أذربيجان', 17),
-(783, 'ar', 'الباهاما', 18),
-(784, 'ar', 'البحرين', 19),
-(785, 'ar', 'بنغلاديش', 20),
-(786, 'ar', 'بربادوس', 21),
-(787, 'ar', 'روسيا البيضاء', 22),
-(788, 'ar', 'بلجيكا', 23),
-(789, 'ar', 'بليز', 24),
-(790, 'ar', 'بنين', 25),
-(791, 'ar', 'برمودا', 26),
-(792, 'ar', 'بوتان', 27),
-(793, 'ar', 'بوليفيا', 28),
-(794, 'ar', 'البوسنة والهرسك', 29),
-(795, 'ar', 'بوتسوانا', 30),
-(796, 'ar', 'البرازيل', 31),
-(797, 'ar', 'إقليم المحيط البريطاني الهندي', 32),
-(798, 'ar', 'جزر فيرجن البريطانية', 33),
-(799, 'ar', 'بروناي', 34),
-(800, 'ar', 'بلغاريا', 35),
-(801, 'ar', 'بوركينا فاسو', 36),
-(802, 'ar', 'بوروندي', 37),
-(803, 'ar', 'كمبوديا', 38),
-(804, 'ar', 'الكاميرون', 39),
-(805, 'ar', 'كندا', 40),
-(806, 'ar', 'جزر الكناري', 41),
-(807, 'ar', 'الرأس الأخضر', 42),
-(808, 'ar', 'الكاريبي هولندا', 43),
-(809, 'ar', 'جزر كايمان', 44),
-(810, 'ar', 'جمهورية افريقيا الوسطى', 45),
-(811, 'ar', 'سبتة ومليلية', 46),
-(812, 'ar', 'تشاد', 47),
-(813, 'ar', 'تشيلي', 48),
-(814, 'ar', 'الصين', 49),
-(815, 'ar', 'جزيرة الكريسماس', 50),
-(816, 'ar', 'جزر كوكوس (كيلينغ)', 51),
-(817, 'ar', 'كولومبيا', 52),
-(818, 'ar', 'جزر القمر', 53),
-(819, 'ar', 'الكونغو - برازافيل', 54),
-(820, 'ar', 'الكونغو - كينشاسا', 55),
-(821, 'ar', 'جزر كوك', 56),
-(822, 'ar', 'كوستاريكا', 57),
-(823, 'ar', 'ساحل العاج', 58),
-(824, 'ar', 'كرواتيا', 59),
-(825, 'ar', 'كوبا', 60),
-(826, 'ar', 'كوراساو', 61),
-(827, 'ar', 'قبرص', 62),
-(828, 'ar', 'التشيك', 63),
-(829, 'ar', 'الدنمارك', 64),
-(830, 'ar', 'دييغو غارسيا', 65),
-(831, 'ar', 'جيبوتي', 66),
-(832, 'ar', 'دومينيكا', 67),
-(833, 'ar', 'جمهورية الدومنيكان', 68),
-(834, 'ar', 'الإكوادور', 69),
-(835, 'ar', 'مصر', 70),
-(836, 'ar', 'السلفادور', 71),
-(837, 'ar', 'غينيا الإستوائية', 72),
-(838, 'ar', 'إريتريا', 73),
-(839, 'ar', 'استونيا', 74),
-(840, 'ar', 'أثيوبيا', 75),
-(841, 'ar', 'منطقة اليورو', 76),
-(842, 'ar', 'جزر فوكلاند', 77),
-(843, 'ar', 'جزر فاروس', 78),
-(844, 'ar', 'فيجي', 79),
-(845, 'ar', 'فنلندا', 80),
-(846, 'ar', 'فرنسا', 81),
-(847, 'ar', 'غيانا الفرنسية', 82),
-(848, 'ar', 'بولينيزيا الفرنسية', 83),
-(849, 'ar', 'المناطق الجنوبية لفرنسا', 84),
-(850, 'ar', 'الغابون', 85),
-(851, 'ar', 'غامبيا', 86),
-(852, 'ar', 'جورجيا', 87),
-(853, 'ar', 'ألمانيا', 88),
-(854, 'ar', 'غانا', 89),
-(855, 'ar', 'جبل طارق', 90),
-(856, 'ar', 'اليونان', 91),
-(857, 'ar', 'الأرض الخضراء', 92),
-(858, 'ar', 'غرينادا', 93),
-(859, 'ar', 'جوادلوب', 94),
-(860, 'ar', 'غوام', 95),
-(861, 'ar', 'غواتيمالا', 96),
-(862, 'ar', 'غيرنسي', 97),
-(863, 'ar', 'غينيا', 98),
-(864, 'ar', 'غينيا بيساو', 99),
-(865, 'ar', 'غيانا', 100),
-(866, 'ar', 'هايتي', 101),
-(867, 'ar', 'هندوراس', 102),
-(868, 'ar', 'هونج كونج SAR الصين', 103),
-(869, 'ar', 'هنغاريا', 104),
-(870, 'ar', 'أيسلندا', 105),
-(871, 'ar', 'الهند', 106),
-(872, 'ar', 'إندونيسيا', 107),
-(873, 'ar', 'إيران', 108),
-(874, 'ar', 'العراق', 109),
-(875, 'ar', 'أيرلندا', 110),
-(876, 'ar', 'جزيرة آيل أوف مان', 111),
-(877, 'ar', 'إسرائيل', 112),
-(878, 'ar', 'إيطاليا', 113),
-(879, 'ar', 'جامايكا', 114),
-(880, 'ar', 'اليابان', 115),
-(881, 'ar', 'جيرسي', 116),
-(882, 'ar', 'الأردن', 117),
-(883, 'ar', 'كازاخستان', 118),
-(884, 'ar', 'كينيا', 119),
-(885, 'ar', 'كيريباس', 120),
-(886, 'ar', 'كوسوفو', 121),
-(887, 'ar', 'الكويت', 122),
-(888, 'ar', 'قرغيزستان', 123),
-(889, 'ar', 'لاوس', 124),
-(890, 'ar', 'لاتفيا', 125),
-(891, 'ar', 'لبنان', 126),
-(892, 'ar', 'ليسوتو', 127),
-(893, 'ar', 'ليبيريا', 128),
-(894, 'ar', 'ليبيا', 129),
-(895, 'ar', 'ليختنشتاين', 130),
-(896, 'ar', 'ليتوانيا', 131),
-(897, 'ar', 'لوكسمبورغ', 132),
-(898, 'ar', 'ماكاو SAR الصين', 133),
-(899, 'ar', 'مقدونيا', 134),
-(900, 'ar', 'مدغشقر', 135),
-(901, 'ar', 'مالاوي', 136),
-(902, 'ar', 'ماليزيا', 137),
-(903, 'ar', 'جزر المالديف', 138),
-(904, 'ar', 'مالي', 139),
-(905, 'ar', 'مالطا', 140),
-(906, 'ar', 'جزر مارشال', 141),
-(907, 'ar', 'مارتينيك', 142),
-(908, 'ar', 'موريتانيا', 143),
-(909, 'ar', 'موريشيوس', 144),
-(910, 'ar', 'ضائع', 145),
-(911, 'ar', 'المكسيك', 146),
-(912, 'ar', 'ميكرونيزيا', 147),
-(913, 'ar', 'مولدوفا', 148),
-(914, 'ar', 'موناكو', 149),
-(915, 'ar', 'منغوليا', 150),
-(916, 'ar', 'الجبل الأسود', 151),
-(917, 'ar', 'مونتسيرات', 152),
-(918, 'ar', 'المغرب', 153),
-(919, 'ar', 'موزمبيق', 154),
-(920, 'ar', 'ميانمار (بورما)', 155),
-(921, 'ar', 'ناميبيا', 156),
-(922, 'ar', 'ناورو', 157),
-(923, 'ar', 'نيبال', 158),
-(924, 'ar', 'نيبال', 159),
-(925, 'ar', 'كاليدونيا الجديدة', 160),
-(926, 'ar', 'نيوزيلاندا', 161),
-(927, 'ar', 'نيكاراغوا', 162),
-(928, 'ar', 'النيجر', 163),
-(929, 'ar', 'نيجيريا', 164),
-(930, 'ar', 'نيوي', 165),
-(931, 'ar', 'جزيرة نورفولك', 166),
-(932, 'ar', 'كوريا الشماليه', 167),
-(933, 'ar', 'جزر مريانا الشمالية', 168),
-(934, 'ar', 'النرويج', 169),
-(935, 'ar', 'سلطنة عمان', 170),
-(936, 'ar', 'باكستان', 171),
-(937, 'ar', 'بالاو', 172),
-(938, 'ar', 'الاراضي الفلسطينية', 173),
-(939, 'ar', 'بناما', 174),
-(940, 'ar', 'بابوا غينيا الجديدة', 175),
-(941, 'ar', 'باراغواي', 176),
-(942, 'ar', 'بيرو', 177),
-(943, 'ar', 'الفلبين', 178),
-(944, 'ar', 'جزر بيتكيرن', 179),
-(945, 'ar', 'بولندا', 180),
-(946, 'ar', 'البرتغال', 181),
-(947, 'ar', 'بورتوريكو', 182),
-(948, 'ar', 'دولة قطر', 183),
-(949, 'ar', 'جمع شمل', 184),
-(950, 'ar', 'رومانيا', 185),
-(951, 'ar', 'روسيا', 186),
-(952, 'ar', 'رواندا', 187),
-(953, 'ar', 'ساموا', 188),
-(954, 'ar', 'سان مارينو', 189),
-(955, 'ar', 'سانت كيتس ونيفيس', 190),
-(956, 'ar', 'المملكة العربية السعودية', 191),
-(957, 'ar', 'السنغال', 192),
-(958, 'ar', 'صربيا', 193),
-(959, 'ar', 'سيشيل', 194),
-(960, 'ar', 'سيراليون', 195),
-(961, 'ar', 'سنغافورة', 196),
-(962, 'ar', 'سينت مارتن', 197),
-(963, 'ar', 'سلوفاكيا', 198),
-(964, 'ar', 'سلوفينيا', 199),
-(965, 'ar', 'جزر سليمان', 200),
-(966, 'ar', 'الصومال', 201),
-(967, 'ar', 'جنوب أفريقيا', 202),
-(968, 'ar', 'جورجيا الجنوبية وجزر ساندويتش الجنوبية', 203),
-(969, 'ar', 'كوريا الجنوبية', 204),
-(970, 'ar', 'جنوب السودان', 205),
-(971, 'ar', 'إسبانيا', 206),
-(972, 'ar', 'سيريلانكا', 207),
-(973, 'ar', 'سانت بارتيليمي', 208),
-(974, 'ar', 'سانت هيلانة', 209),
-(975, 'ar', 'سانت كيتس ونيفيس', 210),
-(976, 'ar', 'شارع لوسيا', 211),
-(977, 'ar', 'سانت مارتن', 212),
-(978, 'ar', 'سانت بيير وميكلون', 213),
-(979, 'ar', 'سانت فنسنت وجزر غرينادين', 214),
-(980, 'ar', 'السودان', 215),
-(981, 'ar', 'سورينام', 216),
-(982, 'ar', 'سفالبارد وجان ماين', 217),
-(983, 'ar', 'سوازيلاند', 218),
-(984, 'ar', 'السويد', 219),
-(985, 'ar', 'سويسرا', 220),
-(986, 'ar', 'سوريا', 221),
-(987, 'ar', 'تايوان', 222),
-(988, 'ar', 'طاجيكستان', 223),
-(989, 'ar', 'تنزانيا', 224),
-(990, 'ar', 'تايلاند', 225),
-(991, 'ar', 'تيمور', 226),
-(992, 'ar', 'توجو', 227),
-(993, 'ar', 'توكيلاو', 228),
-(994, 'ar', 'تونغا', 229),
-(995, 'ar', 'ترينيداد وتوباغو', 230),
-(996, 'ar', 'تريستان دا كونها', 231),
-(997, 'ar', 'تونس', 232),
-(998, 'ar', 'ديك رومي', 233),
-(999, 'ar', 'تركمانستان', 234),
-(1000, 'ar', 'جزر تركس وكايكوس', 235),
-(1001, 'ar', 'توفالو', 236),
-(1002, 'ar', 'جزر الولايات المتحدة البعيدة', 237),
-(1003, 'ar', 'جزر فيرجن الأمريكية', 238),
-(1004, 'ar', 'أوغندا', 239),
-(1005, 'ar', 'أوكرانيا', 240),
-(1006, 'ar', 'الإمارات العربية المتحدة', 241),
-(1007, 'ar', 'المملكة المتحدة', 242),
-(1008, 'ar', 'الأمم المتحدة', 243),
-(1009, 'ar', 'الولايات المتحدة الأمريكية', 244),
-(1010, 'ar', 'أوروغواي', 245),
-(1011, 'ar', 'أوزبكستان', 246),
-(1012, 'ar', 'فانواتو', 247),
-(1013, 'ar', 'مدينة الفاتيكان', 248),
-(1014, 'ar', 'فنزويلا', 249),
-(1015, 'ar', 'فيتنام', 250),
-(1016, 'ar', 'واليس وفوتونا', 251),
-(1017, 'ar', 'الصحراء الغربية', 252),
-(1018, 'ar', 'اليمن', 253),
-(1019, 'ar', 'زامبيا', 254),
-(1020, 'ar', 'زيمبابوي', 255),
-(1021, 'fa', 'افغانستان', 1),
-(1022, 'fa', 'جزایر الند', 2),
-(1023, 'fa', 'آلبانی', 3),
-(1024, 'fa', 'الجزایر', 4),
-(1025, 'fa', 'ساموآ آمریکایی', 5),
-(1026, 'fa', 'آندورا', 6),
-(1027, 'fa', 'آنگولا', 7),
-(1028, 'fa', 'آنگولا', 8),
-(1029, 'fa', 'جنوبگان', 9),
-(1030, 'fa', 'آنتیگوا و باربودا', 10),
-(1031, 'fa', 'آرژانتین', 11),
-(1032, 'fa', 'ارمنستان', 12),
-(1033, 'fa', 'آروبا', 13),
-(1034, 'fa', 'جزیره صعود', 14),
-(1035, 'fa', 'استرالیا', 15),
-(1036, 'fa', 'اتریش', 16),
-(1037, 'fa', 'آذربایجان', 17),
-(1038, 'fa', 'باهاما', 18),
-(1039, 'fa', 'بحرین', 19),
-(1040, 'fa', 'بنگلادش', 20),
-(1041, 'fa', 'باربادوس', 21),
-(1042, 'fa', 'بلاروس', 22),
-(1043, 'fa', 'بلژیک', 23),
-(1044, 'fa', 'بلژیک', 24),
-(1045, 'fa', 'بنین', 25),
-(1046, 'fa', 'برمودا', 26),
-(1047, 'fa', 'بوتان', 27),
-(1048, 'fa', 'بولیوی', 28),
-(1049, 'fa', 'بوسنی و هرزگوین', 29),
-(1050, 'fa', 'بوتسوانا', 30),
-(1051, 'fa', 'برزیل', 31),
-(1052, 'fa', 'قلمرو اقیانوس هند انگلیس', 32),
-(1053, 'fa', 'جزایر ویرجین انگلیس', 33),
-(1054, 'fa', 'برونئی', 34),
-(1055, 'fa', 'بلغارستان', 35),
-(1056, 'fa', 'بورکینا فاسو', 36),
-(1057, 'fa', 'بوروندی', 37),
-(1058, 'fa', 'کامبوج', 38),
-(1059, 'fa', 'کامرون', 39),
-(1060, 'fa', 'کانادا', 40),
-(1061, 'fa', 'جزایر قناری', 41),
-(1062, 'fa', 'کیپ ورد', 42),
-(1063, 'fa', 'کارائیب هلند', 43),
-(1064, 'fa', 'Cayman Islands', 44),
-(1065, 'fa', 'جمهوری آفریقای مرکزی', 45),
-(1066, 'fa', 'سوتا و ملیلا', 46),
-(1067, 'fa', 'چاد', 47),
-(1068, 'fa', 'شیلی', 48),
-(1069, 'fa', 'چین', 49),
-(1070, 'fa', 'جزیره کریسمس', 50),
-(1071, 'fa', 'جزایر کوکو (Keeling)', 51),
-(1072, 'fa', 'کلمبیا', 52),
-(1073, 'fa', 'کومور', 53),
-(1074, 'fa', 'کنگو - برزاویل', 54),
-(1075, 'fa', 'کنگو - کینشاسا', 55),
-(1076, 'fa', 'جزایر کوک', 56),
-(1077, 'fa', 'کاستاریکا', 57),
-(1078, 'fa', 'ساحل عاج', 58),
-(1079, 'fa', 'کرواسی', 59),
-(1080, 'fa', 'کوبا', 60),
-(1081, 'fa', 'کوراسائو', 61),
-(1082, 'fa', 'قبرس', 62),
-(1083, 'fa', 'چک', 63),
-(1084, 'fa', 'دانمارک', 64),
-(1085, 'fa', 'دیگو گارسیا', 65),
-(1086, 'fa', 'جیبوتی', 66),
-(1087, 'fa', 'دومینیکا', 67),
-(1088, 'fa', 'جمهوری دومینیکن', 68),
-(1089, 'fa', 'اکوادور', 69),
-(1090, 'fa', 'مصر', 70),
-(1091, 'fa', 'السالوادور', 71),
-(1092, 'fa', 'گینه استوایی', 72),
-(1093, 'fa', 'اریتره', 73),
-(1094, 'fa', 'استونی', 74),
-(1095, 'fa', 'اتیوپی', 75),
-(1096, 'fa', 'منطقه یورو', 76),
-(1097, 'fa', 'جزایر فالکلند', 77),
-(1098, 'fa', 'جزایر فارو', 78),
-(1099, 'fa', 'فیجی', 79),
-(1100, 'fa', 'فنلاند', 80),
-(1101, 'fa', 'فرانسه', 81),
-(1102, 'fa', 'گویان فرانسه', 82),
-(1103, 'fa', 'پلی‌نزی فرانسه', 83),
-(1104, 'fa', 'سرزمین های جنوبی فرانسه', 84),
-(1105, 'fa', 'گابن', 85),
-(1106, 'fa', 'گامبیا', 86),
-(1107, 'fa', 'جورجیا', 87),
-(1108, 'fa', 'آلمان', 88),
-(1109, 'fa', 'غنا', 89),
-(1110, 'fa', 'جبل الطارق', 90),
-(1111, 'fa', 'یونان', 91),
-(1112, 'fa', 'گرینلند', 92),
-(1113, 'fa', 'گرنادا', 93),
-(1114, 'fa', 'گوادلوپ', 94),
-(1115, 'fa', 'گوام', 95),
-(1116, 'fa', 'گواتمالا', 96),
-(1117, 'fa', 'گورنسی', 97),
-(1118, 'fa', 'گینه', 98),
-(1119, 'fa', 'گینه بیسائو', 99),
-(1120, 'fa', 'گویان', 100),
-(1121, 'fa', 'هائیتی', 101),
-(1122, 'fa', 'هندوراس', 102),
-(1123, 'fa', 'هنگ کنگ SAR چین', 103),
-(1124, 'fa', 'مجارستان', 104),
-(1125, 'fa', 'ایسلند', 105),
-(1126, 'fa', 'هند', 106),
-(1127, 'fa', 'اندونزی', 107),
-(1128, 'fa', 'ایران', 108),
-(1129, 'fa', 'عراق', 109),
-(1130, 'fa', 'ایرلند', 110),
-(1131, 'fa', 'جزیره من', 111),
-(1132, 'fa', 'اسرائيل', 112),
-(1133, 'fa', 'ایتالیا', 113),
-(1134, 'fa', 'جامائیکا', 114),
-(1135, 'fa', 'ژاپن', 115),
-(1136, 'fa', 'پیراهن ورزشی', 116),
-(1137, 'fa', 'اردن', 117),
-(1138, 'fa', 'قزاقستان', 118),
-(1139, 'fa', 'کنیا', 119),
-(1140, 'fa', 'کیریباتی', 120),
-(1141, 'fa', 'کوزوو', 121),
-(1142, 'fa', 'کویت', 122),
-(1143, 'fa', 'قرقیزستان', 123),
-(1144, 'fa', 'لائوس', 124),
-(1145, 'fa', 'لتونی', 125),
-(1146, 'fa', 'لبنان', 126),
-(1147, 'fa', 'لسوتو', 127),
-(1148, 'fa', 'لیبریا', 128),
-(1149, 'fa', 'لیبی', 129),
-(1150, 'fa', 'لیختن اشتاین', 130),
-(1151, 'fa', 'لیتوانی', 131),
-(1152, 'fa', 'لوکزامبورگ', 132),
-(1153, 'fa', 'ماکائو SAR چین', 133),
-(1154, 'fa', 'مقدونیه', 134),
-(1155, 'fa', 'ماداگاسکار', 135),
-(1156, 'fa', 'مالاوی', 136),
-(1157, 'fa', 'مالزی', 137),
-(1158, 'fa', 'مالدیو', 138),
-(1159, 'fa', 'مالی', 139),
-(1160, 'fa', 'مالت', 140),
-(1161, 'fa', 'جزایر مارشال', 141),
-(1162, 'fa', 'مارتینیک', 142),
-(1163, 'fa', 'موریتانی', 143),
-(1164, 'fa', 'موریس', 144),
-(1165, 'fa', 'گمشده', 145),
-(1166, 'fa', 'مکزیک', 146),
-(1167, 'fa', 'میکرونزی', 147),
-(1168, 'fa', 'مولداوی', 148),
-(1169, 'fa', 'موناکو', 149),
-(1170, 'fa', 'مغولستان', 150),
-(1171, 'fa', 'مونته نگرو', 151),
-(1172, 'fa', 'مونتسرات', 152),
-(1173, 'fa', 'مراکش', 153),
-(1174, 'fa', 'موزامبیک', 154),
-(1175, 'fa', 'میانمار (برمه)', 155),
-(1176, 'fa', 'ناميبيا', 156),
-(1177, 'fa', 'نائورو', 157),
-(1178, 'fa', 'نپال', 158),
-(1179, 'fa', 'هلند', 159),
-(1180, 'fa', 'کالدونیای جدید', 160),
-(1181, 'fa', 'نیوزلند', 161),
-(1182, 'fa', 'نیکاراگوئه', 162),
-(1183, 'fa', 'نیجر', 163),
-(1184, 'fa', 'نیجریه', 164),
-(1185, 'fa', 'نیو', 165),
-(1186, 'fa', 'جزیره نورفولک', 166),
-(1187, 'fa', 'کره شمالی', 167),
-(1188, 'fa', 'جزایر ماریانای شمالی', 168),
-(1189, 'fa', 'نروژ', 169),
-(1190, 'fa', 'عمان', 170),
-(1191, 'fa', 'پاکستان', 171),
-(1192, 'fa', 'پالائو', 172),
-(1193, 'fa', 'سرزمین های فلسطینی', 173),
-(1194, 'fa', 'پاناما', 174),
-(1195, 'fa', 'پاپوا گینه نو', 175),
-(1196, 'fa', 'پاراگوئه', 176),
-(1197, 'fa', 'پرو', 177),
-(1198, 'fa', 'فیلیپین', 178),
-(1199, 'fa', 'جزایر پیکریرن', 179),
-(1200, 'fa', 'لهستان', 180),
-(1201, 'fa', 'کشور پرتغال', 181),
-(1202, 'fa', 'پورتوریکو', 182),
-(1203, 'fa', 'قطر', 183),
-(1204, 'fa', 'تجدید دیدار', 184),
-(1205, 'fa', 'رومانی', 185),
-(1206, 'fa', 'روسیه', 186),
-(1207, 'fa', 'رواندا', 187),
-(1208, 'fa', 'ساموآ', 188),
-(1209, 'fa', 'سان مارینو', 189),
-(1210, 'fa', 'سنت کیتس و نوویس', 190),
-(1211, 'fa', 'عربستان سعودی', 191),
-(1212, 'fa', 'سنگال', 192),
-(1213, 'fa', 'صربستان', 193),
-(1214, 'fa', 'سیشل', 194),
-(1215, 'fa', 'سیرالئون', 195),
-(1216, 'fa', 'سنگاپور', 196),
-(1217, 'fa', 'سینت ماارتن', 197),
-(1218, 'fa', 'اسلواکی', 198),
-(1219, 'fa', 'اسلوونی', 199),
-(1220, 'fa', 'جزایر سلیمان', 200),
-(1221, 'fa', 'سومالی', 201),
-(1222, 'fa', 'آفریقای جنوبی', 202),
-(1223, 'fa', 'جزایر جورجیا جنوبی و جزایر ساندویچ جنوبی', 203),
-(1224, 'fa', 'کره جنوبی', 204),
-(1225, 'fa', 'سودان جنوبی', 205),
-(1226, 'fa', 'اسپانیا', 206),
-(1227, 'fa', 'سری لانکا', 207),
-(1228, 'fa', 'سنت بارتلی', 208),
-(1229, 'fa', 'سنت هلنا', 209),
-(1230, 'fa', 'سنت کیتز و نوویس', 210),
-(1231, 'fa', 'سنت لوسیا', 211),
-(1232, 'fa', 'سنت مارتین', 212),
-(1233, 'fa', 'سنت پیر و میکلون', 213),
-(1234, 'fa', 'سنت وینسنت و گرنادینها', 214),
-(1235, 'fa', 'سودان', 215),
-(1236, 'fa', 'سورینام', 216),
-(1237, 'fa', 'اسوالبارد و جان ماین', 217),
-(1238, 'fa', 'سوازیلند', 218),
-(1239, 'fa', 'سوئد', 219),
-(1240, 'fa', 'سوئیس', 220),
-(1241, 'fa', 'سوریه', 221),
-(1242, 'fa', 'تایوان', 222),
-(1243, 'fa', 'تاجیکستان', 223),
-(1244, 'fa', 'تانزانیا', 224),
-(1245, 'fa', 'تایلند', 225),
-(1246, 'fa', 'تیمور-لست', 226),
-(1247, 'fa', 'رفتن', 227),
-(1248, 'fa', 'توکلو', 228),
-(1249, 'fa', 'تونگا', 229),
-(1250, 'fa', 'ترینیداد و توباگو', 230),
-(1251, 'fa', 'تریستان دا کانونا', 231),
-(1252, 'fa', 'تونس', 232),
-(1253, 'fa', 'بوقلمون', 233),
-(1254, 'fa', 'ترکمنستان', 234),
-(1255, 'fa', 'جزایر تورکس و کایکوس', 235),
-(1256, 'fa', 'تووالو', 236),
-(1257, 'fa', 'جزایر دور افتاده ایالات متحده آمریکا', 237),
-(1258, 'fa', 'جزایر ویرجین ایالات متحده', 238),
-(1259, 'fa', 'اوگاندا', 239),
-(1260, 'fa', 'اوکراین', 240),
-(1261, 'fa', 'امارات متحده عربی', 241),
-(1262, 'fa', 'انگلستان', 242),
-(1263, 'fa', 'سازمان ملل', 243),
-(1264, 'fa', 'ایالات متحده', 244),
-(1265, 'fa', 'اروگوئه', 245),
-(1266, 'fa', 'ازبکستان', 246),
-(1267, 'fa', 'وانواتو', 247),
-(1268, 'fa', 'شهر واتیکان', 248),
-(1269, 'fa', 'ونزوئلا', 249),
-(1270, 'fa', 'ویتنام', 250),
-(1271, 'fa', 'والیس و فوتونا', 251),
-(1272, 'fa', 'صحرای غربی', 252),
-(1273, 'fa', 'یمن', 253),
-(1274, 'fa', 'زامبیا', 254),
-(1275, 'fa', 'زیمبابوه', 255),
-(1276, 'pt_BR', 'Afeganistão', 1),
-(1277, 'pt_BR', 'Ilhas Åland', 2),
-(1278, 'pt_BR', 'Albânia', 3),
-(1279, 'pt_BR', 'Argélia', 4),
-(1280, 'pt_BR', 'Samoa Americana', 5),
-(1281, 'pt_BR', 'Andorra', 6),
-(1282, 'pt_BR', 'Angola', 7),
-(1283, 'pt_BR', 'Angola', 8),
-(1284, 'pt_BR', 'Antártico', 9),
-(1285, 'pt_BR', 'Antígua e Barbuda', 10),
-(1286, 'pt_BR', 'Argentina', 11),
-(1287, 'pt_BR', 'Armênia', 12),
-(1288, 'pt_BR', 'Aruba', 13),
-(1289, 'pt_BR', 'Ilha de escalada', 14),
-(1290, 'pt_BR', 'Austrália', 15),
-(1291, 'pt_BR', 'Áustria', 16),
-(1292, 'pt_BR', 'Azerbaijão', 17),
-(1293, 'pt_BR', 'Bahamas', 18),
-(1294, 'pt_BR', 'Bahrain', 19),
-(1295, 'pt_BR', 'Bangladesh', 20),
-(1296, 'pt_BR', 'Barbados', 21),
-(1297, 'pt_BR', 'Bielorrússia', 22),
-(1298, 'pt_BR', 'Bélgica', 23),
-(1299, 'pt_BR', 'Bélgica', 24),
-(1300, 'pt_BR', 'Benin', 25),
-(1301, 'pt_BR', 'Bermuda', 26),
-(1302, 'pt_BR', 'Butão', 27),
-(1303, 'pt_BR', 'Bolívia', 28),
-(1304, 'pt_BR', 'Bósnia e Herzegovina', 29),
-(1305, 'pt_BR', 'Botsuana', 30),
-(1306, 'pt_BR', 'Brasil', 31),
-(1307, 'pt_BR', 'Território Britânico do Oceano Índico', 32),
-(1308, 'pt_BR', 'Ilhas Virgens Britânicas', 33),
-(1309, 'pt_BR', 'Brunei', 34),
-(1310, 'pt_BR', 'Bulgária', 35),
-(1311, 'pt_BR', 'Burkina Faso', 36),
-(1312, 'pt_BR', 'Burundi', 37),
-(1313, 'pt_BR', 'Camboja', 38),
-(1314, 'pt_BR', 'Camarões', 39),
-(1315, 'pt_BR', 'Canadá', 40),
-(1316, 'pt_BR', 'Ilhas Canárias', 41),
-(1317, 'pt_BR', 'Cabo Verde', 42),
-(1318, 'pt_BR', 'Holanda do Caribe', 43),
-(1319, 'pt_BR', 'Ilhas Cayman', 44),
-(1320, 'pt_BR', 'República Centro-Africana', 45),
-(1321, 'pt_BR', 'Ceuta e Melilla', 46),
-(1322, 'pt_BR', 'Chade', 47),
-(1323, 'pt_BR', 'Chile', 48),
-(1324, 'pt_BR', 'China', 49),
-(1325, 'pt_BR', 'Ilha Christmas', 50),
-(1326, 'pt_BR', 'Ilhas Cocos (Keeling)', 51),
-(1327, 'pt_BR', 'Colômbia', 52),
-(1328, 'pt_BR', 'Comores', 53),
-(1329, 'pt_BR', 'Congo - Brazzaville', 54),
-(1330, 'pt_BR', 'Congo - Kinshasa', 55),
-(1331, 'pt_BR', 'Ilhas Cook', 56),
-(1332, 'pt_BR', 'Costa Rica', 57),
-(1333, 'pt_BR', 'Costa do Marfim', 58),
-(1334, 'pt_BR', 'Croácia', 59),
-(1335, 'pt_BR', 'Cuba', 60),
-(1336, 'pt_BR', 'Curaçao', 61),
-(1337, 'pt_BR', 'Chipre', 62),
-(1338, 'pt_BR', 'Czechia', 63),
-(1339, 'pt_BR', 'Dinamarca', 64),
-(1340, 'pt_BR', 'Diego Garcia', 65),
-(1341, 'pt_BR', 'Djibuti', 66),
-(1342, 'pt_BR', 'Dominica', 67),
-(1343, 'pt_BR', 'República Dominicana', 68),
-(1344, 'pt_BR', 'Equador', 69),
-(1345, 'pt_BR', 'Egito', 70),
-(1346, 'pt_BR', 'El Salvador', 71),
-(1347, 'pt_BR', 'Guiné Equatorial', 72),
-(1348, 'pt_BR', 'Eritreia', 73),
-(1349, 'pt_BR', 'Estônia', 74),
-(1350, 'pt_BR', 'Etiópia', 75),
-(1351, 'pt_BR', 'Zona Euro', 76),
-(1352, 'pt_BR', 'Ilhas Malvinas', 77),
-(1353, 'pt_BR', 'Ilhas Faroe', 78),
-(1354, 'pt_BR', 'Fiji', 79),
-(1355, 'pt_BR', 'Finlândia', 80),
-(1356, 'pt_BR', 'França', 81),
-(1357, 'pt_BR', 'Guiana Francesa', 82),
-(1358, 'pt_BR', 'Polinésia Francesa', 83),
-(1359, 'pt_BR', 'Territórios Franceses do Sul', 84),
-(1360, 'pt_BR', 'Gabão', 85),
-(1361, 'pt_BR', 'Gâmbia', 86),
-(1362, 'pt_BR', 'Geórgia', 87),
-(1363, 'pt_BR', 'Alemanha', 88),
-(1364, 'pt_BR', 'Gana', 89),
-(1365, 'pt_BR', 'Gibraltar', 90),
-(1366, 'pt_BR', 'Grécia', 91),
-(1367, 'pt_BR', 'Gronelândia', 92),
-(1368, 'pt_BR', 'Granada', 93),
-(1369, 'pt_BR', 'Guadalupe', 94),
-(1370, 'pt_BR', 'Guam', 95),
-(1371, 'pt_BR', 'Guatemala', 96),
-(1372, 'pt_BR', 'Guernsey', 97),
-(1373, 'pt_BR', 'Guiné', 98),
-(1374, 'pt_BR', 'Guiné-Bissau', 99),
-(1375, 'pt_BR', 'Guiana', 100),
-(1376, 'pt_BR', 'Haiti', 101),
-(1377, 'pt_BR', 'Honduras', 102),
-(1378, 'pt_BR', 'Região Administrativa Especial de Hong Kong, China', 103),
-(1379, 'pt_BR', 'Hungria', 104),
-(1380, 'pt_BR', 'Islândia', 105),
-(1381, 'pt_BR', 'Índia', 106),
-(1382, 'pt_BR', 'Indonésia', 107),
-(1383, 'pt_BR', 'Irã', 108),
-(1384, 'pt_BR', 'Iraque', 109),
-(1385, 'pt_BR', 'Irlanda', 110),
-(1386, 'pt_BR', 'Ilha de Man', 111),
-(1387, 'pt_BR', 'Israel', 112),
-(1388, 'pt_BR', 'Itália', 113),
-(1389, 'pt_BR', 'Jamaica', 114),
-(1390, 'pt_BR', 'Japão', 115),
-(1391, 'pt_BR', 'Jersey', 116),
-(1392, 'pt_BR', 'Jordânia', 117),
-(1393, 'pt_BR', 'Cazaquistão', 118),
-(1394, 'pt_BR', 'Quênia', 119),
-(1395, 'pt_BR', 'Quiribati', 120),
-(1396, 'pt_BR', 'Kosovo', 121),
-(1397, 'pt_BR', 'Kuwait', 122),
-(1398, 'pt_BR', 'Quirguistão', 123),
-(1399, 'pt_BR', 'Laos', 124),
-(1400, 'pt_BR', 'Letônia', 125),
-(1401, 'pt_BR', 'Líbano', 126),
-(1402, 'pt_BR', 'Lesoto', 127),
-(1403, 'pt_BR', 'Libéria', 128),
-(1404, 'pt_BR', 'Líbia', 129),
-(1405, 'pt_BR', 'Liechtenstein', 130),
-(1406, 'pt_BR', 'Lituânia', 131),
-(1407, 'pt_BR', 'Luxemburgo', 132),
-(1408, 'pt_BR', 'Macau SAR China', 133),
-(1409, 'pt_BR', 'Macedônia', 134),
-(1410, 'pt_BR', 'Madagascar', 135),
-(1411, 'pt_BR', 'Malawi', 136),
-(1412, 'pt_BR', 'Malásia', 137),
-(1413, 'pt_BR', 'Maldivas', 138),
-(1414, 'pt_BR', 'Mali', 139),
-(1415, 'pt_BR', 'Malta', 140),
-(1416, 'pt_BR', 'Ilhas Marshall', 141),
-(1417, 'pt_BR', 'Martinica', 142),
-(1418, 'pt_BR', 'Mauritânia', 143),
-(1419, 'pt_BR', 'Maurício', 144),
-(1420, 'pt_BR', 'Maiote', 145),
-(1421, 'pt_BR', 'México', 146),
-(1422, 'pt_BR', 'Micronésia', 147),
-(1423, 'pt_BR', 'Moldávia', 148),
-(1424, 'pt_BR', 'Mônaco', 149),
-(1425, 'pt_BR', 'Mongólia', 150),
-(1426, 'pt_BR', 'Montenegro', 151),
-(1427, 'pt_BR', 'Montserrat', 152),
-(1428, 'pt_BR', 'Marrocos', 153),
-(1429, 'pt_BR', 'Moçambique', 154),
-(1430, 'pt_BR', 'Mianmar (Birmânia)', 155),
-(1431, 'pt_BR', 'Namíbia', 156),
-(1432, 'pt_BR', 'Nauru', 157),
-(1433, 'pt_BR', 'Nepal', 158),
-(1434, 'pt_BR', 'Holanda', 159),
-(1435, 'pt_BR', 'Nova Caledônia', 160),
-(1436, 'pt_BR', 'Nova Zelândia', 161),
-(1437, 'pt_BR', 'Nicarágua', 162),
-(1438, 'pt_BR', 'Níger', 163),
-(1439, 'pt_BR', 'Nigéria', 164),
-(1440, 'pt_BR', 'Niue', 165),
-(1441, 'pt_BR', 'Ilha Norfolk', 166),
-(1442, 'pt_BR', 'Coréia do Norte', 167),
-(1443, 'pt_BR', 'Ilhas Marianas do Norte', 168),
-(1444, 'pt_BR', 'Noruega', 169),
-(1445, 'pt_BR', 'Omã', 170),
-(1446, 'pt_BR', 'Paquistão', 171),
-(1447, 'pt_BR', 'Palau', 172),
-(1448, 'pt_BR', 'Territórios Palestinos', 173),
-(1449, 'pt_BR', 'Panamá', 174),
-(1450, 'pt_BR', 'Papua Nova Guiné', 175),
-(1451, 'pt_BR', 'Paraguai', 176),
-(1452, 'pt_BR', 'Peru', 177),
-(1453, 'pt_BR', 'Filipinas', 178),
-(1454, 'pt_BR', 'Ilhas Pitcairn', 179),
-(1455, 'pt_BR', 'Polônia', 180),
-(1456, 'pt_BR', 'Portugal', 181),
-(1457, 'pt_BR', 'Porto Rico', 182),
-(1458, 'pt_BR', 'Catar', 183),
-(1459, 'pt_BR', 'Reunião', 184),
-(1460, 'pt_BR', 'Romênia', 185),
-(1461, 'pt_BR', 'Rússia', 186),
-(1462, 'pt_BR', 'Ruanda', 187),
-(1463, 'pt_BR', 'Samoa', 188),
-(1464, 'pt_BR', 'São Marinho', 189),
-(1465, 'pt_BR', 'São Cristóvão e Nevis', 190),
-(1466, 'pt_BR', 'Arábia Saudita', 191),
-(1467, 'pt_BR', 'Senegal', 192),
-(1468, 'pt_BR', 'Sérvia', 193),
-(1469, 'pt_BR', 'Seychelles', 194),
-(1470, 'pt_BR', 'Serra Leoa', 195),
-(1471, 'pt_BR', 'Cingapura', 196),
-(1472, 'pt_BR', 'São Martinho', 197),
-(1473, 'pt_BR', 'Eslováquia', 198),
-(1474, 'pt_BR', 'Eslovênia', 199),
-(1475, 'pt_BR', 'Ilhas Salomão', 200),
-(1476, 'pt_BR', 'Somália', 201),
-(1477, 'pt_BR', 'África do Sul', 202),
-(1478, 'pt_BR', 'Ilhas Geórgia do Sul e Sandwich do Sul', 203),
-(1479, 'pt_BR', 'Coréia do Sul', 204),
-(1480, 'pt_BR', 'Sudão do Sul', 205),
-(1481, 'pt_BR', 'Espanha', 206),
-(1482, 'pt_BR', 'Sri Lanka', 207),
-(1483, 'pt_BR', 'São Bartolomeu', 208),
-(1484, 'pt_BR', 'Santa Helena', 209),
-(1485, 'pt_BR', 'São Cristóvão e Nevis', 210),
-(1486, 'pt_BR', 'Santa Lúcia', 211),
-(1487, 'pt_BR', 'São Martinho', 212),
-(1488, 'pt_BR', 'São Pedro e Miquelon', 213),
-(1489, 'pt_BR', 'São Vicente e Granadinas', 214),
-(1490, 'pt_BR', 'Sudão', 215),
-(1491, 'pt_BR', 'Suriname', 216),
-(1492, 'pt_BR', 'Svalbard e Jan Mayen', 217),
-(1493, 'pt_BR', 'Suazilândia', 218),
-(1494, 'pt_BR', 'Suécia', 219),
-(1495, 'pt_BR', 'Suíça', 220),
-(1496, 'pt_BR', 'Síria', 221),
-(1497, 'pt_BR', 'Taiwan', 222),
-(1498, 'pt_BR', 'Tajiquistão', 223),
-(1499, 'pt_BR', 'Tanzânia', 224),
-(1500, 'pt_BR', 'Tailândia', 225),
-(1501, 'pt_BR', 'Timor-Leste', 226),
-(1502, 'pt_BR', 'Togo', 227),
-(1503, 'pt_BR', 'Tokelau', 228),
-(1504, 'pt_BR', 'Tonga', 229),
-(1505, 'pt_BR', 'Trinidad e Tobago', 230),
-(1506, 'pt_BR', 'Tristan da Cunha', 231),
-(1507, 'pt_BR', 'Tunísia', 232),
-(1508, 'pt_BR', 'Turquia', 233),
-(1509, 'pt_BR', 'Turquemenistão', 234),
-(1510, 'pt_BR', 'Ilhas Turks e Caicos', 235),
-(1511, 'pt_BR', 'Tuvalu', 236),
-(1512, 'pt_BR', 'Ilhas periféricas dos EUA', 237),
-(1513, 'pt_BR', 'Ilhas Virgens dos EUA', 238),
-(1514, 'pt_BR', 'Uganda', 239),
-(1515, 'pt_BR', 'Ucrânia', 240),
-(1516, 'pt_BR', 'Emirados Árabes Unidos', 241),
-(1517, 'pt_BR', 'Reino Unido', 242),
-(1518, 'pt_BR', 'Nações Unidas', 243),
-(1519, 'pt_BR', 'Estados Unidos', 244),
-(1520, 'pt_BR', 'Uruguai', 245),
-(1521, 'pt_BR', 'Uzbequistão', 246),
-(1522, 'pt_BR', 'Vanuatu', 247),
-(1523, 'pt_BR', 'Cidade do Vaticano', 248),
-(1524, 'pt_BR', 'Venezuela', 249),
-(1525, 'pt_BR', 'Vietnã', 250),
-(1526, 'pt_BR', 'Wallis e Futuna', 251),
-(1527, 'pt_BR', 'Saara Ocidental', 252),
-(1528, 'pt_BR', 'Iêmen', 253),
-(1529, 'pt_BR', 'Zâmbia', 254),
-(1530, 'pt_BR', 'Zimbábue', 255);
+(1, 'ar', 'أفغانستان', 1),
+(2, 'ar', 'جزر آلاند', 2),
+(3, 'ar', 'ألبانيا', 3),
+(4, 'ar', 'الجزائر', 4),
+(5, 'ar', 'ساموا الأمريكية', 5),
+(6, 'ar', 'أندورا', 6),
+(7, 'ar', 'أنغولا', 7),
+(8, 'ar', 'أنغيلا', 8),
+(9, 'ar', 'القارة القطبية الجنوبية', 9),
+(10, 'ar', 'أنتيغوا وبربودا', 10),
+(11, 'ar', 'الأرجنتين', 11),
+(12, 'ar', 'أرمينيا', 12),
+(13, 'ar', 'أروبا', 13),
+(14, 'ar', 'جزيرة الصعود', 14),
+(15, 'ar', 'أستراليا', 15),
+(16, 'ar', 'النمسا', 16),
+(17, 'ar', 'أذربيجان', 17),
+(18, 'ar', 'الباهاما', 18),
+(19, 'ar', 'البحرين', 19),
+(20, 'ar', 'بنغلاديش', 20),
+(21, 'ar', 'بربادوس', 21),
+(22, 'ar', 'روسيا البيضاء', 22),
+(23, 'ar', 'بلجيكا', 23),
+(24, 'ar', 'بليز', 24),
+(25, 'ar', 'بنين', 25),
+(26, 'ar', 'برمودا', 26),
+(27, 'ar', 'بوتان', 27),
+(28, 'ar', 'بوليفيا', 28),
+(29, 'ar', 'البوسنة والهرسك', 29),
+(30, 'ar', 'بوتسوانا', 30),
+(31, 'ar', 'البرازيل', 31),
+(32, 'ar', 'إقليم المحيط البريطاني الهندي', 32),
+(33, 'ar', 'جزر فيرجن البريطانية', 33),
+(34, 'ar', 'بروناي', 34),
+(35, 'ar', 'بلغاريا', 35),
+(36, 'ar', 'بوركينا فاسو', 36),
+(37, 'ar', 'بوروندي', 37),
+(38, 'ar', 'كمبوديا', 38),
+(39, 'ar', 'الكاميرون', 39),
+(40, 'ar', 'كندا', 40),
+(41, 'ar', 'جزر الكناري', 41),
+(42, 'ar', 'الرأس الأخضر', 42),
+(43, 'ar', 'الكاريبي هولندا', 43),
+(44, 'ar', 'جزر كايمان', 44),
+(45, 'ar', 'جمهورية افريقيا الوسطى', 45),
+(46, 'ar', 'سبتة ومليلية', 46),
+(47, 'ar', 'تشاد', 47),
+(48, 'ar', 'تشيلي', 48),
+(49, 'ar', 'الصين', 49),
+(50, 'ar', 'جزيرة الكريسماس', 50),
+(51, 'ar', 'جزر كوكوس (كيلينغ)', 51),
+(52, 'ar', 'كولومبيا', 52),
+(53, 'ar', 'جزر القمر', 53),
+(54, 'ar', 'الكونغو - برازافيل', 54),
+(55, 'ar', 'الكونغو - كينشاسا', 55),
+(56, 'ar', 'جزر كوك', 56),
+(57, 'ar', 'كوستاريكا', 57),
+(58, 'ar', 'ساحل العاج', 58),
+(59, 'ar', 'كرواتيا', 59),
+(60, 'ar', 'كوبا', 60),
+(61, 'ar', 'كوراساو', 61),
+(62, 'ar', 'قبرص', 62),
+(63, 'ar', 'التشيك', 63),
+(64, 'ar', 'الدنمارك', 64),
+(65, 'ar', 'دييغو غارسيا', 65),
+(66, 'ar', 'جيبوتي', 66),
+(67, 'ar', 'دومينيكا', 67),
+(68, 'ar', 'جمهورية الدومنيكان', 68),
+(69, 'ar', 'الإكوادور', 69),
+(70, 'ar', 'مصر', 70),
+(71, 'ar', 'السلفادور', 71),
+(72, 'ar', 'غينيا الإستوائية', 72),
+(73, 'ar', 'إريتريا', 73),
+(74, 'ar', 'استونيا', 74),
+(75, 'ar', 'أثيوبيا', 75),
+(76, 'ar', 'منطقة اليورو', 76),
+(77, 'ar', 'جزر فوكلاند', 77),
+(78, 'ar', 'جزر فاروس', 78),
+(79, 'ar', 'فيجي', 79),
+(80, 'ar', 'فنلندا', 80),
+(81, 'ar', 'فرنسا', 81),
+(82, 'ar', 'غيانا الفرنسية', 82),
+(83, 'ar', 'بولينيزيا الفرنسية', 83),
+(84, 'ar', 'المناطق الجنوبية لفرنسا', 84),
+(85, 'ar', 'الغابون', 85),
+(86, 'ar', 'غامبيا', 86),
+(87, 'ar', 'جورجيا', 87),
+(88, 'ar', 'ألمانيا', 88),
+(89, 'ar', 'غانا', 89),
+(90, 'ar', 'جبل طارق', 90),
+(91, 'ar', 'اليونان', 91),
+(92, 'ar', 'الأرض الخضراء', 92),
+(93, 'ar', 'غرينادا', 93),
+(94, 'ar', 'جوادلوب', 94),
+(95, 'ar', 'غوام', 95),
+(96, 'ar', 'غواتيمالا', 96),
+(97, 'ar', 'غيرنسي', 97),
+(98, 'ar', 'غينيا', 98),
+(99, 'ar', 'غينيا بيساو', 99),
+(100, 'ar', 'غيانا', 100),
+(101, 'ar', 'هايتي', 101),
+(102, 'ar', 'هندوراس', 102),
+(103, 'ar', 'هونج كونج SAR الصين', 103),
+(104, 'ar', 'هنغاريا', 104),
+(105, 'ar', 'أيسلندا', 105),
+(106, 'ar', 'الهند', 106),
+(107, 'ar', 'إندونيسيا', 107),
+(108, 'ar', 'إيران', 108),
+(109, 'ar', 'العراق', 109),
+(110, 'ar', 'أيرلندا', 110),
+(111, 'ar', 'جزيرة آيل أوف مان', 111),
+(112, 'ar', 'إسرائيل', 112),
+(113, 'ar', 'إيطاليا', 113),
+(114, 'ar', 'جامايكا', 114),
+(115, 'ar', 'اليابان', 115),
+(116, 'ar', 'جيرسي', 116),
+(117, 'ar', 'الأردن', 117),
+(118, 'ar', 'كازاخستان', 118),
+(119, 'ar', 'كينيا', 119),
+(120, 'ar', 'كيريباس', 120),
+(121, 'ar', 'كوسوفو', 121),
+(122, 'ar', 'الكويت', 122),
+(123, 'ar', 'قرغيزستان', 123),
+(124, 'ar', 'لاوس', 124),
+(125, 'ar', 'لاتفيا', 125),
+(126, 'ar', 'لبنان', 126),
+(127, 'ar', 'ليسوتو', 127),
+(128, 'ar', 'ليبيريا', 128),
+(129, 'ar', 'ليبيا', 129),
+(130, 'ar', 'ليختنشتاين', 130),
+(131, 'ar', 'ليتوانيا', 131),
+(132, 'ar', 'لوكسمبورغ', 132),
+(133, 'ar', 'ماكاو SAR الصين', 133),
+(134, 'ar', 'مقدونيا', 134),
+(135, 'ar', 'مدغشقر', 135),
+(136, 'ar', 'مالاوي', 136),
+(137, 'ar', 'ماليزيا', 137),
+(138, 'ar', 'جزر المالديف', 138),
+(139, 'ar', 'مالي', 139),
+(140, 'ar', 'مالطا', 140),
+(141, 'ar', 'جزر مارشال', 141),
+(142, 'ar', 'مارتينيك', 142),
+(143, 'ar', 'موريتانيا', 143),
+(144, 'ar', 'موريشيوس', 144),
+(145, 'ar', 'ضائع', 145),
+(146, 'ar', 'المكسيك', 146),
+(147, 'ar', 'ميكرونيزيا', 147),
+(148, 'ar', 'مولدوفا', 148),
+(149, 'ar', 'موناكو', 149),
+(150, 'ar', 'منغوليا', 150),
+(151, 'ar', 'الجبل الأسود', 151),
+(152, 'ar', 'مونتسيرات', 152),
+(153, 'ar', 'المغرب', 153),
+(154, 'ar', 'موزمبيق', 154),
+(155, 'ar', 'ميانمار (بورما)', 155),
+(156, 'ar', 'ناميبيا', 156),
+(157, 'ar', 'ناورو', 157),
+(158, 'ar', 'نيبال', 158),
+(159, 'ar', 'نيبال', 159),
+(160, 'ar', 'كاليدونيا الجديدة', 160),
+(161, 'ar', 'نيوزيلاندا', 161),
+(162, 'ar', 'نيكاراغوا', 162),
+(163, 'ar', 'النيجر', 163),
+(164, 'ar', 'نيجيريا', 164),
+(165, 'ar', 'نيوي', 165),
+(166, 'ar', 'جزيرة نورفولك', 166),
+(167, 'ar', 'كوريا الشماليه', 167),
+(168, 'ar', 'جزر مريانا الشمالية', 168),
+(169, 'ar', 'النرويج', 169),
+(170, 'ar', 'سلطنة عمان', 170),
+(171, 'ar', 'باكستان', 171),
+(172, 'ar', 'بالاو', 172),
+(173, 'ar', 'الاراضي الفلسطينية', 173),
+(174, 'ar', 'بناما', 174),
+(175, 'ar', 'بابوا غينيا الجديدة', 175),
+(176, 'ar', 'باراغواي', 176),
+(177, 'ar', 'بيرو', 177),
+(178, 'ar', 'الفلبين', 178),
+(179, 'ar', 'جزر بيتكيرن', 179),
+(180, 'ar', 'بولندا', 180),
+(181, 'ar', 'البرتغال', 181),
+(182, 'ar', 'بورتوريكو', 182),
+(183, 'ar', 'دولة قطر', 183),
+(184, 'ar', 'جمع شمل', 184),
+(185, 'ar', 'رومانيا', 185),
+(186, 'ar', 'روسيا', 186),
+(187, 'ar', 'رواندا', 187),
+(188, 'ar', 'ساموا', 188),
+(189, 'ar', 'سان مارينو', 189),
+(190, 'ar', 'سانت كيتس ونيفيس', 190),
+(191, 'ar', 'المملكة العربية السعودية', 191),
+(192, 'ar', 'السنغال', 192),
+(193, 'ar', 'صربيا', 193),
+(194, 'ar', 'سيشيل', 194),
+(195, 'ar', 'سيراليون', 195),
+(196, 'ar', 'سنغافورة', 196),
+(197, 'ar', 'سينت مارتن', 197),
+(198, 'ar', 'سلوفاكيا', 198),
+(199, 'ar', 'سلوفينيا', 199),
+(200, 'ar', 'جزر سليمان', 200),
+(201, 'ar', 'الصومال', 201),
+(202, 'ar', 'جنوب أفريقيا', 202),
+(203, 'ar', 'جورجيا الجنوبية وجزر ساندويتش الجنوبية', 203),
+(204, 'ar', 'كوريا الجنوبية', 204),
+(205, 'ar', 'جنوب السودان', 205),
+(206, 'ar', 'إسبانيا', 206),
+(207, 'ar', 'سيريلانكا', 207),
+(208, 'ar', 'سانت بارتيليمي', 208),
+(209, 'ar', 'سانت هيلانة', 209),
+(210, 'ar', 'سانت كيتس ونيفيس', 210),
+(211, 'ar', 'شارع لوسيا', 211),
+(212, 'ar', 'سانت مارتن', 212),
+(213, 'ar', 'سانت بيير وميكلون', 213),
+(214, 'ar', 'سانت فنسنت وجزر غرينادين', 214),
+(215, 'ar', 'السودان', 215),
+(216, 'ar', 'سورينام', 216),
+(217, 'ar', 'سفالبارد وجان ماين', 217),
+(218, 'ar', 'سوازيلاند', 218),
+(219, 'ar', 'السويد', 219),
+(220, 'ar', 'سويسرا', 220),
+(221, 'ar', 'سوريا', 221),
+(222, 'ar', 'تايوان', 222),
+(223, 'ar', 'طاجيكستان', 223),
+(224, 'ar', 'تنزانيا', 224),
+(225, 'ar', 'تايلاند', 225),
+(226, 'ar', 'تيمور', 226),
+(227, 'ar', 'توجو', 227),
+(228, 'ar', 'توكيلاو', 228),
+(229, 'ar', 'تونغا', 229),
+(230, 'ar', 'ترينيداد وتوباغو', 230),
+(231, 'ar', 'تريستان دا كونها', 231),
+(232, 'ar', 'تونس', 232),
+(233, 'ar', 'ديك رومي', 233),
+(234, 'ar', 'تركمانستان', 234),
+(235, 'ar', 'جزر تركس وكايكوس', 235),
+(236, 'ar', 'توفالو', 236),
+(237, 'ar', 'جزر الولايات المتحدة البعيدة', 237),
+(238, 'ar', 'جزر فيرجن الأمريكية', 238),
+(239, 'ar', 'أوغندا', 239),
+(240, 'ar', 'أوكرانيا', 240),
+(241, 'ar', 'الإمارات العربية المتحدة', 241),
+(242, 'ar', 'المملكة المتحدة', 242),
+(243, 'ar', 'الأمم المتحدة', 243),
+(244, 'ar', 'الولايات المتحدة الأمريكية', 244),
+(245, 'ar', 'أوروغواي', 245),
+(246, 'ar', 'أوزبكستان', 246),
+(247, 'ar', 'فانواتو', 247),
+(248, 'ar', 'مدينة الفاتيكان', 248),
+(249, 'ar', 'فنزويلا', 249),
+(250, 'ar', 'فيتنام', 250),
+(251, 'ar', 'واليس وفوتونا', 251),
+(252, 'ar', 'الصحراء الغربية', 252),
+(253, 'ar', 'اليمن', 253),
+(254, 'ar', 'زامبيا', 254),
+(255, 'ar', 'زيمبابوي', 255),
+(256, 'fa', 'افغانستان', 1),
+(257, 'fa', 'جزایر الند', 2),
+(258, 'fa', 'آلبانی', 3),
+(259, 'fa', 'الجزایر', 4),
+(260, 'fa', 'ساموآ آمریکایی', 5),
+(261, 'fa', 'آندورا', 6),
+(262, 'fa', 'آنگولا', 7),
+(263, 'fa', 'آنگولا', 8),
+(264, 'fa', 'جنوبگان', 9),
+(265, 'fa', 'آنتیگوا و باربودا', 10),
+(266, 'fa', 'آرژانتین', 11),
+(267, 'fa', 'ارمنستان', 12),
+(268, 'fa', 'آروبا', 13),
+(269, 'fa', 'جزیره صعود', 14),
+(270, 'fa', 'استرالیا', 15),
+(271, 'fa', 'اتریش', 16),
+(272, 'fa', 'آذربایجان', 17),
+(273, 'fa', 'باهاما', 18),
+(274, 'fa', 'بحرین', 19),
+(275, 'fa', 'بنگلادش', 20),
+(276, 'fa', 'باربادوس', 21),
+(277, 'fa', 'بلاروس', 22),
+(278, 'fa', 'بلژیک', 23),
+(279, 'fa', 'بلژیک', 24),
+(280, 'fa', 'بنین', 25),
+(281, 'fa', 'برمودا', 26),
+(282, 'fa', 'بوتان', 27),
+(283, 'fa', 'بولیوی', 28),
+(284, 'fa', 'بوسنی و هرزگوین', 29),
+(285, 'fa', 'بوتسوانا', 30),
+(286, 'fa', 'برزیل', 31),
+(287, 'fa', 'قلمرو اقیانوس هند انگلیس', 32),
+(288, 'fa', 'جزایر ویرجین انگلیس', 33),
+(289, 'fa', 'برونئی', 34),
+(290, 'fa', 'بلغارستان', 35),
+(291, 'fa', 'بورکینا فاسو', 36),
+(292, 'fa', 'بوروندی', 37),
+(293, 'fa', 'کامبوج', 38),
+(294, 'fa', 'کامرون', 39),
+(295, 'fa', 'کانادا', 40),
+(296, 'fa', 'جزایر قناری', 41),
+(297, 'fa', 'کیپ ورد', 42),
+(298, 'fa', 'کارائیب هلند', 43),
+(299, 'fa', 'Cayman Islands', 44),
+(300, 'fa', 'جمهوری آفریقای مرکزی', 45),
+(301, 'fa', 'سوتا و ملیلا', 46),
+(302, 'fa', 'چاد', 47),
+(303, 'fa', 'شیلی', 48),
+(304, 'fa', 'چین', 49),
+(305, 'fa', 'جزیره کریسمس', 50),
+(306, 'fa', 'جزایر کوکو (Keeling)', 51),
+(307, 'fa', 'کلمبیا', 52),
+(308, 'fa', 'کومور', 53),
+(309, 'fa', 'کنگو - برزاویل', 54),
+(310, 'fa', 'کنگو - کینشاسا', 55),
+(311, 'fa', 'جزایر کوک', 56),
+(312, 'fa', 'کاستاریکا', 57),
+(313, 'fa', 'ساحل عاج', 58),
+(314, 'fa', 'کرواسی', 59),
+(315, 'fa', 'کوبا', 60),
+(316, 'fa', 'کوراسائو', 61),
+(317, 'fa', 'قبرس', 62),
+(318, 'fa', 'چک', 63),
+(319, 'fa', 'دانمارک', 64),
+(320, 'fa', 'دیگو گارسیا', 65),
+(321, 'fa', 'جیبوتی', 66),
+(322, 'fa', 'دومینیکا', 67),
+(323, 'fa', 'جمهوری دومینیکن', 68),
+(324, 'fa', 'اکوادور', 69),
+(325, 'fa', 'مصر', 70),
+(326, 'fa', 'السالوادور', 71),
+(327, 'fa', 'گینه استوایی', 72),
+(328, 'fa', 'اریتره', 73),
+(329, 'fa', 'استونی', 74),
+(330, 'fa', 'اتیوپی', 75),
+(331, 'fa', 'منطقه یورو', 76),
+(332, 'fa', 'جزایر فالکلند', 77),
+(333, 'fa', 'جزایر فارو', 78),
+(334, 'fa', 'فیجی', 79),
+(335, 'fa', 'فنلاند', 80),
+(336, 'fa', 'فرانسه', 81),
+(337, 'fa', 'گویان فرانسه', 82),
+(338, 'fa', 'پلی‌نزی فرانسه', 83),
+(339, 'fa', 'سرزمین های جنوبی فرانسه', 84),
+(340, 'fa', 'گابن', 85),
+(341, 'fa', 'گامبیا', 86),
+(342, 'fa', 'جورجیا', 87),
+(343, 'fa', 'آلمان', 88),
+(344, 'fa', 'غنا', 89),
+(345, 'fa', 'جبل الطارق', 90),
+(346, 'fa', 'یونان', 91),
+(347, 'fa', 'گرینلند', 92),
+(348, 'fa', 'گرنادا', 93),
+(349, 'fa', 'گوادلوپ', 94),
+(350, 'fa', 'گوام', 95),
+(351, 'fa', 'گواتمالا', 96),
+(352, 'fa', 'گورنسی', 97),
+(353, 'fa', 'گینه', 98),
+(354, 'fa', 'گینه بیسائو', 99),
+(355, 'fa', 'گویان', 100),
+(356, 'fa', 'هائیتی', 101),
+(357, 'fa', 'هندوراس', 102),
+(358, 'fa', 'هنگ کنگ SAR چین', 103),
+(359, 'fa', 'مجارستان', 104),
+(360, 'fa', 'ایسلند', 105),
+(361, 'fa', 'هند', 106),
+(362, 'fa', 'اندونزی', 107),
+(363, 'fa', 'ایران', 108),
+(364, 'fa', 'عراق', 109),
+(365, 'fa', 'ایرلند', 110),
+(366, 'fa', 'جزیره من', 111),
+(367, 'fa', 'اسرائيل', 112),
+(368, 'fa', 'ایتالیا', 113),
+(369, 'fa', 'جامائیکا', 114),
+(370, 'fa', 'ژاپن', 115),
+(371, 'fa', 'پیراهن ورزشی', 116),
+(372, 'fa', 'اردن', 117),
+(373, 'fa', 'قزاقستان', 118),
+(374, 'fa', 'کنیا', 119),
+(375, 'fa', 'کیریباتی', 120),
+(376, 'fa', 'کوزوو', 121),
+(377, 'fa', 'کویت', 122),
+(378, 'fa', 'قرقیزستان', 123),
+(379, 'fa', 'لائوس', 124),
+(380, 'fa', 'لتونی', 125),
+(381, 'fa', 'لبنان', 126),
+(382, 'fa', 'لسوتو', 127),
+(383, 'fa', 'لیبریا', 128),
+(384, 'fa', 'لیبی', 129),
+(385, 'fa', 'لیختن اشتاین', 130),
+(386, 'fa', 'لیتوانی', 131),
+(387, 'fa', 'لوکزامبورگ', 132),
+(388, 'fa', 'ماکائو SAR چین', 133),
+(389, 'fa', 'مقدونیه', 134),
+(390, 'fa', 'ماداگاسکار', 135),
+(391, 'fa', 'مالاوی', 136),
+(392, 'fa', 'مالزی', 137),
+(393, 'fa', 'مالدیو', 138),
+(394, 'fa', 'مالی', 139),
+(395, 'fa', 'مالت', 140),
+(396, 'fa', 'جزایر مارشال', 141),
+(397, 'fa', 'مارتینیک', 142),
+(398, 'fa', 'موریتانی', 143),
+(399, 'fa', 'موریس', 144),
+(400, 'fa', 'گمشده', 145),
+(401, 'fa', 'مکزیک', 146),
+(402, 'fa', 'میکرونزی', 147),
+(403, 'fa', 'مولداوی', 148),
+(404, 'fa', 'موناکو', 149),
+(405, 'fa', 'مغولستان', 150),
+(406, 'fa', 'مونته نگرو', 151),
+(407, 'fa', 'مونتسرات', 152),
+(408, 'fa', 'مراکش', 153),
+(409, 'fa', 'موزامبیک', 154),
+(410, 'fa', 'میانمار (برمه)', 155),
+(411, 'fa', 'ناميبيا', 156),
+(412, 'fa', 'نائورو', 157),
+(413, 'fa', 'نپال', 158),
+(414, 'fa', 'هلند', 159),
+(415, 'fa', 'کالدونیای جدید', 160),
+(416, 'fa', 'نیوزلند', 161),
+(417, 'fa', 'نیکاراگوئه', 162),
+(418, 'fa', 'نیجر', 163),
+(419, 'fa', 'نیجریه', 164),
+(420, 'fa', 'نیو', 165),
+(421, 'fa', 'جزیره نورفولک', 166),
+(422, 'fa', 'کره شمالی', 167),
+(423, 'fa', 'جزایر ماریانای شمالی', 168),
+(424, 'fa', 'نروژ', 169),
+(425, 'fa', 'عمان', 170),
+(426, 'fa', 'پاکستان', 171),
+(427, 'fa', 'پالائو', 172),
+(428, 'fa', 'سرزمین های فلسطینی', 173),
+(429, 'fa', 'پاناما', 174),
+(430, 'fa', 'پاپوا گینه نو', 175),
+(431, 'fa', 'پاراگوئه', 176),
+(432, 'fa', 'پرو', 177),
+(433, 'fa', 'فیلیپین', 178),
+(434, 'fa', 'جزایر پیکریرن', 179),
+(435, 'fa', 'لهستان', 180),
+(436, 'fa', 'کشور پرتغال', 181),
+(437, 'fa', 'پورتوریکو', 182),
+(438, 'fa', 'قطر', 183),
+(439, 'fa', 'تجدید دیدار', 184),
+(440, 'fa', 'رومانی', 185),
+(441, 'fa', 'روسیه', 186),
+(442, 'fa', 'رواندا', 187),
+(443, 'fa', 'ساموآ', 188),
+(444, 'fa', 'سان مارینو', 189),
+(445, 'fa', 'سنت کیتس و نوویس', 190),
+(446, 'fa', 'عربستان سعودی', 191),
+(447, 'fa', 'سنگال', 192),
+(448, 'fa', 'صربستان', 193),
+(449, 'fa', 'سیشل', 194),
+(450, 'fa', 'سیرالئون', 195),
+(451, 'fa', 'سنگاپور', 196),
+(452, 'fa', 'سینت ماارتن', 197),
+(453, 'fa', 'اسلواکی', 198),
+(454, 'fa', 'اسلوونی', 199),
+(455, 'fa', 'جزایر سلیمان', 200),
+(456, 'fa', 'سومالی', 201),
+(457, 'fa', 'آفریقای جنوبی', 202),
+(458, 'fa', 'جزایر جورجیا جنوبی و جزایر ساندویچ جنوبی', 203),
+(459, 'fa', 'کره جنوبی', 204),
+(460, 'fa', 'سودان جنوبی', 205),
+(461, 'fa', 'اسپانیا', 206),
+(462, 'fa', 'سری لانکا', 207),
+(463, 'fa', 'سنت بارتلی', 208),
+(464, 'fa', 'سنت هلنا', 209),
+(465, 'fa', 'سنت کیتز و نوویس', 210),
+(466, 'fa', 'سنت لوسیا', 211),
+(467, 'fa', 'سنت مارتین', 212),
+(468, 'fa', 'سنت پیر و میکلون', 213),
+(469, 'fa', 'سنت وینسنت و گرنادینها', 214),
+(470, 'fa', 'سودان', 215),
+(471, 'fa', 'سورینام', 216),
+(472, 'fa', 'اسوالبارد و جان ماین', 217),
+(473, 'fa', 'سوازیلند', 218),
+(474, 'fa', 'سوئد', 219),
+(475, 'fa', 'سوئیس', 220),
+(476, 'fa', 'سوریه', 221),
+(477, 'fa', 'تایوان', 222),
+(478, 'fa', 'تاجیکستان', 223),
+(479, 'fa', 'تانزانیا', 224),
+(480, 'fa', 'تایلند', 225),
+(481, 'fa', 'تیمور-لست', 226),
+(482, 'fa', 'رفتن', 227),
+(483, 'fa', 'توکلو', 228),
+(484, 'fa', 'تونگا', 229),
+(485, 'fa', 'ترینیداد و توباگو', 230),
+(486, 'fa', 'تریستان دا کانونا', 231),
+(487, 'fa', 'تونس', 232),
+(488, 'fa', 'بوقلمون', 233),
+(489, 'fa', 'ترکمنستان', 234),
+(490, 'fa', 'جزایر تورکس و کایکوس', 235),
+(491, 'fa', 'تووالو', 236),
+(492, 'fa', 'جزایر دور افتاده ایالات متحده آمریکا', 237),
+(493, 'fa', 'جزایر ویرجین ایالات متحده', 238),
+(494, 'fa', 'اوگاندا', 239),
+(495, 'fa', 'اوکراین', 240),
+(496, 'fa', 'امارات متحده عربی', 241),
+(497, 'fa', 'انگلستان', 242),
+(498, 'fa', 'سازمان ملل', 243),
+(499, 'fa', 'ایالات متحده', 244),
+(500, 'fa', 'اروگوئه', 245),
+(501, 'fa', 'ازبکستان', 246),
+(502, 'fa', 'وانواتو', 247),
+(503, 'fa', 'شهر واتیکان', 248),
+(504, 'fa', 'ونزوئلا', 249),
+(505, 'fa', 'ویتنام', 250),
+(506, 'fa', 'والیس و فوتونا', 251),
+(507, 'fa', 'صحرای غربی', 252),
+(508, 'fa', 'یمن', 253),
+(509, 'fa', 'زامبیا', 254),
+(510, 'fa', 'زیمبابوه', 255),
+(511, 'pt_BR', 'Afeganistão', 1),
+(512, 'pt_BR', 'Ilhas Åland', 2),
+(513, 'pt_BR', 'Albânia', 3),
+(514, 'pt_BR', 'Argélia', 4),
+(515, 'pt_BR', 'Samoa Americana', 5),
+(516, 'pt_BR', 'Andorra', 6),
+(517, 'pt_BR', 'Angola', 7),
+(518, 'pt_BR', 'Angola', 8),
+(519, 'pt_BR', 'Antártico', 9),
+(520, 'pt_BR', 'Antígua e Barbuda', 10),
+(521, 'pt_BR', 'Argentina', 11),
+(522, 'pt_BR', 'Armênia', 12),
+(523, 'pt_BR', 'Aruba', 13),
+(524, 'pt_BR', 'Ilha de escalada', 14),
+(525, 'pt_BR', 'Austrália', 15),
+(526, 'pt_BR', 'Áustria', 16),
+(527, 'pt_BR', 'Azerbaijão', 17),
+(528, 'pt_BR', 'Bahamas', 18),
+(529, 'pt_BR', 'Bahrain', 19),
+(530, 'pt_BR', 'Bangladesh', 20),
+(531, 'pt_BR', 'Barbados', 21),
+(532, 'pt_BR', 'Bielorrússia', 22),
+(533, 'pt_BR', 'Bélgica', 23),
+(534, 'pt_BR', 'Bélgica', 24),
+(535, 'pt_BR', 'Benin', 25),
+(536, 'pt_BR', 'Bermuda', 26),
+(537, 'pt_BR', 'Butão', 27),
+(538, 'pt_BR', 'Bolívia', 28),
+(539, 'pt_BR', 'Bósnia e Herzegovina', 29),
+(540, 'pt_BR', 'Botsuana', 30),
+(541, 'pt_BR', 'Brasil', 31),
+(542, 'pt_BR', 'Território Britânico do Oceano Índico', 32),
+(543, 'pt_BR', 'Ilhas Virgens Britânicas', 33),
+(544, 'pt_BR', 'Brunei', 34),
+(545, 'pt_BR', 'Bulgária', 35),
+(546, 'pt_BR', 'Burkina Faso', 36),
+(547, 'pt_BR', 'Burundi', 37),
+(548, 'pt_BR', 'Camboja', 38),
+(549, 'pt_BR', 'Camarões', 39),
+(550, 'pt_BR', 'Canadá', 40),
+(551, 'pt_BR', 'Ilhas Canárias', 41),
+(552, 'pt_BR', 'Cabo Verde', 42),
+(553, 'pt_BR', 'Holanda do Caribe', 43),
+(554, 'pt_BR', 'Ilhas Cayman', 44),
+(555, 'pt_BR', 'República Centro-Africana', 45),
+(556, 'pt_BR', 'Ceuta e Melilla', 46),
+(557, 'pt_BR', 'Chade', 47),
+(558, 'pt_BR', 'Chile', 48),
+(559, 'pt_BR', 'China', 49),
+(560, 'pt_BR', 'Ilha Christmas', 50),
+(561, 'pt_BR', 'Ilhas Cocos (Keeling)', 51),
+(562, 'pt_BR', 'Colômbia', 52),
+(563, 'pt_BR', 'Comores', 53),
+(564, 'pt_BR', 'Congo - Brazzaville', 54),
+(565, 'pt_BR', 'Congo - Kinshasa', 55),
+(566, 'pt_BR', 'Ilhas Cook', 56),
+(567, 'pt_BR', 'Costa Rica', 57),
+(568, 'pt_BR', 'Costa do Marfim', 58),
+(569, 'pt_BR', 'Croácia', 59),
+(570, 'pt_BR', 'Cuba', 60),
+(571, 'pt_BR', 'Curaçao', 61),
+(572, 'pt_BR', 'Chipre', 62),
+(573, 'pt_BR', 'Czechia', 63),
+(574, 'pt_BR', 'Dinamarca', 64),
+(575, 'pt_BR', 'Diego Garcia', 65),
+(576, 'pt_BR', 'Djibuti', 66),
+(577, 'pt_BR', 'Dominica', 67),
+(578, 'pt_BR', 'República Dominicana', 68),
+(579, 'pt_BR', 'Equador', 69),
+(580, 'pt_BR', 'Egito', 70),
+(581, 'pt_BR', 'El Salvador', 71),
+(582, 'pt_BR', 'Guiné Equatorial', 72),
+(583, 'pt_BR', 'Eritreia', 73),
+(584, 'pt_BR', 'Estônia', 74),
+(585, 'pt_BR', 'Etiópia', 75),
+(586, 'pt_BR', 'Zona Euro', 76),
+(587, 'pt_BR', 'Ilhas Malvinas', 77),
+(588, 'pt_BR', 'Ilhas Faroe', 78),
+(589, 'pt_BR', 'Fiji', 79),
+(590, 'pt_BR', 'Finlândia', 80),
+(591, 'pt_BR', 'França', 81),
+(592, 'pt_BR', 'Guiana Francesa', 82),
+(593, 'pt_BR', 'Polinésia Francesa', 83),
+(594, 'pt_BR', 'Territórios Franceses do Sul', 84),
+(595, 'pt_BR', 'Gabão', 85),
+(596, 'pt_BR', 'Gâmbia', 86),
+(597, 'pt_BR', 'Geórgia', 87),
+(598, 'pt_BR', 'Alemanha', 88),
+(599, 'pt_BR', 'Gana', 89),
+(600, 'pt_BR', 'Gibraltar', 90),
+(601, 'pt_BR', 'Grécia', 91),
+(602, 'pt_BR', 'Gronelândia', 92),
+(603, 'pt_BR', 'Granada', 93),
+(604, 'pt_BR', 'Guadalupe', 94),
+(605, 'pt_BR', 'Guam', 95),
+(606, 'pt_BR', 'Guatemala', 96),
+(607, 'pt_BR', 'Guernsey', 97),
+(608, 'pt_BR', 'Guiné', 98),
+(609, 'pt_BR', 'Guiné-Bissau', 99),
+(610, 'pt_BR', 'Guiana', 100),
+(611, 'pt_BR', 'Haiti', 101),
+(612, 'pt_BR', 'Honduras', 102),
+(613, 'pt_BR', 'Região Administrativa Especial de Hong Kong, China', 103),
+(614, 'pt_BR', 'Hungria', 104),
+(615, 'pt_BR', 'Islândia', 105),
+(616, 'pt_BR', 'Índia', 106),
+(617, 'pt_BR', 'Indonésia', 107),
+(618, 'pt_BR', 'Irã', 108),
+(619, 'pt_BR', 'Iraque', 109),
+(620, 'pt_BR', 'Irlanda', 110),
+(621, 'pt_BR', 'Ilha de Man', 111),
+(622, 'pt_BR', 'Israel', 112),
+(623, 'pt_BR', 'Itália', 113),
+(624, 'pt_BR', 'Jamaica', 114),
+(625, 'pt_BR', 'Japão', 115),
+(626, 'pt_BR', 'Jersey', 116),
+(627, 'pt_BR', 'Jordânia', 117),
+(628, 'pt_BR', 'Cazaquistão', 118),
+(629, 'pt_BR', 'Quênia', 119),
+(630, 'pt_BR', 'Quiribati', 120),
+(631, 'pt_BR', 'Kosovo', 121),
+(632, 'pt_BR', 'Kuwait', 122),
+(633, 'pt_BR', 'Quirguistão', 123),
+(634, 'pt_BR', 'Laos', 124),
+(635, 'pt_BR', 'Letônia', 125),
+(636, 'pt_BR', 'Líbano', 126),
+(637, 'pt_BR', 'Lesoto', 127),
+(638, 'pt_BR', 'Libéria', 128),
+(639, 'pt_BR', 'Líbia', 129),
+(640, 'pt_BR', 'Liechtenstein', 130),
+(641, 'pt_BR', 'Lituânia', 131),
+(642, 'pt_BR', 'Luxemburgo', 132),
+(643, 'pt_BR', 'Macau SAR China', 133),
+(644, 'pt_BR', 'Macedônia', 134),
+(645, 'pt_BR', 'Madagascar', 135),
+(646, 'pt_BR', 'Malawi', 136),
+(647, 'pt_BR', 'Malásia', 137),
+(648, 'pt_BR', 'Maldivas', 138),
+(649, 'pt_BR', 'Mali', 139),
+(650, 'pt_BR', 'Malta', 140),
+(651, 'pt_BR', 'Ilhas Marshall', 141),
+(652, 'pt_BR', 'Martinica', 142),
+(653, 'pt_BR', 'Mauritânia', 143),
+(654, 'pt_BR', 'Maurício', 144),
+(655, 'pt_BR', 'Maiote', 145),
+(656, 'pt_BR', 'México', 146),
+(657, 'pt_BR', 'Micronésia', 147),
+(658, 'pt_BR', 'Moldávia', 148),
+(659, 'pt_BR', 'Mônaco', 149),
+(660, 'pt_BR', 'Mongólia', 150),
+(661, 'pt_BR', 'Montenegro', 151),
+(662, 'pt_BR', 'Montserrat', 152),
+(663, 'pt_BR', 'Marrocos', 153),
+(664, 'pt_BR', 'Moçambique', 154),
+(665, 'pt_BR', 'Mianmar (Birmânia)', 155),
+(666, 'pt_BR', 'Namíbia', 156),
+(667, 'pt_BR', 'Nauru', 157),
+(668, 'pt_BR', 'Nepal', 158),
+(669, 'pt_BR', 'Holanda', 159),
+(670, 'pt_BR', 'Nova Caledônia', 160),
+(671, 'pt_BR', 'Nova Zelândia', 161),
+(672, 'pt_BR', 'Nicarágua', 162),
+(673, 'pt_BR', 'Níger', 163),
+(674, 'pt_BR', 'Nigéria', 164),
+(675, 'pt_BR', 'Niue', 165),
+(676, 'pt_BR', 'Ilha Norfolk', 166),
+(677, 'pt_BR', 'Coréia do Norte', 167),
+(678, 'pt_BR', 'Ilhas Marianas do Norte', 168),
+(679, 'pt_BR', 'Noruega', 169),
+(680, 'pt_BR', 'Omã', 170),
+(681, 'pt_BR', 'Paquistão', 171),
+(682, 'pt_BR', 'Palau', 172),
+(683, 'pt_BR', 'Territórios Palestinos', 173),
+(684, 'pt_BR', 'Panamá', 174),
+(685, 'pt_BR', 'Papua Nova Guiné', 175),
+(686, 'pt_BR', 'Paraguai', 176),
+(687, 'pt_BR', 'Peru', 177),
+(688, 'pt_BR', 'Filipinas', 178),
+(689, 'pt_BR', 'Ilhas Pitcairn', 179),
+(690, 'pt_BR', 'Polônia', 180),
+(691, 'pt_BR', 'Portugal', 181),
+(692, 'pt_BR', 'Porto Rico', 182),
+(693, 'pt_BR', 'Catar', 183),
+(694, 'pt_BR', 'Reunião', 184),
+(695, 'pt_BR', 'Romênia', 185),
+(696, 'pt_BR', 'Rússia', 186),
+(697, 'pt_BR', 'Ruanda', 187),
+(698, 'pt_BR', 'Samoa', 188),
+(699, 'pt_BR', 'São Marinho', 189),
+(700, 'pt_BR', 'São Cristóvão e Nevis', 190),
+(701, 'pt_BR', 'Arábia Saudita', 191),
+(702, 'pt_BR', 'Senegal', 192),
+(703, 'pt_BR', 'Sérvia', 193),
+(704, 'pt_BR', 'Seychelles', 194),
+(705, 'pt_BR', 'Serra Leoa', 195),
+(706, 'pt_BR', 'Cingapura', 196),
+(707, 'pt_BR', 'São Martinho', 197),
+(708, 'pt_BR', 'Eslováquia', 198),
+(709, 'pt_BR', 'Eslovênia', 199),
+(710, 'pt_BR', 'Ilhas Salomão', 200),
+(711, 'pt_BR', 'Somália', 201),
+(712, 'pt_BR', 'África do Sul', 202),
+(713, 'pt_BR', 'Ilhas Geórgia do Sul e Sandwich do Sul', 203),
+(714, 'pt_BR', 'Coréia do Sul', 204),
+(715, 'pt_BR', 'Sudão do Sul', 205),
+(716, 'pt_BR', 'Espanha', 206),
+(717, 'pt_BR', 'Sri Lanka', 207),
+(718, 'pt_BR', 'São Bartolomeu', 208),
+(719, 'pt_BR', 'Santa Helena', 209),
+(720, 'pt_BR', 'São Cristóvão e Nevis', 210),
+(721, 'pt_BR', 'Santa Lúcia', 211),
+(722, 'pt_BR', 'São Martinho', 212),
+(723, 'pt_BR', 'São Pedro e Miquelon', 213),
+(724, 'pt_BR', 'São Vicente e Granadinas', 214),
+(725, 'pt_BR', 'Sudão', 215),
+(726, 'pt_BR', 'Suriname', 216),
+(727, 'pt_BR', 'Svalbard e Jan Mayen', 217),
+(728, 'pt_BR', 'Suazilândia', 218),
+(729, 'pt_BR', 'Suécia', 219),
+(730, 'pt_BR', 'Suíça', 220),
+(731, 'pt_BR', 'Síria', 221),
+(732, 'pt_BR', 'Taiwan', 222),
+(733, 'pt_BR', 'Tajiquistão', 223),
+(734, 'pt_BR', 'Tanzânia', 224),
+(735, 'pt_BR', 'Tailândia', 225),
+(736, 'pt_BR', 'Timor-Leste', 226),
+(737, 'pt_BR', 'Togo', 227),
+(738, 'pt_BR', 'Tokelau', 228),
+(739, 'pt_BR', 'Tonga', 229),
+(740, 'pt_BR', 'Trinidad e Tobago', 230),
+(741, 'pt_BR', 'Tristan da Cunha', 231),
+(742, 'pt_BR', 'Tunísia', 232),
+(743, 'pt_BR', 'Turquia', 233),
+(744, 'pt_BR', 'Turquemenistão', 234),
+(745, 'pt_BR', 'Ilhas Turks e Caicos', 235),
+(746, 'pt_BR', 'Tuvalu', 236),
+(747, 'pt_BR', 'Ilhas periféricas dos EUA', 237),
+(748, 'pt_BR', 'Ilhas Virgens dos EUA', 238),
+(749, 'pt_BR', 'Uganda', 239),
+(750, 'pt_BR', 'Ucrânia', 240),
+(751, 'pt_BR', 'Emirados Árabes Unidos', 241),
+(752, 'pt_BR', 'Reino Unido', 242),
+(753, 'pt_BR', 'Nações Unidas', 243),
+(754, 'pt_BR', 'Estados Unidos', 244),
+(755, 'pt_BR', 'Uruguai', 245),
+(756, 'pt_BR', 'Uzbequistão', 246),
+(757, 'pt_BR', 'Vanuatu', 247),
+(758, 'pt_BR', 'Cidade do Vaticano', 248),
+(759, 'pt_BR', 'Venezuela', 249),
+(760, 'pt_BR', 'Vietnã', 250),
+(761, 'pt_BR', 'Wallis e Futuna', 251),
+(762, 'pt_BR', 'Saara Ocidental', 252),
+(763, 'pt_BR', 'Iêmen', 253),
+(764, 'pt_BR', 'Zâmbia', 254),
+(765, 'pt_BR', 'Zimbábue', 255);
 
 -- --------------------------------------------------------
 
@@ -4714,6 +4784,7 @@ INSERT INTO `country_translations` (`id`, `locale`, `name`, `country_id`) VALUES
 -- テーブルの構造 `currencies`
 --
 
+DROP TABLE IF EXISTS `currencies`;
 CREATE TABLE `currencies` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4729,7 +4800,8 @@ CREATE TABLE `currencies` (
 
 INSERT INTO `currencies` (`id`, `code`, `name`, `created_at`, `updated_at`, `symbol`) VALUES
 (1, 'USD', 'US Dollar', NULL, NULL, '$'),
-(2, 'EUR', 'Euro', NULL, NULL, '€');
+(2, 'EUR', 'Euro', NULL, NULL, '€'),
+(3, 'JPY', 'Japanese', '2020-07-06 09:20:40', '2020-07-06 09:20:40', '\\');
 
 -- --------------------------------------------------------
 
@@ -4737,6 +4809,7 @@ INSERT INTO `currencies` (`id`, `code`, `name`, `created_at`, `updated_at`, `sym
 -- テーブルの構造 `currency_exchange_rates`
 --
 
+DROP TABLE IF EXISTS `currency_exchange_rates`;
 CREATE TABLE `currency_exchange_rates` (
   `id` int(10) UNSIGNED NOT NULL,
   `rate` decimal(24,12) NOT NULL,
@@ -4751,6 +4824,7 @@ CREATE TABLE `currency_exchange_rates` (
 -- テーブルの構造 `customers`
 --
 
+DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
   `id` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4772,12 +4846,20 @@ CREATE TABLE `customers` (
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `customers`
+--
+
+INSERT INTO `customers` (`id`, `first_name`, `last_name`, `gender`, `date_of_birth`, `email`, `status`, `password`, `api_token`, `customer_group_id`, `subscribed_to_news_letter`, `remember_token`, `created_at`, `updated_at`, `is_verified`, `token`, `notes`, `phone`) VALUES
+(1, 'tei952', '鄭軍', NULL, NULL, 'tei952@hotmail.com', 1, '$2y$10$HWOjqzkBvcEUTvzqkYqfUOOuQrWN6pF4B16x6XociryxW8FHk/F9O', 'NKp35AXMoinnE3NnxTRTSNQEly1zYAdvhmHCraQZm6oKjb2qGAJW4i9QOhIEFF8DJ1uS2UIipmxAcF3i', 2, 0, NULL, '2020-08-14 06:44:52', '2020-08-14 06:44:52', 1, 'a095c38e932ad455e58830ff0249691b', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- テーブルの構造 `customer_documents`
 --
 
+DROP TABLE IF EXISTS `customer_documents`;
 CREATE TABLE `customer_documents` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4796,6 +4878,7 @@ CREATE TABLE `customer_documents` (
 -- テーブルの構造 `customer_groups`
 --
 
+DROP TABLE IF EXISTS `customer_groups`;
 CREATE TABLE `customer_groups` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4820,6 +4903,7 @@ INSERT INTO `customer_groups` (`id`, `name`, `is_user_defined`, `created_at`, `u
 -- テーブルの構造 `customer_password_resets`
 --
 
+DROP TABLE IF EXISTS `customer_password_resets`;
 CREATE TABLE `customer_password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4832,6 +4916,7 @@ CREATE TABLE `customer_password_resets` (
 -- テーブルの構造 `customer_social_accounts`
 --
 
+DROP TABLE IF EXISTS `customer_social_accounts`;
 CREATE TABLE `customer_social_accounts` (
   `id` int(10) UNSIGNED NOT NULL,
   `provider_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4844,9 +4929,25 @@ CREATE TABLE `customer_social_accounts` (
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `discussions`
+--
+
+DROP TABLE IF EXISTS `discussions`;
+CREATE TABLE `discussions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `subject` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `downloadable_link_purchased`
 --
 
+DROP TABLE IF EXISTS `downloadable_link_purchased`;
 CREATE TABLE `downloadable_link_purchased` (
   `id` int(10) UNSIGNED NOT NULL,
   `product_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4871,6 +4972,7 @@ CREATE TABLE `downloadable_link_purchased` (
 -- テーブルの構造 `dropship_ali_express_attributes`
 --
 
+DROP TABLE IF EXISTS `dropship_ali_express_attributes`;
 CREATE TABLE `dropship_ali_express_attributes` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_attribute_id` int(11) NOT NULL,
@@ -4883,6 +4985,7 @@ CREATE TABLE `dropship_ali_express_attributes` (
 -- テーブルの構造 `dropship_ali_express_attribute_options`
 --
 
+DROP TABLE IF EXISTS `dropship_ali_express_attribute_options`;
 CREATE TABLE `dropship_ali_express_attribute_options` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_attribute_option_id` int(11) NOT NULL,
@@ -4898,6 +5001,7 @@ CREATE TABLE `dropship_ali_express_attribute_options` (
 -- テーブルの構造 `dropship_ali_express_orders`
 --
 
+DROP TABLE IF EXISTS `dropship_ali_express_orders`;
 CREATE TABLE `dropship_ali_express_orders` (
   `id` int(10) UNSIGNED NOT NULL,
   `is_placed` tinyint(1) NOT NULL DEFAULT 0,
@@ -4913,6 +5017,7 @@ CREATE TABLE `dropship_ali_express_orders` (
 -- テーブルの構造 `dropship_ali_express_order_items`
 --
 
+DROP TABLE IF EXISTS `dropship_ali_express_order_items`;
 CREATE TABLE `dropship_ali_express_order_items` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_product_id` int(10) UNSIGNED NOT NULL,
@@ -4929,6 +5034,7 @@ CREATE TABLE `dropship_ali_express_order_items` (
 -- テーブルの構造 `dropship_ali_express_products`
 --
 
+DROP TABLE IF EXISTS `dropship_ali_express_products`;
 CREATE TABLE `dropship_ali_express_products` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_product_url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -4947,6 +5053,7 @@ CREATE TABLE `dropship_ali_express_products` (
 -- テーブルの構造 `dropship_ali_express_product_images`
 --
 
+DROP TABLE IF EXISTS `dropship_ali_express_product_images`;
 CREATE TABLE `dropship_ali_express_product_images` (
   `id` int(10) UNSIGNED NOT NULL,
   `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -4959,6 +5066,7 @@ CREATE TABLE `dropship_ali_express_product_images` (
 -- テーブルの構造 `dropship_ali_express_product_reviews`
 --
 
+DROP TABLE IF EXISTS `dropship_ali_express_product_reviews`;
 CREATE TABLE `dropship_ali_express_product_reviews` (
   `id` int(10) UNSIGNED NOT NULL,
   `ali_express_review_id` int(11) NOT NULL,
@@ -4973,6 +5081,7 @@ CREATE TABLE `dropship_ali_express_product_reviews` (
 -- テーブルの構造 `inventory_sources`
 --
 
+DROP TABLE IF EXISTS `inventory_sources`;
 CREATE TABLE `inventory_sources` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5008,6 +5117,7 @@ INSERT INTO `inventory_sources` (`id`, `code`, `name`, `description`, `contact_n
 -- テーブルの構造 `invoices`
 --
 
+DROP TABLE IF EXISTS `invoices`;
 CREATE TABLE `invoices` (
   `id` int(10) UNSIGNED NOT NULL,
   `increment_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5040,6 +5150,7 @@ CREATE TABLE `invoices` (
 -- テーブルの構造 `invoice_items`
 --
 
+DROP TABLE IF EXISTS `invoice_items`;
 CREATE TABLE `invoice_items` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5071,6 +5182,7 @@ CREATE TABLE `invoice_items` (
 -- テーブルの構造 `locales`
 --
 
+DROP TABLE IF EXISTS `locales`;
 CREATE TABLE `locales` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5089,65 +5201,25 @@ INSERT INTO `locales` (`id`, `code`, `name`, `created_at`, `updated_at`, `direct
 (1, 'en', 'English', NULL, NULL, 'ltr', NULL),
 (2, 'fr', 'French', NULL, NULL, 'ltr', NULL),
 (3, 'nl', 'Dutch', NULL, NULL, 'ltr', NULL),
-(4, 'tr', 'Türkçe', NULL, NULL, 'ltr', NULL);
+(4, 'tr', 'Türkçe', NULL, NULL, 'ltr', NULL),
+(5, 'ja', 'Japanese', '2020-07-06 09:18:53', '2020-07-06 09:18:53', 'ltr', NULL);
 
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `merchant_password_resets`
+-- テーブルの構造 `messages`
 --
 
-CREATE TABLE `merchant_password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `merchant_roles`
---
-
-CREATE TABLE `merchant_roles` (
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE `messages` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `permission_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `permissions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`permissions`)),
+  `discussion_id` int(10) UNSIGNED NOT NULL,
+  `participable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `participable_id` bigint(20) UNSIGNED NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `merchant_sources`
---
-
-CREATE TABLE `merchant_sources` (
-  `id` int(10) UNSIGNED NOT NULL COMMENT '製造者ID',
-  `vendor_id` int(11) NOT NULL COMMENT 'ベンダーID',
-  `merchant_group_id` int(11) NOT NULL COMMENT '製造者グループID',
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '製造者名',
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `postal_code` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '郵便番号',
-  `pref` int(11) NOT NULL COMMENT '都道府県',
-  `city` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '市町村',
-  `address` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '番地',
-  `building_name` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '建物名',
-  `tel` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '電話番号',
-  `fax` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'FAX番号',
-  `agency_denki_shop_code` varchar(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'SmartCIS製造者ID',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() COMMENT '作成日時',
-  `created_user_id` int(11) NOT NULL COMMENT '作成ユーザーID',
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT '更新日時',
-  `updated_user_id` int(11) NOT NULL COMMENT '更新ユーザーID',
-  `del_flg` tinyint(1) NOT NULL DEFAULT 0,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- --------------------------------------------------------
@@ -5156,6 +5228,7 @@ CREATE TABLE `merchant_sources` (
 -- テーブルの構造 `migrations`
 --
 
+DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5345,25 +5418,23 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (176, '2020_06_25_162154_create_customer_social_accounts_table', 1),
 (177, '2020_06_25_162340_change_email_password_columns_in_customers_table', 1),
 (178, '2020_06_30_163510_remove_unique_name_in_tax_categories_table', 1),
-(179, '2014_10_12_100000_create_agent_password_resets_table', 2),
-(180, '2014_10_12_100000_create_merchant_password_resets_table', 2),
-(181, '2014_10_12_100000_create_vendor_password_resets_table', 2),
-(182, '2018_06_13_055341_create_agent_roles_table', 2),
-(183, '2018_06_13_055341_create_merchant_roles_table', 2),
-(184, '2018_06_13_055341_create_vendor_roles_table', 2),
-(185, '2018_07_23_110040_create_agent_sources_table', 2),
-(186, '2018_07_23_110040_create_merchant_sources_table', 2),
-(187, '2018_07_23_110040_create_vendor_sources_table', 2),
-(188, '2019_02_13_170142_create_dropship_ali_express_products_table', 2),
-(189, '2019_02_15_150617_create_dropship_ali_express_product_images_table', 2),
-(190, '2019_02_19_155507_create_dropship_ali_express_attributes_table', 2),
-(191, '2019_02_19_155531_create_dropship_ali_express_attribute_options_table', 2),
-(192, '2019_02_27_144807_create_dropship_ali_express_product_reviews_table', 2),
-(193, '2019_02_28_122205_create_dropship_ali_express_orders_table', 2),
-(194, '2019_02_28_124922_create_dropship_ali_express_order_items_table', 2),
-(195, '2019_06_07_122059_customer_documents_table', 2),
-(196, '2020_04_13_124753_create_velocity_category', 2),
-(197, '2020_04_13_124950_create_velocity_category_translations', 2);
+(179, '2019_02_13_170142_create_dropship_ali_express_products_table', 2),
+(180, '2019_02_15_150617_create_dropship_ali_express_product_images_table', 2),
+(181, '2019_02_19_155507_create_dropship_ali_express_attributes_table', 2),
+(182, '2019_02_19_155531_create_dropship_ali_express_attribute_options_table', 2),
+(183, '2019_02_27_144807_create_dropship_ali_express_product_reviews_table', 2),
+(184, '2019_02_28_122205_create_dropship_ali_express_orders_table', 2),
+(185, '2019_02_28_124922_create_dropship_ali_express_order_items_table', 2),
+(186, '2019_06_07_122059_customer_documents_table', 2),
+(187, '2016_08_01_000001_create_discussions_table', 3),
+(188, '2016_08_01_000002_create_messages_table', 3),
+(189, '2016_08_01_000003_create_participations_table', 3),
+(190, '2019_07_02_121434_create_push_notifications_table', 3),
+(191, '2020_07_31_142021_update_cms_page_translations_table_field_html_content', 3),
+(192, '2020_08_01_132239_add_header_content_count_velocity_meta_data_table', 3),
+(193, '2020_08_12_114128_removing_foriegn_key', 3),
+(194, '2020_11_05_114057_add_category_product_pwa_in_categories', 3),
+(195, '2020_11_10_090451_create_pwa_layout_table', 3);
 
 -- --------------------------------------------------------
 
@@ -5371,6 +5442,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- テーブルの構造 `orders`
 --
 
+DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(10) UNSIGNED NOT NULL,
   `increment_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5441,6 +5513,7 @@ CREATE TABLE `orders` (
 -- テーブルの構造 `order_brands`
 --
 
+DROP TABLE IF EXISTS `order_brands`;
 CREATE TABLE `order_brands` (
   `id` int(10) UNSIGNED NOT NULL,
   `order_id` int(10) UNSIGNED DEFAULT NULL,
@@ -5457,6 +5530,7 @@ CREATE TABLE `order_brands` (
 -- テーブルの構造 `order_comments`
 --
 
+DROP TABLE IF EXISTS `order_comments`;
 CREATE TABLE `order_comments` (
   `id` int(10) UNSIGNED NOT NULL,
   `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5472,6 +5546,7 @@ CREATE TABLE `order_comments` (
 -- テーブルの構造 `order_items`
 --
 
+DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `id` int(10) UNSIGNED NOT NULL,
   `sku` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5522,6 +5597,7 @@ CREATE TABLE `order_items` (
 -- テーブルの構造 `order_payment`
 --
 
+DROP TABLE IF EXISTS `order_payment`;
 CREATE TABLE `order_payment` (
   `id` int(10) UNSIGNED NOT NULL,
   `method` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5534,9 +5610,28 @@ CREATE TABLE `order_payment` (
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `participations`
+--
+
+DROP TABLE IF EXISTS `participations`;
+CREATE TABLE `participations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `discussion_id` int(10) UNSIGNED NOT NULL,
+  `participable_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `participable_id` bigint(20) UNSIGNED NOT NULL,
+  `last_read` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `password_resets`
 --
 
+DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE `password_resets` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5549,6 +5644,7 @@ CREATE TABLE `password_resets` (
 -- テーブルの構造 `products`
 --
 
+DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `id` int(10) UNSIGNED NOT NULL,
   `sku` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5559,12 +5655,20 @@ CREATE TABLE `products` (
   `attribute_family_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `products`
+--
+
+INSERT INTO `products` (`id`, `sku`, `type`, `created_at`, `updated_at`, `parent_id`, `attribute_family_id`) VALUES
+(1, 'box', 'simple', '2020-08-14 06:39:54', '2020-08-14 06:39:54', NULL, 1);
+
 -- --------------------------------------------------------
 
 --
 -- テーブルの構造 `product_attribute_values`
 --
 
+DROP TABLE IF EXISTS `product_attribute_values`;
 CREATE TABLE `product_attribute_values` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5580,12 +5684,44 @@ CREATE TABLE `product_attribute_values` (
   `attribute_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `product_attribute_values`
+--
+
+INSERT INTO `product_attribute_values` (`id`, `locale`, `channel`, `text_value`, `boolean_value`, `integer_value`, `float_value`, `datetime_value`, `date_value`, `json_value`, `product_id`, `attribute_id`) VALUES
+(1, 'ja', 'default', '<p>Gminst50</p>', NULL, NULL, NULL, NULL, NULL, NULL, 1, 9),
+(2, 'ja', 'default', '<p>Gminst50Gminst50Gminst50Gminst50</p>', NULL, NULL, NULL, NULL, NULL, NULL, 1, 10),
+(3, NULL, NULL, 'box', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
+(4, 'ja', 'default', 'Gminst50', NULL, NULL, NULL, NULL, NULL, NULL, 1, 2),
+(5, NULL, NULL, 'gminst50', NULL, NULL, NULL, NULL, NULL, NULL, 1, 3),
+(6, NULL, 'default', NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, 4),
+(7, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 5),
+(8, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 1, 6),
+(9, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 7),
+(10, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 8),
+(11, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 1, 23),
+(12, NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 1, 24),
+(13, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, 26),
+(14, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 16),
+(15, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 17),
+(16, 'ja', 'default', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 18),
+(17, NULL, NULL, NULL, NULL, NULL, '2000.0000', NULL, NULL, NULL, 1, 11),
+(18, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 12),
+(19, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 13),
+(20, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 14),
+(21, NULL, 'default', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 15),
+(22, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 19),
+(23, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 20),
+(24, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, 1, 21),
+(25, NULL, NULL, '20', NULL, NULL, NULL, NULL, NULL, NULL, 1, 22);
+
 -- --------------------------------------------------------
 
 --
 -- テーブルの構造 `product_bundle_options`
 --
 
+DROP TABLE IF EXISTS `product_bundle_options`;
 CREATE TABLE `product_bundle_options` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5600,6 +5736,7 @@ CREATE TABLE `product_bundle_options` (
 -- テーブルの構造 `product_bundle_option_products`
 --
 
+DROP TABLE IF EXISTS `product_bundle_option_products`;
 CREATE TABLE `product_bundle_option_products` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
@@ -5616,6 +5753,7 @@ CREATE TABLE `product_bundle_option_products` (
 -- テーブルの構造 `product_bundle_option_translations`
 --
 
+DROP TABLE IF EXISTS `product_bundle_option_translations`;
 CREATE TABLE `product_bundle_option_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5629,10 +5767,18 @@ CREATE TABLE `product_bundle_option_translations` (
 -- テーブルの構造 `product_categories`
 --
 
+DROP TABLE IF EXISTS `product_categories`;
 CREATE TABLE `product_categories` (
   `product_id` int(10) UNSIGNED NOT NULL,
   `category_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+--
+-- テーブルのデータのダンプ `product_categories`
+--
+
+INSERT INTO `product_categories` (`product_id`, `category_id`) VALUES
+(1, 5);
 
 -- --------------------------------------------------------
 
@@ -5640,6 +5786,7 @@ CREATE TABLE `product_categories` (
 -- テーブルの構造 `product_cross_sells`
 --
 
+DROP TABLE IF EXISTS `product_cross_sells`;
 CREATE TABLE `product_cross_sells` (
   `parent_id` int(10) UNSIGNED NOT NULL,
   `child_id` int(10) UNSIGNED NOT NULL
@@ -5651,6 +5798,7 @@ CREATE TABLE `product_cross_sells` (
 -- テーブルの構造 `product_customer_group_prices`
 --
 
+DROP TABLE IF EXISTS `product_customer_group_prices`;
 CREATE TABLE `product_customer_group_prices` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
@@ -5668,6 +5816,7 @@ CREATE TABLE `product_customer_group_prices` (
 -- テーブルの構造 `product_downloadable_links`
 --
 
+DROP TABLE IF EXISTS `product_downloadable_links`;
 CREATE TABLE `product_downloadable_links` (
   `id` int(10) UNSIGNED NOT NULL,
   `url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5692,6 +5841,7 @@ CREATE TABLE `product_downloadable_links` (
 -- テーブルの構造 `product_downloadable_link_translations`
 --
 
+DROP TABLE IF EXISTS `product_downloadable_link_translations`;
 CREATE TABLE `product_downloadable_link_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5705,6 +5855,7 @@ CREATE TABLE `product_downloadable_link_translations` (
 -- テーブルの構造 `product_downloadable_samples`
 --
 
+DROP TABLE IF EXISTS `product_downloadable_samples`;
 CREATE TABLE `product_downloadable_samples` (
   `id` int(10) UNSIGNED NOT NULL,
   `url` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5723,6 +5874,7 @@ CREATE TABLE `product_downloadable_samples` (
 -- テーブルの構造 `product_downloadable_sample_translations`
 --
 
+DROP TABLE IF EXISTS `product_downloadable_sample_translations`;
 CREATE TABLE `product_downloadable_sample_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `locale` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5736,6 +5888,7 @@ CREATE TABLE `product_downloadable_sample_translations` (
 -- テーブルの構造 `product_flat`
 --
 
+DROP TABLE IF EXISTS `product_flat`;
 CREATE TABLE `product_flat` (
   `id` int(10) UNSIGNED NOT NULL,
   `sku` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5774,12 +5927,20 @@ CREATE TABLE `product_flat` (
   `depth` decimal(12,4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `product_flat`
+--
+
+INSERT INTO `product_flat` (`id`, `sku`, `name`, `description`, `url_key`, `new`, `featured`, `status`, `thumbnail`, `price`, `cost`, `special_price`, `special_price_from`, `special_price_to`, `weight`, `color`, `color_label`, `size`, `size_label`, `created_at`, `locale`, `channel`, `product_id`, `updated_at`, `parent_id`, `visible_individually`, `min_price`, `max_price`, `short_description`, `meta_title`, `meta_keywords`, `meta_description`, `width`, `height`, `depth`) VALUES
+(1, 'box', 'Gminst50', '<p>Gminst50Gminst50Gminst50Gminst50</p>', 'gminst50', 1, 0, 1, NULL, '2000.0000', NULL, NULL, NULL, NULL, '20.0000', 1, 'Red', 6, 'S', '2020-08-14 15:39:54', 'ja', 'default', 1, '2020-08-14 15:39:54', NULL, 1, '2000.0000', '2000.0000', '<p>Gminst50</p>', '', '', '', '0.0000', '0.0000', '0.0000');
+
 -- --------------------------------------------------------
 
 --
 -- テーブルの構造 `product_grouped_products`
 --
 
+DROP TABLE IF EXISTS `product_grouped_products`;
 CREATE TABLE `product_grouped_products` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
@@ -5794,6 +5955,7 @@ CREATE TABLE `product_grouped_products` (
 -- テーブルの構造 `product_images`
 --
 
+DROP TABLE IF EXISTS `product_images`;
 CREATE TABLE `product_images` (
   `id` int(10) UNSIGNED NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5807,6 +5969,7 @@ CREATE TABLE `product_images` (
 -- テーブルの構造 `product_inventories`
 --
 
+DROP TABLE IF EXISTS `product_inventories`;
 CREATE TABLE `product_inventories` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
@@ -5815,12 +5978,20 @@ CREATE TABLE `product_inventories` (
   `vendor_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
+--
+-- テーブルのデータのダンプ `product_inventories`
+--
+
+INSERT INTO `product_inventories` (`id`, `qty`, `product_id`, `inventory_source_id`, `vendor_id`) VALUES
+(1, 100, 1, 1, 0);
+
 -- --------------------------------------------------------
 
 --
 -- テーブルの構造 `product_ordered_inventories`
 --
 
+DROP TABLE IF EXISTS `product_ordered_inventories`;
 CREATE TABLE `product_ordered_inventories` (
   `id` int(10) UNSIGNED NOT NULL,
   `qty` int(11) NOT NULL DEFAULT 0,
@@ -5834,6 +6005,7 @@ CREATE TABLE `product_ordered_inventories` (
 -- テーブルの構造 `product_relations`
 --
 
+DROP TABLE IF EXISTS `product_relations`;
 CREATE TABLE `product_relations` (
   `parent_id` int(10) UNSIGNED NOT NULL,
   `child_id` int(10) UNSIGNED NOT NULL
@@ -5845,6 +6017,7 @@ CREATE TABLE `product_relations` (
 -- テーブルの構造 `product_reviews`
 --
 
+DROP TABLE IF EXISTS `product_reviews`;
 CREATE TABLE `product_reviews` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5864,6 +6037,7 @@ CREATE TABLE `product_reviews` (
 -- テーブルの構造 `product_super_attributes`
 --
 
+DROP TABLE IF EXISTS `product_super_attributes`;
 CREATE TABLE `product_super_attributes` (
   `product_id` int(10) UNSIGNED NOT NULL,
   `attribute_id` int(10) UNSIGNED NOT NULL
@@ -5875,6 +6049,7 @@ CREATE TABLE `product_super_attributes` (
 -- テーブルの構造 `product_up_sells`
 --
 
+DROP TABLE IF EXISTS `product_up_sells`;
 CREATE TABLE `product_up_sells` (
   `parent_id` int(10) UNSIGNED NOT NULL,
   `child_id` int(10) UNSIGNED NOT NULL
@@ -5883,9 +6058,41 @@ CREATE TABLE `product_up_sells` (
 -- --------------------------------------------------------
 
 --
+-- テーブルの構造 `push_notifications`
+--
+
+DROP TABLE IF EXISTS `push_notifications`;
+CREATE TABLE `push_notifications` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `targeturl` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imageurl` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
+-- テーブルの構造 `pwa_layout`
+--
+
+DROP TABLE IF EXISTS `pwa_layout`;
+CREATE TABLE `pwa_layout` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `home_page_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+-- --------------------------------------------------------
+
+--
 -- テーブルの構造 `refunds`
 --
 
+DROP TABLE IF EXISTS `refunds`;
 CREATE TABLE `refunds` (
   `id` int(10) UNSIGNED NOT NULL,
   `increment_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5921,6 +6128,7 @@ CREATE TABLE `refunds` (
 -- テーブルの構造 `refund_items`
 --
 
+DROP TABLE IF EXISTS `refund_items`;
 CREATE TABLE `refund_items` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -5952,6 +6160,7 @@ CREATE TABLE `refund_items` (
 -- テーブルの構造 `roles`
 --
 
+DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -5975,6 +6184,7 @@ INSERT INTO `roles` (`id`, `name`, `description`, `permission_type`, `permission
 -- テーブルの構造 `shipments`
 --
 
+DROP TABLE IF EXISTS `shipments`;
 CREATE TABLE `shipments` (
   `id` int(10) UNSIGNED NOT NULL,
   `status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6000,6 +6210,7 @@ CREATE TABLE `shipments` (
 -- テーブルの構造 `shipment_items`
 --
 
+DROP TABLE IF EXISTS `shipment_items`;
 CREATE TABLE `shipment_items` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6026,6 +6237,7 @@ CREATE TABLE `shipment_items` (
 -- テーブルの構造 `sliders`
 --
 
+DROP TABLE IF EXISTS `sliders`;
 CREATE TABLE `sliders` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6044,6 +6256,7 @@ CREATE TABLE `sliders` (
 -- テーブルの構造 `subscribers_list`
 --
 
+DROP TABLE IF EXISTS `subscribers_list`;
 CREATE TABLE `subscribers_list` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6060,6 +6273,7 @@ CREATE TABLE `subscribers_list` (
 -- テーブルの構造 `tax_categories`
 --
 
+DROP TABLE IF EXISTS `tax_categories`;
 CREATE TABLE `tax_categories` (
   `id` int(10) UNSIGNED NOT NULL,
   `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6075,6 +6289,7 @@ CREATE TABLE `tax_categories` (
 -- テーブルの構造 `tax_categories_tax_rates`
 --
 
+DROP TABLE IF EXISTS `tax_categories_tax_rates`;
 CREATE TABLE `tax_categories_tax_rates` (
   `id` int(10) UNSIGNED NOT NULL,
   `tax_category_id` int(10) UNSIGNED NOT NULL,
@@ -6089,6 +6304,7 @@ CREATE TABLE `tax_categories_tax_rates` (
 -- テーブルの構造 `tax_rates`
 --
 
+DROP TABLE IF EXISTS `tax_rates`;
 CREATE TABLE `tax_rates` (
   `id` int(10) UNSIGNED NOT NULL,
   `identifier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6109,6 +6325,7 @@ CREATE TABLE `tax_rates` (
 -- テーブルの構造 `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6122,40 +6339,10 @@ CREATE TABLE `users` (
 -- --------------------------------------------------------
 
 --
--- テーブルの構造 `velocity_category`
---
-
-CREATE TABLE `velocity_category` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `category_id` int(10) UNSIGNED DEFAULT NULL,
-  `category_menu_id` int(10) UNSIGNED DEFAULT NULL,
-  `icon` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tooltip` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `velocity_category_translations`
---
-
-CREATE TABLE `velocity_category_translations` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `category_id` int(10) UNSIGNED DEFAULT NULL,
-  `products` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
 -- テーブルの構造 `velocity_contents`
 --
 
+DROP TABLE IF EXISTS `velocity_contents`;
 CREATE TABLE `velocity_contents` (
   `id` int(10) UNSIGNED NOT NULL,
   `content_type` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -6171,6 +6358,7 @@ CREATE TABLE `velocity_contents` (
 -- テーブルの構造 `velocity_contents_translations`
 --
 
+DROP TABLE IF EXISTS `velocity_contents_translations`;
 CREATE TABLE `velocity_contents_translations` (
   `id` int(10) UNSIGNED NOT NULL,
   `content_id` int(10) UNSIGNED DEFAULT NULL,
@@ -6193,6 +6381,7 @@ CREATE TABLE `velocity_contents_translations` (
 -- テーブルの構造 `velocity_customer_compare_products`
 --
 
+DROP TABLE IF EXISTS `velocity_customer_compare_products`;
 CREATE TABLE `velocity_customer_compare_products` (
   `id` int(10) UNSIGNED NOT NULL,
   `product_flat_id` int(10) UNSIGNED NOT NULL,
@@ -6207,6 +6396,7 @@ CREATE TABLE `velocity_customer_compare_products` (
 -- テーブルの構造 `velocity_meta_data`
 --
 
+DROP TABLE IF EXISTS `velocity_meta_data`;
 CREATE TABLE `velocity_meta_data` (
   `id` int(10) UNSIGNED NOT NULL,
   `home_page_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -6222,82 +6412,16 @@ CREATE TABLE `velocity_meta_data` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `product_view_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`product_view_images`)),
   `product_policy` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `locale` text COLLATE utf8mb4_unicode_ci NOT NULL
+  `locale` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `header_content_count` text COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 --
 -- テーブルのデータのダンプ `velocity_meta_data`
 --
 
-INSERT INTO `velocity_meta_data` (`id`, `home_page_content`, `footer_left_content`, `footer_middle_content`, `slider`, `advertisement`, `sidebar_category_count`, `featured_product_count`, `new_products_count`, `subscription_bar_content`, `created_at`, `updated_at`, `product_view_images`, `product_policy`, `locale`) VALUES
-(1, '<p>@include(\'shop::home.advertisements.advertisement-four\')@include(\'shop::home.featured-products\') @include(\'shop::home.product-policy\') @include(\'shop::home.advertisements.advertisement-three\') @include(\'shop::home.new-products\') @include(\'shop::home.advertisements.advertisement-two\')</p>', '<p>私だちの目的は先端技術を利用して、素晴らしい製品を提供して、みんな安定の生活を守る.</p>', '<div class=\"col-lg-6 col-md-12 col-sm-12 no-padding\"><ul type=\"none\"><li><a href=\"https://webkul.com/about-us/company-profile/\">About Us</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">Customer Service</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">What&rsquo;s New</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">Contact Us </a></li></ul></div><div class=\"col-lg-6 col-md-12 col-sm-12 no-padding\"><ul type=\"none\"><li><a href=\"https://webkul.com/about-us/company-profile/\"> Order and Returns </a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Payment Policy </a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Shipping Policy</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Privacy and Cookies Policy </a></li></ul></div>', 1, NULL, 9, 10, 10, '<div class=\"social-icons col-lg-6\"><a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-facebook\" title=\"facebook\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-twitter\" title=\"twitter\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-linked-in\" title=\"linkedin\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-pintrest\" title=\"Pinterest\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-youtube\" title=\"Youtube\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-instagram\" title=\"instagram\"></i></a></div>', NULL, NULL, NULL, '<div class=\"row col-12 remove-padding-margin\"><div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-van-ship fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Free Shipping on Order $20 or More</span></div></div></div></div> <div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-exchnage fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Product Replace &amp; Return Available </span></div></div></div></div> <div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-exchnage fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Product Exchange and EMI Available </span></div></div></div></div></div>', 'en');
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `vendor_password_resets`
---
-
-CREATE TABLE `vendor_password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `vendor_roles`
---
-
-CREATE TABLE `vendor_roles` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `permission_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `permissions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`permissions`)),
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- --------------------------------------------------------
-
---
--- テーブルの構造 `vendor_sources`
---
-
-CREATE TABLE `vendor_sources` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `name_kana` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `creditcard_main_apikey` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `creditcard_denki_apikey` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `account_transfer_company_code` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `smartcis_my_auth_id` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `smartcis_my_auth_key` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vendor_denki_shop_code` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `updated_at` datetime NOT NULL,
-  `updated_user_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `created_user_id` int(11) NOT NULL,
-  `gmo_main_site_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gmo_main_site_pass` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gmo_main_shop_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gmo_main_shop_pass` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gmo_denki_site_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gmo_denki_site_pass` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gmo_denki_shop_id` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `gmo_denki_shop_pass` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `aplus_bank_consignor_number` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `aplus_division` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `aplus_conveni_consignor_number` varchar(4) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `aplus_transfer_date` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+INSERT INTO `velocity_meta_data` (`id`, `home_page_content`, `footer_left_content`, `footer_middle_content`, `slider`, `advertisement`, `sidebar_category_count`, `featured_product_count`, `new_products_count`, `subscription_bar_content`, `created_at`, `updated_at`, `product_view_images`, `product_policy`, `locale`, `header_content_count`) VALUES
+(1, '<p>@include(\'shop::home.advertisements.advertisement-four\')@include(\'shop::home.featured-products\') @include(\'shop::home.product-policy\') @include(\'shop::home.advertisements.advertisement-three\') @include(\'shop::home.new-products\') @include(\'shop::home.advertisements.advertisement-two\')</p>', '<p>We love to craft softwares and solve the real world problems with the binaries. We are highly committed to our goals. We invest our resources to create world class easy to use softwares and applications for the enterprise business with the top notch, on the edge technology expertise.</p>', '<div class=\"col-lg-6 col-md-12 col-sm-12 no-padding\"><ul type=\"none\"><li><a href=\"https://webkul.com/about-us/company-profile/\">About Us</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">Customer Service</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">What&rsquo;s New</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\">Contact Us </a></li></ul></div><div class=\"col-lg-6 col-md-12 col-sm-12 no-padding\"><ul type=\"none\"><li><a href=\"https://webkul.com/about-us/company-profile/\"> Order and Returns </a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Payment Policy </a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Shipping Policy</a></li><li><a href=\"https://webkul.com/about-us/company-profile/\"> Privacy and Cookies Policy </a></li></ul></div>', 1, NULL, 9, 10, 10, '<div class=\"social-icons col-lg-6\"><a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-facebook\" title=\"facebook\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-twitter\" title=\"twitter\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-linked-in\" title=\"linkedin\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-pintrest\" title=\"Pinterest\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-youtube\" title=\"Youtube\"></i> </a> <a href=\"https://webkul.com\" target=\"_blank\" class=\"unset\" rel=\"noopener noreferrer\"><i class=\"fs24 within-circle rango-instagram\" title=\"instagram\"></i></a></div>', NULL, NULL, NULL, '<div class=\"row col-12 remove-padding-margin\"><div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-van-ship fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Free Shipping on Order $20 or More</span></div></div></div></div> <div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-exchnage fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Product Replace &amp; Return Available </span></div></div></div></div> <div class=\"col-lg-4 col-sm-12 product-policy-wrapper\"><div class=\"card\"><div class=\"policy\"><div class=\"left\"><i class=\"rango-exchnage fs40\"></i></div> <div class=\"right\"><span class=\"font-setting fs20\">Product Exchange and EMI Available </span></div></div></div></div></div>', 'en', '');
 
 -- --------------------------------------------------------
 
@@ -6305,6 +6429,7 @@ CREATE TABLE `vendor_sources` (
 -- テーブルの構造 `wishlist`
 --
 
+DROP TABLE IF EXISTS `wishlist`;
 CREATE TABLE `wishlist` (
   `id` int(10) UNSIGNED NOT NULL,
   `channel_id` int(10) UNSIGNED NOT NULL,
@@ -6345,25 +6470,6 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `admin_password_resets`
   ADD KEY `admin_password_resets_email_index` (`email`);
-
---
--- テーブルのインデックス `agent_password_resets`
---
-ALTER TABLE `agent_password_resets`
-  ADD KEY `agent_password_resets_email_index` (`email`);
-
---
--- テーブルのインデックス `agent_roles`
---
-ALTER TABLE `agent_roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- テーブルのインデックス `agent_sources`
---
-ALTER TABLE `agent_sources`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `agent_sources_email_unique` (`email`);
 
 --
 -- テーブルのインデックス `attributes`
@@ -6754,6 +6860,12 @@ ALTER TABLE `customer_social_accounts`
   ADD KEY `customer_social_accounts_customer_id_foreign` (`customer_id`);
 
 --
+-- テーブルのインデックス `discussions`
+--
+ALTER TABLE `discussions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- テーブルのインデックス `downloadable_link_purchased`
 --
 ALTER TABLE `downloadable_link_purchased`
@@ -6847,23 +6959,11 @@ ALTER TABLE `locales`
   ADD UNIQUE KEY `locales_code_unique` (`code`);
 
 --
--- テーブルのインデックス `merchant_password_resets`
+-- テーブルのインデックス `messages`
 --
-ALTER TABLE `merchant_password_resets`
-  ADD KEY `merchant_password_resets_email_index` (`email`);
-
---
--- テーブルのインデックス `merchant_roles`
---
-ALTER TABLE `merchant_roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- テーブルのインデックス `merchant_sources`
---
-ALTER TABLE `merchant_sources`
+ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `merchant_sources_email_unique` (`email`);
+  ADD KEY `messages_participable_type_participable_id_index` (`participable_type`,`participable_id`);
 
 --
 -- テーブルのインデックス `migrations`
@@ -6910,6 +7010,13 @@ ALTER TABLE `order_items`
 ALTER TABLE `order_payment`
   ADD PRIMARY KEY (`id`),
   ADD KEY `order_payment_order_id_foreign` (`order_id`);
+
+--
+-- テーブルのインデックス `participations`
+--
+ALTER TABLE `participations`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `participations_participable_type_participable_id_index` (`participable_type`,`participable_id`);
 
 --
 -- テーブルのインデックス `password_resets`
@@ -7076,6 +7183,18 @@ ALTER TABLE `product_up_sells`
   ADD KEY `product_up_sells_child_id_foreign` (`child_id`);
 
 --
+-- テーブルのインデックス `push_notifications`
+--
+ALTER TABLE `push_notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- テーブルのインデックス `pwa_layout`
+--
+ALTER TABLE `pwa_layout`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- テーブルのインデックス `refunds`
 --
 ALTER TABLE `refunds`
@@ -7157,18 +7276,6 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- テーブルのインデックス `velocity_category`
---
-ALTER TABLE `velocity_category`
-  ADD PRIMARY KEY (`id`);
-
---
--- テーブルのインデックス `velocity_category_translations`
---
-ALTER TABLE `velocity_category_translations`
-  ADD PRIMARY KEY (`id`);
-
---
 -- テーブルのインデックス `velocity_contents`
 --
 ALTER TABLE `velocity_contents`
@@ -7196,25 +7303,6 @@ ALTER TABLE `velocity_meta_data`
   ADD PRIMARY KEY (`id`);
 
 --
--- テーブルのインデックス `vendor_password_resets`
---
-ALTER TABLE `vendor_password_resets`
-  ADD KEY `vendor_password_resets_email_index` (`email`);
-
---
--- テーブルのインデックス `vendor_roles`
---
-ALTER TABLE `vendor_roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- テーブルのインデックス `vendor_sources`
---
-ALTER TABLE `vendor_sources`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `vendor_sources_email_unique` (`email`);
-
---
 -- テーブルのインデックス `wishlist`
 --
 ALTER TABLE `wishlist`
@@ -7238,18 +7326,6 @@ ALTER TABLE `addresses`
 --
 ALTER TABLE `admins`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- テーブルのAUTO_INCREMENT `agent_roles`
---
-ALTER TABLE `agent_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `agent_sources`
---
-ALTER TABLE `agent_sources`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理店ID';
 
 --
 -- テーブルのAUTO_INCREMENT `attributes`
@@ -7417,13 +7493,13 @@ ALTER TABLE `catalog_rule_product_prices`
 -- テーブルのAUTO_INCREMENT `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- テーブルのAUTO_INCREMENT `category_translations`
 --
 ALTER TABLE `category_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- テーブルのAUTO_INCREMENT `channels`
@@ -7441,13 +7517,13 @@ ALTER TABLE `cms_pages`
 -- テーブルのAUTO_INCREMENT `cms_page_translations`
 --
 ALTER TABLE `cms_page_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- テーブルのAUTO_INCREMENT `core_config`
 --
 ALTER TABLE `core_config`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- テーブルのAUTO_INCREMENT `countries`
@@ -7465,13 +7541,13 @@ ALTER TABLE `country_states`
 -- テーブルのAUTO_INCREMENT `country_state_translations`
 --
 ALTER TABLE `country_state_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3409;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1705;
 
 --
 -- テーブルのAUTO_INCREMENT `country_translations`
 --
 ALTER TABLE `country_translations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1531;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=766;
 
 --
 -- テーブルのAUTO_INCREMENT `currencies`
@@ -7489,7 +7565,7 @@ ALTER TABLE `currency_exchange_rates`
 -- テーブルのAUTO_INCREMENT `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルのAUTO_INCREMENT `customer_documents`
@@ -7507,6 +7583,12 @@ ALTER TABLE `customer_groups`
 -- テーブルのAUTO_INCREMENT `customer_social_accounts`
 --
 ALTER TABLE `customer_social_accounts`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `discussions`
+--
+ALTER TABLE `discussions`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -7582,22 +7664,16 @@ ALTER TABLE `locales`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- テーブルのAUTO_INCREMENT `merchant_roles`
+-- テーブルのAUTO_INCREMENT `messages`
 --
-ALTER TABLE `merchant_roles`
+ALTER TABLE `messages`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `merchant_sources`
---
-ALTER TABLE `merchant_sources`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '製造者ID';
 
 --
 -- テーブルのAUTO_INCREMENT `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
 
 --
 -- テーブルのAUTO_INCREMENT `orders`
@@ -7630,16 +7706,22 @@ ALTER TABLE `order_payment`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- テーブルのAUTO_INCREMENT `participations`
+--
+ALTER TABLE `participations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- テーブルのAUTO_INCREMENT `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルのAUTO_INCREMENT `product_attribute_values`
 --
 ALTER TABLE `product_attribute_values`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- テーブルのAUTO_INCREMENT `product_bundle_options`
@@ -7693,7 +7775,7 @@ ALTER TABLE `product_downloadable_sample_translations`
 -- テーブルのAUTO_INCREMENT `product_flat`
 --
 ALTER TABLE `product_flat`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルのAUTO_INCREMENT `product_grouped_products`
@@ -7711,7 +7793,7 @@ ALTER TABLE `product_images`
 -- テーブルのAUTO_INCREMENT `product_inventories`
 --
 ALTER TABLE `product_inventories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- テーブルのAUTO_INCREMENT `product_ordered_inventories`
@@ -7724,6 +7806,18 @@ ALTER TABLE `product_ordered_inventories`
 --
 ALTER TABLE `product_reviews`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `push_notifications`
+--
+ALTER TABLE `push_notifications`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- テーブルのAUTO_INCREMENT `pwa_layout`
+--
+ALTER TABLE `pwa_layout`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- テーブルのAUTO_INCREMENT `refunds`
@@ -7792,18 +7886,6 @@ ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- テーブルのAUTO_INCREMENT `velocity_category`
---
-ALTER TABLE `velocity_category`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `velocity_category_translations`
---
-ALTER TABLE `velocity_category_translations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- テーブルのAUTO_INCREMENT `velocity_contents`
 --
 ALTER TABLE `velocity_contents`
@@ -7826,18 +7908,6 @@ ALTER TABLE `velocity_customer_compare_products`
 --
 ALTER TABLE `velocity_meta_data`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- テーブルのAUTO_INCREMENT `vendor_roles`
---
-ALTER TABLE `vendor_roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- テーブルのAUTO_INCREMENT `vendor_sources`
---
-ALTER TABLE `vendor_sources`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- テーブルのAUTO_INCREMENT `wishlist`
@@ -8188,7 +8258,6 @@ ALTER TABLE `dropship_ali_express_product_reviews`
 -- テーブルの制約 `invoices`
 --
 ALTER TABLE `invoices`
-  ADD CONSTRAINT `invoices_order_address_id_foreign` FOREIGN KEY (`order_address_id`) REFERENCES `addresses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `invoices_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
 
 --
@@ -8391,7 +8460,6 @@ ALTER TABLE `refund_items`
 --
 ALTER TABLE `shipments`
   ADD CONSTRAINT `shipments_inventory_source_id_foreign` FOREIGN KEY (`inventory_source_id`) REFERENCES `inventory_sources` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `shipments_order_address_id_foreign` FOREIGN KEY (`order_address_id`) REFERENCES `addresses` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `shipments_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
 
 --

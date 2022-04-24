@@ -28,12 +28,6 @@ Route::group(['middleware' => ['web']], function () {
 });
 Route::get('Japayment/AuPayment/ipn', 'Highwayns\JaPayment\Http\Controllers\AuPaymentController@ipn')->name('Japayment.AuPayment.ipn');
 
-Route::post('Japayment/AuPayment/ipn', 'Highwayns\JaPayment\Http\Controllers\AuPaymentController@ipn')->name('Japayment.AuPayment.ipn');
-
 Route::get('Japayment/DocomoPayment/ipn', 'Highwayns\JaPayment\Http\Controllers\DocomoPaymentController@ipn')->name('Japayment.DocomoPayment.ipn');
 
-Route::post('Japayment/DocomoPayment/ipn', 'Highwayns\JaPayment\Http\Controllers\DocomoPaymentController@ipn')->name('Japayment.DocomoPayment.ipn');
-
 Route::get('Japayment/SoftbankPayment/ipn', 'Highwayns\JaPayment\Http\Controllers\SoftbankPaymentController@ipn')->name('Japayment.SoftbankPayment.ipn');
-
-Route::post('Japayment/SoftbankPayment/ipn', 'Highwayns\JaPayment\Http\Controllers\SoftbankPaymentController@ipn')->name('Japayment.SoftbankPayment.ipn');

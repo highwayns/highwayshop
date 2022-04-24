@@ -1,9 +1,5 @@
 <?php
 return [
-    'one-col' => '<div class="mt-10">クラス: <b>"static-container one-column"</b> １コラムレイアウトに適用.</div>',
-    'two-col' => '<div class="mt-10">クラス: <b>"static-container two-column"</b> ２コラムレイアウトに適用.</div>',
-    'three-col' => '<div class="mt-10">クラス: <b>"static-container three-column"</b> ３コラムレイアウトに適用.</div>',
-    'helper-classes' => 'ヘルプクラス一覧',
     'datagrid' => [
         'actions' => '操作',
         'id' => 'コラムインデックスは0より大きい',
@@ -37,5 +33,8 @@ return [
         'between' => 'Is between',
         'apply' => '適用',
         'items-per-page' => 'ページごと',
+        'value-here' => '値',
+        'numeric-value-here' => '数字値',
+        'submit' => '提出'
     ]
 ];

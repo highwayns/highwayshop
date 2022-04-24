@@ -191,6 +191,16 @@ return [
     ],
 
     'customer' => [
+        'compare'           => [
+            'text'                  => '比較',
+            'compare_similar_items' => '似ている項目を比較する',
+            'added'                 => '項目を比較リストに追加しました。',
+            'already_added'         => '項目がすでに比較リストに追加しました。',
+            'removed'               => '項目を比較リストから削除しました。',
+            'empty-text'            => "比較リストにデータがありません",
+            'product_image'         => '製品画像',
+            'actions'               => '操作一覧',
+        ],
         'login-form' => [
             'sign-up' => '新規登録',
             'new-customer' => '新規顧客',
@@ -247,11 +257,14 @@ return [
             'female' => '女',
         ],
         'general' => [
+            'no'                     => 'いいえ',
+            'yes'                    => 'はい',
             'view' => 'ビュー',
             'filter' => 'フィルター',
             'orders' => '注文一覧',
             'update' => '更新',
             'reviews' => 'レビュー一覧',
+            'currencies'             => '外貨',
             'addresses' => 'アドレス',
             'top-brands' => 'トップブランド一覧',
             'new-password' => '新パスワード',
@@ -274,6 +287,8 @@ return [
 
     'responsive' => [
         'header' => [
+            'done'      => '完成',
+            'languages' => '言語',
             'greeting' => 'よこそ, :customer !',
         ]
     ],

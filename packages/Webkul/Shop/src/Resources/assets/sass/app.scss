@@ -815,7 +815,7 @@ section.slider-block {
                         img {
                             display: none;
                         }
-                        
+
                         input {
                             display: none;
                         }
@@ -3823,6 +3823,31 @@ section.review {
             }
         }
     }
+
+    .image-search-container {
+        .icon {
+            &.camera-icon {
+                top: 10px;
+                position: relative;
+                margin-left: 10px;
+            }
+        }
+
+        input[type=file] {
+            display: none;
+        }
+    }
+
+    .image-search-result {
+        .searched-terms {
+            margin-top: 15px;
+            margin-left: 0 !important;
+        }
+
+        .term-list {
+            line-height: 35px;
+        }
+    }
 }
 /// rtl css start here
 .rtl {
@@ -3861,6 +3886,11 @@ section.review {
                         border-top-right-radius: 0px;
                         border-bottom-right-radius: 0px;
                         margin-left: -2px;
+                    }
+
+                    .image-search-container {
+                        left: 48px;
+                        right: unset;
                     }
                 }
             }
@@ -4536,4 +4566,52 @@ section.review {
             }
         }
     }
+}
+
+//compare page
+body {
+    overflow-x: hidden;
+}
+
+.comparison-component {
+    width: 100%;
+    padding-top: 20px;
+}
+
+.comparison-component > h1 {
+    display: inline-block;
+}
+
+td {
+    padding: 15px;
+    min-width: 250px;
+    max-width: 250px;
+    line-height: 30px;
+    vertical-align: top;
+    word-break: break-word;
+}
+
+.icon.remove-product {
+    top: 5px;
+    float: right;
+    cursor: pointer;
+    position: relative;
+    background-color: black;
+}
+
+.action > div {
+    display: inline-block;
+}
+.cart-wish-wrap .btn.btn-lg {
+    padding: 5px 10px;
+}
+.cart-wish-wrap {
+    display: flex;
+}
+.white-cross-sm-icon {
+    width: 24px;
+    height:24px;
+}
+.add-to-wishlist {
+    margin-left: 15px;
 }

@@ -6,6 +6,7 @@
 <a href="https://packagist.org/packages/bagisto/bagisto"><img src="https://poser.pugx.org/bagisto/bagisto/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/bagisto/bagisto"><img src="https://poser.pugx.org/bagisto/bagisto/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/bagisto/bagisto"><img src="https://poser.pugx.org/bagisto/bagisto/license.svg" alt="License"></a>
+<a href="https://github.com/bagisto/bagisto/actions"><img src="https://github.com/bagisto/bagisto/workflows/CI/badge.svg" alt="Backers on Open Collective"></a>
 <a href="#backers"><img src="https://opencollective.com/bagisto/backers/badge.svg" alt="Backers on Open Collective"></a>
 <a href="#sponsors"><img src="https://opencollective.com/bagisto/sponsors/badge.svg" alt="Sponsors on Open Collective"></a>
 </p>
@@ -74,11 +75,11 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 ### Installation and Configuration
 
-**1. Try our new GUI installer to install Bagisto:**
+**1. You can install Bagisto by using the GUI installer.**
 
 ##### a. Download zip from the link below:
 
-[Download](https://github.com/bagisto/bagisto/archive/v0.1.6.zip)
+[Download the latest release](https://github.com/bagisto/bagisto/releases/latest)
 
 ##### b. Extract the contents of zip and execute the project in your browser:
 
@@ -92,51 +93,17 @@ or
 http(s)://example.com/public
 ~~~
 
-**2. Try our old fashioned way to install Bagisto:**
+**2. Or you can install Bagisto from your console.**
 
 ##### Execute these commands below, in order
 
 ~~~
-1. composer create-project bagisto/bagisto
-~~~
-
-**Now, configure your database:**
-
-If the above command was completed successfully, then you'll find directory **bagisto** with all of the code inside it.
-
-Find file **.env** inside **bagisto** directory and set the environment variables listed below:
-
-* **APP_URL**
-* **DB_CONNECTION**
-* **DB_HOST**
-* **DB_PORT**
-* **DB_DATABASE**
-* **DB_USERNAME**
-* **DB_PASSWORD**
-
-Mailer environment variables are also required to be set up. This is because **Bagisto** needs to send emails to customers and admins depending on what events require notification.
-
-~~~
-2. php artisan migrate
+1. composer create-project bagisto/bagisto-standard
 ~~~
 
 ~~~
-3. php artisan db:seed
+2. php artisan bagisto:install
 ~~~
-
-~~~
-4. php artisan vendor:publish
--> Press 0 and then press enter to publish all assets and configurations.
-~~~
-
-~~~
-5. php artisan storage:link
-~~~
-
-~~~
-6. composer dump-autoload
-~~~
-
 
 **To execute Bagisto**:
 
@@ -199,15 +166,3 @@ Thank you to all our backers! 🙏
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
 <a href="https://opencollective.com/bagisto/contribute/sponsor-7372/checkout" target="_blank"><img src="https://images.opencollective.com/static/images/become_sponsor.svg"></a>
-
-#### php.ini
-* ; http://php.net/memory-limit
-* memory_limit=2G
-
-#### フォルダー作成
-* mkdir -p storage/framework/cache/data
-* mkdir -p storage/framework/sessions
-* mkdir -p storage/framework/views
-* mkdir -p storage/framework/testing
-* mkdir -p storage/app/db-blade-compiler/views
-* php artisan storage:link

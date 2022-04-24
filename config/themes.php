@@ -23,11 +23,5 @@ return [
             'name' => 'Velocity',
             'parent' => 'default'
         ],
-        'shopify' => [
-            'views_path' => 'resources/themes/shopify/views',
-            'assets_path' => 'public/themes/shopify/assets',
-            'name' => 'shopify',
-            'parent' => 'default'
-        ],
     ]
 ];

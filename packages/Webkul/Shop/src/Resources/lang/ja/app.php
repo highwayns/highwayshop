@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'invalid_vat_format' => 'vat idのフォーマット無効',
     'security-warning' => 'セキュリティの警告',
     'nothing-to-delete' => '削除するアイテムはありません',
 
@@ -15,13 +16,14 @@ return [
     ],
 
     'common' => [
-        'error' => 'エラーが発生しました。しばらく待ってから、再度アクセスしてください。'
+        'error' => 'エラーが発生しました。しばらく待ってから、再度アクセスしてください。',
+        'no-result-found' => 'レコードが見つかりません.'
     ],
 
     'home' => [
         'page-title' => config('app.name') . ' - ホーム',
         'featured-products' => 'おすすめ',
-        'new-products' => 'New',
+        'new-products' => '新製品',
         'verify-email' => 'メールアドレスを確認します',
         'resend-verify-email' => '確認メールを再送信'
     ],
@@ -35,6 +37,7 @@ return [
         'cart' => 'カート',
         'profile' => 'プロフィール',
         'wishlist' => 'お気に入り',
+        'cart' => 'カート',
         'logout' => 'ログアウト',
         'search-text' => 'アイテムを探す'
     ],
@@ -66,7 +69,7 @@ return [
 
     'search' => [
         'no-results' => 'お探しの条件に合う検索結果が見つかりませんでした。',
-        'page-title' => '検索',
+        'page-title' => config('app.name') . '―検索',
         'found-results' => '検索結果',
         'found-result' => '検索結果',
         'analysed-keywords' => 'Analysed Keywords'
@@ -211,6 +214,11 @@ return [
 
                 'create' => [
                     'page-title' => '新規住所登録',
+                    'company_name' => '会社名称',
+                    'first_name' => '姓',
+                    'last_name' => '名',
+                    'vat_id' => 'Vat id',
+                    'vat_help_note' => '[Note: Use Country Code with VAT Id. Eg. INV01234567891]',
                     'title' => '住所を追加',
                     'street-address' => '住所',
                     'country' => '国',
@@ -226,6 +234,10 @@ return [
 
                 'edit' => [
                     'page-title' => '住所を編集',
+                    'company_name' => '会社名称',
+                    'first_name' => '姓',
+                    'last_name' => '名',
+                    'vat_id' => 'Vat id',
                     'title' => '住所を編集',
                     'street-address' => '住所',
                     'submit' => '保存する',
@@ -246,7 +258,14 @@ return [
                     'date' => '日時',
                     'status' => '状況',
                     'total' => '合計',
-                    'order_number' => '注文番号'
+                    'order_number' => '注文番号',
+                    'processing' => '処理中',
+                    'completed' => '完了',
+                    'canceled' => '取消し',
+                    'closed' => '閉じった',
+                    'pending' => '保留中',
+                    'pending-payment' => '支払保留中',
+                    'fraud' => '欺诈'
                 ],
 
                 'view' => [
@@ -295,6 +314,8 @@ return [
                     'adjustment-refund' => '返金調整',
                     'adjustment-fee' => '調整手数料',
                     'tracking-number' => '追跡番号',
+                    'cancel-btn-title' => '取消',
+                    'tracking-number' => '通知番号',
                     'cancel-confirm-msg' => 'この注文をキャンセルしてもよろしいですか ?'
                 ]
             ],
@@ -309,6 +330,7 @@ return [
                 'add' => 'アイテムをお気に入りに追加',
                 'remove' => 'アイテムをお気に入りから削除',
                 'moved' => 'アイテムをカートへ移動しました',
+                'option-missing' => '製品オプションが見つかりません, 希望一覧に移動できません.',
                 'move-error' => 'アイテムのお気に入り追加に失敗しました。しばらくしてから再度お試し下さい。',
                 'success' => 'アイテムをお気に入りに追加しました',
                 'failure' => 'アイテムのお気に入り追加に失敗しました。しばらくしてから再度お試し下さい。',
@@ -350,6 +372,7 @@ return [
         'layered-nav-title' => 'Shop By',
         'price-label' => 'As low as',
         'remove-filter-link-title' => '全て削除',
+        'filter-to' => 'to',
         'sort-by' => '並び順',
         'from-a-z' => 'From A-Z',
         'from-z-a' => 'From Z-A',
@@ -383,9 +406,20 @@ return [
         'view-all' => '全て見る',
         'select-above-options' => '最初に上記のオプションを選択してください.',
         'less-quantity' => '数量１未満は選択できません.',
+        'samples' => 'サンプル一覧',
+        'links' => 'リンク一覧',
+        'sample' => 'サンプル',
+        'name' => '名称',
+        'qty' => '数量',
+        'starting-at' => '開始',
+        'customize-options' => 'カスタムオプション',
+        'choose-selection' => '選択',
+        'your-customization' => 'カスタム',
+        'total-amount' => '総計',
+        'none' => 'なし',
         'available-for-order' => '注文可能',
-        'settings' => 'Settings',
-        'compare_options' => 'Compare Options',
+        'settings' => '設定',
+        'compare_options' => 'オプション比較',
     ],
 
     'buynow' => [
@@ -430,7 +464,10 @@ return [
             'cart-subtotal' => '小計',
             'cart-remove-action' => '手続きを進めますか。',
             'partial-cart-update' => 'Only some of the product(s) were updated',
-            'link-missing' => ''
+            'link-missing' => '',
+            'event' => [
+                'expired' => 'イベント終了しました.'
+            ]
         ],
 
         'onepage' => [
@@ -442,6 +479,7 @@ return [
             'review' => 'レビュー',
             'billing-address' => '領収書宛先',
             'sign-in' => 'ログイン',
+            'company-name' => '会社名称',
             'first-name' => '名',
             'last-name' => '姓',
             'email' => 'メールアドレス',
@@ -479,7 +517,10 @@ return [
             'money-desc' => '銀行振り込み',
             'paypal-desc' => 'Paypal',
             'free-desc' => '送料無料',
-            'flat-desc' => '送料一律'
+            'flat-desc' => '送料一律',
+            'password' => 'パスワード',
+            'login-exist-message' => 'すでにアカウントを持っているため, ログインしてください.',
+            'enter-coupon-code' => 'クーポンコードを入力してください'
         ],
 
         'total' => [
@@ -495,7 +536,10 @@ return [
             'coupon' => 'クーポン',
             'coupon-applied' => '使用済みクーポン',
             'remove-coupon' => 'クーポンを削除',
-            'cannot-apply-coupon' => 'クーポンを使用することができません'
+            'cannot-apply-coupon' => 'クーポンを使用することができません',
+            'invalid-coupon' => 'クーポンコード無効.',
+            'success-coupon' => 'クーポンコード利用成功.',
+            'coupon-apply-issue' => 'クーポン利用失敗.'
         ],
 
         'success' => [
@@ -530,6 +574,15 @@ return [
             'final-summary' => '発送手続き完了後、お知らせメールを配信いたしますので、今しばらくお待ちください。',
             'help' => 'お問合せなどは下記メールアドレスへご連絡ください。:support_email',
             'thanks' => 'Gracias!',
+            
+            'comment' => [
+                'subject' => '注文にコメントを追加しました',
+                'dear' => 'Dear :customer_name',
+                'final-summary' => 'ご訪問ありがとうございます',
+                'help' => '下記のメールにご連絡をお待ちしております。 :support_email',
+                'thanks' => 'ありがとうございます!',
+            ],
+
             'cancel' => [
                 'subject' => '注文がキャンセルされました',
                 'heading' => '注文がキャンセルされました',
@@ -566,6 +619,15 @@ return [
             'tracking-number' => '追跡番号',
             'greeting' => 'El pedido :order_id ha sido enviado a :created_at',
         ],
+
+        'refund' => [
+            'heading' => 'あなたの返金 #:refund_id 注文 #:order_id',
+            'subject' => '注文の返金 #:order_id',
+            'summary' => '返金総計',
+            'adjustment-refund' => '調整返金',
+            'adjustment-fee' => '調整費用'
+        ],
+
         'forget-password' => [
             'subject' => 'パスワードをリセットする',
             'dear' => '様 :name',
@@ -612,13 +674,13 @@ return [
     ],
 
     'webkul' => [
-        'copy-right' => '© Copyright :year Webkul Software, All rights reserved',
+        'copy-right' => '© Copyright :year Highwayshop Software, All rights reserved',
     ],
 
     'response' => [
-        'create-success' => ':name created successfully.',
-        'update-success' => ':name updated successfully.',
-        'delete-success' => ':name deleted successfully.',
-        'submit-success' => ':name submitted successfully.'
+        'create-success' => ':name 作成成功.',
+        'update-success' => ':name 更新成功.',
+        'delete-success' => ':name 削除成功.',
+        'submit-success' => ':name 提出成功.'
     ],
 ];

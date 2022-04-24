@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Highwayshop'),
+    'name' => env('APP_NAME', 'Bagisto'),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE','Asia/Tokyo'),
+    'timezone' => env('APP_TIMEZONE','Asia/Kolkata'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'ja',
 
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +117,7 @@ return [
     |
     */
     
-    'currency' => env('APP_CURRENCY', 'JPY'),
+    'currency' => env('APP_CURRENCY', 'USD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -153,7 +153,7 @@ return [
     /*
         Application Version
     */
-    'version' => env('APP_VERSION', '1.1.0'),
+    'version' => env('APP_VERSION'),
 
     /**
      * Blacklisting attributes while debugging
@@ -242,7 +242,6 @@ return [
         Flynsarmy\DbBladeCompiler\DbBladeCompilerServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
 
         //Webkul packages
         Webkul\Theme\Providers\ThemeServiceProvider::class,
@@ -269,17 +268,11 @@ return [
         Webkul\CMS\Providers\CMSServiceProvider::class,
         Webkul\Velocity\Providers\VelocityServiceProvider::class,
         Webkul\BookingProduct\Providers\BookingProductServiceProvider::class,
-        Highwayns\Agent\Providers\AgentServiceProvider::class,
-        Highwayns\AgentAdmin\Providers\AgentAdminServiceProvider::class,
-        Highwayns\Merchant\Providers\MerchantServiceProvider::class,
-        Highwayns\MerchantAdmin\Providers\MerchantAdminServiceProvider::class,
-        Highwayns\Vendor\Providers\VendorServiceProvider::class,
-        Highwayns\VendorAdmin\Providers\VendorAdminServiceProvider::class,
-        // Osiset\ShopifyApp\ShopifyAppProvider::class,
-        Highwayns\JaDelivery\Providers\JaDeliveryServiceProvider::class,
-        Highwayns\JaPayment\Providers\JaPaymentServiceProvider::class,
+        Webkul\SocialLogin\Providers\SocialLoginServiceProvider::class,
         Webkul\Dropship\Providers\DropshipServiceProvider::class,
-        Webkul\CustomerDocument\Providers\CustomerDocumentServiceProvider::class
+        Webkul\CustomerDocument\Providers\CustomerDocumentServiceProvider::class,
+        Highwayns\JaDelivery\Providers\JaDeliveryServiceProvider::class,
+        Highwayns\JaPayment\Providers\JaPaymentServiceProvider::class
     ],
 
     /*
